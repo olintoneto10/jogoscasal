@@ -205,6 +205,49 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 /* Slide-in animation for card transitions */
 @keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
 .pos-card.entering{animation:slideIn 0.22s ease-out}
+/* ══ SKIP BUTTON ══ */
+.btn-skip{background:none;border:none;color:var(--muted);font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;padding:0.2rem 0.5rem;text-decoration:underline dotted;text-underline-offset:3px;transition:color 0.15s;touch-action:manipulation}
+.btn-skip:hover{color:var(--rose-l)}
+/* ══ POSIÇÕES BENEFÍCIOS ══ */
+.pos-benefits{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.3rem}
+.pos-benefit{padding:0.5rem 0.7rem;border-radius:6px;font-size:0.72rem;line-height:1.45;color:var(--text)}
+.pos-benefit-label{font-size:0.58rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.25rem}
+.pos-benefit.her{background:rgba(196,107,122,0.1);border:1px solid rgba(196,107,122,0.22)}
+.pos-benefit.her .pos-benefit-label{color:var(--rose-l)}
+.pos-benefit.him{background:rgba(200,148,58,0.07);border:1px solid rgba(200,148,58,0.2)}
+.pos-benefit.him .pos-benefit-label{color:var(--gold)}
+/* ══ RECONEXÃO ══ */
+#screen-reconexao{gap:2rem;padding-top:0}
+.recon-progress{display:flex;gap:0.6rem;justify-content:center}
+.recon-dot{width:9px;height:9px;border-radius:50%;background:rgba(200,148,58,0.18);transition:background 0.35s}
+.recon-dot.on{background:var(--gold)}
+.recon-step-num{font-size:0.72rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;font-family:'Jost',sans-serif;text-align:center}
+.recon-question{font-family:'Cormorant SC',serif;font-size:1.45rem;font-weight:600;color:var(--text);text-align:center;padding:0 1.5rem;line-height:1.45}
+.recon-instruction{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);text-align:center;padding:0 1.5rem;line-height:1.65}
+/* ══ MAPA DO DESEJO ══ */
+#screen-mapa{gap:1.2rem;padding-top:0}
+.mapa-intro-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);text-align:center;padding:0 1.5rem;line-height:1.7}
+.mapa-list{width:100%;padding:0 1.2rem;display:flex;flex-direction:column;gap:0.45rem;overflow-y:auto}
+.mapa-item{background:var(--ground-2);border:1px solid rgba(200,148,58,0.15);border-radius:8px;padding:0.65rem 0.9rem;display:flex;align-items:center;justify-content:space-between;gap:0.7rem}
+.mapa-item-label{font-size:0.85rem;color:var(--text);font-family:'Libre Caslon Text',serif;font-style:italic;flex:1}
+.mapa-choices{display:flex;gap:0.35rem;flex-shrink:0}
+.mapa-choice{width:34px;height:34px;border-radius:50%;border:1px solid rgba(200,148,58,0.18);background:transparent;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s;touch-action:manipulation;line-height:1}
+.mapa-choice.sel{border-color:var(--gold);background:rgba(200,148,58,0.18)}
+.mapa-match-card{background:var(--ground-2);border-radius:10px;padding:0.9rem 1.2rem;margin:0 1.2rem}
+.mapa-match-card.yes{border:1px solid rgba(102,187,106,0.35)}
+.mapa-match-card.curious{border:1px solid rgba(200,148,58,0.35)}
+.mapa-match-title{font-family:'Cormorant SC',serif;font-size:0.8rem;letter-spacing:0.1em;margin-bottom:0.6rem}
+.mapa-match-card.yes .mapa-match-title{color:#a5d6a7}
+.mapa-match-card.curious .mapa-match-title{color:var(--gold-l)}
+.mapa-match-item{font-size:0.82rem;color:var(--text);padding:0.25rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.mapa-match-item:last-child{border-bottom:none}
+/* ══ AFTERCARE ══ */
+#aftercare-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.95);backdrop-filter:blur(18px);z-index:350;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.4s;padding:2rem}
+#aftercare-overlay.on{opacity:1;pointer-events:all}
+.aftercare-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.28);border-radius:18px;padding:2.2rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center;max-width:340px;width:100%}
+.aftercare-icon{font-size:3rem;line-height:1}
+.aftercare-title{font-family:'Cormorant SC',serif;font-size:1.5rem;color:var(--gold-l);letter-spacing:0.06em}
+.aftercare-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.95rem;color:var(--text);line-height:1.72}
 
 /* ══ TIMER ══ */
 #timer-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.93);backdrop-filter:blur(14px);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -296,11 +339,13 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span class="pname" id="hP2">—</span>
   </div>
   <div class="games-grid">
+    <div class="game-card" onclick="go('screen-reconexao')" style="grid-column:1/-1;border-color:rgba(196,107,122,0.3)"><div class="icon">💬</div><div class="name">Reconexão</div><div class="desc">Comece aqui — 3 perguntas para se reencontrar antes de tudo</div></div>
     <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
     <div class="game-card" onclick="go('screen-vd')"><div class="icon">🃏</div><div class="name">Verdade ou Desafio</div><div class="desc">Perguntas íntimas e ações ousadas</div></div>
     <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
     <div class="game-card" onclick="go('screen-quiz')"><div class="icon">❤️</div><div class="name">Quiz do Casal</div><div class="desc">Descubram o quanto se conhecem</div></div>
     <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
+    <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
   <button class="home-logout" onclick="doLogout()">← Trocar jogadores</button>
@@ -328,6 +373,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <div class="c-text" id="rCText"></div>
       <div class="c-timer-hint" onclick="openTimerFrom(rOverlay)">⏱ Iniciar cronômetro</div>
       <button class="btn-ghost" id="rNewBtn">Nova Rodada</button>
+      <button class="btn-skip" onclick="document.getElementById('rOverlay').classList.remove('on')">↩ Pular este desafio</button>
     </div>
   </div></div>
 </div>
@@ -357,6 +403,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <div class="c-text" id="vdCText"></div>
       <div class="c-timer-hint" onclick="openTimerFrom(vdOverlay)">⏱ Iniciar cronômetro</div>
       <button class="btn-ghost" onclick="vdNext()">Próxima Rodada</button>
+      <button class="btn-skip" onclick="document.getElementById('vdOverlay').classList.remove('on')">↩ Pular este</button>
     </div>
   </div></div>
 </div>
@@ -377,6 +424,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="die-card" id="die3"><div class="die-label">Local</div><div class="die-value blank" id="dv3">—</div></div>
   </div>
   <div class="dado-result" id="dadoResult">Role os dados para descobrir</div>
+  <button class="btn-skip" id="dadoSkip" style="display:none" onclick="document.getElementById('dadoBtn').click()">↩ Não gostaram? Rolar novamente</button>
   <button class="btn-gold" id="dadoBtn">Rolar os Dados</button>
 </div>
 
@@ -388,6 +436,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <p style="font-family:'Libre Caslon Text',serif;font-style:italic;color:var(--muted);line-height:1.7;font-size:0.95rem">
       Cada jogador responde separadamente com o PIN.<br>Depois comparam as respostas — quantas coincidem?
     </p>
+    <div class="levels" id="quizLevels">
+      <button class="lvl on" data-level="Conexão">Conexão</button>
+      <button class="lvl" data-level="Profundo">Profundo</button>
+    </div>
     <button class="btn-gold" onclick="quizStart()">Começar o Quiz</button>
   </div>
   <div id="quizGame" style="display:none;flex-direction:column;align-items:center;gap:1.2rem;width:100%">
@@ -432,6 +484,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <div class="pos-badges" id="posBadges"></div>
       <div class="pos-desc" id="posDesc"></div>
       <div class="pos-tip" id="posTip"></div>
+      <div class="pos-benefits" id="posBenefits"></div>
     </div>
   </div>
   <p class="pos-counter" id="posCounter"></p>
@@ -441,6 +494,56 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="btn-ghost" onclick="posNav(1)">Próxima →</button>
   </div>
   <button class="btn-gold" onclick="posRandom()">Posição Aleatória</button>
+</div>
+
+<!-- ══ RECONEXÃO ══ -->
+<div class="screen" id="screen-reconexao">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Reconexão</span></div>
+  <div style="height:1.2rem"></div>
+  <div id="reconGame" style="display:flex;flex-direction:column;align-items:center;gap:1.6rem;width:100%;padding:0 1.2rem">
+    <div class="recon-progress" id="reconDots"></div>
+    <div class="recon-step-num" id="reconStepNum"></div>
+    <div class="recon-question" id="reconQuestion"></div>
+    <div class="recon-instruction" id="reconInstruction"></div>
+  </div>
+  <div id="reconDone" style="display:none;flex-direction:column;align-items:center;gap:1.4rem;padding:0 1.5rem;text-align:center">
+    <div style="font-size:2.8rem">🌿</div>
+    <p style="font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);letter-spacing:0.05em">Agora vocês estão presentes</p>
+    <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7">A conexão emocional já começou.<br>Escolham um jogo para continuar a noite.</p>
+    <button class="btn-ghost" onclick="go('home')">Escolher um Jogo</button>
+    <button class="btn-skip" onclick="reconStart()">↩ Repetir as perguntas</button>
+  </div>
+  <button class="btn-gold" id="reconBtn" onclick="reconNext()">Próxima Pergunta →</button>
+</div>
+
+<!-- ══ MAPA DO DESEJO ══ -->
+<div class="screen" id="screen-mapa">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Mapa do Desejo</span></div>
+  <div style="height:0.8rem"></div>
+  <div id="mapaIntro" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:0 1.5rem;text-align:center">
+    <p class="mapa-intro-text">Cada um responde sozinho com o PIN.<br><br>✅ Quero &nbsp;·&nbsp; 🤔 Tenho curiosidade &nbsp;·&nbsp; ❌ Não agora<br><br>No final o app mostra <strong style="color:var(--gold)">só o que os dois marcaram em comum</strong> — sem expor o que não coincidiu.</p>
+    <button class="btn-gold" onclick="mapaStart()">Começar</button>
+  </div>
+  <div id="mapaGame" style="display:none;flex-direction:column;align-items:center;gap:0.9rem;width:100%">
+    <p class="quiz-phase" id="mapaPhase">Jogador 1</p>
+    <div class="mapa-list" id="mapaList"></div>
+    <button class="btn-gold" id="mapaConfirmBtn" onclick="mapaConfirm()" style="margin-top:0.3rem">Confirmar com PIN →</button>
+  </div>
+  <div id="mapaResults" style="display:none;flex-direction:column;align-items:center;gap:1rem;width:100%;padding-bottom:1rem">
+    <div class="quiz-score" style="font-size:1.6rem"><div id="mapaMatchCount">0</div><div class="quiz-score-label">desejos em comum</div></div>
+    <div id="mapaMatchCards" style="width:100%;display:flex;flex-direction:column;gap:0.8rem"></div>
+    <button class="btn-ghost" onclick="mapaReset()">Jogar Novamente</button>
+  </div>
+</div>
+
+<!-- ══ AFTERCARE OVERLAY ══ -->
+<div id="aftercare-overlay">
+  <div class="aftercare-card">
+    <div class="aftercare-icon">🌿</div>
+    <div class="aftercare-title">Momento de Cuidado</div>
+    <div class="aftercare-text" id="aftercareText"></div>
+  </div>
+  <button class="btn-ghost" onclick="document.getElementById('aftercare-overlay').classList.remove('on')">Fechar</button>
 </div>
 
 <!-- ══ MUSIC FAB ══ -->
@@ -535,6 +638,8 @@ function go(id){
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
   if(id==='screen-posicoes')renderPos();
+  if(id==='screen-reconexao')reconStart();
+  if(id==='screen-mapa')mapaReset();
 }
 
 // ══ LOGIN ══════════════════════════════════════════════════
@@ -731,6 +836,7 @@ document.getElementById('dadoBtn').addEventListener('click',function(){
     const local=DADO.local[Math.floor(Math.random()*DADO.local.length)];
     ['dv0','dv1','dv2','dv3'].forEach((id,i)=>{const el=document.getElementById(id);el.textContent=[parte,acao,dur,local][i];el.classList.remove('blank');});
     document.getElementById('dadoResult').textContent=`${acao.charAt(0).toUpperCase()+acao.slice(1)} o ${parte} por ${dur} — ${local}.`;
+    document.getElementById('dadoSkip').style.display='';
     dadoRolling=false;const btn=document.getElementById('dadoBtn');btn.disabled=false;btn.textContent='Rolar os Dados';
   },600);
 });
@@ -748,19 +854,20 @@ const QUIZ=[
 ];
 let qState={phase:0,q:0,ans:[[],[]]};
 function quizStart(){
+  quizQuestions=getLevel('quizLevels')==='Profundo'?QUIZ_DEEP:QUIZ;
   qState={phase:1,q:0,ans:[[],[]]};
   document.getElementById('quizIntro').style.display='none';
   document.getElementById('quizGame').style.display='flex';
   renderQ();
 }
 function renderQ(){
-  const p=qState.phase,q=qState.q,total=QUIZ.length;
+  const p=qState.phase,q=qState.q,total=quizQuestions.length;
   const pname=p===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
   document.getElementById('qPhase').textContent=`${pname} — Pergunta ${q+1} de ${total}`;
   document.getElementById('qBar').style.width=`${((p-1)*total+q)/(2*total)*100}%`;
-  document.getElementById('qQuestion').textContent=QUIZ[q].p;
+  document.getElementById('qQuestion').textContent=quizQuestions[q].p;
   const opts=document.getElementById('qOptions');opts.innerHTML='';
-  QUIZ[q].o.forEach((opt,i)=>{
+  quizQuestions[q].o.forEach((opt,i)=>{
     const b=document.createElement('button');b.className='quiz-opt';b.textContent=opt;
     b.onclick=()=>{
       qState.ans[p-1][q]=i;
@@ -778,7 +885,7 @@ function showQuizResults(){
     document.getElementById('quizGame').style.display='none';
     document.getElementById('quizResults').style.display='flex';
     let score=0;const list=document.getElementById('qResultList');list.innerHTML='';
-    QUIZ.forEach((q,i)=>{
+    quizQuestions.forEach((q,i)=>{
       const a1=qState.ans[0][i],a2=qState.ans[1][i],match=a1===a2;
       if(match)score++;
       const card=document.createElement('div');card.className='quiz-result-card';
@@ -786,7 +893,7 @@ function showQuizResults(){
       card.innerHTML=`<div class="qr-q">${q.p}</div><div class="qr-answers"><div class="qr-a ${match?'match':'differ'}"><span>${n1}</span>${q.o[a1]}</div><div class="qr-a ${match?'match':'differ'}"><span>${n2}</span>${q.o[a2]}</div></div>`;
       list.appendChild(card);
     });
-    document.getElementById('qScoreNum').textContent=`${score}/${QUIZ.length}`;
+    document.getElementById('qScoreNum').textContent=`${score}/${quizQuestions.length}`;
     document.getElementById('qBar').style.width='100%';
   });
 }
@@ -820,13 +927,16 @@ document.getElementById('missaoBtn').addEventListener('click',function(){
   const lv=getLevel('missaoLevels');
   const arr=MISSOES[lv],m=arr[Math.floor(Math.random()*arr.length)];
   const card=document.getElementById('missaoCard');
-  card.innerHTML=`<div class="missao-card"><div class="missao-card-title">Missão de Hoje</div><div class="missao-rule"></div><div class="missao-steps">${m.map((s,i)=>`<div class="missao-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div></div>`;
+  const aftercareBtn=lv==='Explosivo'?'<button class="btn-ghost" style="margin-top:1.2rem;align-self:center" onclick="showAftercare()">🌿 Momento de Aftercare</button>':'';
+  card.innerHTML=`<div class="missao-card"><div class="missao-card-title">Missão de Hoje</div><div class="missao-rule"></div><div class="missao-steps">${m.map((s,i)=>`<div class="missao-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div>${aftercareBtn}</div>`;
 });
 
 // ══ POSIÇÕES DATA ═════════════════════════════════════════════
 const POSICOES=[
   {
     name:'Missionário',level:'Iniciante',time:'Livre',
+    her:'Contato visual intenso e beijos constantes; estimulação manual do clitóris fica fácil',
+    him:'Sensação de corpo inteiro e contato próximo; ritmo completamente controlável',
     desc:'Posição clássica e íntima. Um parceiro deita de costas enquanto o outro se posiciona acima, permitindo contato visual profundo e máxima conexão emocional.',
     tip:'<strong>Dica:</strong> Um travesseiro sob os quadris de quem está embaixo cria uma angulação perfeita e intensifica as sensações.',
     svg:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
@@ -842,6 +952,8 @@ const POSICOES=[
   },
   {
     name:'Colher',level:'Iniciante',time:'Livre',
+    her:'Sensação de proteção e aconchego; parceiro tem acesso livre às mãos pela frente',
+    him:'Abraço completo e calor total; ritmo lento e sussurros ao ouvido',
     desc:'Posição de máxima intimidade e aconchego. Ambos deitam de lado na mesma direção, com um parceiro por trás do outro, criando um abraço total e muito calor.',
     tip:'<strong>Dica:</strong> Ideal para noites frias ou quando querem mais carinho. Perfeita para conversar enquanto se tocam.',
     svg:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
@@ -855,6 +967,8 @@ const POSICOES=[
   },
   {
     name:'Cavalgada',level:'Iniciante',time:'Livre',
+    her:'Controle total do ângulo e do ritmo; melhor posição para estimulação do clitóris e ponto G',
+    him:'Visão completa do parceiro; mãos totalmente livres para carícias',
     desc:'A pessoa de cima assume o controle total do ritmo e da profundidade. Posição que favorece o orgasmo feminino e permite ótima estimulação ao mesmo tempo.',
     tip:'<strong>Dica:</strong> Quem está em cima pode inclinar o corpo levemente para frente para estimulação intensa. Experimenta apoiar as mãos no peito do parceiro.',
     svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
@@ -870,6 +984,8 @@ const POSICOES=[
   },
   {
     name:'Cachorrinho',level:'Intermediário',time:'Livre',
+    her:'Estimulação profunda intensa; possibilidade de estimulação manual simultânea',
+    him:'Profundidade máxima com controle total; carícias nas costas e quadris',
     desc:'Posição de alta estimulação. Um parceiro apoia nas mãos e joelhos enquanto o outro se posiciona atrás. Permite penetração profunda e acesso perfeito para carícias.',
     tip:'<strong>Dica:</strong> O parceiro na frente pode abaixar os ombros para intensificar as sensações. Use as mãos para carícias extras.',
     svg:`<svg viewBox="0 0 210 148" xmlns="http://www.w3.org/2000/svg">
@@ -888,6 +1004,8 @@ const POSICOES=[
   },
   {
     name:'Cadeira',level:'Intermediário',time:'Livre',
+    her:'Controle do ritmo e profundidade; beijos e carícias simultâneas face a face',
+    him:'Intimidade olho no olho com profundidade; mãos livres para abraçar e tocar',
     desc:'Um parceiro senta confortavelmente enquanto o outro senta em seu colo. Posição ótima para beijos e carícias simultâneas com profundidade e controle partilhados.',
     tip:'<strong>Dica:</strong> Usem uma cadeira firme ou sentem na beira da cama. Quem está em cima controla o ritmo com os pés no chão.',
     svg:`<svg viewBox="0 0 200 152" xmlns="http://www.w3.org/2000/svg">
@@ -907,6 +1025,8 @@ const POSICOES=[
   },
   {
     name:'Face a Face Deitados',level:'Iniciante',time:'Livre',
+    her:'Beijos constantes e olhares; carícias mútuas com ritmo suave e conexão emocional alta',
+    him:'Conexão emocional máxima; intimidade calma com liberdade para abraçar por completo',
     desc:'Ambos deitam de lado, frente a frente. Posição muito íntima que permite beijos constantes, olhar nos olhos e carícias mútuas enquanto permanecem conectados.',
     tip:'<strong>Dica:</strong> Dobrem os joelhos juntos para aproximar os quadris. Um travesseiro entre as pernas de quem está embaixo aumenta o conforto.',
     svg:`<svg viewBox="0 0 200 132" xmlns="http://www.w3.org/2000/svg">
@@ -921,6 +1041,8 @@ const POSICOES=[
   },
   {
     name:'Em Pé',level:'Intermediário',time:'Livre',
+    her:'Sensação de intensidade e espontaneidade; ótima para fora da cama ou no banho',
+    him:'Sensação de força e envolvimento total; ideal para explorar novos ambientes',
     desc:'Ambos em pé, de frente ou com um levantando a perna do outro. Posição ótima para fora da cama — contra a parede, na ducha ou em qualquer ambiente.',
     tip:'<strong>Dica:</strong> Apoiar as costas na parede dá mais estabilidade e libera as mãos. Diferença de altura pode ser ajustada com um degrau ou banheiro.',
     svg:`<svg viewBox="0 0 200 158" xmlns="http://www.w3.org/2000/svg">
@@ -939,6 +1061,8 @@ const POSICOES=[
   },
   {
     name:'Borboleta',level:'Avançado',time:'Livre',
+    her:'Ângulo perfeito para estimulação profunda do ponto G; travesseiro amplifica tudo',
+    him:'Profundidade máxima com controle total do ritmo; visão completa do parceiro',
     desc:'Um parceiro deita na beira da cama com as pernas levantadas enquanto o outro fica em pé ou ajoelhado. A elevação dos quadris cria um ângulo único de estimulação profunda.',
     tip:'<strong>Dica:</strong> Um travesseiro sob os quadris de quem deita amplifica tudo. Quem está de pé pode variar o ritmo com muito mais controle.',
     svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
@@ -958,6 +1082,8 @@ const POSICOES=[
   },
   {
     name:'Invertida',level:'Avançado',time:'Livre',
+    her:'Estimulação de pontos diferentes do habitual; controle total do ritmo e profundidade',
+    him:'Sensação completamente nova; ângulo único e visão das costas do parceiro',
     desc:'Variação da cavalgada com a pessoa de cima voltada para o lado oposto. Sensações completamente diferentes e estimulação de pontos únicos para ambos os parceiros.',
     tip:'<strong>Dica:</strong> Quem fica em cima apoia as mãos nas coxas ou joelhos do parceiro para equilíbrio. Posição incrível para quem quer sensações novas.',
     svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
@@ -1005,6 +1131,10 @@ function renderPos(){
   document.getElementById('posCounter').textContent=`${posIndex+1} de ${posFiltered.length}`;
   const lbadge=p.level==='Iniciante'?'badge-i':p.level==='Intermediário'?'badge-m':'badge-a';
   document.getElementById('posBadges').innerHTML=`<span class="badge ${lbadge}">${p.level}</span><span class="badge badge-t">⏱ ${p.time}</span>`;
+  document.getElementById('posBenefits').innerHTML=(p.her||p.him)?`
+    ${p.her?`<div class="pos-benefit her"><div class="pos-benefit-label">❤️ Para ela</div>${p.her}</div>`:''}
+    ${p.him?`<div class="pos-benefit him"><div class="pos-benefit-label">⚡ Para ele</div>${p.him}</div>`:''}
+  `:`<div></div>`;
 }
 
 function posNav(dir){
@@ -1226,8 +1356,145 @@ function closeTimer(){
   document.getElementById('timer-overlay').classList.remove('on');
 }
 
+// ══ RECONEXÃO ════════════════════════════════════════════════
+const RECON_QUESTIONS=[
+  {q:'O que foi bom no seu dia hoje?',i:'Cada um responde — sem pressa, sem julgamento. Ouçam de verdade.'},
+  {q:'O que você mais admira em mim essa semana?',i:'Olhem um para o outro enquanto respondem. Uma coisa específica, não genérica.'},
+  {q:'O que você precisa dessa noite?',i:'Sejam honestos. Pode ser um abraço, conversa, calma — ou mais que isso.'},
+];
+let reconStep=0;
+function reconStart(){
+  reconStep=0;
+  document.getElementById('reconGame').style.display='flex';
+  document.getElementById('reconDone').style.display='none';
+  document.getElementById('reconBtn').style.display='';
+  renderRecon();
+}
+function renderRecon(){
+  const q=RECON_QUESTIONS[reconStep];
+  document.getElementById('reconQuestion').textContent=q.q;
+  document.getElementById('reconInstruction').textContent=q.i;
+  document.getElementById('reconStepNum').textContent=`Pergunta ${reconStep+1} de ${RECON_QUESTIONS.length}`;
+  document.getElementById('reconBtn').textContent=reconStep<RECON_QUESTIONS.length-1?'Próxima Pergunta →':'Concluir ✓';
+  document.getElementById('reconDots').innerHTML=RECON_QUESTIONS.map((_,i)=>`<div class="recon-dot${i<=reconStep?' on':''}"></div>`).join('');
+}
+function reconNext(){
+  if(reconStep<RECON_QUESTIONS.length-1){reconStep++;renderRecon();}
+  else{
+    document.getElementById('reconGame').style.display='none';
+    document.getElementById('reconDone').style.display='flex';
+    document.getElementById('reconBtn').style.display='none';
+  }
+}
+
+// ══ MAPA DO DESEJO ════════════════════════════════════════════
+const MAPA_ITEMS=[
+  {label:'Massagem sensual completa',e:'💆'},
+  {label:'Banho juntos sem pressa',e:'🚿'},
+  {label:'Venda nos olhos',e:'🙈'},
+  {label:'Roleplay / fantasia encenada',e:'🎭'},
+  {label:'Lugar diferente da cama',e:'🏠'},
+  {label:'Explorar novas posições',e:'🌸'},
+  {label:'Conversa íntima antes',e:'💬'},
+  {label:'Dançar juntos primeiro',e:'💃'},
+  {label:'Foto ou vídeo íntimo',e:'📷'},
+  {label:'Toque muito lento e consciente',e:'🤲'},
+  {label:'Ser surpreendido(a)',e:'🎁'},
+  {label:'Usar acessórios / brinquedos',e:'✨'},
+];
+let mapaAnswers=[[],[]],mapaPhaseIdx=0;
+function mapaStart(){
+  mapaAnswers=[new Array(MAPA_ITEMS.length).fill(null),new Array(MAPA_ITEMS.length).fill(null)];
+  mapaPhaseIdx=0;
+  document.getElementById('mapaIntro').style.display='none';
+  document.getElementById('mapaGame').style.display='flex';
+  renderMapa();
+}
+function renderMapa(){
+  const pname=mapaPhaseIdx===0?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  document.getElementById('mapaPhase').textContent=`${pname} — marque seus desejos`;
+  const list=document.getElementById('mapaList');list.innerHTML='';
+  MAPA_ITEMS.forEach((item,i)=>{
+    const d=document.createElement('div');d.className='mapa-item';
+    d.innerHTML=`<div class="mapa-item-label">${item.e} ${item.label}</div><div class="mapa-choices">
+      <button class="mapa-choice" data-idx="${i}" data-val="yes" onclick="mapaToggle(this)" title="Quero">✅</button>
+      <button class="mapa-choice" data-idx="${i}" data-val="curious" onclick="mapaToggle(this)" title="Tenho curiosidade">🤔</button>
+      <button class="mapa-choice" data-idx="${i}" data-val="no" onclick="mapaToggle(this)" title="Não agora">❌</button>
+    </div>`;
+    list.appendChild(d);
+  });
+}
+function mapaToggle(btn){
+  const idx=parseInt(btn.dataset.idx);
+  btn.closest('.mapa-choices').querySelectorAll('.mapa-choice').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  mapaAnswers[mapaPhaseIdx][idx]=btn.dataset.val;
+}
+function mapaConfirm(){
+  const pinTarget=mapaPhaseIdx===0?2:1;
+  openPin(pinTarget,()=>{
+    if(mapaPhaseIdx===0){mapaPhaseIdx=1;renderMapa();}
+    else showMapaResults();
+  });
+}
+function showMapaResults(){
+  document.getElementById('mapaGame').style.display='none';
+  document.getElementById('mapaResults').style.display='flex';
+  const yes=[],curious=[];
+  MAPA_ITEMS.forEach((item,i)=>{
+    const a1=mapaAnswers[0][i]||'no',a2=mapaAnswers[1][i]||'no';
+    if(a1==='yes'&&a2==='yes')yes.push(item);
+    else if((a1==='yes'||a1==='curious')&&(a2==='yes'||a2==='curious'))curious.push(item);
+  });
+  document.getElementById('mapaMatchCount').textContent=yes.length+curious.length;
+  const cards=document.getElementById('mapaMatchCards');cards.innerHTML='';
+  if(!yes.length&&!curious.length){
+    cards.innerHTML='<p style="text-align:center;color:var(--muted);font-family:\'Libre Caslon Text\',serif;font-style:italic;padding:1rem 1.5rem;line-height:1.65">Nenhuma coincidência desta vez — isso é um convite para conversar sobre o que cada um marcou!</p>';
+    return;
+  }
+  if(yes.length){
+    const c=document.createElement('div');c.className='mapa-match-card yes';
+    c.innerHTML=`<div class="mapa-match-title">✅ Os dois querem</div><div>${yes.map(m=>`<div class="mapa-match-item">${m.e} ${m.label}</div>`).join('')}</div>`;
+    cards.appendChild(c);
+  }
+  if(curious.length){
+    const c=document.createElement('div');c.className='mapa-match-card curious';
+    c.innerHTML=`<div class="mapa-match-title">🤔 Os dois têm curiosidade</div><div>${curious.map(m=>`<div class="mapa-match-item">${m.e} ${m.label}</div>`).join('')}</div>`;
+    cards.appendChild(c);
+  }
+}
+function mapaReset(){
+  mapaAnswers=[[],[]];mapaPhaseIdx=0;
+  document.getElementById('mapaResults').style.display='none';
+  document.getElementById('mapaGame').style.display='none';
+  document.getElementById('mapaIntro').style.display='flex';
+}
+
+// ══ AFTERCARE ════════════════════════════════════════════════
+const AFTERCARE_MSGS=[
+  'Fiquem abraçados por 5 minutos. Sem celular, sem palavras — só a respiração de vocês dois.',
+  'Olhem um para o outro. Sem precisar dizer nada. Só estejam presentes por alguns momentos.',
+  'Um copo de água, um carinho demorado. Conversem sobre o que sentiram — sem pressa.',
+  'Deitem juntos em silêncio. Esse momento de calma faz parte da noite de vocês.',
+];
+function showAftercare(){
+  document.getElementById('aftercareText').textContent=AFTERCARE_MSGS[Math.floor(Math.random()*AFTERCARE_MSGS.length)];
+  document.getElementById('aftercare-overlay').classList.add('on');
+}
+
+// ══ QUIZ PROFUNDO (nível extra) ══════════════════════════════
+const QUIZ_DEEP=[
+  {p:'O que eu poderia fazer que te faria sentir mais desejado(a)?',o:['Palavras ao ouvido','Toque inesperado','Olhar demorado','Surpresa planejada']},
+  {p:'Tem algo que você quer me pedir há tempo mas não conseguiu?',o:['Sim, algo físico','Sim, algo emocional','Talvez, não tenho certeza','Não, estou satisfeito(a)']},
+  {p:'O que te faz sentir mais seguro(a) comigo?',o:['Abraço sem motivo','Conversa honesta','Sem cobranças','Cumplicidade no olhar']},
+  {p:'Qual sensação você mais quer viver comigo?',o:['Ser surpreendido(a)','Me sentir irresistível','Explorar algo novo','Conexão profunda']},
+  {p:'O que te deixa mais na disposição emocionalmente?',o:['Me sentir ouvido(a)','Resolver um conflito','Receber atenção plena','Estar descansado(a)']},
+  {p:'Se você pudesse mudar uma coisa na nossa intimidade, o que seria?',o:['Mais frequência','Mais variedade','Mais conversa antes','Mais tempo depois']},
+  {p:'Como prefere ser reconquistado(a) em dias difíceis?',o:['Silêncio amoroso','Palavras de afirmação','Gesto concreto','Toque gentil']},
+  {p:'O que significa se sentir completamente amado(a) por mim?',o:['Ser aceito(a) como sou','Ser surpreendido(a)','Ter prioridade','Ser desejado(a) sempre']},
+];
+let quizQuestions=QUIZ;
 // init timer display
-timerSet(300);
 document.getElementById('musicVol').style.setProperty('--p','60%');
 
 // ══ PIN SYSTEM ════════════════════════════════════════════════
