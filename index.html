@@ -2320,8 +2320,7 @@ function mpMostrarCarta(carta){
     nivel='Dado dos Prazeres';cat=carta.acao+' o '+carta.parte;texto=carta.texto;
   } else if(carta.jogo==='missao'){
     nivel=carta.nivel;cat='Missão da Noite';
-    texto=(carta.steps||[]).join('
-');
+    texto=(carta.steps||[]).join(' | ');
   } else if(carta.jogo==='strip'){
     nivel=carta.nivel;cat='Striptease';texto=carta.texto;
   } else if(carta.jogo==='quiz'){
