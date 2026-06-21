@@ -607,15 +607,15 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <div class="now-playing" id="nowPlaying">Escolha um clima acima</div>
   <div class="music-search-row">
-    <input class="music-search-input" id="musicSearch" type="text" placeholder="Buscar (ex: forró, mpb...)" onkeydown="if(event.key==='Enter')searchRadio()">
-    <button class="music-search-btn" onclick="searchRadio()" title="Buscar">🔍</button>
+    <input class="music-search-input" id="musicSearch" type="text" placeholder="Artista, música ou estilo..." onkeydown="if(event.key==='Enter')searchMusic()">
+    <button class="music-search-btn" onclick="searchMusic()" title="Buscar">🔍</button>
   </div>
   <div class="music-vol-row">
     <span class="music-vol-label">Vol</span>
     <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.05" value="0.6" oninput="setMusicVol(this)">
     <button class="music-stop-btn" onclick="stopRadio()">Parar</button>
   </div>
-  <button class="mood-btn" id="nextStationBtn" onclick="nextStation()" style="display:none;grid-column:1/-1;margin-top:0.4rem;width:100%">⏭ Próxima Estação</button>
+  <button class="mood-btn" id="nextStationBtn" onclick="nextMedia()" style="display:none;grid-column:1/-1;margin-top:0.4rem;width:100%">⏭ Próxima</button>
 </div>
 
 <!-- ══ DRINK TOAST ══ -->
@@ -1566,9 +1566,16 @@ function nextStation(){
   playStation();
 }
 
+function nextMedia(){
+  if(iTunesTracks.length){nextItunesTrack();}
+  else{nextStation();}
+}
+
 function stopRadio(){
   if(radioEl){radioEl.pause();radioEl.src='';}
+  if(itunesEl){itunesEl.pause();itunesEl.src='';}
   radioTag=null;radioStations=[];radioIndex=0;radioErrCount=0;
+  iTunesTracks=[];iTunesIndex=0;
   document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
   document.getElementById('music-fab').classList.remove('playing');
   setNowPlaying('Escolha um clima acima');
@@ -1579,6 +1586,7 @@ function setMusicVol(el){
   const v=parseFloat(el.value);
   el.style.setProperty('--p',`${v*100}%`);
   if(radioEl)radioEl.volume=v;
+  if(itunesEl)itunesEl.volume=v;
 }
 
 function toggleMusic(){
@@ -1683,16 +1691,77 @@ function drinkAndClose(overlayId){
 }
 
 // ══ MUSIC SEARCH ══════════════════════════════════════════════
-async function searchRadio(){
+// ── iTunes state ───────────────────────────────────────────────
+let iTunesTracks=[],iTunesIndex=0,itunesEl=null;
+
+function getItunesEl(){
+  if(!itunesEl){
+    itunesEl=document.createElement('audio');
+    itunesEl.volume=parseFloat(document.getElementById('musicVol').value);
+    itunesEl.addEventListener('ended',()=>{nextItunesTrack();});
+    itunesEl.addEventListener('playing',()=>{
+      const t=iTunesTracks[iTunesIndex];
+      if(t)setNowPlaying(`🎵 ${t.trackName} — ${t.artistName}`);
+      document.getElementById('music-fab').classList.add('playing');
+    });
+    itunesEl.addEventListener('error',()=>{nextItunesTrack();});
+    itunesEl.addEventListener('pause',()=>{
+      if(!iTunesTracks.length)document.getElementById('music-fab').classList.remove('playing');
+    });
+  }
+  return itunesEl;
+}
+
+function playItunesTrack(){
+  const t=iTunesTracks[iTunesIndex];
+  if(!t)return;
+  if(radioEl){radioEl.pause();radioEl.src='';}
+  const el=getItunesEl();
+  el.src=t.previewUrl;
+  setNowPlaying(`⏳ ${t.trackName}…`);
+  el.play().catch(()=>{});
+  const nb=document.getElementById('nextStationBtn');
+  nb.style.display='';nb.textContent='⏭ Próxima Música';
+}
+
+function nextItunesTrack(){
+  if(!iTunesTracks.length)return;
+  iTunesIndex=(iTunesIndex+1)%iTunesTracks.length;
+  playItunesTrack();
+}
+
+async function fetchItunes(q){
+  try{
+    const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&media=music&limit=25&country=BR`);
+    if(r.ok){const d=await r.json();return d.results.filter(t=>t.previewUrl);}
+  }catch(e){}
+  return[];
+}
+
+async function searchMusic(){
   const q=document.getElementById('musicSearch').value.trim();
   if(!q)return;
   document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
-  radioTag=q;radioErrCount=0;
   setNowPlaying(`🔍 Buscando "${q}"…`);
   document.getElementById('nextStationBtn').style.display='none';
+  // Try iTunes first (artist / song search)
+  const tracks=await fetchItunes(q);
+  if(tracks.length){
+    if(radioEl){radioEl.pause();radioEl.src='';}
+    radioTag=null;radioStations=[];radioErrCount=0;
+    iTunesTracks=tracks;iTunesIndex=0;
+    playItunesTrack();
+    return;
+  }
+  // Fall back to Radio Browser for genre/style
+  iTunesTracks=[];
+  radioTag=q;radioErrCount=0;
   const stations=await fetchStations(q);
-  if(!stations.length){setNowPlaying(`⚠️ Sem rádios para "${q}"`);radioTag=null;return;}
-  radioStations=stations;radioIndex=0;playStation();
+  if(!stations.length){setNowPlaying(`⚠️ Sem resultados para "${q}"`);radioTag=null;return;}
+  radioStations=stations;radioIndex=0;
+  const nb=document.getElementById('nextStationBtn');
+  nb.style.display='';nb.textContent='⏭ Próxima Estação';
+  playStation();
 }
 
 // ══ STRIPTEASE ════════════════════════════════════════════════
