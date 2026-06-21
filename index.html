@@ -1005,14 +1005,14 @@ function posRandom(){
 // ══ MUSIC PLAYER (Web Audio) ══════════════════════════════════
 let audioCtx=null,gainNode=null,audioNodes=[],currentMood=null;
 
-function initAudio(){
+async function initAudio(){
   if(!audioCtx){
     audioCtx=new(window.AudioContext||window.webkitAudioContext)();
     gainNode=audioCtx.createGain();
     gainNode.gain.value=parseFloat(document.getElementById('musicVol').value);
     gainNode.connect(audioCtx.destination);
   }
-  if(audioCtx.state==='suspended')audioCtx.resume();
+  if(audioCtx.state==='suspended') await audioCtx.resume();
 }
 
 function stopAllNodes(){
@@ -1020,10 +1020,10 @@ function stopAllNodes(){
   audioNodes=[];
 }
 
-function playMood(btn){
+async function playMood(btn){
   const mood=btn.dataset.mood;
   stopAllNodes();
-  initAudio();
+  await initAudio();
   document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));
 
   if(currentMood===mood){currentMood=null;return;}
