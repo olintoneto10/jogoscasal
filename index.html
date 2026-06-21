@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A080F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jogos do Desejo">
+<link rel="manifest" href="manifest.json">
 <title>Jogos do Desejo</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💞</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -41,7 +48,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lvl.on[data-level="Avançado"]{color:#EE5555;background:rgba(200,50,50,0.13)}
 
 /* ── Buttons ── */
-.btn-gold{font-family:'Cormorant SC',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.16em;color:#120508;background:linear-gradient(135deg,#F0A070 0%,#D4855A 55%,#A05030 100%);border:none;border-radius:4px;padding:0.85rem 3rem;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 22px rgba(212,133,90,0.38);animation:breathe 2.8s ease-in-out infinite}
+.btn-gold{font-family:'Cormorant SC',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.16em;color:#120508;background:linear-gradient(135deg,#F0A070 0%,#D4855A 55%,#A05030 100%);border:none;border-radius:4px;padding:0.85rem 3rem;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 22px rgba(212,133,90,0.38)}
 @keyframes breathe{0%,100%{box-shadow:0 4px 22px rgba(212,133,90,0.38)}50%{box-shadow:0 4px 40px rgba(238,104,136,0.6)}}
 .btn-gold:hover:not(:disabled){transform:translateY(-2px)}
 .btn-gold:disabled{opacity:0.5;cursor:not-allowed;animation:none}
@@ -346,6 +353,48 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .btn-whatsapp:hover,.btn-whatsapp:active{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.5)}
 .btn-whatsapp span{font-size:1.3rem;line-height:1}
 .sala-status-txt{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);text-align:center;padding:0 1.5rem}
+/* ══ ONBOARDING ══ */
+#screen-onboarding{justify-content:center;gap:0;padding:0}
+.onb-wrap{display:flex;flex-direction:column;align-items:center;gap:1.4rem;padding:2.5rem 2rem;text-align:center;max-width:360px;width:100%}
+.onb-logo{font-size:5rem;line-height:1;animation:onbPulse 2s ease-in-out infinite}
+@keyframes onbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.onb-title{font-family:'Cormorant SC',serif;font-size:clamp(2rem,9vw,2.8rem);font-weight:600;color:var(--gold-l);letter-spacing:0.06em;line-height:1;text-shadow:0 0 40px rgba(208,69,110,0.5)}
+.onb-sub{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.92rem;color:var(--muted);line-height:1.6;max-width:280px}
+.onb-features{display:flex;flex-direction:column;gap:0.75rem;width:100%;text-align:left}
+.onb-feat{display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.03);border:1px solid rgba(212,133,90,0.15);border-radius:10px;padding:0.75rem 1rem;font-size:0.88rem;color:var(--text)}
+.onb-feat span:first-child{font-size:1.3rem;flex-shrink:0}
+.onb-privacy{font-size:0.62rem;color:rgba(184,136,122,0.5);letter-spacing:0.08em;text-transform:uppercase}
+/* ══ CONSENT GATE ══ */
+#consent-overlay{position:fixed;inset:0;background:rgba(14,4,8,0.96);backdrop-filter:blur(16px);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#consent-overlay.on{opacity:1;pointer-events:all}
+.consent-card{background:var(--ground-2);border:1px solid rgba(238,104,136,0.3);border-radius:16px;padding:2rem 1.8rem;max-width:320px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1.2rem}
+.consent-icon{font-size:2.8rem;line-height:1}
+.consent-title{font-family:'Cormorant SC',serif;font-size:1.35rem;color:var(--gold-l);letter-spacing:0.05em}
+.consent-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);line-height:1.65}
+.consent-btns{display:flex;gap:0.7rem;flex-direction:column}
+/* ══ MP WAITING DOTS ══ */
+.wait-dots{display:flex;gap:0.5rem;justify-content:center;margin-top:0.5rem}
+.wait-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);opacity:0.25;animation:dotPulse 1.4s ease-in-out infinite}
+.wait-dot:nth-child(2){animation-delay:0.2s}
+.wait-dot:nth-child(3){animation-delay:0.4s}
+@keyframes dotPulse{0%,80%,100%{opacity:0.25;transform:scale(1)}40%{opacity:1;transform:scale(1.3)}}
+.sala-code-hint{font-size:0.72rem;color:var(--muted);text-align:center;margin-top:0.4rem;letter-spacing:0.05em}
+/* ══ GAMIFICAÇÃO — STREAK + MISSÃO ══ */
+.home-streak{display:flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,rgba(212,133,90,0.1),rgba(238,104,136,0.08));border:1px solid rgba(212,133,90,0.22);border-radius:10px;padding:0.6rem 1rem;width:100%}
+.streak-fire{font-size:1.4rem;line-height:1}
+.streak-count{font-family:'Cormorant SC',serif;font-size:1.5rem;font-weight:700;color:var(--gold-l)}
+.streak-label{font-size:0.72rem;color:var(--muted);flex:1;letter-spacing:0.04em}
+.streak-hist-btn{background:none;border:1px solid rgba(212,133,90,0.25);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.65rem;border-radius:3px;cursor:pointer;white-space:nowrap}
+.home-mission{background:linear-gradient(145deg,rgba(208,69,110,0.08),rgba(238,104,136,0.05));border:1px solid rgba(208,69,110,0.22);border-radius:12px;padding:1rem 1.1rem;width:100%;display:flex;flex-direction:column;gap:0.5rem}
+.mission-week-label{font-size:0.6rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--rose-l)}
+.mission-week-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--text);line-height:1.55}
+.mission-done-btn{align-self:flex-end;background:none;border:1px solid rgba(102,187,106,0.3);color:#a5d6a7;font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:3px;cursor:pointer}
+.mission-done-btn.done{color:var(--muted);border-color:rgba(255,255,255,0.1);text-decoration:line-through}
+/* ══ HISTORY CARD ══ */
+.hist-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:8px;padding:0.7rem 0.9rem;display:flex;flex-direction:column;gap:0.25rem}
+.hist-jogo{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.hist-texto{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--text);line-height:1.5}
+.hist-data{font-size:0.6rem;color:rgba(184,136,122,0.45);text-align:right}
 </style>
 
 </head>
@@ -356,8 +405,25 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <span class="mp-b-vez">Vez de <b id="mp-vez-nome">—</b></span>
 </div>
 
+<!-- ══ ONBOARDING ══ -->
+<div class="screen active" id="screen-onboarding">
+  <div class="onb-wrap">
+    <div class="onb-logo">💞</div>
+    <h1 class="onb-title">Jogos do Desejo</h1>
+    <p class="onb-sub">9 brincadeiras para casais que querem se conectar mais</p>
+    <div class="onb-features">
+      <div class="onb-feat"><span>🎡</span><span>Roleta, desafios e missões</span></div>
+      <div class="onb-feat"><span>🃏</span><span>Verdade ou desafio com níveis</span></div>
+      <div class="onb-feat"><span>🗺️</span><span>Mapa de desejos compartilhado</span></div>
+      <div class="onb-feat"><span>📱</span><span>Jogue no mesmo celular ou em dois</span></div>
+    </div>
+    <button class="btn-gold" onclick="onbContinuar()" style="margin-top:0.5rem">Começar Agora →</button>
+    <p class="onb-privacy">Nenhum dado é enviado sem sua permissão</p>
+  </div>
+</div>
+
 <!-- ══ ESCOLHA DE MODO ══ -->
-<div class="screen active" id="screen-mode">
+<div class="screen" id="screen-mode">
   <div class="login-logo">
     <h1>Jogos do Desejo</h1>
     <p>Uma noite inesquecível começa aqui</p>
@@ -449,6 +515,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span>💬</span> Convidar pelo WhatsApp
   </button>
   <div id="sala-status" class="sala-status-txt">Aguardando parceiro(a) entrar…</div>
+  <div class="wait-dots"><div class="wait-dot"></div><div class="wait-dot"></div><div class="wait-dot"></div></div>
   <button class="btn-ghost" onclick="cancelarSala()">← Cancelar</button>
 </div>
 
@@ -462,6 +529,17 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span class="pname" id="hP1">—</span>
     <span class="heart">♥</span>
     <span class="pname" id="hP2">—</span>
+  </div>
+  <div class="home-streak" id="home-streak" style="display:none">
+    <span class="streak-fire">🔥</span>
+    <span class="streak-count" id="streak-count">1</span>
+    <span class="streak-label">noite seguida</span>
+    <button class="streak-hist-btn" onclick="abrirHistorico()">📖 Histórico</button>
+  </div>
+  <div class="home-mission" id="home-mission" style="display:none">
+    <div class="mission-week-label">Missão da Semana</div>
+    <div class="mission-week-text" id="mission-week-text"></div>
+    <button class="mission-done-btn" id="mission-done-btn" onclick="missaoDaSemanaFeita()">✓ Concluímos!</button>
   </div>
   <div class="games-grid">
     <div class="game-card" onclick="go('screen-reconexao')" style="grid-column:1/-1;border-color:rgba(196,107,122,0.3)"><div class="icon">💬</div><div class="name">Reconexão</div><div class="desc">Comece aqui — 3 perguntas para se reencontrar antes de tudo</div></div>
@@ -835,6 +913,27 @@ function doLogout(){
   go('screen-mode');
 }
 
+
+// ══ CONSENT GATE (Explosivo) ═════════════════════════════════════
+let _consentPendingLvl=null,_consentPendingGroup=null;
+function pedirConsentExplosivo(btn,groupId){
+  _consentPendingLvl=btn;_consentPendingGroup=groupId;
+  document.getElementById('consent-overlay').classList.add('on');
+}
+function consentAceitar(){
+  document.getElementById('consent-overlay').classList.remove('on');
+  if(_consentPendingLvl&&_consentPendingGroup){
+    const grp=document.getElementById(_consentPendingGroup);
+    grp.querySelectorAll('.lvl').forEach(b=>b.classList.remove('on'));
+    _consentPendingLvl.classList.add('on');
+    levelState[_consentPendingGroup]='Explosivo';
+  }
+  _consentPendingLvl=null;_consentPendingGroup=null;
+}
+function consentRecusar(){
+  document.getElementById('consent-overlay').classList.remove('on');
+  _consentPendingLvl=null;_consentPendingGroup=null;
+}
 // ══ LEVELS ══════════════════════════════════════════════════
 const levelState={};
 document.querySelectorAll('.levels').forEach(grp=>{
@@ -843,6 +942,7 @@ document.querySelectorAll('.levels').forEach(grp=>{
   levelState[id]=firstOn?firstOn.dataset.level:'Romântico';
   grp.querySelectorAll('.lvl').forEach(btn=>{
     btn.addEventListener('click',function(){
+      if(this.dataset.level==='Explosivo'){pedirConsentExplosivo(this,id);return;}
       grp.querySelectorAll('.lvl').forEach(b=>b.classList.remove('on'));
       this.classList.add('on');levelState[id]=this.dataset.level;
     });
@@ -856,9 +956,12 @@ const RCATS=[
   {name:'Fantasia',color:'#0F2260'},{name:'Desafio',color:'#751212'},
   {name:'Surpresa',color:'#5A3208'},{name:'Carinho',color:'#68154A'},
   {name:'Sedução',color:'#230E58'},{name:'Sorte',color:'#083830'},
+,
+  {name:'Quebra-gelo',color:'#1E4D3A'},
 ];
 const RCARDS={
   'Romântico':{
+    'Quebra-gelo':['Se você fosse um personagem de filme, qual seria?','Qual foi a primeira coisa que te atraiu em mim?','Qual é seu hábito favorito nosso como casal?','Se você pudesse mudar um dia que vivemos juntos, qual escolheria — e por quê?','Qual viagem você mais quer fazer comigo?'],
     'Beijo':[
       'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
       'Beije a testa, as bochechas e o nariz do seu parceiro(a) com ternura.',
@@ -917,6 +1020,7 @@ const RCARDS={
     ],
   },
   'Quente':{
+    'Quebra-gelo':['Se você fosse me presentear agora sem gastar dinheiro, o que me daria?','O que você faz que me deixa com saudade?','Se pudéssemos estar em qualquer lugar do mundo agora, onde seria?','Qual memória nossa você revisitaria?','O que me faz diferente de todo mundo que você já conheceu?'],
     'Beijo':[
       'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
       'Beije com muito calor os lábios, aumentando a intensidade aos poucos.',
@@ -975,6 +1079,7 @@ const RCARDS={
     ],
   },
   'Explosivo':{
+    'Quebra-gelo':['Se eu te olhasse nos olhos agora por 1 minuto inteiro, o que você sentiria?','O que você ainda não me disse mas gostaria de dizer?','Se você tivesse que me seduzir apenas com palavras, o que diria?','Qual parte minha te tira o fôlego sem você perceber?','O que posso fazer agora que te deixaria com vontade de me beijar?'],
     'Beijo':[
       'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
       'Beije o parceiro(a) com intensidade máxima até um dos dois pedir para parar.',
@@ -1038,10 +1143,18 @@ const RCARDS={
 const rCanvas=document.getElementById('rWheel'),rCtx=rCanvas.getContext('2d');
 const RN=RCATS.length,RSEG=(2*Math.PI)/RN;
 let rAngle=0,rSpinning=false;
-function sizeRWheel(){const s=Math.min(320,innerWidth-80);rCanvas.width=s;rCanvas.height=s;drawRWheel(rAngle);}
+let rCSS=320;
+function sizeRWheel(){
+  const dpr=window.devicePixelRatio||1;
+  rCSS=Math.min(320,innerWidth-80);
+  rCanvas.width=rCSS*dpr;rCanvas.height=rCSS*dpr;
+  rCanvas.style.width=rCSS+'px';rCanvas.style.height=rCSS+'px';
+  rCtx.setTransform(dpr,0,0,dpr,0,0);
+  drawRWheel(rAngle);
+}
 function lighten(hex,n){return '#'+hex.slice(1).replace(/../g,c=>Math.min(255,parseInt(c,16)+n).toString(16).padStart(2,'0'));}
 function drawRWheel(a){
-  const sz=rCanvas.width,cx=sz/2,cy=sz/2,R=cx*0.88;
+  const sz=rCSS,cx=sz/2,cy=sz/2,R=cx*0.88;
   rCtx.clearRect(0,0,sz,sz);
   rCtx.save();rCtx.translate(cx,cy);rCtx.rotate(a);
   for(let i=0;i<RN;i++){
@@ -1068,6 +1181,7 @@ function drawRWheel(a){
 sizeRWheel();addEventListener('resize',sizeRWheel);
 document.getElementById('rSpinBtn').addEventListener('click',function(){
   if(rSpinning)return;rSpinning=true;this.disabled=true;this.textContent='Girando…';
+  if(navigator.vibrate)navigator.vibrate([40,20,40]);
   rCanvas.classList.add('spinning');document.getElementById('rOverlay').classList.remove('on');
   const from=rAngle,to=from+(6+Math.random()*4)*2*Math.PI+Math.random()*2*Math.PI;
   const dur=4300,t0=performance.now();const btn=this;
@@ -1082,7 +1196,9 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
     const lv=getLevel('rLevels'),cat=RCATS[winner].name;
     document.getElementById('rCLevel').textContent=lv.toUpperCase();
     document.getElementById('rCCat').textContent=cat;
-    const rPool=RCARDS[lv][cat];document.getElementById('rCText').textContent=Array.isArray(rPool)?rPool[Math.floor(Math.random()*rPool.length)]:rPool;
+    const rPool=RCARDS[lv][cat];const rText=Array.isArray(rPool)?rPool[Math.floor(Math.random()*rPool.length)]:rPool;
+    document.getElementById('rCText').textContent=rText;
+    salvarCarta('Roleta — '+cat,rText);
     document.getElementById('rCard').classList.remove('flipped');
     document.getElementById('rOverlay').classList.add('on');
   })(performance.now());
@@ -1193,14 +1309,14 @@ const VD={
       'Tire toda a sua roupa lentamente, sem pressa.',
       'Me diga o que quer que eu faça com você — com todos os detalhes.',
       'Surpreenda-me com algo que nunca fizemos antes.',
-      'Faça o que quiser com meu corpo por 5 minutos.',
+      'Com todo o consentimento do mundo: o que você faria comigo por 5 minutos?',
       'Me beije por onde quiser durante 2 minutos.',
       'Realize agora o que você mais deseja fazer comigo.',
       'Me provoque sem me tocar — só com a voz — por 1 minuto.',
       'Tire minha roupa usando só uma mão.',
       'Me descreva em voz alta o que vai fazer comigo antes de fazer.',
       'Fique 2 minutos colado(a) em mim sem fazer absolutamente nada — só sentindo.',
-      'Me ordene algo — e faça com que eu obedeça.',
+      'Se você pudesse assumir o controle total por 5 minutos, o que faria comigo?',
       'Me beije de um jeito que deixe claro o que você quer.',
       'Use uma venda e descubra o que eu esconder para você durante 3 minutos.',
       'Mostre, sem palavras, o quanto você me deseja agora.',
@@ -1214,6 +1330,7 @@ function vdPick(tipo){
   document.getElementById('vdCLevel').textContent=lv.toUpperCase();
   document.getElementById('vdCCat').textContent=tipo==='verdade'?'Verdade':'Desafio';
   document.getElementById('vdCText').textContent=text;
+  salvarCarta('Verdade ou Desafio — '+tipo,text);
   document.getElementById('vdSealIcon').textContent=tipo==='verdade'?'💬':'🔥';
   document.getElementById('vdCard').classList.remove('flipped');
   document.getElementById('vdOverlay').classList.add('on');
@@ -2149,6 +2266,103 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('login').classList.contains('active'))doLogin();
 });
 
+
+// ══ GAMIFICAÇÃO ═══════════════════════════════════════════════════
+
+// ── Streak ──────────────────────────────────────────────────────
+function atualizarStreak(){
+  const hoje=new Date().toDateString();
+  const ultimo=localStorage.getItem('jd_lastDay');
+  let streak=parseInt(localStorage.getItem('jd_streak')||'0');
+  if(ultimo!==hoje){
+    const ontem=new Date(Date.now()-86400000).toDateString();
+    streak=ultimo===ontem?streak+1:1;
+    localStorage.setItem('jd_streak',streak);
+    localStorage.setItem('jd_lastDay',hoje);
+  }
+  const el=document.getElementById('home-streak');
+  if(streak>0){
+    el.style.display='flex';
+    document.getElementById('streak-count').textContent=streak;
+    const lbl=document.getElementById('home-streak').querySelector('.streak-label');
+    lbl.textContent=streak===1?'noite jogando':streak+' noites seguidas';
+  }
+}
+
+// ── Missão da Semana ─────────────────────────────────────────────
+const MISSOES_SEMANA=[
+  'Jantar sem celular — dois pratos, uma conversa profunda',
+  'Troca de massagem completa — 10 minutos cada',
+  'Uma surpresa para o outro — pequena ou grande, o que vier do coração',
+  'Assistam um filme que o outro escolher, sem reclamar',
+  'Escrevam 5 coisas que admiram um no outro e leiam em voz alta',
+  'Um passeio novo juntos — pode ser só uma caminhada diferente',
+  'Cozinhem juntos uma receita que nunca fizeram',
+  'Uma noite sem tela — só vocês dois e conversa',
+  'Cada um conta um sonho que ainda quer realizar com o outro',
+  'Tirem uma foto juntos em cada lugar que visitarem essa semana',
+  'Façam algo que o outro escolher, sem questionar',
+  'Durmam abraçados toda a noite, sem celular na cama',
+];
+function getMissaoDaSemana(){
+  const sem=Math.floor(Date.now()/(7*86400000));
+  return MISSOES_SEMANA[sem%MISSOES_SEMANA.length];
+}
+function carregarMissaoSemana(){
+  const sem=Math.floor(Date.now()/(7*86400000));
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  const feita=stored.sem===sem&&stored.feita;
+  const texto=getMissaoDaSemana();
+  const el=document.getElementById('home-mission');
+  el.style.display='flex';
+  document.getElementById('mission-week-text').textContent=texto;
+  const btn=document.getElementById('mission-done-btn');
+  if(feita){btn.classList.add('done');btn.textContent='✓ Concluída!';}
+  else{btn.classList.remove('done');btn.textContent='✓ Concluímos!';}
+}
+function missaoDaSemanaFeita(){
+  const sem=Math.floor(Date.now()/(7*86400000));
+  localStorage.setItem('jd_missaoSem',JSON.stringify({sem,feita:true}));
+  const btn=document.getElementById('mission-done-btn');
+  btn.classList.add('done');btn.textContent='✓ Concluída!';
+  if(navigator.vibrate)navigator.vibrate([30,20,60]);
+}
+
+// ── Histórico ────────────────────────────────────────────────────
+function salvarCarta(jogo,texto){
+  if(!texto||texto.length<5)return;
+  const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
+  hist.unshift({jogo,texto,data:new Date().toLocaleDateString('pt-BR')});
+  if(hist.length>20)hist.pop();
+  localStorage.setItem('jd_hist',JSON.stringify(hist));
+}
+function abrirHistorico(){
+  const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
+  const list=document.getElementById('hist-list');
+  const empty=document.getElementById('hist-empty');
+  list.innerHTML='';
+  if(!hist.length){empty.style.display='block';list.style.display='none';}
+  else{
+    empty.style.display='none';list.style.display='flex';
+    hist.forEach(h=>{
+      const d=document.createElement('div');d.className='hist-card';
+      d.innerHTML='<div class="hist-jogo">'+h.jogo+'</div><div class="hist-texto">'+h.texto+'</div><div class="hist-data">'+h.data+'</div>';
+      list.appendChild(d);
+    });
+  }
+  document.getElementById('hist-overlay').style.display='flex';
+}
+function fecharHistorico(){
+  document.getElementById('hist-overlay').style.display='none';
+}
+
+// ── Init gamification on home load ───────────────────────────────
+const _goOrigGamif=go;
+go=function(id){
+  _goOrigGamif(id);
+  if(id==='home'){atualizarStreak();carregarMissaoSemana();}
+};
+
 // ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
 const fbCfg={
   apiKey:'AIzaSyCFC73ybsKQJBkpwHS3FJxV18BaM5s5lIE',
@@ -2221,7 +2435,7 @@ async function doLoginMpCriar(){
     const codigo=gerarCodigo();
     mp.eu='p1';mp.codigo=codigo;mp.ativo=true;
     mp.salaRef=fbdb.ref('salas/'+codigo);
-    await mp.salaRef.set({criada:Date.now(),p1:{nome,pin},vez:'p1'});
+    await mp.salaRef.set({criada:Date.now(),expiraEm:Date.now()+7200000,p1:{nome},vez:'p1'});
     players.p1={name:nome,pin};
     document.getElementById('sala-display-code').textContent=codigo;
     document.getElementById('sala-status').textContent='Aguardando parceiro(a) entrar…';
@@ -2229,7 +2443,7 @@ async function doLoginMpCriar(){
     mp._p2Listener=mp.salaRef.child('p2').on('value',snap=>{
       if(!snap.exists())return;
       const d=snap.val();
-      players.p2={name:d.nome,pin:d.pin};
+      players.p2={name:d.nome,pin:'0000'};
       mpIniciarJogo();
     });
   }catch(e){
@@ -2257,9 +2471,9 @@ async function doLoginMpEntrar(){
     const d=snap.val();
     mp.eu='p2';mp.codigo=codigo;mp.ativo=true;mp.salaRef=ref;
     mp.vezAtual=d.vez||'p1';
-    players.p1={name:d.p1.nome,pin:d.p1.pin};
+    players.p1={name:d.p1.nome,pin:'0000'};
     players.p2={name:nome,pin};
-    await ref.child('p2').set({nome,pin});
+    await ref.child('p2').set({nome});
     mpIniciarJogo();
   }catch(e){
     mp.ativo=false;mp.eu=null;mp.salaRef=null;
@@ -2432,18 +2646,6 @@ new MutationObserver(()=>{
   }
 }).observe(document.getElementById('missaoCard'),{childList:true,subtree:true});
 
-
-// ── Deep link: ?sala=CODE (WhatsApp invite) ──────────────────────
-(function(){
-  const params=new URLSearchParams(location.search);
-  const sala=params.get('sala');
-  if(sala&&sala.length>=4){
-    go('login-mp');
-    document.getElementById('join-input-wrap').style.display='flex';
-    document.getElementById('mpSalaInput').value=sala.toUpperCase();
-    setTimeout(()=>document.getElementById('mpname').focus(),200);
-  }
-})();
 // Striptease — hook into renderStrip
 const _renderStripOrig=renderStrip;
 renderStrip=function(){
@@ -2468,6 +2670,38 @@ renderStrip=function(){
   </div>
   <button class="btn-mp-ok" onclick="mpConfirmar()">✓ Feito! Próxima rodada</button>
   <button class="btn-ghost" style="font-size:0.7rem" onclick="mpConfirmar()">↩ Pular</button>
+</div>
+
+<!-- ══ HISTÓRICO OVERLAY ══ -->
+<div id="hist-overlay" style="display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(18px);z-index:450;flex-direction:column;align-items:center;padding:1.5rem 1.2rem;overflow-y:auto">
+  <div style="width:100%;max-width:420px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
+      <div style="font-family:'Cormorant SC',serif;font-size:1.2rem;color:var(--gold-l);letter-spacing:0.06em">📖 Nossa História</div>
+      <button onclick="fecharHistorico()" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer">✕</button>
+    </div>
+    <div id="hist-list" style="display:flex;flex-direction:column;gap:0.6rem"></div>
+    <div id="hist-empty" style="text-align:center;color:var(--muted);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;padding:2rem;display:none">Nenhuma carta jogada ainda.<br>Comece uma brincadeira!</div>
+    <button onclick="fecharHistorico()" class="btn-ghost" style="margin-top:1.5rem;width:100%">Fechar</button>
+  </div>
+</div>
+
+<!-- ══ PRIVACIDADE / TERMOS ══ -->
+<div id="priv-overlay" style="display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(18px);z-index:500;flex-direction:column;align-items:center;padding:2rem 1.5rem;overflow-y:auto">
+  <div style="max-width:420px;width:100%;display:flex;flex-direction:column;gap:1.2rem">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:'Cormorant SC',serif;font-size:1.2rem;color:var(--gold-l)">Privacidade e Termos</div>
+      <button onclick="document.getElementById('priv-overlay').style.display='none'" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer">✕</button>
+    </div>
+    <div style="font-family:'Libre Caslon Text',serif;font-size:0.87rem;color:var(--muted);line-height:1.7;display:flex;flex-direction:column;gap:1rem">
+      <p><strong style="color:var(--text)">Seus dados ficam no seu aparelho.</strong> Nomes e respostas são salvos apenas no armazenamento local do seu celular (localStorage). Nenhuma informação pessoal é enviada para servidores de terceiros sem sua ação.</p>
+      <p><strong style="color:var(--text)">Modo dois celulares (Firebase).</strong> Ao usar a função de dois celulares, o código da sala e os nomes dos jogadores são temporariamente armazenados no Firebase (Google) para sincronizar a sessão. As salas expiram automaticamente em 2 horas. Nenhum PIN ou resposta é enviado.</p>
+      <p><strong style="color:var(--text)">Conteúdo adulto.</strong> Este app contém conteúdo para casais adultos. Ao usar o nível "Explosivo", ambos os parceiros confirmam que são maiores de 18 anos e consentiram com o conteúdo.</p>
+      <p><strong style="color:var(--text)">Exclusão de dados.</strong> Para apagar todos os dados salvos localmente, use o botão abaixo.</p>
+      <p><strong style="color:var(--text)">Consentimento.</strong> O uso do app implica concordância com estes termos. O app é gratuito e sem fins comerciais.</p>
+    </div>
+    <button onclick="apagarTodosDados()" class="btn-ghost" style="border-color:rgba(238,104,136,0.35);color:var(--rose-l)">🗑️ Apagar todos os meus dados</button>
+    <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Entendido</button>
+  </div>
 </div>
 </body>
 </html>
