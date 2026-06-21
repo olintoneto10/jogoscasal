@@ -197,6 +197,14 @@ input[type=range].music-vol::-webkit-slider-thumb{-webkit-appearance:none;width:
 .music-stop-btn{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.28rem 0.6rem;border-radius:4px;cursor:pointer;white-space:nowrap;font-family:'Jost',sans-serif;transition:all 0.15s}
 .music-stop-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
 .now-playing{font-size:0.62rem;color:var(--muted);text-align:center;padding:0.4rem 0.2rem;border-top:1px solid rgba(200,148,58,0.1);border-bottom:1px solid rgba(200,148,58,0.1);margin:0.5rem 0;min-height:1.5rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:'Jost',sans-serif}
+/* Touch optimization — removes 300ms tap delay on mobile */
+button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:manipulation}
+/* Music FAB — pulse when stream is active */
+@keyframes fabPulse{0%,100%{box-shadow:0 0 16px rgba(200,148,58,0.35)}50%{box-shadow:0 0 32px rgba(200,148,58,0.7),0 0 50px rgba(196,107,122,0.28)}}
+.fab.playing{animation:fabPulse 1.8s ease-in-out infinite;border-color:var(--gold)}
+/* Slide-in animation for card transitions */
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.pos-card.entering{animation:slideIn 0.22s ease-out}
 
 /* ══ TIMER ══ */
 #timer-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.93);backdrop-filter:blur(14px);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -560,7 +568,9 @@ function doLogout(){
 // ══ LEVELS ══════════════════════════════════════════════════
 const levelState={};
 document.querySelectorAll('.levels').forEach(grp=>{
-  const id=grp.id;levelState[id]='Romântico';
+  const id=grp.id;
+  const firstOn=grp.querySelector('.lvl.on');
+  levelState[id]=firstOn?firstOn.dataset.level:'Romântico';
   grp.querySelectorAll('.lvl').forEach(btn=>{
     btn.addEventListener('click',function(){
       grp.querySelectorAll('.lvl').forEach(b=>b.classList.remove('on'));
@@ -984,6 +994,10 @@ function renderPos(){
   if(!posFiltered.length)return;
   if(posIndex>=posFiltered.length)posIndex=0;
   const p=posFiltered[posIndex];
+  const card=document.getElementById('posCard');
+  card.classList.remove('entering');
+  void card.offsetWidth; // reflow to restart animation
+  card.classList.add('entering');
   document.getElementById('posIllustration').innerHTML=p.svg;
   document.getElementById('posName').textContent=p.name;
   document.getElementById('posDesc').textContent=p.desc;
@@ -1005,26 +1019,50 @@ function posRandom(){
   renderPos();
 }
 
+// Swipe gestures for position navigation
+(()=>{
+  let tx=0;
+  const card=document.getElementById('posCard');
+  card.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  card.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>50)posNav(dx<0?1:-1);
+  },{passive:true});
+})();
+
 // ══ MUSIC PLAYER (Radio Browser API) ═════════════════════════
 const RADIO_SERVERS=['https://de1.api.radio-browser.info','https://nl1.api.radio-browser.info','https://at1.api.radio-browser.info'];
-let radioEl=null,radioStations=[],radioIndex=0,radioTag=null,radioActiveBtn=null;
+let radioEl=null,radioStations=[],radioIndex=0,radioTag=null,radioErrCount=0;
 
 function getRadioEl(){
   if(!radioEl){
     radioEl=document.createElement('audio');
-    radioEl.crossOrigin='anonymous';
+    // NO crossOrigin — radio streams rarely send CORS headers; setting it blocks playback
     radioEl.volume=parseFloat(document.getElementById('musicVol').value);
-    radioEl.addEventListener('error',()=>nextStation());
-    radioEl.addEventListener('stalled',()=>nextStation());
+    radioEl.addEventListener('error',()=>{
+      radioErrCount++;
+      if(radioErrCount<Math.min(radioStations.length,8))setTimeout(nextStation,1200);
+      else setNowPlaying('⚠️ Nenhuma estação disponível no momento');
+    });
+    radioEl.addEventListener('playing',()=>{
+      const st=radioStations[radioIndex];
+      if(st)setNowPlaying(`📻 ${st.name}`);
+      document.getElementById('music-fab').classList.add('playing');
+      radioErrCount=0;
+    });
+    radioEl.addEventListener('pause',()=>{
+      document.getElementById('music-fab').classList.remove('playing');
+    });
   }
   return radioEl;
 }
 
 async function fetchStations(tag){
-  const params=new URLSearchParams({tagExact:'false',tag,limit:'30',order:'votes',reverse:'true',hidebroken:'true',codec:'MP3'});
+  // Try multiple API mirrors; no User-Agent (forbidden header in browser fetch)
+  const params=new URLSearchParams({tag,limit:'40',order:'votes',reverse:'true',hidebroken:'true'});
   for(const srv of RADIO_SERVERS){
     try{
-      const r=await fetch(`${srv}/json/stations/search?${params}`,{headers:{'User-Agent':'JogosCasal/1.0'}});
+      const r=await fetch(`${srv}/json/stations/search?${params}`);
       if(r.ok){const data=await r.json();if(data.length)return data;}
     }catch(e){}
   }
@@ -1040,18 +1078,19 @@ async function playRadio(btn){
   const tag=btn.dataset.tag;
   document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
 
-  if(radioTag===tag){
-    stopRadio();return;
-  }
+  if(radioTag===tag){stopRadio();return;}
 
   btn.classList.add('on');
-  radioActiveBtn=btn;
   radioTag=tag;
+  radioErrCount=0;
   setNowPlaying('🔍 Buscando estações…');
   document.getElementById('nextStationBtn').style.display='none';
 
   const stations=await fetchStations(tag);
-  if(!stations.length){setNowPlaying('⚠️ Nenhuma estação encontrada');radioTag=null;btn.classList.remove('on');return;}
+  if(!stations.length){
+    setNowPlaying('⚠️ Sem conexão ou nenhuma estação encontrada');
+    radioTag=null;btn.classList.remove('on');return;
+  }
 
   radioStations=stations;
   radioIndex=0;
@@ -1062,9 +1101,11 @@ function playStation(){
   if(!radioStations.length)return;
   const st=radioStations[radioIndex];
   const audio=getRadioEl();
+  audio.pause();
+  audio.src='';
   audio.src=st.url_resolved||st.url;
-  audio.play().catch(()=>nextStation());
-  setNowPlaying(`📻 ${st.name}`);
+  setNowPlaying(`⏳ ${st.name}…`);
+  audio.play().catch(()=>{}); // errors handled by 'error' event
   document.getElementById('nextStationBtn').style.display='';
 }
 
@@ -1076,8 +1117,9 @@ function nextStation(){
 
 function stopRadio(){
   if(radioEl){radioEl.pause();radioEl.src='';}
-  radioTag=null;radioStations=[];radioIndex=0;radioActiveBtn=null;
+  radioTag=null;radioStations=[];radioIndex=0;radioErrCount=0;
   document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
+  document.getElementById('music-fab').classList.remove('playing');
   setNowPlaying('Escolha um clima acima');
   document.getElementById('nextStationBtn').style.display='none';
 }
@@ -1184,7 +1226,7 @@ function closeTimer(){
 
 // init timer display
 timerSet(300);
-document.getElementById('musicVol').style.setProperty('--p','35%');
+document.getElementById('musicVol').style.setProperty('--p','60%');
 
 // ══ PIN SYSTEM ════════════════════════════════════════════════
 let pinState={target:'',buf:'',callback:null};
@@ -1226,8 +1268,13 @@ function pinDel(){
   renderPinDots();
 }
 
-// Enter key for login
+// Keyboard support: Enter for login, digits/backspace for PIN overlay
 document.addEventListener('keydown',e=>{
+  if(document.getElementById('pin-overlay').classList.contains('on')){
+    if(e.key>='0'&&e.key<='9')pinKey(e.key);
+    else if(e.key==='Backspace')pinDel();
+    return;
+  }
   if(e.key==='Enter'&&document.getElementById('login').classList.contains('active'))doLogin();
 });
 </script>
