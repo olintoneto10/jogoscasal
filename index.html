@@ -196,6 +196,7 @@ input[type=range].music-vol{flex:1;-webkit-appearance:none;appearance:none;heigh
 input[type=range].music-vol::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--gold-l);cursor:pointer}
 .music-stop-btn{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.28rem 0.6rem;border-radius:4px;cursor:pointer;white-space:nowrap;font-family:'Jost',sans-serif;transition:all 0.15s}
 .music-stop-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
+.now-playing{font-size:0.62rem;color:var(--muted);text-align:center;padding:0.4rem 0.2rem;border-top:1px solid rgba(200,148,58,0.1);border-bottom:1px solid rgba(200,148,58,0.1);margin:0.5rem 0;min-height:1.5rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:'Jost',sans-serif}
 
 /* ══ TIMER ══ */
 #timer-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.93);backdrop-filter:blur(14px);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -437,18 +438,20 @@ input[type=range].music-vol::-webkit-slider-thumb{-webkit-appearance:none;width:
 <!-- ══ MUSIC FAB ══ -->
 <button class="fab" id="music-fab" onclick="toggleMusic()" title="Música ambiente">🎵</button>
 <div class="music-panel" id="music-panel">
-  <div class="music-panel-title">🎵 Clima Musical</div>
+  <div class="music-panel-title">📻 Rádio Ao Vivo</div>
   <div class="music-moods">
-    <button class="mood-btn" data-mood="romantico" onclick="playMood(this)"><span class="mood-icon">🕯️</span>Romântico</button>
-    <button class="mood-btn" data-mood="sensual" onclick="playMood(this)"><span class="mood-icon">🔥</span>Sensual</button>
-    <button class="mood-btn" data-mood="jazz" onclick="playMood(this)"><span class="mood-icon">🎷</span>Jazz Suave</button>
-    <button class="mood-btn" data-mood="chuva" onclick="playMood(this)"><span class="mood-icon">🌧️</span>Chuva</button>
+    <button class="mood-btn" data-tag="romantic" onclick="playRadio(this)"><span class="mood-icon">🕯️</span>Romântico</button>
+    <button class="mood-btn" data-tag="love songs" onclick="playRadio(this)"><span class="mood-icon">❤️</span>Love Songs</button>
+    <button class="mood-btn" data-tag="jazz" onclick="playRadio(this)"><span class="mood-icon">🎷</span>Jazz</button>
+    <button class="mood-btn" data-tag="bossa nova" onclick="playRadio(this)"><span class="mood-icon">🌴</span>Bossa Nova</button>
   </div>
+  <div class="now-playing" id="nowPlaying">Escolha um clima acima</div>
   <div class="music-vol-row">
     <span class="music-vol-label">Vol</span>
-    <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.05" value="0.35" oninput="setMusicVol(this)">
-    <button class="music-stop-btn" onclick="stopMusic()">Parar</button>
+    <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.05" value="0.6" oninput="setMusicVol(this)">
+    <button class="music-stop-btn" onclick="stopRadio()">Parar</button>
   </div>
+  <button class="mood-btn" id="nextStationBtn" onclick="nextStation()" style="display:none;grid-column:1/-1;margin-top:0.4rem;width:100%">⏭ Próxima Estação</button>
 </div>
 
 <!-- ══ TIMER FAB ══ -->
@@ -1002,82 +1005,87 @@ function posRandom(){
   renderPos();
 }
 
-// ══ MUSIC PLAYER (Web Audio) ══════════════════════════════════
-let audioCtx=null,gainNode=null,audioNodes=[],currentMood=null;
+// ══ MUSIC PLAYER (Radio Browser API) ═════════════════════════
+const RADIO_SERVERS=['https://de1.api.radio-browser.info','https://nl1.api.radio-browser.info','https://at1.api.radio-browser.info'];
+let radioEl=null,radioStations=[],radioIndex=0,radioTag=null,radioActiveBtn=null;
 
-async function initAudio(){
-  if(!audioCtx){
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    gainNode=audioCtx.createGain();
-    gainNode.gain.value=parseFloat(document.getElementById('musicVol').value);
-    gainNode.connect(audioCtx.destination);
+function getRadioEl(){
+  if(!radioEl){
+    radioEl=document.createElement('audio');
+    radioEl.crossOrigin='anonymous';
+    radioEl.volume=parseFloat(document.getElementById('musicVol').value);
+    radioEl.addEventListener('error',()=>nextStation());
+    radioEl.addEventListener('stalled',()=>nextStation());
   }
-  if(audioCtx.state==='suspended') await audioCtx.resume();
+  return radioEl;
 }
 
-function stopAllNodes(){
-  audioNodes.forEach(n=>{try{n.stop&&n.stop();}catch(e){}try{n.disconnect&&n.disconnect();}catch(e){}});
-  audioNodes=[];
-}
-
-async function playMood(btn){
-  const mood=btn.dataset.mood;
-  stopAllNodes();
-  await initAudio();
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));
-
-  if(currentMood===mood){currentMood=null;return;}
-  btn.classList.add('on');currentMood=mood;
-
-  if(mood==='romantico'){
-    [432,648,864].forEach((f,i)=>{
-      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
-      osc.type='sine';osc.frequency.value=f;g.gain.value=0.14/(i+1);
-      const lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();
-      lfo.frequency.value=0.08+i*0.04;lg.gain.value=f*0.003;
-      lfo.connect(lg);lg.connect(osc.frequency);
-      osc.connect(g);g.connect(gainNode);
-      osc.start();lfo.start();audioNodes.push(osc,g,lfo,lg);
-    });
-  } else if(mood==='sensual'){
-    const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
-    osc.type='sine';osc.frequency.value=90;g.gain.value=0.28;
-    const lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();
-    lfo.frequency.value=0.6;lg.gain.value=0.14;
-    lfo.connect(lg);lg.connect(g.gain);
-    osc.connect(g);g.connect(gainNode);osc.start();lfo.start();
-    audioNodes.push(osc,g,lfo,lg);
-    const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
-    o2.type='sine';o2.frequency.value=270;g2.gain.value=0.06;
-    o2.connect(g2);g2.connect(gainNode);o2.start();audioNodes.push(o2,g2);
-  } else if(mood==='jazz'){
-    [261.6,329.6,392,466.2].forEach((f,i)=>{
-      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
-      osc.type='triangle';osc.frequency.value=f;osc.detune.value=(Math.random()-0.5)*10;
-      g.gain.setValueAtTime(0,audioCtx.currentTime);
-      g.gain.linearRampToValueAtTime(0.08/(i*0.4+1),audioCtx.currentTime+0.6+i*0.25);
-      osc.connect(g);g.connect(gainNode);osc.start();audioNodes.push(osc,g);
-    });
-  } else if(mood==='chuva'){
-    const buf=audioCtx.createBuffer(2,audioCtx.sampleRate*3,audioCtx.sampleRate);
-    for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
-    const src=audioCtx.createBufferSource();src.buffer=buf;src.loop=true;
-    const filter=audioCtx.createBiquadFilter();filter.type='bandpass';filter.frequency.value=900;filter.Q.value=0.4;
-    const g=audioCtx.createGain();g.gain.value=0.45;
-    src.connect(filter);filter.connect(g);g.connect(gainNode);src.start();
-    audioNodes.push(src,filter,g);
+async function fetchStations(tag){
+  const params=new URLSearchParams({tagExact:'false',tag,limit:'30',order:'votes',reverse:'true',hidebroken:'true',codec:'MP3'});
+  for(const srv of RADIO_SERVERS){
+    try{
+      const r=await fetch(`${srv}/json/stations/search?${params}`,{headers:{'User-Agent':'JogosCasal/1.0'}});
+      if(r.ok){const data=await r.json();if(data.length)return data;}
+    }catch(e){}
   }
+  return[];
 }
 
-function stopMusic(){
-  stopAllNodes();currentMood=null;
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));
+function setNowPlaying(text){
+  const el=document.getElementById('nowPlaying');
+  if(el)el.textContent=text;
+}
+
+async function playRadio(btn){
+  const tag=btn.dataset.tag;
+  document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
+
+  if(radioTag===tag){
+    stopRadio();return;
+  }
+
+  btn.classList.add('on');
+  radioActiveBtn=btn;
+  radioTag=tag;
+  setNowPlaying('🔍 Buscando estações…');
+  document.getElementById('nextStationBtn').style.display='none';
+
+  const stations=await fetchStations(tag);
+  if(!stations.length){setNowPlaying('⚠️ Nenhuma estação encontrada');radioTag=null;btn.classList.remove('on');return;}
+
+  radioStations=stations;
+  radioIndex=0;
+  playStation();
+}
+
+function playStation(){
+  if(!radioStations.length)return;
+  const st=radioStations[radioIndex];
+  const audio=getRadioEl();
+  audio.src=st.url_resolved||st.url;
+  audio.play().catch(()=>nextStation());
+  setNowPlaying(`📻 ${st.name}`);
+  document.getElementById('nextStationBtn').style.display='';
+}
+
+function nextStation(){
+  if(!radioStations.length)return;
+  radioIndex=(radioIndex+1)%radioStations.length;
+  playStation();
+}
+
+function stopRadio(){
+  if(radioEl){radioEl.pause();radioEl.src='';}
+  radioTag=null;radioStations=[];radioIndex=0;radioActiveBtn=null;
+  document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
+  setNowPlaying('Escolha um clima acima');
+  document.getElementById('nextStationBtn').style.display='none';
 }
 
 function setMusicVol(el){
   const v=parseFloat(el.value);
   el.style.setProperty('--p',`${v*100}%`);
-  if(gainNode)gainNode.gain.value=v;
+  if(radioEl)radioEl.volume=v;
 }
 
 function toggleMusic(){
