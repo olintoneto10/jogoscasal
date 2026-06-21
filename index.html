@@ -241,6 +241,23 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mapa-match-card.curious .mapa-match-title{color:var(--gold-l)}
 .mapa-match-item{font-size:0.82rem;color:var(--text);padding:0.25rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
 .mapa-match-item:last-child{border-bottom:none}
+/* ══ MÚSICA SEARCH ══ */
+.music-search-row{display:flex;gap:0.4rem;margin-top:0.45rem}
+.music-search-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:6px;padding:0.38rem 0.6rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.72rem;outline:none;transition:border-color 0.2s;min-width:0}
+.music-search-input:focus{border-color:var(--gold)}
+.music-search-input::placeholder{color:var(--muted)}
+.music-search-btn{background:rgba(200,148,58,0.1);border:1px solid rgba(200,148,58,0.22);border-radius:6px;padding:0.38rem 0.55rem;cursor:pointer;font-size:0.85rem;line-height:1;color:var(--gold);touch-action:manipulation;flex-shrink:0}
+/* ══ DRINK BUTTON ══ */
+.btn-drink{background:rgba(196,107,122,0.1);border:1px solid rgba(196,107,122,0.28);color:var(--rose-l);font-size:0.66rem;font-family:'Jost',sans-serif;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 0.9rem;border-radius:4px;cursor:pointer;transition:all 0.18s;touch-action:manipulation}
+.btn-drink:hover{background:rgba(196,107,122,0.22);border-color:var(--rose)}
+#drink-toast{position:fixed;bottom:6.5rem;left:50%;transform:translateX(-50%) translateY(6px);background:rgba(196,107,122,0.92);color:#fff;font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:500;padding:0.55rem 1.4rem;border-radius:20px;opacity:0;transition:opacity 0.3s,transform 0.3s;pointer-events:none;z-index:500;white-space:nowrap;letter-spacing:0.04em}
+#drink-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ══ STRIPTEASE ══ */
+#screen-strip{gap:1.6rem;padding-top:0}
+.strip-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.3);border-radius:16px;margin:0 1.2rem;padding:2rem 1.6rem;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;min-height:140px;justify-content:center}
+.strip-instruction{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.05rem;line-height:1.7;color:var(--text)}
+.strip-step{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em}
+.strip-btns{display:flex;gap:0.8rem;align-items:center;justify-content:center}
 /* ══ AFTERCARE ══ */
 #aftercare-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.95);backdrop-filter:blur(18px);z-index:350;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.4s;padding:2rem}
 #aftercare-overlay.on{opacity:1;pointer-events:all}
@@ -345,6 +362,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
     <div class="game-card" onclick="go('screen-quiz')"><div class="icon">❤️</div><div class="name">Quiz do Casal</div><div class="desc">Descubram o quanto se conhecem</div></div>
     <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
+    <div class="game-card" onclick="go('screen-strip')"><div class="icon">🪄</div><div class="name">Striptease</div><div class="desc">Peça por peça, ao ritmo que quiser</div></div>
     <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
@@ -373,7 +391,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <div class="c-text" id="rCText"></div>
       <div class="c-timer-hint" onclick="openTimerFrom(rOverlay)">⏱ Iniciar cronômetro</div>
       <button class="btn-ghost" id="rNewBtn">Nova Rodada</button>
-      <button class="btn-skip" onclick="document.getElementById('rOverlay').classList.remove('on')">↩ Pular este desafio</button>
+      <div style="display:flex;gap:0.6rem;justify-content:center">
+        <button class="btn-drink" onclick="drinkAndClose('rOverlay')">🍹 Beber</button>
+        <button class="btn-skip" onclick="document.getElementById('rOverlay').classList.remove('on')">↩ Pular</button>
+      </div>
     </div>
   </div></div>
 </div>
@@ -403,7 +424,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <div class="c-text" id="vdCText"></div>
       <div class="c-timer-hint" onclick="openTimerFrom(vdOverlay)">⏱ Iniciar cronômetro</div>
       <button class="btn-ghost" onclick="vdNext()">Próxima Rodada</button>
-      <button class="btn-skip" onclick="document.getElementById('vdOverlay').classList.remove('on')">↩ Pular este</button>
+      <div style="display:flex;gap:0.6rem;justify-content:center">
+        <button class="btn-drink" onclick="drinkAndClose('vdOverlay')">🍹 Beber</button>
+        <button class="btn-skip" onclick="document.getElementById('vdOverlay').classList.remove('on')">↩ Pular</button>
+      </div>
     </div>
   </div></div>
 </div>
@@ -496,6 +520,31 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <button class="btn-gold" onclick="posRandom()">Posição Aleatória</button>
 </div>
 
+<!-- ══ STRIPTEASE ══ -->
+<div class="screen" id="screen-strip">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Striptease</span></div>
+  <div style="height:1rem"></div>
+  <div class="levels" id="stripLevels">
+    <button class="lvl on" data-level="Romântico">Romântico</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
+  </div>
+  <p class="vd-player" id="stripPlayer">Quem vai se apresentar?</p>
+  <div class="vd-btns" id="stripChoose">
+    <button class="vd-btn verdade" onclick="stripChoose(1)">👤 <span id="stripN1">Jogador 1</span></button>
+    <button class="vd-btn desafio" onclick="stripChoose(2)">👤 <span id="stripN2">Jogador 2</span></button>
+  </div>
+  <div class="strip-card" id="stripCard" style="display:none">
+    <div class="strip-instruction" id="stripInstruction"></div>
+    <div class="strip-step" id="stripStep"></div>
+  </div>
+  <div class="strip-btns" id="stripBtns" style="display:none">
+    <button class="btn-ghost" onclick="openTimerFrom(null)">⏱ Timer</button>
+    <button class="btn-drink" onclick="drinkAndSkipStrip()">🍹 Beber e Pular</button>
+  </div>
+  <button class="btn-gold" id="stripBtn" style="display:none" onclick="stripNext()">Próxima Peça →</button>
+</div>
+
 <!-- ══ RECONEXÃO ══ -->
 <div class="screen" id="screen-reconexao">
   <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Reconexão</span></div>
@@ -557,6 +606,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="mood-btn" data-tag="top-br" onclick="playRadio(this)"><span class="mood-icon">🇧🇷</span>Top Brasil</button>
   </div>
   <div class="now-playing" id="nowPlaying">Escolha um clima acima</div>
+  <div class="music-search-row">
+    <input class="music-search-input" id="musicSearch" type="text" placeholder="Buscar (ex: forró, mpb...)" onkeydown="if(event.key==='Enter')searchRadio()">
+    <button class="music-search-btn" onclick="searchRadio()" title="Buscar">🔍</button>
+  </div>
   <div class="music-vol-row">
     <span class="music-vol-label">Vol</span>
     <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.05" value="0.6" oninput="setMusicVol(this)">
@@ -564,6 +617,9 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <button class="mood-btn" id="nextStationBtn" onclick="nextStation()" style="display:none;grid-column:1/-1;margin-top:0.4rem;width:100%">⏭ Próxima Estação</button>
 </div>
+
+<!-- ══ DRINK TOAST ══ -->
+<div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ TIMER FAB ══ -->
 <button class="fab" id="timer-fab" onclick="openTimerFrom(null)" title="Cronômetro">⏱</button>
@@ -694,34 +750,178 @@ const RCATS=[
 ];
 const RCARDS={
   'Romântico':{
-    'Beijo':'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
-    'Massagem':'Massagem no pescoço e ombros por 5 minutos, com a pessoa de olhos fechados.',
-    'Fantasia':'Conte uma fantasia romântica que você guarda sobre vocês dois.',
-    'Desafio':'Diga 5 coisas que te deixam completamente apaixonado(a) pelo seu parceiro(a).',
-    'Surpresa':'Prepare uma bebida especial e sirva da forma mais sedutora que conseguir.',
-    'Carinho':'Fiquem 3 minutos só abraçados, olho no olho, em silêncio total.',
-    'Sedução':'Dance uma música lenta escolhida por você, só para o seu parceiro(a).',
-    'Sorte':'Seu parceiro(a) escolhe qualquer desafio romântico desta noite para você.',
+    'Beijo':[
+      'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
+      'Beije a testa, as bochechas e o nariz do seu parceiro(a) com ternura.',
+      'Peça um beijo como se fosse o último desta noite.',
+      'Beije os dedos da mão do seu parceiro(a) um a um.',
+      'Invente um beijo que represente o que você sente agora.',
+    ],
+    'Massagem':[
+      'Massagem no pescoço e ombros por 5 minutos, com a pessoa de olhos fechados.',
+      'Massagem suave nas mãos e punhos por 3 minutos.',
+      'Massagem no couro cabeludo por 4 minutos — deixe a pessoa relaxar.',
+      'Massagem nos pés com movimentos lentos e carinhosos por 5 minutos.',
+      'Massagem nas costas inteiras enquanto a pessoa ouve a música favorita.',
+    ],
+    'Fantasia':[
+      'Conte uma fantasia romântica que você guarda sobre vocês dois.',
+      'Descreva o encontro dos sonhos que você imagina com seu parceiro(a).',
+      'Fale sobre um lugar que sempre quis visitar a dois e o que faria lá.',
+      'Invente um cenário romântico e convide seu parceiro(a) para a história.',
+      'Conte uma memória futura — algo que ainda não aconteceu mas você deseja muito.',
+    ],
+    'Desafio':[
+      'Diga 5 coisas que te deixam completamente apaixonado(a) pelo seu parceiro(a).',
+      'Escreva uma mensagem carinhosa com o dedo nas costas do seu parceiro(a).',
+      'Olhe nos olhos do seu parceiro(a) por 1 minuto sem falar nada.',
+      'Diga em voz alta o que sente, como se fosse a primeira vez.',
+      'Crie um nome carinhoso novo para seu parceiro(a) e explique o porquê.',
+    ],
+    'Surpresa':[
+      'Prepare uma bebida especial e sirva da forma mais sedutora que conseguir.',
+      'Planeje em 2 minutos um mini date surpresa para ainda essa noite.',
+      'Surpreenda com um toque gentil num lugar inesperado.',
+      'Escreva num papel um elogio e guarde no bolso do parceiro(a) sem ele(a) ver.',
+      'Faça uma promessa sincera para os próximos 7 dias.',
+    ],
+    'Carinho':[
+      'Fiquem 3 minutos só abraçados, olho no olho, em silêncio total.',
+      'Deite no colo do seu parceiro(a) por 2 minutos sem dizer nada.',
+      'Envolva o rosto do parceiro(a) nas suas mãos e fique olhando por 30 segundos.',
+      'Acaricie o cabelo do seu parceiro(a) suavemente por 2 minutos.',
+      'Segure as mãos do parceiro(a) e fiquem em silêncio por 1 minuto.',
+    ],
+    'Sedução':[
+      'Dance uma música lenta escolhida por você, só para o seu parceiro(a).',
+      'Cante baixinho uma música romântica no ouvido do seu parceiro(a).',
+      'Leia um poema — ou improvise um — com a voz mais suave que conseguir.',
+      'Dance com o parceiro(a) abraçados por uma música inteira.',
+      'Mostre um gesto sedutoro em câmera lenta, como se fosse um filme.',
+    ],
+    'Sorte':[
+      'Seu parceiro(a) escolhe qualquer desafio romântico desta noite para você.',
+      'Seu parceiro(a) faz um pedido e você atende sem questionar.',
+      'Troque de lugar: quem perguntava agora responde.',
+      'Seu parceiro(a) inventa um desafio surpresa para você cumprir agora.',
+      'Deixe seu parceiro(a) decidir o próximo jogo da noite.',
+    ],
   },
   'Quente':{
-    'Beijo':'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
-    'Massagem':'Massagem completa nas costas, 10 minutos, com creme perfumado.',
-    'Fantasia':'Encene por 5 minutos a fantasia mais ousada que você já confessou.',
-    'Desafio':'Tire uma peça de roupa lentamente, de forma sedutora, sem nenhuma pressa.',
-    'Surpresa':'Vende os olhos do seu parceiro(a) e dê 3 surpresas sensoriais inesperadas.',
-    'Carinho':'Explore com as mãos as partes favoritas do corpo do seu parceiro(a) por 3 min.',
-    'Sedução':'Faça um striptease de pelo menos 2 peças de roupa ao som de uma música.',
-    'Sorte':'Troque de papel: quem era passivo(a) vira ativo(a) pelos próximos 10 minutos.',
+    'Beijo':[
+      'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
+      'Beije com muito calor os lábios, aumentando a intensidade aos poucos.',
+      'Beije a clavícula do seu parceiro(a) de um lado ao outro lentamente.',
+      'Comece com um beijo suave e evolua para algo muito mais intenso.',
+      'Beije as costas do parceiro(a) de cima para baixo sem pressa.',
+    ],
+    'Massagem':[
+      'Massagem completa nas costas, 10 minutos, com creme perfumado.',
+      'Massagem sensual nos ombros e nuca por 7 minutos.',
+      'Massagem na barriga com movimentos circulares por 5 minutos.',
+      'Massagem na parte interna dos braços por 4 minutos.',
+      'Massagem nas panturrilhas e coxas por 8 minutos.',
+    ],
+    'Fantasia':[
+      'Encene por 5 minutos a fantasia mais ousada que você já confessou.',
+      'Fale sobre uma situação em que você mais se sentiu atraído(a) pelo parceiro(a).',
+      'Descreva o que imagina fazer se estivessem completamente sozinhos agora.',
+      'Invente um personagem e seduz seu parceiro(a) como esse personagem.',
+      'Conte uma fantasia que você nunca ousou fazer mas pensa com frequência.',
+    ],
+    'Desafio':[
+      'Tire uma peça de roupa lentamente, de forma sedutora, sem nenhuma pressa.',
+      'Sussurre no ouvido do parceiro(a) o que planeja fazer mais tarde.',
+      'Olhe nos olhos e mostre com gestos o que está sentindo agora.',
+      'Faça algo inesperado e sedutoro que seu parceiro(a) não espera.',
+      'Desafie seu parceiro(a) a ficar parado(a) enquanto você o(a) provoca por 1 minuto.',
+    ],
+    'Surpresa':[
+      'Vende os olhos do seu parceiro(a) e dê 3 surpresas sensoriais inesperadas.',
+      'Prepare um ambiente surpresa: luz baixa, música, e sua presença.',
+      'Surpreenda com um beijo em um lugar que raramente beija.',
+      'Apareça com algo que seu parceiro(a) gosta sem ter combinado.',
+      'Faça um gesto quente e inesperado enquanto o parceiro(a) menos espera.',
+    ],
+    'Carinho':[
+      'Explore com as mãos as partes favoritas do corpo do seu parceiro(a) por 3 min.',
+      'Acaricie lentamente o braço do parceiro(a) da mão até o ombro.',
+      'Passe os dedos suavemente pelo rosto do seu parceiro(a) por 2 minutos.',
+      'Fique abraçado(a) por trás do seu parceiro(a) por 2 minutos em silêncio.',
+      'Trace letras nas costas do parceiro(a) e peça que adivinhe o que escreveu.',
+    ],
+    'Sedução':[
+      'Faça um striptease de pelo menos 2 peças de roupa ao som de uma música.',
+      'Dance de forma sugestiva a um palmo do seu parceiro(a) sem tocá-lo(a).',
+      'Chame o parceiro(a) apenas com o olhar de um lado da sala ao outro.',
+      'Mude seu tom de voz para algo mais rouco e provoque com palavras.',
+      'Apareça de surpresa com algo diferente no visual e veja a reação.',
+    ],
+    'Sorte':[
+      'Troque de papel: quem era passivo(a) vira ativo(a) pelos próximos 10 minutos.',
+      'Seu parceiro(a) escolhe onde e como quer ser beijado(a) agora.',
+      'Obedecendo ao parceiro(a): faça o que ele(a) pedir nos próximos 5 minutos.',
+      'Seu parceiro(a) escolhe a música e você dança para ele(a).',
+      'Deixe o parceiro(a) guiar completamente os próximos 10 minutos.',
+    ],
   },
   'Explosivo':{
-    'Beijo':'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
-    'Massagem':'Massagem sensual completa por 15 minutos — seu parceiro(a) guia suas mãos.',
-    'Fantasia':'Realize agora mesmo a fantasia mais ousada que você já confessou.',
-    'Desafio':'Fique sem roupas pelo restante da noite. Nenhuma exceção.',
-    'Surpresa':'Surpreenda seu parceiro(a) com algo que ele(a) jamais esperaria agora.',
-    'Carinho':'Explore cada centímetro do corpo do seu parceiro(a), em silêncio, por 5 min.',
-    'Sedução':'Seduza seu parceiro(a) usando só palavras — sussurradas no ouvido — por 3 min.',
-    'Sorte':'Seu parceiro(a) tem controle total pelos próximos 20 minutos. Obedeça tudo.',
+    'Beijo':[
+      'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
+      'Beije o parceiro(a) com intensidade máxima até um dos dois pedir para parar.',
+      'Beije do pescoço até os lábios, explorando tudo no caminho.',
+      'Combine dois tipos de beijo diferentes em sequência — sua escolha.',
+      'Beije por 3 minutos sem tirar as mãos do rosto do parceiro(a).',
+    ],
+    'Massagem':[
+      'Massagem sensual completa por 15 minutos — seu parceiro(a) guia suas mãos.',
+      'Massagem completa nas costas e pernas por 12 minutos com óleo.',
+      'Massagem que começa nos ombros e vai descendo até onde o parceiro(a) permitir.',
+      'Massagem com as mãos e lábios alternados por 10 minutos.',
+      'Massagem intensa nas costas enquanto descreve o que está sentindo em voz alta.',
+    ],
+    'Fantasia':[
+      'Realize agora mesmo a fantasia mais ousada que você já confessou.',
+      'Encene um papel que nunca experimentaram antes por 10 minutos.',
+      'Diga em detalhes o que deseja fazer e comece a realizar agora.',
+      'Proponha algo que ambos nunca fizeram — e executem nos próximos minutos.',
+      'Descubra uma fantasia nova que nenhum dos dois já mencionou.',
+    ],
+    'Desafio':[
+      'Fique sem roupas pelo restante da noite. Nenhuma exceção.',
+      'Desafie seu parceiro(a) a provar que você é irresistível em 5 minutos.',
+      'Peça algo que nunca pediu antes — e realize agora.',
+      'Mantenha contato visual durante 3 minutos enquanto faz algo ousado.',
+      'Cumpra um desafio combinado em segredo apenas por gestos.',
+    ],
+    'Surpresa':[
+      'Surpreenda seu parceiro(a) com algo que ele(a) jamais esperaria agora.',
+      'Faça algo completamente inesperado nos próximos 30 segundos.',
+      'Surprise com um gesto, palavra ou toque absolutamente único.',
+      'Apareça de um jeito diferente do normal e surpreenda completamente.',
+      'Planeje e execute uma surpresa explosiva em menos de 2 minutos.',
+    ],
+    'Carinho':[
+      'Explore cada centímetro do corpo do seu parceiro(a), em silêncio, por 5 min.',
+      'Fique de olhos fechados e explore com as mãos por 3 minutos.',
+      'Descubra um ponto no corpo do parceiro(a) que nunca explorou antes.',
+      'Toque e massageie alternando pressão suave e mais intensa por 4 minutos.',
+      'Explore com as mãos e lábios alternados por 5 minutos.',
+    ],
+    'Sedução':[
+      'Seduza seu parceiro(a) usando só palavras — sussurradas no ouvido — por 3 min.',
+      'Sente a frente do parceiro(a) e seduza apenas com o olhar por 2 minutos.',
+      'Use sua voz para descrever o que vai fazer — sem fazer ainda.',
+      'Dance de forma completamente livre e sensual por uma música inteira.',
+      'Provoque sem tocar usando apenas aproximação e recuo por 2 minutos.',
+    ],
+    'Sorte':[
+      'Seu parceiro(a) tem controle total pelos próximos 20 minutos. Obedeça tudo.',
+      'Inverta completamente os papéis por 15 minutos.',
+      'Seu parceiro(a) escolhe a fantasia desta noite — e você realiza.',
+      'Obedecimento total: qualquer pedido do parceiro(a) nos próximos 20 minutos.',
+      'Deixe o parceiro(a) comandar o restante da noite.',
+    ],
   },
 };
 
@@ -773,7 +973,7 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
     const lv=getLevel('rLevels'),cat=RCATS[winner].name;
     document.getElementById('rCLevel').textContent=lv.toUpperCase();
     document.getElementById('rCCat').textContent=cat;
-    document.getElementById('rCText').textContent=RCARDS[lv][cat];
+    const rPool=RCARDS[lv][cat];document.getElementById('rCText').textContent=Array.isArray(rPool)?rPool[Math.floor(Math.random()*rPool.length)]:rPool;
     document.getElementById('rCard').classList.remove('flipped');
     document.getElementById('rOverlay').classList.add('on');
   })(performance.now());
@@ -785,16 +985,118 @@ document.getElementById('rNewBtn').addEventListener('click',e=>{e.stopPropagatio
 // ══ VD DATA ══════════════════════════════════════════════════
 const VD={
   'Romântico':{
-    verdade:['Qual foi o momento mais especial que já vivemos juntos?','O que você mais admira em mim?','Qual parte do meu corpo você mais gosta?','Como você me descreveria para alguém que nunca me viu?','Qual foi a primeira coisa que te atraiu em mim?','O que você sente quando me vê chegar?','Qual música te lembra de nós dois?'],
-    desafio:['Olhe nos meus olhos por 1 minuto inteiro sem desviar o olhar.','Me dê o abraço mais apertado que conseguir e fique assim por 30 segundos.','Cante um trecho de uma música que te lembra de mim.','Me diga uma coisa que você nunca me disse antes.','Descreva com 3 palavras o que sente por mim — e explique cada uma.','Me faça sorrir sem usar palavras.','Escreva com o dedo no meu braço o que está sentindo agora.'],
+    verdade:[
+      'Qual foi o momento mais especial que já vivemos juntos?',
+      'O que você mais admira em mim?',
+      'Qual parte do meu corpo você mais gosta?',
+      'Como você me descreveria para alguém que nunca me viu?',
+      'Qual foi a primeira coisa que te atraiu em mim?',
+      'O que você sente quando me vê chegar?',
+      'Qual música te lembra de nós dois?',
+      'Qual foi o dia em que você mais se sentiu amado(a) por mim?',
+      'Que pequeno gesto meu te faz sentir mais especial?',
+      'Qual é o sonho que ainda quer realizar comigo?',
+      'Se você pudesse mudar algo no começo do nosso relacionamento, o que seria?',
+      'Qual foi o nosso melhor beijo até hoje?',
+      'O que você mais sente falta quando estamos separados?',
+      'Como você imagina que seremos daqui a 10 anos?',
+      'Qual é a característica minha que você mais ama?',
+      'Qual memória nossa você mais quer guardar para sempre?',
+    ],
+    desafio:[
+      'Olhe nos meus olhos por 1 minuto inteiro sem desviar o olhar.',
+      'Me dê o abraço mais apertado que conseguir e fique assim por 30 segundos.',
+      'Cante um trecho de uma música que te lembra de mim.',
+      'Me diga uma coisa que você nunca me disse antes.',
+      'Descreva com 3 palavras o que sente por mim — e explique cada uma.',
+      'Me faça sorrir sem usar palavras.',
+      'Escreva com o dedo no meu braço o que está sentindo agora.',
+      'Faça um elogio sincero sobre cada uma das minhas qualidades — pelo menos 5.',
+      'Fique de olhos fechados enquanto eu escrevo uma palavra no seu rosto com o dedo.',
+      'Me imite de forma carinhosa por 30 segundos.',
+      'Recite um poema inventado agora sobre nós dois.',
+      'Segure meu rosto nas suas mãos e me diga uma coisa importante.',
+      'Feche os olhos, pense na nossa melhor memória e me conte o que viu.',
+      'Escreva uma mensagem de amor no celular — mas leia em voz alta para mim.',
+      'Dance comigo em silêncio por 1 minuto inteiro.',
+      'Me diga três coisas pelas quais é grato(a) em mim hoje.',
+    ],
   },
   'Quente':{
-    verdade:['Qual fantasia você nunca me contou mas gostaria de realizar?','Qual parte do meu corpo te deixa mais louco(a)?','O que você gostaria que eu fizesse mais na nossa intimidade?','Qual foi o momento mais quente que vivemos juntos?','O que você usaria — ou não usaria — para me seduzir agora?','Onde você prefere ser beijado(a)?','Qual é seu maior desejo dessa noite?'],
-    desafio:['Sussurre no meu ouvido o que quer fazer comigo agora.','Tire uma peça de roupa minha lentamente.','Beije meu pescoço por 1 minuto sem parar.','Me faça uma massagem nos ombros por 3 minutos.','Dance para mim ao som de uma música que você escolher.','Me olhe da forma mais sedutora que conseguir por 30 segundos.','Me beije de um jeito que eu nunca me esqueça.'],
+    verdade:[
+      'Qual fantasia você nunca me contou mas gostaria de realizar?',
+      'Qual parte do meu corpo te deixa mais louco(a)?',
+      'O que você gostaria que eu fizesse mais na nossa intimidade?',
+      'Qual foi o momento mais quente que vivemos juntos?',
+      'O que você usaria — ou não usaria — para me seduzir agora?',
+      'Onde você prefere ser beijado(a)?',
+      'Qual é seu maior desejo dessa noite?',
+      'Qual foi a vez que mais te senti irresistível?',
+      'O que te deixa mais com vontade de me tocar?',
+      'Qual parte minha você não cansa de olhar?',
+      'Se pudesse escolher um lugar diferente para nos encontrarmos intimamente, qual seria?',
+      'O que você gostaria de experimentar e ainda não teve coragem de pedir?',
+      'Qual som da minha voz te afeta mais?',
+      'Quando foi a última vez que se sentiu completamente desejado(a) por mim?',
+      'O que eu poderia fazer só com as palavras para te deixar sem fôlego?',
+      'Qual roupa minha te deixa mais louco(a)?',
+    ],
+    desafio:[
+      'Sussurre no meu ouvido o que quer fazer comigo agora.',
+      'Tire uma peça de roupa minha lentamente.',
+      'Beije meu pescoço por 1 minuto sem parar.',
+      'Me faça uma massagem nos ombros por 3 minutos.',
+      'Dance para mim ao som de uma música que você escolher.',
+      'Me olhe da forma mais sedutora que conseguir por 30 segundos.',
+      'Me beije de um jeito que eu nunca me esqueça.',
+      'Sopre levemente na minha orelha e diga algo no meu ouvido.',
+      'Desamarre meu cabelo — ou arrume — lentamente.',
+      'Trace com a ponta dos dedos um caminho pelo meu braço durante 30 segundos.',
+      'Me tire os sapatos e massageie meus pés por 2 minutos.',
+      'Me olhe nos olhos enquanto me descreve o que vê.',
+      'Afaste meu cabelo do rosto e me beije na testa.',
+      'Me vende os olhos por 1 minuto e me dê 3 toques surpresa.',
+      'Segure minha mão e não solte pelos próximos 3 minutos.',
+      'Dance colado(a) a mim até a música acabar.',
+    ],
   },
   'Explosivo':{
-    verdade:['Descreva em detalhes sua fantasia mais proibida.','O que eu poderia fazer que te deixaria completamente sem controle?','Qual parte do meu corpo você mais deseja explorar agora?','O que você mais deseja que aconteça essa noite?','Conte algo sobre sua sexualidade que nunca contou a ninguém.','O que você faria se eu não tivesse nenhuma inibição?','Qual é a coisa mais ousada que você já pensou em fazer comigo?'],
-    desafio:['Seduza-me apenas com olhares por 2 minutos.','Tire toda a sua roupa lentamente, sem pressa.','Me diga o que quer que eu faça com você — com todos os detalhes.','Surpreenda-me com algo que nunca fizemos antes.','Faça o que quiser com meu corpo por 5 minutos.','Me beije por onde quiser durante 2 minutos.','Realize agora o que você mais deseja fazer comigo.'],
+    verdade:[
+      'Descreva em detalhes sua fantasia mais proibida.',
+      'O que eu poderia fazer que te deixaria completamente sem controle?',
+      'Qual parte do meu corpo você mais deseja explorar agora?',
+      'O que você mais deseja que aconteça essa noite?',
+      'Conte algo sobre sua sexualidade que nunca contou a ninguém.',
+      'O que você faria se eu não tivesse nenhuma inibição?',
+      'Qual é a coisa mais ousada que você já pensou em fazer comigo?',
+      'Existe algo que você quer que eu faça e nunca pediu?',
+      'Qual cena de filme ou série te deixa mais provocado(a)?',
+      'O que te faz perder completamente a cabeça na intimidade?',
+      'Qual foi o toque meu que mais te marcou?',
+      'Se você pudesse dirigir completamente nossa noite, como seria?',
+      'O que te excita só de imaginar, mas nunca tentamos?',
+      'Qual é a palavra ou frase que mais gosta de ouvir de mim na hora H?',
+      'Se não houvesse limites, o que você faria comigo agora?',
+      'Como você prefere que eu te surpreenda quando menos espera?',
+    ],
+    desafio:[
+      'Seduza-me apenas com olhares por 2 minutos.',
+      'Tire toda a sua roupa lentamente, sem pressa.',
+      'Me diga o que quer que eu faça com você — com todos os detalhes.',
+      'Surpreenda-me com algo que nunca fizemos antes.',
+      'Faça o que quiser com meu corpo por 5 minutos.',
+      'Me beije por onde quiser durante 2 minutos.',
+      'Realize agora o que você mais deseja fazer comigo.',
+      'Me provoque sem me tocar — só com a voz — por 1 minuto.',
+      'Tire minha roupa usando só uma mão.',
+      'Me descreva em voz alta o que vai fazer comigo antes de fazer.',
+      'Fique 2 minutos colado(a) em mim sem fazer absolutamente nada — só sentindo.',
+      'Me ordene algo — e faça com que eu obedeça.',
+      'Me beije de um jeito que deixe claro o que você quer.',
+      'Use uma venda e descubra o que eu esconder para você durante 3 minutos.',
+      'Mostre, sem palavras, o quanto você me deseja agora.',
+      'Surpreenda-me com um gesto que eu nunca vi de você antes.',
+    ],
   },
 };
 function vdPick(tipo){
@@ -818,10 +1120,18 @@ document.getElementById('vdOverlay').addEventListener('click',function(e){if(e.t
 
 // ══ DADO DATA ════════════════════════════════════════════════
 const DADO={
-  parte:{'Romântico':['pescoço','ombros','mãos','cabelo','costas','rosto'],'Quente':['pescoço','orelha','ombros','costas','pés','nuca','joelhos','pulsos'],'Explosivo':['pescoço','orelha','peito','barriga','coxas','nuca','quadris','corpo todo']},
-  acao:{'Romântico':['acariciar','massagear','beijar','abraçar','tocar levemente','afagar'],'Quente':['beijar','massagear','morder levemente','acariciar','soprar','lamber suavemente'],'Explosivo':['beijar','morder','massagear','lamber','acariciar','explorar','apertar']},
-  duracao:['1 minuto','2 minutos','3 minutos','5 minutos','10 minutos','você decide'],
-  local:['aqui mesmo','no quarto','no banheiro','onde você quiser'],
+  parte:{
+    'Romântico':['pescoço','ombros','mãos','cabelo','costas','rosto','orelhas','pulsos','joelhos','testa','nuca','tornozelos'],
+    'Quente':['pescoço','orelha','ombros','costas','pés','nuca','joelhos','pulsos','barriga','clavícula','coxa','coluna'],
+    'Explosivo':['pescoço','orelha','peito','barriga','coxas','nuca','quadris','corpo todo','lombar','ombros','coluna','tornozelos'],
+  },
+  acao:{
+    'Romântico':['acariciar','massagear','beijar','abraçar','tocar levemente','afagar','soprar suavemente','traçar com os dedos','segurar','pressionar com carinho'],
+    'Quente':['beijar','massagear','morder levemente','acariciar','soprar','lamber suavemente','pressionar','deslizar os dedos','apertar com cuidado','explorar com as mãos'],
+    'Explosivo':['beijar','morder','massagear','lamber','acariciar','explorar','apertar','pressionar','usar os lábios','deslizar'],
+  },
+  duracao:['30 segundos','1 minuto','2 minutos','3 minutos','5 minutos','7 minutos','10 minutos','você decide','até a música acabar','quanto tempo quiser'],
+  local:['aqui mesmo','no quarto','no banheiro','onde você quiser','no sofá','com música','com luz apagada','com os olhos fechados'],
 };
 let dadoRolling=false;
 document.getElementById('dadoBtn').addEventListener('click',function(){
@@ -911,16 +1221,25 @@ const MISSOES={
     ['Apaguem as luzes, acendam uma vela e coloquem uma música suave.','Sentem frente a frente e contem 3 memórias favoritas de vocês dois.','Massagem completa nos ombros e costas do seu parceiro(a) por 10 minutos.','Terminem com um abraço longo e um beijo apaixonado — sem pressa.'],
     ['Escrevam um bilhete um para o outro dizendo o que mais amam na pessoa.','Preparem juntos uma bebida especial e brindem à noite de vocês.','Dancem juntos por duas músicas — escolham uma cada.','Deitem abraçados por 15 minutos sem celular.'],
     ['Desliguem os celulares. A próxima hora é só de vocês.','Olhem fotos de momentos especiais de vocês e comentem cada uma.','Carinho demorado pelo rosto e cabelo do parceiro(a) por 5 minutos.','Durmam abraçados — sem TV, sem celular, sem distração.'],
+    ['Preparem juntos um lanche especial para compartilhar.','Escolham 3 músicas que marcaram o relacionamento de vocês e ouçam juntos.','Cada um faz um elogio sincero sobre algo que admira no outro.','Terminem a noite com um abraço demorado e um silêncio amoroso.'],
+    ['Descubram juntos: qual é o sonho que ainda querem realizar a dois?','Façam uma promessa mútua para os próximos 30 dias.','Massagem nas mãos — 5 minutos cada — enquanto conversam.','Adormeçam de mãos dadas.'],
+    ['Escrevam juntos uma lista de 10 coisas que amam um no outro.','Brindem com a bebida favorita e relembrem o primeiro encontro.','Olho no olho: cada um diz o que sente pelo outro em 1 minuto, sem interrupção.','Abraço longo e beijo antes de dormir.'],
   ],
   'Quente':[
     ['Cada um tira uma peça de roupa do outro lentamente.','Joguem Verdade ou Desafio nível Quente por 15 minutos.','Massagem sensual completa por 15 minutos — o(a) massageado(a) escolhe onde.','A noite é de vocês — deixem o desejo guiar.'],
     ['Vistam algo que deixa o outro louco(a) — ou tirem tudo.','Sussurrem um ao outro o que mais desejam nessa noite.','Fiquem 10 minutos apenas se beijando — sem ir além ainda.','Agora sim — realizem o que sussurraram.'],
     ['Escolham juntos uma música para essa noite e dancem juntos.','Cada um faz um pedido que o outro deve cumprir.','Banho juntos — 15 minutos, sem pressa.','Tragam a energia do banho para o quarto.'],
+    ['Vistam — ou desvistam — o outro com calma e intenção.','Façam um jogo de perguntas quentes: quem responde manda.','Massagem com venda nos olhos — o(a) massageado(a) não pode ver nada.','Encerrem do jeito que o desejo mandar.'],
+    ['Coloquem uma música sensual e fiquem apenas se olhando por 2 minutos.','Cada um revela um desejo que ainda não realizou a dois.','Beijos por todo o corpo — 3 minutos cada, em revezamento.','Decidam juntos como terminar a noite.'],
+    ['Preparem juntos o ambiente: luz baixa, música certa, bebida favorita.','Joguem 3 rodadas de Dado Sensual nível Quente.','Cada um tira uma peça de roupa antes de cada rodada.','Sigam o que a última rodada mandar.'],
   ],
   'Explosivo':[
     ['Porta fechada, telefone desligado — a noite é absolutamente de vocês.','Fiquem nus e explorem o corpo um do outro por 10 minutos, sem ir além.','Cada um diz em voz alta a fantasia que guarda há mais tempo.','Realizem a fantasia dita — sem censura.'],
     ['Escolham juntos o que cada um vai vestir — ou não vestir.','Vendam os olhos do(a) parceiro(a) e surpreendam com toque, sopro e beijos por 10 min.','Troquem de papel: quem sempre é ativo(a) vira passivo(a) por 20 minutos.','Durmam nus e abraçados — a noite foi de vocês.'],
     ['Cada um escreve num papel o que mais deseja que aconteça — sem mostrar ainda.','Troquem os papéis e leiam em voz alta.','Realizem o pedido do outro — completamente.','Fiquem acordados conversando sobre o que sentiram.'],
+    ['Decidam juntos uma fantasia inédita para realizar essa noite.','Preparem o ambiente: sensações, música, toque — tudo nos mínimos detalhes.','Quem começar passivo(a) vira ativo(a) na metade — sem aviso.','Aftercare completo — cuidem um do outro no final.'],
+    ['Tirem o máximo de roupas possível antes de começar qualquer jogo.','Joguem Striptease no nível Explosivo até o fim.','Cada um realiza UM desejo do outro que nunca foi pedido antes.','Durmam abraçados, nus, sem nenhuma distração.'],
+    ['Criem juntos as regras da noite: o que vale, o que é proibido, o que é obrigatório.','Cada um elege a posição favorita para experimentar.','Troquem de posição quando a música mudar.','Aftercare: cuidem um do outro, água, carinho, silêncio reconfortante.'],
   ],
 };
 document.getElementById('missaoBtn').addEventListener('click',function(){
@@ -1355,6 +1674,111 @@ function openTimerFrom(overlayEl){
 function closeTimer(){
   document.getElementById('timer-overlay').classList.remove('on');
 }
+
+// ══ DRINK ════════════════════════════════════════════════════
+function drinkAndClose(overlayId){
+  document.getElementById(overlayId).classList.remove('on');
+  const t=document.getElementById('drink-toast');
+  t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);
+}
+
+// ══ MUSIC SEARCH ══════════════════════════════════════════════
+async function searchRadio(){
+  const q=document.getElementById('musicSearch').value.trim();
+  if(!q)return;
+  document.querySelectorAll('.mood-btn[data-tag]').forEach(b=>b.classList.remove('on'));
+  radioTag=q;radioErrCount=0;
+  setNowPlaying(`🔍 Buscando "${q}"…`);
+  document.getElementById('nextStationBtn').style.display='none';
+  const stations=await fetchStations(q);
+  if(!stations.length){setNowPlaying(`⚠️ Sem rádios para "${q}"`);radioTag=null;return;}
+  radioStations=stations;radioIndex=0;playStation();
+}
+
+// ══ STRIPTEASE ════════════════════════════════════════════════
+const STRIP={
+  'Romântico':[
+    'Remova os sapatos lentamente — um de cada vez. Faça contato visual.',
+    'Tire as meias com calma. Sem pressa nenhuma.',
+    'Dê uma volta de 360° para que seu parceiro(a) possa te admirar por inteiro.',
+    'Retire o cinto ou o acessório que estiver usando.',
+    'Remova a camisa ou blusa pelos ombros — devagar, centímetro por centímetro.',
+    'Baixe a calça ou saia. Vire de costas enquanto faz isso.',
+    'Fique só na roupa íntima. Fica parado(a) 30 segundos. Deixa ele(a) olhar.',
+    'Retire o sutiã ou camiseta interior — do jeito que preferir.',
+    'Última peça. A escolha é sua. Faça cada segundo valer.',
+  ],
+  'Quente':[
+    'Remova um sapato e passe-o suavemente pelo rosto do parceiro(a) antes de largar.',
+    'Tire as meias de forma lenta e sensual — com a imaginação e sem pressa.',
+    'Dance por 30 segundos antes de tirar qualquer peça.',
+    'Retire o cinto de forma ousada — use os dentes se tiver coragem.',
+    'Tire a camisa virando de costas. Só se vire quando ela cair completamente.',
+    'Baixe a calça ou saia 3 cm por vez. Pause entre cada movimento.',
+    'Fique na roupa íntima por 1 minuto. Ele(a) não pode te tocar — só olhar.',
+    'Tire o sutiã por baixo da camisa sem tirá-la — ou o inverso. Surpreenda.',
+    'Última peça. Olhe nos olhos enquanto faz isso. Devagar, sem desviar o olhar.',
+  ],
+  'Explosivo':[
+    'Começa pelos sapatos. Jogue cada um na direção do parceiro(a).',
+    'Tire as meias — use-as como acessório de dança.',
+    'Dance por 1 minuto. Retire o que quiser no ritmo da música.',
+    'O cinto vai. Use-o como chicote — dê uma pequena estalada no ar.',
+    'Camisa fora — de uma vez, sem cerimônia. Ou muito devagar. Você decide.',
+    'Calça ou saia: tudo de uma vez ou centímetro a centímetro. Agora.',
+    'Fique na roupa íntima. Fica imóvel por 45 segundos. Deixa ele(a) olhar.',
+    'Última barreira. Tire do jeito que quiser. Pode ser rápido(a) agora.',
+    'Pronto(a). O que acontece a seguir é escolha de vocês dois. 🔥',
+  ],
+};
+let stripCards=[],stripStep=-1,stripPerformer=0;
+function stripChoose(p){
+  stripPerformer=p;
+  const name=p===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  document.getElementById('stripPlayer').textContent=`${name} vai se apresentar`;
+  document.getElementById('stripChoose').style.display='none';
+  const lv=getLevel('stripLevels');
+  stripCards=[...STRIP[lv]];stripStep=0;
+  document.getElementById('stripCard').style.display='';
+  document.getElementById('stripBtns').style.display='';
+  document.getElementById('stripBtn').style.display='';
+  renderStrip();
+}
+function renderStrip(){
+  document.getElementById('stripInstruction').textContent=stripCards[stripStep];
+  document.getElementById('stripStep').textContent=`Peça ${stripStep+1} de ${stripCards.length}`;
+  document.getElementById('stripBtn').textContent=stripStep<stripCards.length-1?'Próxima Peça →':'Finalizar ✓';
+}
+function stripNext(){
+  if(stripStep<stripCards.length-1){stripStep++;renderStrip();}
+  else resetStrip();
+}
+function drinkAndSkipStrip(){
+  const t=document.getElementById('drink-toast');
+  t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);
+  if(stripStep<stripCards.length-1){stripStep++;renderStrip();}
+}
+function resetStrip(){
+  stripStep=-1;stripCards=[];stripPerformer=0;
+  document.getElementById('stripChoose').style.display='';
+  document.getElementById('stripCard').style.display='none';
+  document.getElementById('stripBtns').style.display='none';
+  document.getElementById('stripBtn').style.display='none';
+  document.getElementById('stripPlayer').textContent='Quem vai se apresentar?';
+}
+document.getElementById('stripLevels').querySelectorAll('.lvl').forEach(btn=>{
+  btn.addEventListener('click',()=>{if(stripPerformer)resetStrip();});
+});
+// Update player names on strip screen when navigating
+const _goOrig=go;
+go=function(id){
+  _goOrig(id);
+  if(id==='screen-strip'){
+    document.getElementById('stripN1').textContent=players.p1.name||'Jogador 1';
+    document.getElementById('stripN2').textContent=players.p2.name||'Jogador 2';
+    resetStrip();
+  }
+};
 
 // ══ RECONEXÃO ════════════════════════════════════════════════
 const RECON_QUESTIONS=[
