@@ -448,10 +448,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div class="music-panel" id="music-panel">
   <div class="music-panel-title">📻 Rádio Ao Vivo</div>
   <div class="music-moods">
-    <button class="mood-btn" data-tag="romantic" onclick="playRadio(this)"><span class="mood-icon">🕯️</span>Romântico</button>
-    <button class="mood-btn" data-tag="love songs" onclick="playRadio(this)"><span class="mood-icon">❤️</span>Love Songs</button>
-    <button class="mood-btn" data-tag="jazz" onclick="playRadio(this)"><span class="mood-icon">🎷</span>Jazz</button>
-    <button class="mood-btn" data-tag="bossa nova" onclick="playRadio(this)"><span class="mood-icon">🌴</span>Bossa Nova</button>
+    <button class="mood-btn" data-tag="sertanejo" onclick="playRadio(this)"><span class="mood-icon">🤠</span>Sertanejo</button>
+    <button class="mood-btn" data-tag="pop rock" onclick="playRadio(this)"><span class="mood-icon">🎸</span>Pop Rock</button>
+    <button class="mood-btn" data-tag="pagode" onclick="playRadio(this)"><span class="mood-icon">🥁</span>Pagode</button>
+    <button class="mood-btn" data-tag="top-br" onclick="playRadio(this)"><span class="mood-icon">🇧🇷</span>Top Brasil</button>
   </div>
   <div class="now-playing" id="nowPlaying">Escolha um clima acima</div>
   <div class="music-vol-row">
@@ -1058,8 +1058,10 @@ function getRadioEl(){
 }
 
 async function fetchStations(tag){
-  // Try multiple API mirrors; no User-Agent (forbidden header in browser fetch)
-  const params=new URLSearchParams({tag,limit:'40',order:'votes',reverse:'true',hidebroken:'true'});
+  // "top-br" = busca as mais ouvidas do Brasil por clickcount, não por tag
+  const params=tag==='top-br'
+    ?new URLSearchParams({countrycode:'BR',limit:'40',order:'clickcount',reverse:'true',hidebroken:'true'})
+    :new URLSearchParams({tag,limit:'40',order:'votes',reverse:'true',hidebroken:'true'});
   for(const srv of RADIO_SERVERS){
     try{
       const r=await fetch(`${srv}/json/stations/search?${params}`);
