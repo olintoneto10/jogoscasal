@@ -314,6 +314,8 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   .timer-presets{gap:0.4rem}
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
 </head>
 <body>
 <canvas id="bg"></canvas>
@@ -2300,14 +2302,17 @@ vdPick=function(tipo){
 };
 
 // Roleta (MutationObserver on rOverlay)
+let _rOverlayWasOn=false;
 new MutationObserver(()=>{
   const ov=document.getElementById('rOverlay');
-  if(ov.classList.contains('on')&&mp.ativo){
+  const isOn=ov.classList.contains('on');
+  if(isOn&&!_rOverlayWasOn&&mp.ativo){
     mpSyncCarta({jogo:'roleta',
       nivel:document.getElementById('rCLevel').textContent,
       categoria:document.getElementById('rCCat').textContent,
       texto:document.getElementById('rCText').textContent});
   }
+  _rOverlayWasOn=isOn;
 }).observe(document.getElementById('rOverlay'),{attributes:true,attributeFilter:['class']});
 
 // Dado (fires 700ms after button click, after animation)
@@ -2327,10 +2332,15 @@ document.getElementById('dadoBtn').addEventListener('click',()=>{
 });
 
 // Missão (MutationObserver on missaoCard)
+let _lastMissaoHash='';
 new MutationObserver(()=>{
   if(!mp.ativo)return;
   const steps=[...document.querySelectorAll('#missaoCard .step-text')].map(e=>e.textContent);
-  if(steps.length)mpSyncCarta({jogo:'missao',nivel:getLevel('missaoLevels'),steps,texto:steps.join(' → ')});
+  const hash=steps.join('|');
+  if(steps.length&&hash!==_lastMissaoHash){
+    _lastMissaoHash=hash;
+    mpSyncCarta({jogo:'missao',nivel:getLevel('missaoLevels'),steps,texto:steps.join(' → ')});
+  }
 }).observe(document.getElementById('missaoCard'),{childList:true,subtree:true});
 
 // Striptease — hook into renderStrip
@@ -2339,7 +2349,7 @@ renderStrip=function(){
   _renderStripOrig();
   if(!mp.ativo||stripStep<0)return;
   const lvl=getLevel('stripLevels');
-  const txt=document.getElementById('stripCardText')?document.getElementById('stripCardText').textContent:'';
+  const txt=document.getElementById('stripInstruction')?document.getElementById('stripInstruction').textContent:'';
   mpSyncCarta({jogo:'strip',nivel:lvl,passo:stripStep,texto:txt});
 };
 
