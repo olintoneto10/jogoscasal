@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roleta do Desejo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ground:      #150D1E;
+      --ground-2:    #1C1130;
+      --text:        #F5E6D0;
+      --text-muted:  #9A8470;
+      --gold:        #C8943A;
+      --gold-light:  #E8B85A;
+      --rose:        #C46B7A;
+      --rose-light:  #E08898;
+      --glow-gold:   rgba(200, 148, 58, 0.35);
+      --glow-rose:   rgba(196, 107, 122, 0.3);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ground);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 20%, #201030 0%, #150D1E 55%, #0D0815 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Background particles ───────────────────────────────── */
+    #bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── App shell ──────────────────────────────────────────── */
+    .app {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+      padding: 2.5rem 1.5rem 3rem;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header { text-align: center; }
+
+    header h1 {
+      font-family: 'Cormorant SC', serif;
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      text-shadow: 0 0 50px var(--glow-gold);
+    }
+
+    header p {
+      font-family: 'Libre Caslon Text', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+      letter-spacing: 0.09em;
+    }
+
+    /* ── Level selector ─────────────────────────────────────── */
+    .levels {
+      display: flex;
+      border: 1px solid rgba(200, 148, 58, 0.22);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .level-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid rgba(200, 148, 58, 0.22);
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .level-btn:last-child { border-right: none; }
+    .level-btn:hover { color: var(--text); background: rgba(200,148,58,0.07); }
+
+    .level-btn.active[data-level="Romântico"] {
+      color: var(--rose-light);
+      background: rgba(196,107,122,0.12);
+    }
+    .level-btn.active[data-level="Quente"] {
+      color: var(--gold-light);
+      background: rgba(200,148,58,0.13);
+    }
+    .level-btn.active[data-level="Explosivo"] {
+      color: #EE5555;
+      background: rgba(200,50,50,0.13);
+    }
+
+    /* ── Wheel ──────────────────────────────────────────────── */
+    .wheel-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid var(--gold-light);
+      filter: drop-shadow(0 0 8px var(--glow-gold));
+      z-index: 2;
+    }
+
+    #wheel {
+      border-radius: 50%;
+      display: block;
+      transition: box-shadow 0.3s;
+      box-shadow: 0 0 35px rgba(200,148,58,0.12), 0 0 70px rgba(140,40,70,0.08);
+    }
+
+    #wheel.spinning {
+      box-shadow: 0 0 55px rgba(200,148,58,0.28), 0 0 90px rgba(196,107,122,0.18);
+    }
+
+    /* ── Spin button ─────────────────────────────────────────── */
+    .spin-btn {
+      font-family: 'Cormorant SC', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: #0D0815;
+      background: linear-gradient(135deg, #E8B85A 0%, #C8943A 55%, #9A6A22 100%);
+      border: none;
+      border-radius: 4px;
+      padding: 0.85rem 3.2rem;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 4px 22px rgba(200,148,58,0.32);
+      animation: btn-breathe 2.8s ease-in-out infinite;
+    }
+
+    @keyframes btn-breathe {
+      0%, 100% { box-shadow: 0 4px 22px rgba(200,148,58,0.32); }
+      50%       { box-shadow: 0 4px 38px rgba(200,148,58,0.55); }
+    }
+
+    .spin-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 34px rgba(200,148,58,0.5);
+    }
+
+    .spin-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      animation: none;
+      transform: none;
+    }
+
+    /* ── Card overlay ────────────────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 5, 18, 0.86);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.38s;
+    }
+
+    .overlay.on {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .scene { perspective: 900px; }
+
+    .card {
+      width: 290px;
+      height: 410px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.85s cubic-bezier(0.4, 0.0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped { transform: rotateY(180deg); }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.8rem;
+      gap: 1rem;
+    }
+
+    /* Card back — sealed */
+    .back {
+      background: var(--ground-2);
+      border: 1px solid rgba(200,148,58,0.28);
+      box-shadow: inset 0 0 60px rgba(200,148,58,0.04), 0 24px 64px rgba(0,0,0,0.55);
+    }
+
+    .seal {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .seal canvas { display: block; }
+
+    .hint {
+      font-family: 'Libre Caslon Text', serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.09em;
+      margin-top: 0.3rem;
+    }
+
+    /* Card front — revealed */
+    .front {
+      background: var(--ground-2);
+      border: 1px solid rgba(200,148,58,0.38);
+      box-shadow: inset 0 0 70px rgba(200,148,58,0.03), 0 24px 64px rgba(0,0,0,0.55);
+      transform: rotateY(180deg);
+      text-align: center;
+      gap: 1.1rem;
+    }
+
+    .c-level {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .c-category {
+      font-family: 'Cormorant SC', serif;
+      font-size: 1.95rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 28px var(--glow-gold);
+    }
+
+    .c-rule {
+      width: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      flex-shrink: 0;
+    }
+
+    .c-text {
+      font-family: 'Libre Caslon Text', serif;
+      font-style: italic;
+      font-size: 0.98rem;
+      line-height: 1.72;
+      color: var(--text);
+    }
+
+    .again-btn {
+      margin-top: 0.5rem;
+      background: transparent;
+      border: 1px solid rgba(200,148,58,0.3);
+      color: var(--gold);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.6rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .again-btn:hover {
+      background: rgba(200,148,58,0.1);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+    }
+
+    /* ── Reduced motion ─────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .spin-btn { animation: none; }
+      .card      { transition: none; }
+    }
+
+    /* ── Mobile ─────────────────────────────────────────────── */
+    @media (max-width: 400px) {
+      .app { gap: 1.4rem; padding: 2rem 1rem 2.5rem; }
+      .card { width: 270px; height: 390px; }
+      .face { padding: 1.6rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="app">
+  <header>
+    <h1>Roleta do Desejo</h1>
+    <p>Uma noite de surpresas para dois</p>
+  </header>
+
+  <div class="levels">
+    <button class="level-btn active" data-level="Romântico">Romântico</button>
+    <button class="level-btn"        data-level="Quente">Quente</button>
+    <button class="level-btn"        data-level="Explosivo">Explosivo</button>
+  </div>
+
+  <div class="wheel-wrap">
+    <div class="pointer"></div>
+    <canvas id="wheel"></canvas>
+  </div>
+
+  <button id="spinBtn" class="spin-btn">Girar a Roleta</button>
+</div>
+
+<!-- Card reveal -->
+<div class="overlay" id="overlay">
+  <div class="scene">
+    <div class="card" id="card">
+
+      <div class="face back">
+        <div class="seal"><canvas id="sealCanvas" width="80" height="80"></canvas></div>
+        <p class="hint">Toque para revelar</p>
+      </div>
+
+      <div class="face front">
+        <div class="c-level"    id="cLevel"></div>
+        <div class="c-category" id="cCategory"></div>
+        <div class="c-rule"></div>
+        <div class="c-text"     id="cText"></div>
+        <button class="again-btn" id="againBtn">Nova Rodada</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CARDS DATA ──────────────────────────────────────────────────────────────
+const CARDS = {
+  'Romântico': {
+    'Beijo':    'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
+    'Massagem': 'Faça uma massagem no pescoço e ombros por 5 minutos, com a pessoa de olhos fechados.',
+    'Fantasia': 'Conte uma fantasia romântica que você guarda sobre vocês dois.',
+    'Desafio':  'Diga 5 coisas que te deixam completamente apaixonado(a) pelo seu parceiro(a).',
+    'Surpresa': 'Prepare uma bebida especial e sirva da forma mais sedutora que conseguir.',
+    'Carinho':  'Fiquem 3 minutos só abraçados, olho no olho, em silêncio total.',
+    'Sedução':  'Dance uma música lenta escolhida por você, só para o seu parceiro(a).',
+    'Sorte':    'Seu parceiro(a) escolhe qualquer desafio romântico desta noite para você.',
+  },
+  'Quente': {
+    'Beijo':    'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
+    'Massagem': 'Massagem completa nas costas, 10 minutos, com azeite ou creme perfumado.',
+    'Fantasia': 'Encene por 5 minutos a fantasia mais ousada que você já confessou.',
+    'Desafio':  'Tire uma peça de roupa lentamente, de forma sedutora, sem nenhuma pressa.',
+    'Surpresa': 'Vende os olhos do seu parceiro(a) e dê 3 surpresas sensoriais inesperadas.',
+    'Carinho':  'Explore com as mãos as partes favoritas do corpo do seu parceiro(a) por 3 min.',
+    'Sedução':  'Faça um striptease de pelo menos 2 peças de roupa ao som de uma música.',
+    'Sorte':    'Troque de papel: quem era passivo vira ativo pelos próximos 10 minutos.',
+  },
+  'Explosivo': {
+    'Beijo':    'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
+    'Massagem': 'Massagem sensual completa por 15 minutos — seu parceiro(a) guia suas mãos.',
+    'Fantasia': 'Realize agora mesmo a fantasia mais ousada que você já confessou ao parceiro(a).',
+    'Desafio':  'Fique sem roupas pelo restante da noite. Nenhuma exceção.',
+    'Surpresa': 'Surpreenda seu parceiro(a) com algo que ele(a) jamais esperaria neste momento.',
+    'Carinho':  'Explore cada centímetro do corpo do seu parceiro(a), em silêncio absoluto, por 5 min.',
+    'Sedução':  'Seduza seu parceiro(a) usando só palavras — sussurradas no ouvido — por 3 minutos.',
+    'Sorte':    'Seu parceiro(a) tem controle total pelos próximos 20 minutos. Obedeça tudo.',
+  },
+};
+
+const CATS = [
+  { name: 'Beijo',    color: '#6E1535' },
+  { name: 'Massagem', color: '#38186A' },
+  { name: 'Fantasia', color: '#0F2260' },
+  { name: 'Desafio',  color: '#751212' },
+  { name: 'Surpresa', color: '#5A3208' },
+  { name: 'Carinho',  color: '#68154A' },
+  { name: 'Sedução',  color: '#230E58' },
+  { name: 'Sorte',    color: '#083830' },
+];
+
+const N   = CATS.length;
+const SEG = (2 * Math.PI) / N;
+
+// ── STATE ───────────────────────────────────────────────────────────────────
+let level        = 'Romântico';
+let currentAngle = 0;
+let spinning     = false;
+let winner       = -1;
+
+// ── BACKGROUND PARTICLES ────────────────────────────────────────────────────
+const bgCanvas = document.getElementById('bg');
+const bgCtx    = bgCanvas.getContext('2d');
+const pts = Array.from({ length: 55 }, () => ({
+  x: Math.random(),
+  y: Math.random(),
+  r: Math.random() * 1.1 + 0.3,
+  v: Math.random() * 0.25 + 0.06,
+  a: Math.random() * 0.45 + 0.08,
+}));
+
+function resizeBg() {
+  bgCanvas.width  = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
+
+(function bgLoop() {
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+  for (const p of pts) {
+    p.y -= p.v / bgCanvas.height;
+    if (p.y < -0.02) { p.y = 1.02; p.x = Math.random(); }
+    bgCtx.beginPath();
+    bgCtx.arc(p.x * bgCanvas.width, p.y * bgCanvas.height, p.r, 0, 2 * Math.PI);
+    bgCtx.fillStyle = `rgba(200,162,60,${p.a})`;
+    bgCtx.fill();
+  }
+  requestAnimationFrame(bgLoop);
+})();
+
+// ── WHEEL ───────────────────────────────────────────────────────────────────
+const wCanvas = document.getElementById('wheel');
+const wCtx    = wCanvas.getContext('2d');
+
+function sizeWheel() {
+  const size = Math.min(360, window.innerWidth - 64);
+  wCanvas.width  = size;
+  wCanvas.height = size;
+  drawWheel(currentAngle);
+}
+
+function lighten(hex, n) {
+  return '#' + hex.slice(1).replace(/../g, c =>
+    Math.min(255, parseInt(c, 16) + n).toString(16).padStart(2, '0')
+  );
+}
+
+function drawWheel(angle) {
+  const sz = wCanvas.width;
+  const cx = sz / 2;
+  const cy = sz / 2;
+  const R  = cx * 0.88;
+
+  wCtx.clearRect(0, 0, sz, sz);
+
+  // Outer glow halo
+  const halo = wCtx.createRadialGradient(cx, cy, R * 0.85, cx, cy, R + 22);
+  halo.addColorStop(0, 'rgba(200,148,58,0.18)');
+  halo.addColorStop(1, 'rgba(200,148,58,0)');
+  wCtx.beginPath();
+  wCtx.arc(cx, cy, R + 22, 0, 2 * Math.PI);
+  wCtx.fillStyle = halo;
+  wCtx.fill();
+
+  wCtx.save();
+  wCtx.translate(cx, cy);
+  wCtx.rotate(angle);
+
+  for (let i = 0; i < N; i++) {
+    const a0 = -Math.PI / 2 + i * SEG;
+    const a1 = a0 + SEG;
+    const am = a0 + SEG / 2;
+
+    // Segment fill with subtle radial gradient
+    wCtx.beginPath();
+    wCtx.moveTo(0, 0);
+    wCtx.arc(0, 0, R, a0, a1);
+    wCtx.closePath();
+    const gx = Math.cos(am) * R * 0.45;
+    const gy = Math.sin(am) * R * 0.45;
+    const g = wCtx.createRadialGradient(gx * 0.3, gy * 0.3, 0, gx, gy, R * 0.75);
+    g.addColorStop(0, lighten(CATS[i].color, 36));
+    g.addColorStop(1, CATS[i].color);
+    wCtx.fillStyle = g;
+    wCtx.fill();
+
+    // Gold spoke line
+    wCtx.beginPath();
+    wCtx.moveTo(Math.cos(a0) * 10, Math.sin(a0) * 10);
+    wCtx.lineTo(Math.cos(a0) * R, Math.sin(a0) * R);
+    wCtx.strokeStyle = 'rgba(200,148,58,0.45)';
+    wCtx.lineWidth = 1;
+    wCtx.stroke();
+
+    // Label: rotate to midpoint angle, translate out, draw name
+    wCtx.save();
+    wCtx.rotate(am);
+    wCtx.translate(R * 0.58, 0);
+    wCtx.rotate(Math.PI / 2);
+    wCtx.textAlign = 'center';
+    wCtx.textBaseline = 'middle';
+    wCtx.fillStyle = 'rgba(245,230,208,0.92)';
+    wCtx.font = `500 ${Math.max(9, sz * 0.026)}px Jost, sans-serif`;
+    wCtx.fillText(CATS[i].name.toUpperCase(), 0, 0);
+    wCtx.restore();
+  }
+
+  // Center hub
+  const hubR = R * 0.115;
+  wCtx.beginPath();
+  wCtx.arc(0, 0, hubR + 3, 0, 2 * Math.PI);
+  wCtx.fillStyle = '#0D0815';
+  wCtx.fill();
+
+  const hubG = wCtx.createRadialGradient(0, 0, 0, 0, 0, hubR);
+  hubG.addColorStop(0, '#EEC860');
+  hubG.addColorStop(0.55, '#C8943A');
+  hubG.addColorStop(1, '#6A4010');
+  wCtx.beginPath();
+  wCtx.arc(0, 0, hubR, 0, 2 * Math.PI);
+  wCtx.fillStyle = hubG;
+  wCtx.fill();
+
+  // 6-pointed star in hub
+  const sr = hubR * 0.52;
+  const ir = hubR * 0.24;
+  wCtx.beginPath();
+  for (let k = 0; k < 6; k++) {
+    const oa = (k / 6) * 2 * Math.PI - Math.PI / 2;
+    const ia = oa + Math.PI / 6;
+    if (k === 0) wCtx.moveTo(Math.cos(oa) * sr, Math.sin(oa) * sr);
+    else         wCtx.lineTo(Math.cos(oa) * sr, Math.sin(oa) * sr);
+    wCtx.lineTo(Math.cos(ia) * ir, Math.sin(ia) * ir);
+  }
+  wCtx.closePath();
+  wCtx.fillStyle = 'rgba(255,240,200,0.72)';
+  wCtx.fill();
+
+  wCtx.restore();
+
+  // Outer ring
+  wCtx.beginPath();
+  wCtx.arc(cx, cy, R, 0, 2 * Math.PI);
+  wCtx.strokeStyle = '#C8943A';
+  wCtx.lineWidth = 2.5;
+  wCtx.stroke();
+}
+
+sizeWheel();
+window.addEventListener('resize', sizeWheel);
+
+// ── SPIN ────────────────────────────────────────────────────────────────────
+const spinBtn = document.getElementById('spinBtn');
+spinBtn.addEventListener('click', spin);
+
+function spin() {
+  if (spinning) return;
+  spinning = true;
+
+  spinBtn.disabled    = true;
+  spinBtn.textContent = 'Girando…';
+  wCanvas.classList.add('spinning');
+  closeOverlay();
+
+  const from   = currentAngle;
+  const extra  = (6 + Math.random() * 4) * 2 * Math.PI;
+  const rnd    = Math.random() * 2 * Math.PI;
+  const to     = from + extra + rnd;
+  const dur    = 4300;
+  const t0     = performance.now();
+
+  function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 4);
+    currentAngle = from + (to - from) * e;
+    drawWheel(currentAngle);
+    if (p < 1) { requestAnimationFrame(tick); return; }
+
+    currentAngle = to;
+    spinning     = false;
+    wCanvas.classList.remove('spinning');
+    spinBtn.disabled    = false;
+    spinBtn.textContent = 'Girar a Roleta';
+
+    const norm = ((-currentAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    winner = Math.floor(norm / SEG) % N;
+    openOverlay();
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── SEAL CANVAS ─────────────────────────────────────────────────────────────
+function drawSeal() {
+  const sc  = document.getElementById('sealCanvas');
+  const ctx = sc.getContext('2d');
+  const cx  = 40, cy = 40, R = 34;
+
+  ctx.clearRect(0, 0, 80, 80);
+
+  // Outer circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(200,148,58,0.55)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Petals / ornament: 8 small arcs
+  for (let i = 0; i < 8; i++) {
+    const a  = (i / 8) * 2 * Math.PI;
+    const px = cx + Math.cos(a) * R;
+    const py = cy + Math.sin(a) * R;
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = 'rgba(200,148,58,0.35)';
+    ctx.fill();
+  }
+
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, R * 0.55, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(200,148,58,0.4)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // 6-point star
+  const sr = R * 0.38, ir = R * 0.18;
+  ctx.beginPath();
+  for (let k = 0; k < 6; k++) {
+    const oa = (k / 6) * 2 * Math.PI - Math.PI / 2;
+    const ia = oa + Math.PI / 6;
+    if (k === 0) ctx.moveTo(cx + Math.cos(oa) * sr, cy + Math.sin(oa) * sr);
+    else         ctx.lineTo(cx + Math.cos(oa) * sr, cy + Math.sin(oa) * sr);
+    ctx.lineTo(cx + Math.cos(ia) * ir, cy + Math.sin(ia) * ir);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(200,148,58,0.7)';
+  ctx.fill();
+}
+drawSeal();
+
+// ── OVERLAY ─────────────────────────────────────────────────────────────────
+const overlay = document.getElementById('overlay');
+const cardEl  = document.getElementById('card');
+
+function openOverlay() {
+  document.getElementById('cLevel').textContent    = level.toUpperCase();
+  document.getElementById('cCategory').textContent = CATS[winner].name;
+  document.getElementById('cText').textContent     = CARDS[level][CATS[winner].name];
+  cardEl.classList.remove('flipped');
+  overlay.classList.add('on');
+}
+
+function closeOverlay() {
+  overlay.classList.remove('on');
+}
+
+cardEl.addEventListener('click', () => {
+  if (!cardEl.classList.contains('flipped')) cardEl.classList.add('flipped');
+});
+
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) closeOverlay();
+});
+
+document.getElementById('againBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  closeOverlay();
+});
+
+// ── LEVEL BUTTONS ────────────────────────────────────────────────────────────
+document.querySelectorAll('.level-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    level = this.dataset.level;
+  });
+});
+</script>
+</body>
+</html>
