@@ -1,449 +1,336 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogos do Desejo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --ground:     #150D1E;
-      --ground-2:   #1C1130;
-      --ground-3:   #251545;
-      --text:       #F5E6D0;
-      --muted:      #9A8470;
-      --gold:       #C8943A;
-      --gold-l:     #E8B85A;
-      --rose:       #C46B7A;
-      --rose-l:     #E08898;
-      --red:        #C83838;
-      --glow-gold:  rgba(200,148,58,0.35);
-    }
-    html, body {
-      min-height: 100vh;
-      background: radial-gradient(ellipse at 50% 20%, #201030 0%, #150D1E 55%, #0D0815 100%);
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      overflow-x: hidden;
-    }
-    #bg {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogos do Desejo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ground:#150D1E;--ground-2:#1C1130;--ground-3:#251545;
+  --text:#F5E6D0;--muted:#9A8470;--gold:#C8943A;--gold-l:#E8B85A;
+  --rose:#C46B7A;--rose-l:#E08898;--glow-gold:rgba(200,148,58,0.35);
+}
+html,body{min-height:100vh;background:radial-gradient(ellipse at 50% 20%,#201030 0%,#150D1E 55%,#0D0815 100%);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden}
+#bg{position:fixed;inset:0;pointer-events:none;z-index:0}
 
-    /* ── Screens ─────────────────────────────────────────────── */
-    .screen {
-      display: none; flex-direction: column; align-items: center;
-      min-height: 100vh; padding: 0 0 3rem;
-      position: relative; z-index: 1;
-      width: 100%; max-width: 480px; margin: 0 auto;
-    }
-    .screen.active { display: flex; }
+/* ── Screens ── */
+.screen{display:none;flex-direction:column;align-items:center;min-height:100vh;padding:0 0 5rem;position:relative;z-index:1;width:100%;max-width:480px;margin:0 auto}
+.screen.active{display:flex}
 
-    /* ── Shared header ───────────────────────────────────────── */
-    .game-header {
-      width: 100%; display: flex; align-items: center;
-      padding: 1.2rem 1.2rem 0; gap: 0.8rem;
-    }
-    .back-btn {
-      background: none; border: 1px solid rgba(200,148,58,0.25);
-      color: var(--gold); font-family: 'Jost', sans-serif;
-      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.4rem 0.9rem; border-radius: 3px; cursor: pointer;
-      transition: background 0.18s;
-      flex-shrink: 0;
-    }
-    .back-btn:hover { background: rgba(200,148,58,0.1); }
-    .game-title {
-      font-family: 'Cormorant SC', serif; font-size: 1.1rem;
-      color: var(--gold-l); letter-spacing: 0.06em;
-    }
+/* ── Header ── */
+.game-header{width:100%;display:flex;align-items:center;padding:1.2rem 1.2rem 0;gap:0.8rem}
+.back-btn{background:none;border:1px solid rgba(200,148,58,0.25);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:3px;cursor:pointer;transition:background 0.18s;flex-shrink:0}
+.back-btn:hover{background:rgba(200,148,58,0.1)}
+.game-title{font-family:'Cormorant SC',serif;font-size:1.1rem;color:var(--gold-l);letter-spacing:0.06em}
 
-    /* ── Level selector ──────────────────────────────────────── */
-    .levels {
-      display: flex; border: 1px solid rgba(200,148,58,0.22);
-      border-radius: 4px; overflow: hidden;
-    }
-    .lvl {
-      background: transparent; border: none;
-      border-right: 1px solid rgba(200,148,58,0.22);
-      color: var(--muted); font-family: 'Jost', sans-serif;
-      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 0.6rem 1rem; cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .lvl:last-child { border-right: none; }
-    .lvl:hover { color: var(--text); background: rgba(200,148,58,0.07); }
-    .lvl.on[data-level="Romântico"] { color: var(--rose-l); background: rgba(196,107,122,0.12); }
-    .lvl.on[data-level="Quente"]    { color: var(--gold-l); background: rgba(200,148,58,0.13); }
-    .lvl.on[data-level="Explosivo"] { color: #EE5555;       background: rgba(200,50,50,0.13); }
+/* ── Levels ── */
+.levels{display:flex;border:1px solid rgba(200,148,58,0.22);border-radius:4px;overflow:hidden}
+.lvl{background:transparent;border:none;border-right:1px solid rgba(200,148,58,0.22);color:var(--muted);font-family:'Jost',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1rem;cursor:pointer;transition:background 0.2s,color 0.2s}
+.lvl:last-child{border-right:none}
+.lvl:hover{color:var(--text);background:rgba(200,148,58,0.07)}
+.lvl.on[data-level="Romântico"]{color:var(--rose-l);background:rgba(196,107,122,0.12)}
+.lvl.on[data-level="Quente"]{color:var(--gold-l);background:rgba(200,148,58,0.13)}
+.lvl.on[data-level="Explosivo"]{color:#EE5555;background:rgba(200,50,50,0.13)}
+.lvl.on[data-level="Iniciante"]{color:var(--rose-l);background:rgba(196,107,122,0.12)}
+.lvl.on[data-level="Intermediário"]{color:var(--gold-l);background:rgba(200,148,58,0.13)}
+.lvl.on[data-level="Avançado"]{color:#EE5555;background:rgba(200,50,50,0.13)}
 
-    /* ── Primary button ──────────────────────────────────────── */
-    .btn-gold {
-      font-family: 'Cormorant SC', serif; font-size: 1.1rem;
-      font-weight: 600; letter-spacing: 0.16em; color: #0D0815;
-      background: linear-gradient(135deg, #E8B85A 0%, #C8943A 55%, #9A6A22 100%);
-      border: none; border-radius: 4px; padding: 0.85rem 3rem;
-      cursor: pointer; transition: transform 0.18s, box-shadow 0.18s;
-      box-shadow: 0 4px 22px rgba(200,148,58,0.32);
-      animation: breathe 2.8s ease-in-out infinite;
-    }
-    @keyframes breathe {
-      0%,100% { box-shadow: 0 4px 22px rgba(200,148,58,0.32); }
-      50%      { box-shadow: 0 4px 38px rgba(200,148,58,0.55); }
-    }
-    .btn-gold:hover:not(:disabled) { transform: translateY(-2px); }
-    .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
+/* ── Buttons ── */
+.btn-gold{font-family:'Cormorant SC',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.16em;color:#0D0815;background:linear-gradient(135deg,#E8B85A 0%,#C8943A 55%,#9A6A22 100%);border:none;border-radius:4px;padding:0.85rem 3rem;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 22px rgba(200,148,58,0.32);animation:breathe 2.8s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 4px 22px rgba(200,148,58,0.32)}50%{box-shadow:0 4px 38px rgba(200,148,58,0.55)}}
+.btn-gold:hover:not(:disabled){transform:translateY(-2px)}
+.btn-gold:disabled{opacity:0.5;cursor:not-allowed;animation:none}
+.btn-ghost{background:transparent;border:1px solid rgba(200,148,58,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.66rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:0.55rem 1.6rem;border-radius:3px;cursor:pointer;transition:background 0.18s,color 0.18s}
+.btn-ghost:hover{background:rgba(200,148,58,0.1);color:var(--gold-l)}
 
-    /* ── Card overlay (shared) ───────────────────────────────── */
-    .overlay {
-      position: fixed; inset: 0; background: rgba(10,5,18,0.87);
-      backdrop-filter: blur(10px); display: flex;
-      align-items: center; justify-content: center;
-      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.35s;
-    }
-    .overlay.on { opacity: 1; pointer-events: all; }
-    .scene { perspective: 900px; }
-    .card {
-      width: 290px; min-height: 380px;
-      position: relative; transform-style: preserve-3d;
-      transition: transform 0.85s cubic-bezier(0.4,0,0.2,1); cursor: pointer;
-    }
-    .card.flipped { transform: rotateY(180deg); }
-    .face {
-      position: absolute; inset: 0; border-radius: 14px;
-      backface-visibility: hidden; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; padding: 2rem 1.8rem; gap: 1rem;
-    }
-    .face.back {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.28);
-      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
-    }
-    .face.front {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.38);
-      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
-      transform: rotateY(180deg); text-align: center;
-    }
-    .seal { font-size: 4rem; color: var(--gold); text-shadow: 0 0 30px var(--glow-gold); }
-    .seal-hint {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.78rem; color: var(--muted); letter-spacing: 0.09em;
-    }
-    .c-level { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-    .c-cat {
-      font-family: 'Cormorant SC', serif; font-size: 1.8rem; font-weight: 700;
-      color: var(--gold-l); letter-spacing: 0.06em; text-shadow: 0 0 28px var(--glow-gold);
-    }
-    .c-rule { width: 44px; height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent); flex-shrink: 0; }
-    .c-text {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.97rem; line-height: 1.72; color: var(--text);
-    }
-    .btn-ghost {
-      background: transparent; border: 1px solid rgba(200,148,58,0.3);
-      color: var(--gold); font-family: 'Jost', sans-serif;
-      font-size: 0.66rem; font-weight: 500; letter-spacing: 0.16em;
-      text-transform: uppercase; padding: 0.55rem 1.6rem;
-      border-radius: 3px; cursor: pointer; transition: background 0.18s, color 0.18s;
-    }
-    .btn-ghost:hover { background: rgba(200,148,58,0.1); color: var(--gold-l); }
+/* ── Card flip overlay ── */
+.overlay{position:fixed;inset:0;background:rgba(10,5,18,0.87);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity 0.35s}
+.overlay.on{opacity:1;pointer-events:all}
+.scene{perspective:900px}
+.card{width:290px;min-height:380px;position:relative;transform-style:preserve-3d;transition:transform 0.85s cubic-bezier(0.4,0,0.2,1);cursor:pointer}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.8rem;gap:1rem}
+.face.back{background:var(--ground-2);border:1px solid rgba(200,148,58,0.28);box-shadow:0 24px 64px rgba(0,0,0,0.55)}
+.face.front{background:var(--ground-2);border:1px solid rgba(200,148,58,0.38);box-shadow:0 24px 64px rgba(0,0,0,0.55);transform:rotateY(180deg);text-align:center}
+.seal{font-size:4rem;color:var(--gold);text-shadow:0 0 30px var(--glow-gold)}
+.seal-hint{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.78rem;color:var(--muted);letter-spacing:0.09em}
+.c-level{font-size:0.62rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted)}
+.c-cat{font-family:'Cormorant SC',serif;font-size:1.8rem;font-weight:700;color:var(--gold-l);letter-spacing:0.06em;text-shadow:0 0 28px var(--glow-gold)}
+.c-rule{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);flex-shrink:0}
+.c-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.97rem;line-height:1.72;color:var(--text)}
+.c-timer-hint{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+.c-timer-hint:hover{color:var(--gold)}
 
-    /* ══════════════════════════════════════════════════════════
-       HOME
-    ══════════════════════════════════════════════════════════ */
-    #home {
-      gap: 2rem; padding: 2.5rem 1.2rem 3rem;
-    }
-    .home-header { text-align: center; }
-    .home-header h1 {
-      font-family: 'Cormorant SC', serif;
-      font-size: clamp(2rem, 9vw, 3rem); font-weight: 600;
-      color: var(--gold-l); letter-spacing: 0.06em; line-height: 1;
-      text-shadow: 0 0 50px var(--glow-gold);
-    }
-    .home-header p {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.82rem; color: var(--muted); margin-top: 0.45rem; letter-spacing: 0.09em;
-    }
-    .games-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%;
-    }
-    .game-card {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.2);
-      border-radius: 12px; padding: 1.4rem 1rem; cursor: pointer;
-      transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 0.6rem; text-align: center;
-    }
-    .game-card:hover {
-      border-color: rgba(200,148,58,0.5); transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(200,148,58,0.15);
-    }
-    .game-card .icon { font-size: 2rem; line-height: 1; }
-    .game-card .name {
-      font-family: 'Cormorant SC', serif; font-size: 0.95rem;
-      font-weight: 600; color: var(--gold-l); letter-spacing: 0.04em;
-    }
-    .game-card .desc {
-      font-size: 0.68rem; color: var(--muted); line-height: 1.4;
-    }
+/* ══ LOGIN ══ */
+#login{justify-content:center;gap:1.8rem;padding:2rem 1.5rem}
+.login-logo{text-align:center}
+.login-logo h1{font-family:'Cormorant SC',serif;font-size:clamp(2.2rem,10vw,3.2rem);font-weight:600;color:var(--gold-l);letter-spacing:0.06em;line-height:1;text-shadow:0 0 50px var(--glow-gold)}
+.login-logo p{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.82rem;color:var(--muted);margin-top:0.4rem}
+.login-players{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%}
+.login-player{background:var(--ground-2);border:1px solid rgba(200,148,58,0.2);border-radius:12px;padding:1.2rem;display:flex;flex-direction:column;gap:0.75rem}
+.login-player-label{font-family:'Cormorant SC',serif;font-size:0.88rem;color:var(--gold);letter-spacing:0.08em;text-align:center}
+.login-input{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:6px;padding:0.55rem 0.75rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.88rem;width:100%;outline:none;transition:border-color 0.2s}
+.login-input:focus{border-color:var(--gold)}
+.login-input::placeholder{color:var(--muted)}
+.pin-wrap{position:relative}
+.pin-toggle{position:absolute;right:0.6rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem;line-height:1;padding:0}
+.login-err{font-size:0.72rem;color:var(--rose-l);text-align:center;min-height:1em}
 
-    /* ══════════════════════════════════════════════════════════
-       ROLETA
-    ══════════════════════════════════════════════════════════ */
-    #screen-roleta { gap: 1.6rem; padding-top: 0; }
-    .wheel-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
-    .pointer {
-      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      width: 0; height: 0;
-      border-left: 10px solid transparent; border-right: 10px solid transparent;
-      border-top: 20px solid var(--gold-l);
-      filter: drop-shadow(0 0 8px var(--glow-gold)); z-index: 2;
-    }
-    #rWheel {
-      border-radius: 50%; display: block; transition: box-shadow 0.3s;
-      box-shadow: 0 0 35px rgba(200,148,58,0.12);
-    }
-    #rWheel.spinning { box-shadow: 0 0 60px rgba(200,148,58,0.3), 0 0 90px rgba(196,107,122,0.18); }
+/* ══ HOME ══ */
+#home{gap:1.8rem;padding:2.5rem 1.2rem 3rem}
+.home-header{text-align:center}
+.home-header h1{font-family:'Cormorant SC',serif;font-size:clamp(2rem,9vw,3rem);font-weight:600;color:var(--gold-l);letter-spacing:0.06em;line-height:1;text-shadow:0 0 50px var(--glow-gold)}
+.home-header p{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.82rem;color:var(--muted);margin-top:0.45rem;letter-spacing:0.09em}
+.home-couple{display:flex;align-items:center;gap:0.5rem;font-size:0.8rem;color:var(--muted);justify-content:center}
+.home-couple .pname{color:var(--gold-l);font-weight:500}
+.home-couple .heart{color:var(--rose)}
+.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%}
+.game-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.2);border-radius:12px;padding:1.4rem 1rem;cursor:pointer;transition:border-color 0.2s,transform 0.18s,box-shadow 0.2s;display:flex;flex-direction:column;align-items:center;gap:0.6rem;text-align:center}
+.game-card:hover{border-color:rgba(200,148,58,0.5);transform:translateY(-3px);box-shadow:0 8px 30px rgba(200,148,58,0.15)}
+.game-card .icon{font-size:2rem;line-height:1}
+.game-card .name{font-family:'Cormorant SC',serif;font-size:0.95rem;font-weight:600;color:var(--gold-l);letter-spacing:0.04em}
+.game-card .desc{font-size:0.68rem;color:var(--muted);line-height:1.4}
+.home-logout{font-size:0.65rem;color:var(--muted);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline dotted;text-underline-offset:3px}
+.home-logout:hover{color:var(--text)}
 
-    /* ══════════════════════════════════════════════════════════
-       VERDADE OU DESAFIO
-    ══════════════════════════════════════════════════════════ */
-    #screen-vd { gap: 1.8rem; padding-top: 0; }
-    .vd-player {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.85rem; color: var(--muted); letter-spacing: 0.06em;
-    }
-    .vd-btns { display: flex; gap: 1rem; }
-    .vd-btn {
-      font-family: 'Cormorant SC', serif; font-size: 1rem;
-      font-weight: 600; letter-spacing: 0.14em;
-      border: none; border-radius: 4px; padding: 0.9rem 2rem;
-      cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; flex: 1;
-    }
-    .vd-btn.verdade {
-      background: linear-gradient(135deg, #a0c4ff, #5588cc);
-      color: #0D0815; box-shadow: 0 4px 18px rgba(85,136,204,0.3);
-    }
-    .vd-btn.desafio {
-      background: linear-gradient(135deg, #E8B85A, #C8943A);
-      color: #0D0815; box-shadow: 0 4px 18px rgba(200,148,58,0.3);
-    }
-    .vd-btn:hover { transform: translateY(-2px); }
+/* ══ ROLETA ══ */
+#screen-roleta{gap:1.6rem;padding-top:0}
+.wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+.pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:20px solid var(--gold-l);filter:drop-shadow(0 0 8px var(--glow-gold));z-index:2}
+#rWheel{border-radius:50%;display:block;transition:box-shadow 0.3s;box-shadow:0 0 35px rgba(200,148,58,0.12)}
+#rWheel.spinning{box-shadow:0 0 60px rgba(200,148,58,0.3),0 0 90px rgba(196,107,122,0.18)}
 
-    /* ══════════════════════════════════════════════════════════
-       DADO DOS PRAZERES
-    ══════════════════════════════════════════════════════════ */
-    #screen-dado { gap: 1.8rem; padding-top: 0; }
-    .dice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; width: 100%; padding: 0 1.2rem; }
-    .die-card {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.22);
-      border-radius: 10px; padding: 1rem 0.8rem; text-align: center;
-      display: flex; flex-direction: column; gap: 0.5rem;
-    }
-    .die-card.rolling { animation: diceShake 0.5s ease-in-out; }
-    @keyframes diceShake {
-      0%,100% { transform: rotate(0deg); }
-      20%  { transform: rotate(-6deg) scale(1.04); }
-      40%  { transform: rotate(6deg) scale(1.06); }
-      60%  { transform: rotate(-4deg) scale(1.04); }
-      80%  { transform: rotate(4deg) scale(1.02); }
-    }
-    .die-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-    .die-value {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 1rem; color: var(--gold-l); min-height: 1.4em;
-      transition: opacity 0.2s;
-    }
-    .die-value.blank { opacity: 0.2; }
-    .dado-result {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 1rem; line-height: 1.7; color: var(--text);
-      text-align: center; padding: 1rem 1.5rem;
-      border: 1px solid rgba(200,148,58,0.25); border-radius: 10px;
-      background: var(--ground-2); margin: 0 1.2rem;
-      min-height: 3.5rem; display: flex; align-items: center; justify-content: center;
-    }
+/* ══ VD ══ */
+#screen-vd{gap:1.8rem;padding-top:0}
+.vd-player{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--muted);letter-spacing:0.06em}
+.vd-btns{display:flex;gap:1rem}
+.vd-btn{font-family:'Cormorant SC',serif;font-size:1rem;font-weight:600;letter-spacing:0.14em;border:none;border-radius:4px;padding:0.9rem 2rem;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;flex:1}
+.vd-btn.verdade{background:linear-gradient(135deg,#a0c4ff,#5588cc);color:#0D0815;box-shadow:0 4px 18px rgba(85,136,204,0.3)}
+.vd-btn.desafio{background:linear-gradient(135deg,#E8B85A,#C8943A);color:#0D0815;box-shadow:0 4px 18px rgba(200,148,58,0.3)}
+.vd-btn:hover{transform:translateY(-2px)}
 
-    /* ══════════════════════════════════════════════════════════
-       QUIZ DO CASAL
-    ══════════════════════════════════════════════════════════ */
-    #screen-quiz { gap: 1.6rem; padding-top: 0; }
-    .quiz-phase {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.85rem; color: var(--muted); letter-spacing: 0.06em;
-      text-align: center;
-    }
-    .quiz-progress { width: calc(100% - 2.4rem); height: 2px; background: rgba(200,148,58,0.15); border-radius: 2px; }
-    .quiz-progress-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.4s; }
-    .quiz-question {
-      font-family: 'Cormorant SC', serif; font-size: 1.3rem; font-weight: 600;
-      color: var(--text); text-align: center; padding: 0 1.2rem; line-height: 1.4;
-    }
-    .quiz-options { display: flex; flex-direction: column; gap: 0.7rem; width: 100%; padding: 0 1.2rem; }
-    .quiz-opt {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.22);
-      border-radius: 8px; padding: 0.9rem 1.2rem; cursor: pointer;
-      font-family: 'Libre Caslon Text', serif; font-size: 0.95rem;
-      color: var(--text); transition: border-color 0.18s, background 0.18s;
-      text-align: left;
-    }
-    .quiz-opt:hover  { border-color: rgba(200,148,58,0.5); background: rgba(200,148,58,0.07); }
-    .quiz-opt.chosen { border-color: var(--gold); background: rgba(200,148,58,0.12); color: var(--gold-l); }
-    .quiz-opt.match  { border-color: #66bb6a; background: rgba(102,187,106,0.12); color: #a5d6a7; }
-    .quiz-opt.differ { border-color: var(--rose); background: rgba(196,107,122,0.1); }
+/* ══ DADO ══ */
+#screen-dado{gap:1.8rem;padding-top:0}
+.dice-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;width:100%;padding:0 1.2rem}
+.die-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:1rem 0.8rem;text-align:center;display:flex;flex-direction:column;gap:0.5rem}
+.die-card.rolling{animation:diceShake 0.5s ease-in-out}
+@keyframes diceShake{0%,100%{transform:rotate(0deg)}20%{transform:rotate(-6deg) scale(1.04)}40%{transform:rotate(6deg) scale(1.06)}60%{transform:rotate(-4deg) scale(1.04)}80%{transform:rotate(4deg) scale(1.02)}}
+.die-label{font-size:0.6rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.die-value{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;color:var(--gold-l);min-height:1.4em;transition:opacity 0.2s}
+.die-value.blank{opacity:0.2}
+.dado-result{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;line-height:1.7;color:var(--text);text-align:center;padding:1rem 1.5rem;border:1px solid rgba(200,148,58,0.25);border-radius:10px;background:var(--ground-2);margin:0 1.2rem;min-height:3.5rem;display:flex;align-items:center;justify-content:center}
 
-    .quiz-result-wrap {
-      width: 100%; padding: 0 1.2rem; display: flex; flex-direction: column; gap: 1rem;
-    }
-    .quiz-result-card {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.22);
-      border-radius: 10px; padding: 1rem 1.2rem;
-    }
-    .qr-q { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 0.04em; }
-    .qr-answers { display: flex; gap: 0.6rem; }
-    .qr-a {
-      flex: 1; padding: 0.5rem 0.6rem; border-radius: 6px;
-      font-size: 0.8rem; text-align: center; line-height: 1.3;
-    }
-    .qr-a span { display: block; font-size: 0.62rem; color: var(--muted); margin-bottom: 0.2rem; letter-spacing: 0.08em; }
-    .qr-a.match  { background: rgba(102,187,106,0.15); border: 1px solid rgba(102,187,106,0.3); color: #a5d6a7; }
-    .qr-a.differ { background: rgba(196,107,122,0.12); border: 1px solid rgba(196,107,122,0.3); color: var(--rose-l); }
-    .quiz-score {
-      text-align: center; font-family: 'Cormorant SC', serif;
-      font-size: 2rem; font-weight: 700; color: var(--gold-l);
-      text-shadow: 0 0 30px var(--glow-gold);
-    }
-    .quiz-score-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.3rem; }
+/* ══ QUIZ ══ */
+#screen-quiz{gap:1.6rem;padding-top:0}
+.quiz-phase{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--muted);letter-spacing:0.06em;text-align:center}
+.quiz-progress{width:calc(100% - 2.4rem);height:2px;background:rgba(200,148,58,0.15);border-radius:2px}
+.quiz-progress-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s}
+.quiz-question{font-family:'Cormorant SC',serif;font-size:1.3rem;font-weight:600;color:var(--text);text-align:center;padding:0 1.2rem;line-height:1.4}
+.quiz-options{display:flex;flex-direction:column;gap:0.7rem;width:100%;padding:0 1.2rem}
+.quiz-opt{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:8px;padding:0.9rem 1.2rem;cursor:pointer;font-family:'Libre Caslon Text',serif;font-size:0.95rem;color:var(--text);transition:border-color 0.18s,background 0.18s;text-align:left}
+.quiz-opt:hover{border-color:rgba(200,148,58,0.5);background:rgba(200,148,58,0.07)}
+.quiz-opt.match{border-color:#66bb6a;background:rgba(102,187,106,0.12);color:#a5d6a7}
+.quiz-opt.differ{border-color:var(--rose);background:rgba(196,107,122,0.1)}
+.quiz-result-wrap{width:100%;padding:0 1.2rem;display:flex;flex-direction:column;gap:1rem}
+.quiz-result-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:1rem 1.2rem}
+.qr-q{font-size:0.72rem;color:var(--muted);margin-bottom:0.5rem;letter-spacing:0.04em}
+.qr-answers{display:flex;gap:0.6rem}
+.qr-a{flex:1;padding:0.5rem 0.6rem;border-radius:6px;font-size:0.8rem;text-align:center;line-height:1.3}
+.qr-a span{display:block;font-size:0.62rem;color:var(--muted);margin-bottom:0.2rem;letter-spacing:0.08em}
+.qr-a.match{background:rgba(102,187,106,0.15);border:1px solid rgba(102,187,106,0.3);color:#a5d6a7}
+.qr-a.differ{background:rgba(196,107,122,0.12);border:1px solid rgba(196,107,122,0.3);color:var(--rose-l)}
+.quiz-score{text-align:center;font-family:'Cormorant SC',serif;font-size:2rem;font-weight:700;color:var(--gold-l);text-shadow:0 0 30px var(--glow-gold)}
+.quiz-score-label{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.3rem}
 
-    /* ══════════════════════════════════════════════════════════
-       MISSÃO DA NOITE
-    ══════════════════════════════════════════════════════════ */
-    #screen-missao { gap: 1.8rem; padding-top: 0; }
-    .missao-card {
-      background: var(--ground-2); border: 1px solid rgba(200,148,58,0.3);
-      border-radius: 14px; padding: 1.8rem 1.5rem; margin: 0 1.2rem;
-      display: flex; flex-direction: column; gap: 1.2rem;
-    }
-    .missao-card-title {
-      font-family: 'Cormorant SC', serif; font-size: 1.4rem;
-      color: var(--gold-l); text-shadow: 0 0 20px var(--glow-gold);
-      letter-spacing: 0.06em; text-align: center;
-    }
-    .missao-rule { width: 44px; height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent); align-self: center; }
-    .missao-steps { display: flex; flex-direction: column; gap: 1rem; }
-    .missao-step { display: flex; gap: 0.9rem; align-items: flex-start; }
-    .step-num {
-      font-family: 'Cormorant SC', serif; font-size: 1.5rem;
-      color: var(--gold); opacity: 0.6; line-height: 1; flex-shrink: 0;
-      width: 1.4rem; text-align: right;
-    }
-    .step-text {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.95rem; line-height: 1.65; color: var(--text); padding-top: 0.1rem;
-    }
-    .missao-empty {
-      font-family: 'Libre Caslon Text', serif; font-style: italic;
-      font-size: 0.9rem; color: var(--muted); text-align: center; padding: 2rem 1.2rem;
-    }
+/* ══ MISSÃO ══ */
+#screen-missao{gap:1.8rem;padding-top:0}
+.missao-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.3);border-radius:14px;padding:1.8rem 1.5rem;margin:0 1.2rem;display:flex;flex-direction:column;gap:1.2rem}
+.missao-card-title{font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);text-shadow:0 0 20px var(--glow-gold);letter-spacing:0.06em;text-align:center}
+.missao-rule{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);align-self:center}
+.missao-steps{display:flex;flex-direction:column;gap:1rem}
+.missao-step{display:flex;gap:0.9rem;align-items:flex-start}
+.step-num{font-family:'Cormorant SC',serif;font-size:1.5rem;color:var(--gold);opacity:0.6;line-height:1;flex-shrink:0;width:1.4rem;text-align:right}
+.step-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.95rem;line-height:1.65;color:var(--text);padding-top:0.1rem}
+.missao-empty{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);text-align:center;padding:2rem 1.2rem}
 
-    @media (prefers-reduced-motion: reduce) {
-      .btn-gold, .card { animation: none; transition: none; }
-    }
-    @media (max-width: 400px) {
-      .games-grid { grid-template-columns: 1fr; }
-      .card { width: 270px; }
-      .vd-btns { flex-direction: column; }
-    }
-  </style>
+/* ══ POSIÇÕES ══ */
+#screen-posicoes{gap:1.6rem;padding-top:0}
+.pos-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.28);border-radius:16px;margin:0 1.2rem;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.pos-illustration{width:100%;background:linear-gradient(180deg,#1C1130 0%,#150D1E 100%);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(200,148,58,0.12);min-height:160px}
+.pos-illustration svg{width:100%;max-width:220px;height:auto}
+.pos-info{padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:0.85rem}
+.pos-name{font-family:'Cormorant SC',serif;font-size:1.5rem;font-weight:700;color:var(--gold-l);letter-spacing:0.06em;text-align:center;text-shadow:0 0 20px var(--glow-gold)}
+.pos-badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap}
+.badge{font-size:0.6rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:0.28rem 0.7rem;border-radius:20px}
+.badge-i{background:rgba(196,107,122,0.18);color:var(--rose-l);border:1px solid rgba(196,107,122,0.3)}
+.badge-m{background:rgba(200,148,58,0.14);color:var(--gold-l);border:1px solid rgba(200,148,58,0.3)}
+.badge-a{background:rgba(200,50,50,0.14);color:#EE8888;border:1px solid rgba(200,50,50,0.3)}
+.badge-t{background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+.pos-desc{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.93rem;line-height:1.68;color:var(--text);text-align:center}
+.pos-tip{font-size:0.75rem;color:var(--muted);text-align:center;line-height:1.5;padding:0.6rem 0.8rem;background:rgba(200,148,58,0.05);border-radius:6px;border:1px solid rgba(200,148,58,0.12)}
+.pos-tip strong{color:var(--gold)}
+.pos-btns{display:flex;gap:0.8rem;padding:0 1.2rem;width:100%}
+.pos-btns .btn-ghost{flex:1;padding:0.7rem 0.5rem;font-size:0.62rem}
+.pos-counter{font-size:0.68rem;color:var(--muted);text-align:center;letter-spacing:0.08em}
+
+/* ══ FLOATING MUSIC ══ */
+.fab{position:fixed;bottom:1.4rem;width:48px;height:48px;border-radius:50%;border:1px solid rgba(200,148,58,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;transition:transform 0.2s,box-shadow 0.2s;background:rgba(21,13,30,0.92);backdrop-filter:blur(12px);font-size:1.1rem;color:var(--gold)}
+.fab:hover{transform:scale(1.08);box-shadow:0 4px 20px rgba(200,148,58,0.25)}
+#music-fab{right:1.4rem}
+#timer-fab{right:5.2rem}
+.fab.active{border-color:var(--gold);box-shadow:0 0 16px rgba(200,148,58,0.35)}
+.music-panel{position:fixed;bottom:5rem;right:1rem;width:252px;background:rgba(21,13,30,0.97);border:1px solid rgba(200,148,58,0.25);border-radius:14px;padding:1rem;backdrop-filter:blur(20px);z-index:100;transform:scale(0.88) translateY(8px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s}
+.music-panel.on{opacity:1;pointer-events:all;transform:scale(1) translateY(0)}
+.music-panel-title{font-family:'Cormorant SC',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.8rem}
+.music-moods{display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-bottom:0.8rem}
+.mood-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.15);border-radius:8px;padding:0.5rem 0.4rem;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.66rem;color:var(--muted);transition:all 0.18s;display:flex;flex-direction:column;align-items:center;gap:0.18rem;line-height:1}
+.mood-btn:hover{border-color:rgba(200,148,58,0.35);color:var(--text)}
+.mood-btn.on{border-color:var(--gold);color:var(--gold-l);background:rgba(200,148,58,0.1)}
+.mood-icon{font-size:1.05rem}
+.music-vol-row{display:flex;align-items:center;gap:0.6rem}
+.music-vol-label{font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap}
+input[type=range].music-vol{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--gold) var(--p,35%),rgba(200,148,58,0.18) var(--p,35%));outline:none;cursor:pointer}
+input[type=range].music-vol::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--gold-l);cursor:pointer}
+.music-stop-btn{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.28rem 0.6rem;border-radius:4px;cursor:pointer;white-space:nowrap;font-family:'Jost',sans-serif;transition:all 0.15s}
+.music-stop-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
+
+/* ══ TIMER ══ */
+#timer-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.93);backdrop-filter:blur(14px);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#timer-overlay.on{opacity:1;pointer-events:all}
+.timer-presets{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center}
+.timer-preset{background:rgba(255,255,255,0.05);border:1px solid rgba(200,148,58,0.18);border-radius:6px;padding:0.45rem 0.85rem;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.72rem;color:var(--muted);transition:all 0.18s}
+.timer-preset:hover{color:var(--text);border-color:rgba(200,148,58,0.4)}
+.timer-preset.on{color:var(--gold-l);border-color:var(--gold);background:rgba(200,148,58,0.1)}
+.timer-ring-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+#timerSvg{transform:rotate(-90deg)}
+.timer-display{position:absolute;text-align:center}
+.timer-time{font-family:'Cormorant SC',serif;font-size:3rem;font-weight:700;color:var(--gold-l);text-shadow:0 0 30px var(--glow-gold);letter-spacing:0.04em}
+.timer-lbl{font-size:0.6rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-top:0.2rem}
+.timer-btns{display:flex;gap:0.7rem}
+.timer-action{font-family:'Jost',sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:0.65rem 1.6rem;border-radius:4px;cursor:pointer;transition:all 0.18s;border:none}
+.timer-start{background:linear-gradient(135deg,#E8B85A,#C8943A);color:#0D0815;box-shadow:0 4px 18px rgba(200,148,58,0.3)}
+.timer-reset{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.12)!important}
+.timer-reset:hover{color:var(--text)}
+#timer-close{position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;z-index:10;line-height:1}
+#timer-close:hover{color:var(--text)}
+@keyframes timerFlash{0%,100%{background:rgba(10,5,18,0.93)}50%{background:rgba(200,148,58,0.18)}}
+.timer-done-anim{animation:timerFlash 0.5s 3}
+
+/* ══ PIN OVERLAY ══ */
+#pin-overlay{position:fixed;inset:0;background:rgba(10,5,18,0.97);backdrop-filter:blur(18px);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#pin-overlay.on{opacity:1;pointer-events:all}
+.pin-title{font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);text-align:center;letter-spacing:0.06em}
+.pin-sub{font-size:0.78rem;color:var(--muted);text-align:center;line-height:1.5}
+.pin-dots{display:flex;gap:0.9rem}
+.pin-dot{width:13px;height:13px;border-radius:50%;border:1px solid rgba(200,148,58,0.4);background:transparent;transition:background 0.18s}
+.pin-dot.on{background:var(--gold);border-color:var(--gold)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:0.55rem}
+.pin-key{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.15);color:var(--text);font-family:'Cormorant SC',serif;font-size:1.5rem;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;user-select:none}
+.pin-key:hover{background:rgba(200,148,58,0.1);border-color:rgba(200,148,58,0.35)}
+.pin-key:active{transform:scale(0.92)}
+.pin-err{color:var(--rose-l);font-size:0.76rem;text-align:center;min-height:1em;letter-spacing:0.04em}
+
+@media(prefers-reduced-motion:reduce){.btn-gold,.card{animation:none;transition:none}}
+@media(max-width:400px){
+  .games-grid{grid-template-columns:1fr}
+  .card{width:270px}
+  .vd-btns{flex-direction:column}
+  .login-players{grid-template-columns:1fr}
+  .music-panel{width:calc(100vw - 2rem);right:1rem}
+  .timer-presets{gap:0.4rem}
+}
+</style>
 </head>
 <body>
 <canvas id="bg"></canvas>
 
-<!-- ══ HOME ══════════════════════════════════════════════════ -->
-<div class="screen active" id="home">
+<!-- ══ LOGIN ══ -->
+<div class="screen active" id="login">
+  <div class="login-logo">
+    <h1>Jogos do Desejo</h1>
+    <p>Registrem os dois jogadores para começar</p>
+  </div>
+  <div class="login-players">
+    <div class="login-player">
+      <div class="login-player-label">Jogador 1</div>
+      <input class="login-input" id="p1name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
+      <div class="pin-wrap">
+        <input class="login-input" id="p1pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+        <button class="pin-toggle" onclick="togglePin('p1pin',this)">👁</button>
+      </div>
+    </div>
+    <div class="login-player">
+      <div class="login-player-label">Jogador 2</div>
+      <input class="login-input" id="p2name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
+      <div class="pin-wrap">
+        <input class="login-input" id="p2pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+        <button class="pin-toggle" onclick="togglePin('p2pin',this)">👁</button>
+      </div>
+    </div>
+  </div>
+  <div class="login-err" id="loginErr"></div>
+  <button class="btn-gold" onclick="doLogin()">Começar a Noite</button>
+</div>
+
+<!-- ══ HOME ══ -->
+<div class="screen" id="home">
   <div class="home-header">
     <h1>Jogos do Desejo</h1>
     <p>Escolha como começar a noite</p>
   </div>
-  <div class="games-grid">
-    <div class="game-card" onclick="go('screen-roleta')">
-      <div class="icon">🎡</div>
-      <div class="name">Roleta do Desejo</div>
-      <div class="desc">Gire e descubra o que a noite reserva</div>
-    </div>
-    <div class="game-card" onclick="go('screen-vd')">
-      <div class="icon">🃏</div>
-      <div class="name">Verdade ou Desafio</div>
-      <div class="desc">Perguntas íntimas e ações ousadas</div>
-    </div>
-    <div class="game-card" onclick="go('screen-dado')">
-      <div class="icon">🎲</div>
-      <div class="name">Dado dos Prazeres</div>
-      <div class="desc">Combinações aleatórias do desejo</div>
-    </div>
-    <div class="game-card" onclick="go('screen-quiz')">
-      <div class="icon">❤️</div>
-      <div class="name">Quiz do Casal</div>
-      <div class="desc">Descubram o quanto se conhecem</div>
-    </div>
-    <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1">
-      <div class="icon">🌙</div>
-      <div class="name">Missão da Noite</div>
-      <div class="desc">Uma missão completa com etapas para viver juntos</div>
-    </div>
+  <div class="home-couple">
+    <span class="pname" id="hP1">—</span>
+    <span class="heart">♥</span>
+    <span class="pname" id="hP2">—</span>
   </div>
+  <div class="games-grid">
+    <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
+    <div class="game-card" onclick="go('screen-vd')"><div class="icon">🃏</div><div class="name">Verdade ou Desafio</div><div class="desc">Perguntas íntimas e ações ousadas</div></div>
+    <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
+    <div class="game-card" onclick="go('screen-quiz')"><div class="icon">❤️</div><div class="name">Quiz do Casal</div><div class="desc">Descubram o quanto se conhecem</div></div>
+    <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
+    <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
+  </div>
+  <button class="home-logout" onclick="doLogout()">← Trocar jogadores</button>
 </div>
 
-<!-- ══ ROLETA DO DESEJO ═══════════════════════════════════════ -->
+<!-- ══ ROLETA ══ -->
 <div class="screen" id="screen-roleta">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">Roleta do Desejo</span>
-  </div>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Roleta do Desejo</span></div>
   <div style="height:1.2rem"></div>
   <div class="levels" id="rLevels">
     <button class="lvl on" data-level="Romântico">Romântico</button>
-    <button class="lvl"    data-level="Quente">Quente</button>
-    <button class="lvl"    data-level="Explosivo">Explosivo</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
   </div>
-  <div class="wheel-wrap">
-    <div class="pointer"></div>
-    <canvas id="rWheel"></canvas>
-  </div>
+  <div class="wheel-wrap"><div class="pointer"></div><canvas id="rWheel"></canvas></div>
   <button class="btn-gold" id="rSpinBtn">Girar a Roleta</button>
 </div>
 <div class="overlay" id="rOverlay">
-  <div class="scene">
-    <div class="card" id="rCard">
-      <div class="face back">
-        <div class="seal">✦</div>
-        <p class="seal-hint">Toque para revelar</p>
-      </div>
-      <div class="face front">
-        <div class="c-level"  id="rCLevel"></div>
-        <div class="c-cat"    id="rCCat"></div>
-        <div class="c-rule"></div>
-        <div class="c-text"   id="rCText"></div>
-        <button class="btn-ghost" id="rNewBtn">Nova Rodada</button>
-      </div>
+  <div class="scene"><div class="card" id="rCard">
+    <div class="face back"><div class="seal">✦</div><p class="seal-hint">Toque para revelar</p></div>
+    <div class="face front">
+      <div class="c-level" id="rCLevel"></div>
+      <div class="c-cat" id="rCCat"></div>
+      <div class="c-rule"></div>
+      <div class="c-text" id="rCText"></div>
+      <div class="c-timer-hint" onclick="openTimerFrom(rOverlay)">⏱ Iniciar cronômetro</div>
+      <button class="btn-ghost" id="rNewBtn">Nova Rodada</button>
     </div>
-  </div>
+  </div></div>
 </div>
 
-<!-- ══ VERDADE OU DESAFIO ════════════════════════════════════ -->
+<!-- ══ VD ══ -->
 <div class="screen" id="screen-vd">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">Verdade ou Desafio</span>
-  </div>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Verdade ou Desafio</span></div>
   <div style="height:1rem"></div>
   <div class="levels" id="vdLevels">
     <button class="lvl on" data-level="Romântico">Romântico</button>
-    <button class="lvl"    data-level="Quente">Quente</button>
-    <button class="lvl"    data-level="Explosivo">Explosivo</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
   </div>
   <p class="vd-player" id="vdPlayer">Vez do Jogador 1</p>
   <div class="vd-btns">
@@ -452,34 +339,27 @@
   </div>
 </div>
 <div class="overlay" id="vdOverlay">
-  <div class="scene">
-    <div class="card" id="vdCard">
-      <div class="face back">
-        <div class="seal" id="vdSealIcon">🃏</div>
-        <p class="seal-hint" id="vdSealHint">Toque para revelar</p>
-      </div>
-      <div class="face front">
-        <div class="c-level"  id="vdCLevel"></div>
-        <div class="c-cat"    id="vdCCat"></div>
-        <div class="c-rule"></div>
-        <div class="c-text"   id="vdCText"></div>
-        <button class="btn-ghost" onclick="vdNext()">Próxima Rodada</button>
-      </div>
+  <div class="scene"><div class="card" id="vdCard">
+    <div class="face back"><div class="seal" id="vdSealIcon">🃏</div><p class="seal-hint">Toque para revelar</p></div>
+    <div class="face front">
+      <div class="c-level" id="vdCLevel"></div>
+      <div class="c-cat" id="vdCCat"></div>
+      <div class="c-rule"></div>
+      <div class="c-text" id="vdCText"></div>
+      <div class="c-timer-hint" onclick="openTimerFrom(vdOverlay)">⏱ Iniciar cronômetro</div>
+      <button class="btn-ghost" onclick="vdNext()">Próxima Rodada</button>
     </div>
-  </div>
+  </div></div>
 </div>
 
-<!-- ══ DADO DOS PRAZERES ═════════════════════════════════════ -->
+<!-- ══ DADO ══ -->
 <div class="screen" id="screen-dado">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">Dado dos Prazeres</span>
-  </div>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Dado dos Prazeres</span></div>
   <div style="height:1rem"></div>
   <div class="levels" id="dadoLevels">
     <button class="lvl on" data-level="Romântico">Romântico</button>
-    <button class="lvl"    data-level="Quente">Quente</button>
-    <button class="lvl"    data-level="Explosivo">Explosivo</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
   </div>
   <div class="dice-grid">
     <div class="die-card" id="die0"><div class="die-label">Parte do Corpo</div><div class="die-value blank" id="dv0">—</div></div>
@@ -491,209 +371,288 @@
   <button class="btn-gold" id="dadoBtn">Rolar os Dados</button>
 </div>
 
-<!-- ══ QUIZ DO CASAL ═════════════════════════════════════════ -->
+<!-- ══ QUIZ ══ -->
 <div class="screen" id="screen-quiz">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">Quiz do Casal</span>
-  </div>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Quiz do Casal</span></div>
   <div style="height:0.8rem"></div>
-
-  <!-- Intro -->
   <div id="quizIntro" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:0 1.5rem;text-align:center">
     <p style="font-family:'Libre Caslon Text',serif;font-style:italic;color:var(--muted);line-height:1.7;font-size:0.95rem">
-      Cada jogador responde as mesmas perguntas separadamente.<br>
-      Depois comparam as respostas — quantas coincidem?
+      Cada jogador responde separadamente com o PIN.<br>Depois comparam as respostas — quantas coincidem?
     </p>
     <button class="btn-gold" onclick="quizStart()">Começar o Quiz</button>
   </div>
-
-  <!-- Questions -->
   <div id="quizGame" style="display:none;flex-direction:column;align-items:center;gap:1.2rem;width:100%">
     <p class="quiz-phase" id="qPhase">Jogador 1 — Responda</p>
-    <div class="quiz-progress" style="width:calc(100% - 2.4rem)">
-      <div class="quiz-progress-bar" id="qBar" style="width:0%"></div>
-    </div>
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="qBar" style="width:0%"></div></div>
     <p class="quiz-question" id="qQuestion"></p>
     <div class="quiz-options" id="qOptions"></div>
   </div>
-
-  <!-- Results -->
   <div id="quizResults" style="display:none;flex-direction:column;align-items:center;gap:1.2rem;width:100%">
-    <div class="quiz-score">
-      <div id="qScoreNum">0/8</div>
-      <div class="quiz-score-label">respostas em comum</div>
-    </div>
+    <div class="quiz-score"><div id="qScoreNum">0/8</div><div class="quiz-score-label">respostas em comum</div></div>
     <div class="quiz-result-wrap" id="qResultList"></div>
     <button class="btn-ghost" onclick="quizReset()">Jogar Novamente</button>
   </div>
 </div>
 
-<!-- ══ MISSÃO DA NOITE ═══════════════════════════════════════ -->
+<!-- ══ MISSÃO ══ -->
 <div class="screen" id="screen-missao">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">Missão da Noite</span>
-  </div>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Missão da Noite</span></div>
   <div style="height:1rem"></div>
   <div class="levels" id="missaoLevels">
     <button class="lvl on" data-level="Romântico">Romântico</button>
-    <button class="lvl"    data-level="Quente">Quente</button>
-    <button class="lvl"    data-level="Explosivo">Explosivo</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
   </div>
-  <div id="missaoCard" style="width:100%">
-    <p class="missao-empty">Gere uma missão para começar a noite</p>
-  </div>
+  <div id="missaoCard" style="width:100%"><p class="missao-empty">Gere uma missão para começar a noite</p></div>
   <button class="btn-gold" id="missaoBtn">Gerar Missão</button>
 </div>
 
-<script>
-// ══ NAVIGATION ════════════════════════════════════════════════
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
+<!-- ══ POSIÇÕES ══ -->
+<div class="screen" id="screen-posicoes">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Posições do Casal</span></div>
+  <div style="height:1rem"></div>
+  <div class="levels" id="posLevels">
+    <button class="lvl on" data-level="Iniciante">Iniciante</button>
+    <button class="lvl" data-level="Intermediário">Intermediário</button>
+    <button class="lvl" data-level="Avançado">Avançado</button>
+  </div>
+  <div class="pos-card" id="posCard">
+    <div class="pos-illustration" id="posIllustration"></div>
+    <div class="pos-info">
+      <div class="pos-name" id="posName">—</div>
+      <div class="pos-badges" id="posBadges"></div>
+      <div class="pos-desc" id="posDesc"></div>
+      <div class="pos-tip" id="posTip"></div>
+    </div>
+  </div>
+  <p class="pos-counter" id="posCounter"></p>
+  <div class="pos-btns">
+    <button class="btn-ghost" onclick="posNav(-1)">← Anterior</button>
+    <button class="btn-ghost" onclick="openTimerFrom(null)">⏱ Timer</button>
+    <button class="btn-ghost" onclick="posNav(1)">Próxima →</button>
+  </div>
+  <button class="btn-gold" onclick="posRandom()">Posição Aleatória</button>
+</div>
 
-// ══ BACKGROUND PARTICLES ════════════════════════════════════
-const bgC = document.getElementById('bg'), bgX = bgC.getContext('2d');
-const pts = Array.from({length:55},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.3,v:Math.random()*0.25+0.06,a:Math.random()*0.45+0.08}));
-function resizeBg(){ bgC.width=innerWidth; bgC.height=innerHeight; }
-resizeBg(); addEventListener('resize',resizeBg);
+<!-- ══ MUSIC FAB ══ -->
+<button class="fab" id="music-fab" onclick="toggleMusic()" title="Música ambiente">🎵</button>
+<div class="music-panel" id="music-panel">
+  <div class="music-panel-title">🎵 Clima Musical</div>
+  <div class="music-moods">
+    <button class="mood-btn" data-mood="romantico" onclick="playMood(this)"><span class="mood-icon">🕯️</span>Romântico</button>
+    <button class="mood-btn" data-mood="sensual" onclick="playMood(this)"><span class="mood-icon">🔥</span>Sensual</button>
+    <button class="mood-btn" data-mood="jazz" onclick="playMood(this)"><span class="mood-icon">🎷</span>Jazz Suave</button>
+    <button class="mood-btn" data-mood="chuva" onclick="playMood(this)"><span class="mood-icon">🌧️</span>Chuva</button>
+  </div>
+  <div class="music-vol-row">
+    <span class="music-vol-label">Vol</span>
+    <input type="range" class="music-vol" id="musicVol" min="0" max="1" step="0.05" value="0.35" oninput="setMusicVol(this)">
+    <button class="music-stop-btn" onclick="stopMusic()">Parar</button>
+  </div>
+</div>
+
+<!-- ══ TIMER FAB ══ -->
+<button class="fab" id="timer-fab" onclick="openTimerFrom(null)" title="Cronômetro">⏱</button>
+
+<!-- ══ TIMER OVERLAY ══ -->
+<div id="timer-overlay">
+  <button id="timer-close" onclick="closeTimer()">✕</button>
+  <div class="timer-presets">
+    <button class="timer-preset" data-sec="60" onclick="timerSet(60)">1 min</button>
+    <button class="timer-preset" data-sec="120" onclick="timerSet(120)">2 min</button>
+    <button class="timer-preset" data-sec="300" onclick="timerSet(300)">5 min</button>
+    <button class="timer-preset" data-sec="600" onclick="timerSet(600)">10 min</button>
+    <button class="timer-preset" data-sec="900" onclick="timerSet(900)">15 min</button>
+  </div>
+  <div class="timer-ring-wrap">
+    <svg id="timerSvg" width="200" height="200" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="84" fill="none" stroke="rgba(200,148,58,0.12)" stroke-width="8"/>
+      <circle id="timerCircle" cx="100" cy="100" r="84" fill="none" stroke="#C8943A" stroke-width="8" stroke-linecap="round"
+        stroke-dasharray="527.8" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear"/>
+    </svg>
+    <div class="timer-display">
+      <div class="timer-time" id="timerTime">05:00</div>
+      <div class="timer-lbl" id="timerLbl">Pronto</div>
+    </div>
+  </div>
+  <div class="timer-btns">
+    <button class="timer-action timer-start" id="timerStartBtn" onclick="timerToggle()">Iniciar</button>
+    <button class="timer-action timer-reset" onclick="timerReset()">Reiniciar</button>
+  </div>
+</div>
+
+<!-- ══ PIN OVERLAY ══ -->
+<div id="pin-overlay">
+  <div class="pin-title" id="pinTitle">Verificação</div>
+  <div class="pin-sub" id="pinSub">Digite seu PIN para continuar</div>
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+  </div>
+  <div class="pin-pad">
+    <button class="pin-key" onclick="pinKey('1')">1</button><button class="pin-key" onclick="pinKey('2')">2</button><button class="pin-key" onclick="pinKey('3')">3</button>
+    <button class="pin-key" onclick="pinKey('4')">4</button><button class="pin-key" onclick="pinKey('5')">5</button><button class="pin-key" onclick="pinKey('6')">6</button>
+    <button class="pin-key" onclick="pinKey('7')">7</button><button class="pin-key" onclick="pinKey('8')">8</button><button class="pin-key" onclick="pinKey('9')">9</button>
+    <div></div><button class="pin-key" onclick="pinKey('0')">0</button>
+    <button class="pin-key" style="font-size:1rem" onclick="pinDel()">⌫</button>
+  </div>
+  <div class="pin-err" id="pinErr"></div>
+</div>
+
+<script>
+// ══ STATE ══════════════════════════════════════════════════
+let players = {p1:{name:'',pin:''},p2:{name:'',pin:''}};
+let vdCurrent = 1;
+
+// ══ BACKGROUND ══════════════════════════════════════════════
+const bgC=document.getElementById('bg'),bgX=bgC.getContext('2d');
+const pts=Array.from({length:55},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.3,v:Math.random()*0.25+0.06,a:Math.random()*0.45+0.08}));
+function resizeBg(){bgC.width=innerWidth;bgC.height=innerHeight}
+resizeBg();addEventListener('resize',resizeBg);
 (function bgLoop(){
   bgX.clearRect(0,0,bgC.width,bgC.height);
   pts.forEach(p=>{
-    p.y-=p.v/bgC.height; if(p.y<-0.02){p.y=1.02;p.x=Math.random();}
-    bgX.beginPath(); bgX.arc(p.x*bgC.width,p.y*bgC.height,p.r,0,2*Math.PI);
-    bgX.fillStyle=`rgba(200,162,60,${p.a})`; bgX.fill();
-  }); requestAnimationFrame(bgLoop);
+    p.y-=p.v/bgC.height;if(p.y<-0.02){p.y=1.02;p.x=Math.random();}
+    bgX.beginPath();bgX.arc(p.x*bgC.width,p.y*bgC.height,p.r,0,2*Math.PI);
+    bgX.fillStyle=`rgba(200,162,60,${p.a})`;bgX.fill();
+  });requestAnimationFrame(bgLoop);
 })();
 
-// ══ SHARED LEVEL SELECTOR ════════════════════════════════════
-const levelState = {};
+// ══ NAVIGATION ══════════════════════════════════════════════
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='screen-posicoes')renderPos();
+}
+
+// ══ LOGIN ══════════════════════════════════════════════════
+function togglePin(id,btn){
+  const el=document.getElementById(id);
+  el.type=el.type==='password'?'text':'password';
+  btn.textContent=el.type==='password'?'👁':'🙈';
+}
+function doLogin(){
+  const n1=document.getElementById('p1name').value.trim();
+  const n2=document.getElementById('p2name').value.trim();
+  const pin1=document.getElementById('p1pin').value.trim();
+  const pin2=document.getElementById('p2pin').value.trim();
+  const err=document.getElementById('loginErr');
+  if(!n1||!n2){err.textContent='Digite o nome dos dois jogadores.';return;}
+  if(pin1.length<4||pin2.length<4){err.textContent='Os PINs precisam ter 4 dígitos.';return;}
+  if(!/^\d{4}$/.test(pin1)||!/^\d{4}$/.test(pin2)){err.textContent='Use apenas números no PIN.';return;}
+  err.textContent='';
+  players={p1:{name:n1,pin:pin1},p2:{name:n2,pin:pin2}};
+  document.getElementById('hP1').textContent=n1;
+  document.getElementById('hP2').textContent=n2;
+  document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
+  vdCurrent=1;
+  go('home');
+}
+function doLogout(){
+  players={p1:{name:'',pin:''},p2:{name:'',pin:''}};
+  go('login');
+}
+
+// ══ LEVELS ══════════════════════════════════════════════════
+const levelState={};
 document.querySelectorAll('.levels').forEach(grp=>{
-  const id = grp.id;
-  levelState[id] = 'Romântico';
+  const id=grp.id;levelState[id]='Romântico';
   grp.querySelectorAll('.lvl').forEach(btn=>{
     btn.addEventListener('click',function(){
       grp.querySelectorAll('.lvl').forEach(b=>b.classList.remove('on'));
-      this.classList.add('on');
-      levelState[id] = this.dataset.level;
+      this.classList.add('on');levelState[id]=this.dataset.level;
     });
   });
 });
-function getLevel(id){ return levelState[id]||'Romântico'; }
+function getLevel(id){return levelState[id]||'Romântico';}
 
 // ══ ROLETA DATA ══════════════════════════════════════════════
 const RCATS=[
-  {name:'Beijo',   color:'#6E1535'},{name:'Massagem',color:'#38186A'},
-  {name:'Fantasia',color:'#0F2260'},{name:'Desafio', color:'#751212'},
-  {name:'Surpresa',color:'#5A3208'},{name:'Carinho', color:'#68154A'},
-  {name:'Sedução', color:'#230E58'},{name:'Sorte',   color:'#083830'},
+  {name:'Beijo',color:'#6E1535'},{name:'Massagem',color:'#38186A'},
+  {name:'Fantasia',color:'#0F2260'},{name:'Desafio',color:'#751212'},
+  {name:'Surpresa',color:'#5A3208'},{name:'Carinho',color:'#68154A'},
+  {name:'Sedução',color:'#230E58'},{name:'Sorte',color:'#083830'},
 ];
 const RCARDS={
   'Romântico':{
-    'Beijo':   'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
+    'Beijo':'Dê um beijo longo e apaixonado de 30 segundos — sem usar as mãos.',
     'Massagem':'Massagem no pescoço e ombros por 5 minutos, com a pessoa de olhos fechados.',
     'Fantasia':'Conte uma fantasia romântica que você guarda sobre vocês dois.',
-    'Desafio': 'Diga 5 coisas que te deixam completamente apaixonado(a) pelo seu parceiro(a).',
+    'Desafio':'Diga 5 coisas que te deixam completamente apaixonado(a) pelo seu parceiro(a).',
     'Surpresa':'Prepare uma bebida especial e sirva da forma mais sedutora que conseguir.',
-    'Carinho': 'Fiquem 3 minutos só abraçados, olho no olho, em silêncio total.',
-    'Sedução': 'Dance uma música lenta escolhida por você, só para o seu parceiro(a).',
-    'Sorte':   'Seu parceiro(a) escolhe qualquer desafio romântico desta noite para você.',
+    'Carinho':'Fiquem 3 minutos só abraçados, olho no olho, em silêncio total.',
+    'Sedução':'Dance uma música lenta escolhida por você, só para o seu parceiro(a).',
+    'Sorte':'Seu parceiro(a) escolhe qualquer desafio romântico desta noite para você.',
   },
   'Quente':{
-    'Beijo':   'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
-    'Massagem':'Massagem completa nas costas, 10 minutos, com azeite ou creme perfumado.',
+    'Beijo':'Beije o pescoço do seu parceiro(a) por 1 minuto inteiro — sem parar.',
+    'Massagem':'Massagem completa nas costas, 10 minutos, com creme perfumado.',
     'Fantasia':'Encene por 5 minutos a fantasia mais ousada que você já confessou.',
-    'Desafio': 'Tire uma peça de roupa lentamente, de forma sedutora, sem nenhuma pressa.',
+    'Desafio':'Tire uma peça de roupa lentamente, de forma sedutora, sem nenhuma pressa.',
     'Surpresa':'Vende os olhos do seu parceiro(a) e dê 3 surpresas sensoriais inesperadas.',
-    'Carinho': 'Explore com as mãos as partes favoritas do corpo do seu parceiro(a) por 3 min.',
-    'Sedução': 'Faça um striptease de pelo menos 2 peças de roupa ao som de uma música.',
-    'Sorte':   'Troque de papel: quem era passivo(a) vira ativo(a) pelos próximos 10 minutos.',
+    'Carinho':'Explore com as mãos as partes favoritas do corpo do seu parceiro(a) por 3 min.',
+    'Sedução':'Faça um striptease de pelo menos 2 peças de roupa ao som de uma música.',
+    'Sorte':'Troque de papel: quem era passivo(a) vira ativo(a) pelos próximos 10 minutos.',
   },
   'Explosivo':{
-    'Beijo':   'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
+    'Beijo':'Beije apaixonadamente por onde quiser durante 2 minutos — sem interrupção.',
     'Massagem':'Massagem sensual completa por 15 minutos — seu parceiro(a) guia suas mãos.',
     'Fantasia':'Realize agora mesmo a fantasia mais ousada que você já confessou.',
-    'Desafio': 'Fique sem roupas pelo restante da noite. Nenhuma exceção.',
+    'Desafio':'Fique sem roupas pelo restante da noite. Nenhuma exceção.',
     'Surpresa':'Surpreenda seu parceiro(a) com algo que ele(a) jamais esperaria agora.',
-    'Carinho': 'Explore cada centímetro do corpo do seu parceiro(a), em silêncio, por 5 min.',
-    'Sedução': 'Seduza seu parceiro(a) usando só palavras — sussurradas no ouvido — por 3 min.',
-    'Sorte':   'Seu parceiro(a) tem controle total pelos próximos 20 minutos. Obedeça tudo.',
+    'Carinho':'Explore cada centímetro do corpo do seu parceiro(a), em silêncio, por 5 min.',
+    'Sedução':'Seduza seu parceiro(a) usando só palavras — sussurradas no ouvido — por 3 min.',
+    'Sorte':'Seu parceiro(a) tem controle total pelos próximos 20 minutos. Obedeça tudo.',
   },
 };
 
-// ══ ROLETA WHEEL ════════════════════════════════════════════
-const rCanvas=document.getElementById('rWheel'), rCtx=rCanvas.getContext('2d');
-const RN=RCATS.length, RSEG=(2*Math.PI)/RN;
-let rAngle=0, rSpinning=false, rWinner=-1;
-
-function sizeRWheel(){
-  const s=Math.min(340,innerWidth-70); rCanvas.width=s; rCanvas.height=s; drawRWheel(rAngle);
-}
-function lighten(hex,n){
-  return '#'+hex.slice(1).replace(/../g,c=>Math.min(255,parseInt(c,16)+n).toString(16).padStart(2,'0'));
-}
+// ══ ROLETA WHEEL ══════════════════════════════════════════════
+const rCanvas=document.getElementById('rWheel'),rCtx=rCanvas.getContext('2d');
+const RN=RCATS.length,RSEG=(2*Math.PI)/RN;
+let rAngle=0,rSpinning=false;
+function sizeRWheel(){const s=Math.min(320,innerWidth-80);rCanvas.width=s;rCanvas.height=s;drawRWheel(rAngle);}
+function lighten(hex,n){return '#'+hex.slice(1).replace(/../g,c=>Math.min(255,parseInt(c,16)+n).toString(16).padStart(2,'0'));}
 function drawRWheel(a){
   const sz=rCanvas.width,cx=sz/2,cy=sz/2,R=cx*0.88;
   rCtx.clearRect(0,0,sz,sz);
-  const halo=rCtx.createRadialGradient(cx,cy,R*.85,cx,cy,R+22);
-  halo.addColorStop(0,'rgba(200,148,58,0.18)'); halo.addColorStop(1,'rgba(200,148,58,0)');
-  rCtx.beginPath(); rCtx.arc(cx,cy,R+22,0,2*Math.PI); rCtx.fillStyle=halo; rCtx.fill();
-  rCtx.save(); rCtx.translate(cx,cy); rCtx.rotate(a);
+  rCtx.save();rCtx.translate(cx,cy);rCtx.rotate(a);
   for(let i=0;i<RN;i++){
     const a0=-Math.PI/2+i*RSEG,a1=a0+RSEG,am=a0+RSEG/2;
-    rCtx.beginPath(); rCtx.moveTo(0,0); rCtx.arc(0,0,R,a0,a1); rCtx.closePath();
+    rCtx.beginPath();rCtx.moveTo(0,0);rCtx.arc(0,0,R,a0,a1);rCtx.closePath();
     const gx=Math.cos(am)*R*.45,gy=Math.sin(am)*R*.45;
     const g=rCtx.createRadialGradient(gx*.3,gy*.3,0,gx,gy,R*.75);
-    g.addColorStop(0,lighten(RCATS[i].color,36)); g.addColorStop(1,RCATS[i].color);
-    rCtx.fillStyle=g; rCtx.fill();
-    rCtx.beginPath(); rCtx.moveTo(Math.cos(a0)*10,Math.sin(a0)*10);
-    rCtx.lineTo(Math.cos(a0)*R,Math.sin(a0)*R);
-    rCtx.strokeStyle='rgba(200,148,58,0.45)'; rCtx.lineWidth=1; rCtx.stroke();
-    rCtx.save(); rCtx.rotate(am); rCtx.translate(R*.58,0); rCtx.rotate(Math.PI/2);
-    rCtx.textAlign='center'; rCtx.textBaseline='middle';
+    g.addColorStop(0,lighten(RCATS[i].color,36));g.addColorStop(1,RCATS[i].color);
+    rCtx.fillStyle=g;rCtx.fill();
+    rCtx.save();rCtx.rotate(am);rCtx.translate(R*.58,0);rCtx.rotate(Math.PI/2);
+    rCtx.textAlign='center';rCtx.textBaseline='middle';
     rCtx.fillStyle='rgba(245,230,208,0.92)';
     rCtx.font=`500 ${Math.max(9,sz*0.026)}px Jost,sans-serif`;
-    rCtx.fillText(RCATS[i].name.toUpperCase(),0,0); rCtx.restore();
+    rCtx.fillText(RCATS[i].name.toUpperCase(),0,0);rCtx.restore();
   }
   const hubR=R*.115;
-  rCtx.beginPath(); rCtx.arc(0,0,hubR+3,0,2*Math.PI); rCtx.fillStyle='#0D0815'; rCtx.fill();
+  rCtx.beginPath();rCtx.arc(0,0,hubR+3,0,2*Math.PI);rCtx.fillStyle='#0D0815';rCtx.fill();
   const hg=rCtx.createRadialGradient(0,0,0,0,0,hubR);
-  hg.addColorStop(0,'#EEC860'); hg.addColorStop(.55,'#C8943A'); hg.addColorStop(1,'#6A4010');
-  rCtx.beginPath(); rCtx.arc(0,0,hubR,0,2*Math.PI); rCtx.fillStyle=hg; rCtx.fill();
-  rCtx.beginPath();
-  for(let k=0;k<6;k++){
-    const oa=(k/6)*2*Math.PI-Math.PI/2,ia=oa+Math.PI/6;
-    if(k===0)rCtx.moveTo(Math.cos(oa)*hubR*.52,Math.sin(oa)*hubR*.52);
-    else rCtx.lineTo(Math.cos(oa)*hubR*.52,Math.sin(oa)*hubR*.52);
-    rCtx.lineTo(Math.cos(ia)*hubR*.24,Math.sin(ia)*hubR*.24);
-  }
-  rCtx.closePath(); rCtx.fillStyle='rgba(255,240,200,0.72)'; rCtx.fill();
+  hg.addColorStop(0,'#EEC860');hg.addColorStop(.55,'#C8943A');hg.addColorStop(1,'#6A4010');
+  rCtx.beginPath();rCtx.arc(0,0,hubR,0,2*Math.PI);rCtx.fillStyle=hg;rCtx.fill();
   rCtx.restore();
-  rCtx.beginPath(); rCtx.arc(cx,cy,R,0,2*Math.PI);
-  rCtx.strokeStyle='#C8943A'; rCtx.lineWidth=2.5; rCtx.stroke();
+  rCtx.beginPath();rCtx.arc(cx,cy,R,0,2*Math.PI);rCtx.strokeStyle='#C8943A';rCtx.lineWidth=2.5;rCtx.stroke();
 }
-sizeRWheel(); addEventListener('resize',sizeRWheel);
-
+sizeRWheel();addEventListener('resize',sizeRWheel);
 document.getElementById('rSpinBtn').addEventListener('click',function(){
-  if(rSpinning)return;
-  rSpinning=true; this.disabled=true; this.textContent='Girando…';
-  rCanvas.classList.add('spinning');
-  document.getElementById('rOverlay').classList.remove('on');
+  if(rSpinning)return;rSpinning=true;this.disabled=true;this.textContent='Girando…';
+  rCanvas.classList.add('spinning');document.getElementById('rOverlay').classList.remove('on');
   const from=rAngle,to=from+(6+Math.random()*4)*2*Math.PI+Math.random()*2*Math.PI;
-  const dur=4300,t0=performance.now();
-  const btn=this;
+  const dur=4300,t0=performance.now();const btn=this;
   (function tick(now){
     const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,4);
-    rAngle=from+(to-from)*e; drawRWheel(rAngle);
+    rAngle=from+(to-from)*e;drawRWheel(rAngle);
     if(p<1){requestAnimationFrame(tick);return;}
-    rAngle=to; rSpinning=false; rCanvas.classList.remove('spinning');
-    btn.disabled=false; btn.textContent='Girar a Roleta';
+    rAngle=to;rSpinning=false;rCanvas.classList.remove('spinning');
+    btn.disabled=false;btn.textContent='Girar a Roleta';
     const norm=((-rAngle%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
-    rWinner=Math.floor(norm/RSEG)%RN;
-    const lv=getLevel('rLevels'),cat=RCATS[rWinner].name;
+    const winner=Math.floor(norm/RSEG)%RN;
+    const lv=getLevel('rLevels'),cat=RCATS[winner].name;
     document.getElementById('rCLevel').textContent=lv.toUpperCase();
     document.getElementById('rCCat').textContent=cat;
     document.getElementById('rCText').textContent=RCARDS[lv][cat];
@@ -701,83 +660,28 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
     document.getElementById('rOverlay').classList.add('on');
   })(performance.now());
 });
-document.getElementById('rCard').addEventListener('click',function(){
-  if(!this.classList.contains('flipped'))this.classList.add('flipped');
-});
-document.getElementById('rOverlay').addEventListener('click',function(e){
-  if(e.target===this)this.classList.remove('on');
-});
-document.getElementById('rNewBtn').addEventListener('click',e=>{
-  e.stopPropagation(); document.getElementById('rOverlay').classList.remove('on');
-});
+document.getElementById('rCard').addEventListener('click',function(){if(!this.classList.contains('flipped'))this.classList.add('flipped');});
+document.getElementById('rOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
+document.getElementById('rNewBtn').addEventListener('click',e=>{e.stopPropagation();document.getElementById('rOverlay').classList.remove('on');});
 
-// ══ VERDADE OU DESAFIO DATA ══════════════════════════════════
+// ══ VD DATA ══════════════════════════════════════════════════
 const VD={
   'Romântico':{
-    verdade:[
-      'Qual foi o momento mais especial que já vivemos juntos?',
-      'O que você mais admira em mim?',
-      'Qual parte do meu corpo você mais gosta?',
-      'Como você me descreveria para alguém que nunca me viu?',
-      'Qual foi a primeira coisa que te atraiu em mim?',
-      'O que você sente quando me vê chegar?',
-      'Qual música te lembra de nós dois?',
-    ],
-    desafio:[
-      'Olhe nos meus olhos por 1 minuto inteiro sem desviar o olhar.',
-      'Me dê o abraço mais apertado que conseguir e fique assim por 30 segundos.',
-      'Cante um trecho de uma música que te lembra de mim.',
-      'Me diga uma coisa que você nunca me disse antes.',
-      'Descreva com 3 palavras o que sente por mim — e explique cada uma.',
-      'Escreva com o dedo no meu braço o que está sentindo agora.',
-      'Me faça sorrir sem usar palavras.',
-    ],
+    verdade:['Qual foi o momento mais especial que já vivemos juntos?','O que você mais admira em mim?','Qual parte do meu corpo você mais gosta?','Como você me descreveria para alguém que nunca me viu?','Qual foi a primeira coisa que te atraiu em mim?','O que você sente quando me vê chegar?','Qual música te lembra de nós dois?'],
+    desafio:['Olhe nos meus olhos por 1 minuto inteiro sem desviar o olhar.','Me dê o abraço mais apertado que conseguir e fique assim por 30 segundos.','Cante um trecho de uma música que te lembra de mim.','Me diga uma coisa que você nunca me disse antes.','Descreva com 3 palavras o que sente por mim — e explique cada uma.','Me faça sorrir sem usar palavras.','Escreva com o dedo no meu braço o que está sentindo agora.'],
   },
   'Quente':{
-    verdade:[
-      'Qual fantasia você nunca me contou mas gostaria de realizar?',
-      'Qual parte do meu corpo te deixa mais louco(a)?',
-      'O que você gostaria que eu fizesse mais na nossa intimidade?',
-      'Qual foi o momento mais quente que vivemos juntos?',
-      'O que você usaria — ou não usaria — para me seduzir agora?',
-      'Onde você prefere ser beijado(a)?',
-      'Qual é seu maior desejo dessa noite?',
-    ],
-    desafio:[
-      'Sussurre no meu ouvido o que quer fazer comigo agora.',
-      'Tire uma peça de roupa minha lentamente.',
-      'Beije meu pescoço por 1 minuto sem parar.',
-      'Me faça uma massagem nos ombros por 3 minutos.',
-      'Dance para mim ao som de uma música que você escolher.',
-      'Me olhe da forma mais sedutora que conseguir por 30 segundos.',
-      'Me beije de um jeito que eu nunca me esqueça.',
-    ],
+    verdade:['Qual fantasia você nunca me contou mas gostaria de realizar?','Qual parte do meu corpo te deixa mais louco(a)?','O que você gostaria que eu fizesse mais na nossa intimidade?','Qual foi o momento mais quente que vivemos juntos?','O que você usaria — ou não usaria — para me seduzir agora?','Onde você prefere ser beijado(a)?','Qual é seu maior desejo dessa noite?'],
+    desafio:['Sussurre no meu ouvido o que quer fazer comigo agora.','Tire uma peça de roupa minha lentamente.','Beije meu pescoço por 1 minuto sem parar.','Me faça uma massagem nos ombros por 3 minutos.','Dance para mim ao som de uma música que você escolher.','Me olhe da forma mais sedutora que conseguir por 30 segundos.','Me beije de um jeito que eu nunca me esqueça.'],
   },
   'Explosivo':{
-    verdade:[
-      'Descreva em detalhes sua fantasia mais proibida.',
-      'O que eu poderia fazer que te deixaria completamente sem controle?',
-      'Qual parte do meu corpo você mais deseja explorar agora?',
-      'O que você mais deseja que aconteça essa noite?',
-      'Conte algo sobre sua sexualidade que nunca contou a ninguém.',
-      'O que você faria se eu não tivesse nenhuma inibição?',
-      'Qual é a coisa mais ousada que você já pensou em fazer comigo?',
-    ],
-    desafio:[
-      'Seduza-me apenas com olhares por 2 minutos.',
-      'Tire toda a sua roupa lentamente, sem pressa.',
-      'Me diga o que quer que eu faça com você — com todos os detalhes.',
-      'Surpreenda-me com algo que nunca fizemos antes.',
-      'Faça o que quiser com meu corpo por 5 minutos.',
-      'Me beije por onde quiser durante 2 minutos.',
-      'Realize agora o que você mais deseja fazer comigo.',
-    ],
+    verdade:['Descreva em detalhes sua fantasia mais proibida.','O que eu poderia fazer que te deixaria completamente sem controle?','Qual parte do meu corpo você mais deseja explorar agora?','O que você mais deseja que aconteça essa noite?','Conte algo sobre sua sexualidade que nunca contou a ninguém.','O que você faria se eu não tivesse nenhuma inibição?','Qual é a coisa mais ousada que você já pensou em fazer comigo?'],
+    desafio:['Seduza-me apenas com olhares por 2 minutos.','Tire toda a sua roupa lentamente, sem pressa.','Me diga o que quer que eu faça com você — com todos os detalhes.','Surpreenda-me com algo que nunca fizemos antes.','Faça o que quiser com meu corpo por 5 minutos.','Me beije por onde quiser durante 2 minutos.','Realize agora o que você mais deseja fazer comigo.'],
   },
 };
-let vdPlayer=1;
 function vdPick(tipo){
   const lv=getLevel('vdLevels');
-  const pool=VD[lv][tipo]; const text=pool[Math.floor(Math.random()*pool.length)];
+  const pool=VD[lv][tipo];const text=pool[Math.floor(Math.random()*pool.length)];
   document.getElementById('vdCLevel').textContent=lv.toUpperCase();
   document.getElementById('vdCCat').textContent=tipo==='verdade'?'Verdade':'Desafio';
   document.getElementById('vdCText').textContent=text;
@@ -786,70 +690,48 @@ function vdPick(tipo){
   document.getElementById('vdOverlay').classList.add('on');
 }
 function vdNext(){
-  vdPlayer = vdPlayer===1?2:1;
-  document.getElementById('vdPlayer').textContent=`Vez do Jogador ${vdPlayer}`;
+  vdCurrent=vdCurrent===1?2:1;
+  const name=vdCurrent===1?players.p1.name:players.p2.name;
+  document.getElementById('vdPlayer').textContent=`Vez de ${name||'Jogador '+vdCurrent}`;
   document.getElementById('vdOverlay').classList.remove('on');
 }
-document.getElementById('vdCard').addEventListener('click',function(){
-  if(!this.classList.contains('flipped'))this.classList.add('flipped');
-});
-document.getElementById('vdOverlay').addEventListener('click',function(e){
-  if(e.target===this)this.classList.remove('on');
-});
+document.getElementById('vdCard').addEventListener('click',function(){if(!this.classList.contains('flipped'))this.classList.add('flipped');});
+document.getElementById('vdOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
 
-// ══ DADO DOS PRAZERES DATA ═══════════════════════════════════
+// ══ DADO DATA ════════════════════════════════════════════════
 const DADO={
-  parte:{
-    'Romântico':['pescoço','ombros','mãos','cabelo','costas','rosto'],
-    'Quente':   ['pescoço','orelha','ombros','costas','pés','nuca','joelhos','pulsos'],
-    'Explosivo':['pescoço','orelha','peito','barriga','coxas','nuca','quadris','corpo todo'],
-  },
-  acao:{
-    'Romântico':['acariciar','massagear','beijar','abraçar','tocar levemente','afagar'],
-    'Quente':   ['beijar','massagear','morder levemente','acariciar','soprar','lamber suavemente'],
-    'Explosivo':['beijar','morder','massagear','lamber','acariciar','explorar','apertar'],
-  },
+  parte:{'Romântico':['pescoço','ombros','mãos','cabelo','costas','rosto'],'Quente':['pescoço','orelha','ombros','costas','pés','nuca','joelhos','pulsos'],'Explosivo':['pescoço','orelha','peito','barriga','coxas','nuca','quadris','corpo todo']},
+  acao:{'Romântico':['acariciar','massagear','beijar','abraçar','tocar levemente','afagar'],'Quente':['beijar','massagear','morder levemente','acariciar','soprar','lamber suavemente'],'Explosivo':['beijar','morder','massagear','lamber','acariciar','explorar','apertar']},
   duracao:['1 minuto','2 minutos','3 minutos','5 minutos','10 minutos','você decide'],
-  local:  ['aqui mesmo','no quarto','no banheiro','onde você quiser'],
+  local:['aqui mesmo','no quarto','no banheiro','onde você quiser'],
 };
 let dadoRolling=false;
 document.getElementById('dadoBtn').addEventListener('click',function(){
-  if(dadoRolling)return; dadoRolling=true;
-  this.disabled=true; this.textContent='Rolando…';
+  if(dadoRolling)return;dadoRolling=true;this.disabled=true;this.textContent='Rolando…';
   document.getElementById('dadoResult').textContent='…';
-  [0,1,2,3].forEach(i=>{
-    const d=document.getElementById('die'+i),v=document.getElementById('dv'+i);
-    v.classList.add('blank'); d.classList.add('rolling');
-    d.addEventListener('animationend',()=>d.classList.remove('rolling'),{once:true});
-  });
+  [0,1,2,3].forEach(i=>{const d=document.getElementById('die'+i),v=document.getElementById('dv'+i);v.classList.add('blank');d.classList.add('rolling');d.addEventListener('animationend',()=>d.classList.remove('rolling'),{once:true});});
   setTimeout(()=>{
     const lv=getLevel('dadoLevels');
-    const parte =DADO.parte[lv][Math.floor(Math.random()*DADO.parte[lv].length)];
-    const acao  =DADO.acao[lv][Math.floor(Math.random()*DADO.acao[lv].length)];
-    const dur   =DADO.duracao[Math.floor(Math.random()*DADO.duracao.length)];
-    const local =DADO.local[Math.floor(Math.random()*DADO.local.length)];
-    ['dv0','dv1','dv2','dv3'].forEach((id,i)=>{
-      const el=document.getElementById(id);
-      el.textContent=[parte,acao,dur,local][i]; el.classList.remove('blank');
-    });
-    document.getElementById('dadoResult').textContent=
-      `${acao.charAt(0).toUpperCase()+acao.slice(1)} o ${parte} por ${dur} — ${local}.`;
-    dadoRolling=false;
-    const btn=document.getElementById('dadoBtn');
-    btn.disabled=false; btn.textContent='Rolar os Dados';
+    const parte=DADO.parte[lv][Math.floor(Math.random()*DADO.parte[lv].length)];
+    const acao=DADO.acao[lv][Math.floor(Math.random()*DADO.acao[lv].length)];
+    const dur=DADO.duracao[Math.floor(Math.random()*DADO.duracao.length)];
+    const local=DADO.local[Math.floor(Math.random()*DADO.local.length)];
+    ['dv0','dv1','dv2','dv3'].forEach((id,i)=>{const el=document.getElementById(id);el.textContent=[parte,acao,dur,local][i];el.classList.remove('blank');});
+    document.getElementById('dadoResult').textContent=`${acao.charAt(0).toUpperCase()+acao.slice(1)} o ${parte} por ${dur} — ${local}.`;
+    dadoRolling=false;const btn=document.getElementById('dadoBtn');btn.disabled=false;btn.textContent='Rolar os Dados';
   },600);
 });
 
-// ══ QUIZ DO CASAL DATA ═══════════════════════════════════════
+// ══ QUIZ ════════════════════════════════════════════════════
 const QUIZ=[
-  {p:'Onde você prefere ser beijado(a)?',    o:['Lábios','Pescoço','Orelha','Ombros']},
-  {p:'O que te relaxa mais?',                o:['Massagem','Banho quente','Música suave','Abraço demorado']},
-  {p:'Qual clima você prefere para a intimidade?', o:['Luz de vela','No escuro','Com música','De dia']},
-  {p:'Como prefere ser surpreendido(a)?',    o:['Com toque gentil','Com palavras','Com olhar','Com presente']},
-  {p:'Qual parte de mim te atrai mais?',     o:['Olhos','Sorriso','Mãos','Corpo todo']},
-  {p:'O que te deixa mais na disposição?',   o:['Banho juntos','Jantar romântico','Massagem','Conversa íntima']},
-  {p:'Como prefere terminar a noite?',       o:['Abraçados dormindo','Conversando','Assistindo algo','Em silêncio']},
-  {p:'Qual sua maior fantasia?',             o:['Lugar diferente','Roleplay','Surpresa','Algo novo']},
+  {p:'Onde você prefere ser beijado(a)?',o:['Lábios','Pescoço','Orelha','Ombros']},
+  {p:'O que te relaxa mais?',o:['Massagem','Banho quente','Música suave','Abraço demorado']},
+  {p:'Qual clima você prefere para a intimidade?',o:['Luz de vela','No escuro','Com música','De dia']},
+  {p:'Como prefere ser surpreendido(a)?',o:['Com toque gentil','Com palavras','Com olhar','Com presente']},
+  {p:'Qual parte de mim te atrai mais?',o:['Olhos','Sorriso','Mãos','Corpo todo']},
+  {p:'O que te deixa mais na disposição?',o:['Banho juntos','Jantar romântico','Massagem','Conversa íntima']},
+  {p:'Como prefere terminar a noite?',o:['Abraçados dormindo','Conversando','Assistindo algo','Em silêncio']},
+  {p:'Qual sua maior fantasia?',o:['Lugar diferente','Roleplay','Surpresa','Algo novo']},
 ];
 let qState={phase:0,q:0,ans:[[],[]]};
 function quizStart(){
@@ -860,37 +742,40 @@ function quizStart(){
 }
 function renderQ(){
   const p=qState.phase,q=qState.q,total=QUIZ.length;
-  document.getElementById('qPhase').textContent=`Jogador ${p} — Pergunta ${q+1} de ${total}`;
+  const pname=p===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  document.getElementById('qPhase').textContent=`${pname} — Pergunta ${q+1} de ${total}`;
   document.getElementById('qBar').style.width=`${((p-1)*total+q)/(2*total)*100}%`;
   document.getElementById('qQuestion').textContent=QUIZ[q].p;
-  const opts=document.getElementById('qOptions'); opts.innerHTML='';
+  const opts=document.getElementById('qOptions');opts.innerHTML='';
   QUIZ[q].o.forEach((opt,i)=>{
-    const b=document.createElement('button'); b.className='quiz-opt'; b.textContent=opt;
+    const b=document.createElement('button');b.className='quiz-opt';b.textContent=opt;
     b.onclick=()=>{
       qState.ans[p-1][q]=i;
       if(q+1<total){qState.q++;renderQ();}
-      else if(p===1){qState.phase=2;qState.q=0;renderQ();}
-      else showQuizResults();
+      else if(p===1){
+        qState.phase=2;qState.q=0;
+        openPin(2,()=>{renderQ();});
+      } else showQuizResults();
     };
     opts.appendChild(b);
   });
 }
 function showQuizResults(){
-  document.getElementById('quizGame').style.display='none';
-  document.getElementById('quizResults').style.display='flex';
-  let score=0; const list=document.getElementById('qResultList'); list.innerHTML='';
-  QUIZ.forEach((q,i)=>{
-    const a1=qState.ans[0][i],a2=qState.ans[1][i],match=a1===a2;
-    if(match)score++;
-    const card=document.createElement('div'); card.className='quiz-result-card';
-    card.innerHTML=`<div class="qr-q">${q.p}</div><div class="qr-answers">
-      <div class="qr-a ${match?'match':'differ'}"><span>Jogador 1</span>${q.o[a1]}</div>
-      <div class="qr-a ${match?'match':'differ'}"><span>Jogador 2</span>${q.o[a2]}</div>
-    </div>`;
-    list.appendChild(card);
+  openPin(1,()=>{
+    document.getElementById('quizGame').style.display='none';
+    document.getElementById('quizResults').style.display='flex';
+    let score=0;const list=document.getElementById('qResultList');list.innerHTML='';
+    QUIZ.forEach((q,i)=>{
+      const a1=qState.ans[0][i],a2=qState.ans[1][i],match=a1===a2;
+      if(match)score++;
+      const card=document.createElement('div');card.className='quiz-result-card';
+      const n1=players.p1.name||'J1',n2=players.p2.name||'J2';
+      card.innerHTML=`<div class="qr-q">${q.p}</div><div class="qr-answers"><div class="qr-a ${match?'match':'differ'}"><span>${n1}</span>${q.o[a1]}</div><div class="qr-a ${match?'match':'differ'}"><span>${n2}</span>${q.o[a2]}</div></div>`;
+      list.appendChild(card);
+    });
+    document.getElementById('qScoreNum').textContent=`${score}/${QUIZ.length}`;
+    document.getElementById('qBar').style.width='100%';
   });
-  document.getElementById('qScoreNum').textContent=`${score}/${QUIZ.length}`;
-  document.getElementById('qBar').style.width='100%';
 }
 function quizReset(){
   qState={phase:0,q:0,ans:[[],[]]};
@@ -900,65 +785,442 @@ function quizReset(){
   document.getElementById('qBar').style.width='0%';
 }
 
-// ══ MISSÃO DA NOITE DATA ═════════════════════════════════════
+// ══ MISSÃO DATA ════════════════════════════════════════════
 const MISSOES={
   'Romântico':[
-    ['Apaguem as luzes, acendam uma vela e coloquem uma música suave.',
-     'Sentem frente a frente e contem 3 memórias favoritas de vocês dois.',
-     'Massagem completa nos ombros e costas do seu parceiro(a) por 10 minutos.',
-     'Terminem com um abraço longo e um beijo apaixonado — sem pressa.'],
-    ['Escrevam um bilhete um para o outro dizendo o que mais amam na pessoa.',
-     'Preparem juntos uma bebida especial e brindem à noite de vocês.',
-     'Dancem juntos por duas músicas — escolham uma cada.',
-     'Deitem abraçados por 15 minutos sem celular.'],
-    ['Desliguem os celulares. A próxima hora é só de vocês.',
-     'Olhem fotos de momentos especiais de vocês e comentem cada uma.',
-     'Carinho demorado pelo rosto e cabelo do parceiro(a) por 5 minutos.',
-     'Durmam abraçados — sem TV, sem celular, sem distração.'],
+    ['Apaguem as luzes, acendam uma vela e coloquem uma música suave.','Sentem frente a frente e contem 3 memórias favoritas de vocês dois.','Massagem completa nos ombros e costas do seu parceiro(a) por 10 minutos.','Terminem com um abraço longo e um beijo apaixonado — sem pressa.'],
+    ['Escrevam um bilhete um para o outro dizendo o que mais amam na pessoa.','Preparem juntos uma bebida especial e brindem à noite de vocês.','Dancem juntos por duas músicas — escolham uma cada.','Deitem abraçados por 15 minutos sem celular.'],
+    ['Desliguem os celulares. A próxima hora é só de vocês.','Olhem fotos de momentos especiais de vocês e comentem cada uma.','Carinho demorado pelo rosto e cabelo do parceiro(a) por 5 minutos.','Durmam abraçados — sem TV, sem celular, sem distração.'],
   ],
   'Quente':[
-    ['Cada um tira uma peça de roupa do outro lentamente.',
-     'Joguem Verdade ou Desafio nível Quente por 15 minutos.',
-     'Massagem sensual completa por 15 minutos — o(a) massageado(a) escolhe onde.',
-     'A noite é de vocês — deixem o desejo guiar.'],
-    ['Vistam algo que deixa o outro louco(a) — ou tirem tudo.',
-     'Sussurrem um ao outro o que mais desejam nessa noite.',
-     'Fiquem 10 minutos apenas se beijando — sem ir além ainda.',
-     'Agora sim — realizem o que sussurraram.'],
-    ['Escolham juntos uma música para essa noite e dancem juntos.',
-     'Cada um faz um pedido que o outro deve cumprir.',
-     'Banho juntos — 15 minutos, sem pressa.',
-     'Tragam a energia do banho para o quarto.'],
+    ['Cada um tira uma peça de roupa do outro lentamente.','Joguem Verdade ou Desafio nível Quente por 15 minutos.','Massagem sensual completa por 15 minutos — o(a) massageado(a) escolhe onde.','A noite é de vocês — deixem o desejo guiar.'],
+    ['Vistam algo que deixa o outro louco(a) — ou tirem tudo.','Sussurrem um ao outro o que mais desejam nessa noite.','Fiquem 10 minutos apenas se beijando — sem ir além ainda.','Agora sim — realizem o que sussurraram.'],
+    ['Escolham juntos uma música para essa noite e dancem juntos.','Cada um faz um pedido que o outro deve cumprir.','Banho juntos — 15 minutos, sem pressa.','Tragam a energia do banho para o quarto.'],
   ],
   'Explosivo':[
-    ['Porta fechada, telefone desligado — a noite é absolutamente de vocês.',
-     'Fiquem nus e explorem o corpo um do outro por 10 minutos, sem ir além.',
-     'Cada um diz em voz alta a fantasia que guarda há mais tempo.',
-     'Realizem a fantasia dita — sem censura.'],
-    ['Escolham juntos o que cada um vai vestir — ou não vestir.',
-     'Vendam os olhos do(a) parceiro(a) e surpreendam com toque, sopro e beijos por 10 min.',
-     'Troquem de papel: quem sempre é ativo(a) vira passivo(a) por 20 minutos.',
-     'Durmam nus e abraçados — a noite foi de vocês.'],
-    ['Cada um escreve num papel o que mais deseja que aconteça — sem mostrar ainda.',
-     'Troquem os papéis e leiam em voz alta.',
-     'Realizem o pedido do outro — completamente.',
-     'Fiquem acordados conversando sobre o que sentiram.'],
+    ['Porta fechada, telefone desligado — a noite é absolutamente de vocês.','Fiquem nus e explorem o corpo um do outro por 10 minutos, sem ir além.','Cada um diz em voz alta a fantasia que guarda há mais tempo.','Realizem a fantasia dita — sem censura.'],
+    ['Escolham juntos o que cada um vai vestir — ou não vestir.','Vendam os olhos do(a) parceiro(a) e surpreendam com toque, sopro e beijos por 10 min.','Troquem de papel: quem sempre é ativo(a) vira passivo(a) por 20 minutos.','Durmam nus e abraçados — a noite foi de vocês.'],
+    ['Cada um escreve num papel o que mais deseja que aconteça — sem mostrar ainda.','Troquem os papéis e leiam em voz alta.','Realizem o pedido do outro — completamente.','Fiquem acordados conversando sobre o que sentiram.'],
   ],
 };
 document.getElementById('missaoBtn').addEventListener('click',function(){
   const lv=getLevel('missaoLevels');
-  const arr=MISSOES[lv], m=arr[Math.floor(Math.random()*arr.length)];
+  const arr=MISSOES[lv],m=arr[Math.floor(Math.random()*arr.length)];
   const card=document.getElementById('missaoCard');
-  card.innerHTML=`<div class="missao-card">
-    <div class="missao-card-title">Missão de Hoje</div>
-    <div class="missao-rule"></div>
-    <div class="missao-steps">${m.map((s,i)=>`
-      <div class="missao-step">
-        <div class="step-num">${i+1}</div>
-        <div class="step-text">${s}</div>
-      </div>`).join('')}
-    </div>
-  </div>`;
+  card.innerHTML=`<div class="missao-card"><div class="missao-card-title">Missão de Hoje</div><div class="missao-rule"></div><div class="missao-steps">${m.map((s,i)=>`<div class="missao-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div></div>`;
+});
+
+// ══ POSIÇÕES DATA ═════════════════════════════════════════════
+const POSICOES=[
+  {
+    name:'Missionário',level:'Iniciante',time:'Livre',
+    desc:'Posição clássica e íntima. Um parceiro deita de costas enquanto o outro se posiciona acima, permitindo contato visual profundo e máxima conexão emocional.',
+    tip:'<strong>Dica:</strong> Um travesseiro sob os quadris de quem está embaixo cria uma angulação perfeita e intensifica as sensações.',
+    svg:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="90" cy="108" rx="55" ry="13" fill="#C8943A" opacity="0.85"/>
+      <circle cx="152" cy="103" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M42 110 C30 95 32 75 45 62" stroke="#C8943A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M55 110 C43 95 44 76 58 63" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <ellipse cx="90" cy="90" rx="52" ry="12" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="150" cy="85" r="12" fill="#C46B7A" opacity="0.85"/>
+      <path d="M108 88 L120 64" stroke="#C46B7A" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M74 88 L62 64" stroke="#C46B7A" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.85"/>
+    </svg>`
+  },
+  {
+    name:'Colher',level:'Iniciante',time:'Livre',
+    desc:'Posição de máxima intimidade e aconchego. Ambos deitam de lado na mesma direção, com um parceiro por trás do outro, criando um abraço total e muito calor.',
+    tip:'<strong>Dica:</strong> Ideal para noites frias ou quando querem mais carinho. Perfeita para conversar enquanto se tocam.',
+    svg:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="92" cy="108" rx="56" ry="13" fill="#C8943A" opacity="0.85"/>
+      <circle cx="154" cy="103" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M105 100 C118 88 130 84 140 86" stroke="#C8943A" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.75"/>
+      <ellipse cx="90" cy="88" rx="52" ry="11" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="148" cy="83" r="12" fill="#C46B7A" opacity="0.85"/>
+      <path d="M38 88 C28 92 22 100 24 112" stroke="#C46B7A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+    </svg>`
+  },
+  {
+    name:'Cavalgada',level:'Iniciante',time:'Livre',
+    desc:'A pessoa de cima assume o controle total do ritmo e da profundidade. Posição que favorece o orgasmo feminino e permite ótima estimulação ao mesmo tempo.',
+    tip:'<strong>Dica:</strong> Quem está em cima pode inclinar o corpo levemente para frente para estimulação intensa. Experimenta apoiar as mãos no peito do parceiro.',
+    svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="90" cy="122" rx="55" ry="12" fill="#C8943A" opacity="0.85"/>
+      <circle cx="152" cy="117" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M65 122 L52 140" stroke="#C46B7A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M120 122 L133 140" stroke="#C46B7A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <ellipse cx="93" cy="88" rx="16" ry="32" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="93" cy="52" r="14" fill="#C46B7A" opacity="0.85"/>
+      <path d="M78 82 L64 72" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.7"/>
+      <path d="M108 82 L122 72" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.7"/>
+    </svg>`
+  },
+  {
+    name:'Cachorrinho',level:'Intermediário',time:'Livre',
+    desc:'Posição de alta estimulação. Um parceiro apoia nas mãos e joelhos enquanto o outro se posiciona atrás. Permite penetração profunda e acesso perfeito para carícias.',
+    tip:'<strong>Dica:</strong> O parceiro na frente pode abaixar os ombros para intensificar as sensações. Use as mãos para carícias extras.',
+    svg:`<svg viewBox="0 0 210 148" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="82" cy="88" rx="46" ry="14" transform="rotate(-8 82 88)" fill="#C8943A" opacity="0.85"/>
+      <circle cx="35" cy="96" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M55 92 L44 120" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M68 90 L58 118" stroke="#C8943A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <path d="M115 90 L118 120" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M125 88 L130 118" stroke="#C8943A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <ellipse cx="158" cy="76" rx="15" ry="30" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="158" cy="42" r="13" fill="#C46B7A" opacity="0.85"/>
+      <path d="M148 104 L143 130" stroke="#C46B7A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M167 104 L172 130" stroke="#C46B7A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M146 85 C138 88 128 90 118 90" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65"/>
+    </svg>`
+  },
+  {
+    name:'Cadeira',level:'Intermediário',time:'Livre',
+    desc:'Um parceiro senta confortavelmente enquanto o outro senta em seu colo. Posição ótima para beijos e carícias simultâneas com profundidade e controle partilhados.',
+    tip:'<strong>Dica:</strong> Usem uma cadeira firme ou sentem na beira da cama. Quem está em cima controla o ritmo com os pés no chão.',
+    svg:`<svg viewBox="0 0 200 152" xmlns="http://www.w3.org/2000/svg">
+      <rect x="62" y="108" width="76" height="4" rx="2" fill="rgba(200,148,58,0.18)"/>
+      <rect x="60" y="75" width="4" height="36" rx="2" fill="rgba(200,148,58,0.12)"/>
+      <rect x="134" y="75" width="4" height="36" rx="2" fill="rgba(200,148,58,0.12)"/>
+      <ellipse cx="98" cy="78" rx="14" ry="28" fill="#C8943A" opacity="0.85"/>
+      <circle cx="98" cy="46" r="13" fill="#C8943A" opacity="0.85"/>
+      <ellipse cx="98" cy="108" rx="30" ry="9" fill="#C8943A" opacity="0.85"/>
+      <path d="M72 112 L68 138" stroke="#C8943A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M122 112 L126 138" stroke="#C8943A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <ellipse cx="97" cy="60" rx="12" ry="25" transform="rotate(8 97 60)" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="101" cy="30" r="12" fill="#C46B7A" opacity="0.85"/>
+      <path d="M85 80 L74 108" stroke="#C46B7A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M109 80 L120 108" stroke="#C46B7A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.85"/>
+    </svg>`
+  },
+  {
+    name:'Face a Face Deitados',level:'Iniciante',time:'Livre',
+    desc:'Ambos deitam de lado, frente a frente. Posição muito íntima que permite beijos constantes, olhar nos olhos e carícias mútuas enquanto permanecem conectados.',
+    tip:'<strong>Dica:</strong> Dobrem os joelhos juntos para aproximar os quadris. Um travesseiro entre as pernas de quem está embaixo aumenta o conforto.',
+    svg:`<svg viewBox="0 0 200 132" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="90" cy="105" rx="55" ry="12" fill="#C8943A" opacity="0.85"/>
+      <circle cx="150" cy="100" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M38 106 C28 100 24 90 30 80" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <path d="M125 98 C132 90 138 85 140 82" stroke="#C8943A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65"/>
+      <ellipse cx="90" cy="83" rx="52" ry="11" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="32" cy="78" r="12" fill="#C46B7A" opacity="0.85"/>
+      <path d="M140 84 C150 78 154 68 148 58" stroke="#C46B7A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+    </svg>`
+  },
+  {
+    name:'Em Pé',level:'Intermediário',time:'Livre',
+    desc:'Ambos em pé, de frente ou com um levantando a perna do outro. Posição ótima para fora da cama — contra a parede, na ducha ou em qualquer ambiente.',
+    tip:'<strong>Dica:</strong> Apoiar as costas na parede dá mais estabilidade e libera as mãos. Diferença de altura pode ser ajustada com um degrau ou banheiro.',
+    svg:`<svg viewBox="0 0 200 158" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="85" cy="75" rx="14" ry="32" fill="#C8943A" opacity="0.85"/>
+      <circle cx="85" cy="39" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M76 105 L72 140" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M94 105 L98 140" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M98 72 C110 68 118 65 122 68" stroke="#C8943A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65"/>
+      <path d="M98 82 C110 80 120 80 124 82" stroke="#C8943A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65"/>
+      <ellipse cx="115" cy="72" rx="13" ry="30" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="115" cy="38" r="12" fill="#C46B7A" opacity="0.85"/>
+      <path d="M108 100 L105 138" stroke="#C46B7A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M122 100 C130 88 98 78 90 82" stroke="#C46B7A" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <path d="M103 68 C95 65 88 64 84 66" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65"/>
+    </svg>`
+  },
+  {
+    name:'Borboleta',level:'Avançado',time:'Livre',
+    desc:'Um parceiro deita na beira da cama com as pernas levantadas enquanto o outro fica em pé ou ajoelhado. A elevação dos quadris cria um ângulo único de estimulação profunda.',
+    tip:'<strong>Dica:</strong> Um travesseiro sob os quadris de quem deita amplifica tudo. Quem está de pé pode variar o ritmo com muito mais controle.',
+    svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="118" width="120" height="3" rx="1.5" fill="rgba(200,148,58,0.12)"/>
+      <ellipse cx="72" cy="108" rx="48" ry="12" fill="#C8943A" opacity="0.85"/>
+      <circle cx="126" cy="103" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M36 108 C22 92 18 72 30 56" stroke="#C8943A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M50 108 C38 90 36 70 50 56" stroke="#C8943A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <circle cx="30" cy="50" r="7" fill="#C8943A" opacity="0.6"/>
+      <circle cx="50" cy="50" r="7" fill="#C8943A" opacity="0.6"/>
+      <ellipse cx="160" cy="80" rx="14" ry="28" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="160" cy="48" r="13" fill="#C46B7A" opacity="0.85"/>
+      <path d="M150 106 L145 130" stroke="#C46B7A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M170 106 L175 130" stroke="#C46B7A" stroke-width="11" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M148 82 C138 80 62 90 56 96" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.6"/>
+    </svg>`
+  },
+  {
+    name:'Invertida',level:'Avançado',time:'Livre',
+    desc:'Variação da cavalgada com a pessoa de cima voltada para o lado oposto. Sensações completamente diferentes e estimulação de pontos únicos para ambos os parceiros.',
+    tip:'<strong>Dica:</strong> Quem fica em cima apoia as mãos nas coxas ou joelhos do parceiro para equilíbrio. Posição incrível para quem quer sensações novas.',
+    svg:`<svg viewBox="0 0 200 148" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="90" cy="122" rx="55" ry="12" fill="#C8943A" opacity="0.85"/>
+      <circle cx="152" cy="117" r="13" fill="#C8943A" opacity="0.85"/>
+      <path d="M78 122 L68 140" stroke="#C46B7A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M108 122 L118 140" stroke="#C46B7A" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <ellipse cx="88" cy="88" rx="16" ry="32" fill="#C46B7A" opacity="0.85"/>
+      <circle cx="88" cy="52" r="14" fill="#C46B7A" opacity="0.85"/>
+      <path d="M72 82 C60 78 52 74 48 76" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.7"/>
+      <path d="M104 82 C116 78 124 74 128 76" stroke="#C46B7A" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.7"/>
+    </svg>`
+  },
+];
+
+// posições filtradas por nível
+let posIndex=0;
+let posFiltered=[];
+
+function getPosFiltered(){
+  const lv=getLevel('posLevels');
+  if(lv==='Iniciante') return POSICOES.filter(p=>p.level==='Iniciante');
+  if(lv==='Intermediário') return POSICOES.filter(p=>p.level==='Iniciante'||p.level==='Intermediário');
+  return POSICOES;
+}
+
+// Atualizar ao mudar nível
+document.getElementById('posLevels').querySelectorAll('.lvl').forEach(btn=>{
+  btn.addEventListener('click',()=>{posIndex=0;renderPos();});
+});
+
+function renderPos(){
+  posFiltered=getPosFiltered();
+  if(!posFiltered.length)return;
+  if(posIndex>=posFiltered.length)posIndex=0;
+  const p=posFiltered[posIndex];
+  document.getElementById('posIllustration').innerHTML=p.svg;
+  document.getElementById('posName').textContent=p.name;
+  document.getElementById('posDesc').textContent=p.desc;
+  document.getElementById('posTip').innerHTML=p.tip;
+  document.getElementById('posCounter').textContent=`${posIndex+1} de ${posFiltered.length}`;
+  const lbadge=p.level==='Iniciante'?'badge-i':p.level==='Intermediário'?'badge-m':'badge-a';
+  document.getElementById('posBadges').innerHTML=`<span class="badge ${lbadge}">${p.level}</span><span class="badge badge-t">⏱ ${p.time}</span>`;
+}
+
+function posNav(dir){
+  posFiltered=getPosFiltered();
+  posIndex=(posIndex+dir+posFiltered.length)%posFiltered.length;
+  renderPos();
+}
+
+function posRandom(){
+  posFiltered=getPosFiltered();
+  posIndex=Math.floor(Math.random()*posFiltered.length);
+  renderPos();
+}
+
+// ══ MUSIC PLAYER (Web Audio) ══════════════════════════════════
+let audioCtx=null,gainNode=null,audioNodes=[],currentMood=null;
+
+function initAudio(){
+  if(!audioCtx){
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    gainNode=audioCtx.createGain();
+    gainNode.gain.value=parseFloat(document.getElementById('musicVol').value);
+    gainNode.connect(audioCtx.destination);
+  }
+  if(audioCtx.state==='suspended')audioCtx.resume();
+}
+
+function stopAllNodes(){
+  audioNodes.forEach(n=>{try{n.stop&&n.stop();}catch(e){}try{n.disconnect&&n.disconnect();}catch(e){}});
+  audioNodes=[];
+}
+
+function playMood(btn){
+  const mood=btn.dataset.mood;
+  stopAllNodes();
+  initAudio();
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));
+
+  if(currentMood===mood){currentMood=null;return;}
+  btn.classList.add('on');currentMood=mood;
+
+  if(mood==='romantico'){
+    [432,648,864].forEach((f,i)=>{
+      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
+      osc.type='sine';osc.frequency.value=f;g.gain.value=0.14/(i+1);
+      const lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();
+      lfo.frequency.value=0.08+i*0.04;lg.gain.value=f*0.003;
+      lfo.connect(lg);lg.connect(osc.frequency);
+      osc.connect(g);g.connect(gainNode);
+      osc.start();lfo.start();audioNodes.push(osc,g,lfo,lg);
+    });
+  } else if(mood==='sensual'){
+    const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
+    osc.type='sine';osc.frequency.value=90;g.gain.value=0.28;
+    const lfo=audioCtx.createOscillator(),lg=audioCtx.createGain();
+    lfo.frequency.value=0.6;lg.gain.value=0.14;
+    lfo.connect(lg);lg.connect(g.gain);
+    osc.connect(g);g.connect(gainNode);osc.start();lfo.start();
+    audioNodes.push(osc,g,lfo,lg);
+    const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
+    o2.type='sine';o2.frequency.value=270;g2.gain.value=0.06;
+    o2.connect(g2);g2.connect(gainNode);o2.start();audioNodes.push(o2,g2);
+  } else if(mood==='jazz'){
+    [261.6,329.6,392,466.2].forEach((f,i)=>{
+      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
+      osc.type='triangle';osc.frequency.value=f;osc.detune.value=(Math.random()-0.5)*10;
+      g.gain.setValueAtTime(0,audioCtx.currentTime);
+      g.gain.linearRampToValueAtTime(0.08/(i*0.4+1),audioCtx.currentTime+0.6+i*0.25);
+      osc.connect(g);g.connect(gainNode);osc.start();audioNodes.push(osc,g);
+    });
+  } else if(mood==='chuva'){
+    const buf=audioCtx.createBuffer(2,audioCtx.sampleRate*3,audioCtx.sampleRate);
+    for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+    const src=audioCtx.createBufferSource();src.buffer=buf;src.loop=true;
+    const filter=audioCtx.createBiquadFilter();filter.type='bandpass';filter.frequency.value=900;filter.Q.value=0.4;
+    const g=audioCtx.createGain();g.gain.value=0.45;
+    src.connect(filter);filter.connect(g);g.connect(gainNode);src.start();
+    audioNodes.push(src,filter,g);
+  }
+}
+
+function stopMusic(){
+  stopAllNodes();currentMood=null;
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));
+}
+
+function setMusicVol(el){
+  const v=parseFloat(el.value);
+  el.style.setProperty('--p',`${v*100}%`);
+  if(gainNode)gainNode.gain.value=v;
+}
+
+function toggleMusic(){
+  const fab=document.getElementById('music-fab');
+  const panel=document.getElementById('music-panel');
+  const on=panel.classList.toggle('on');
+  fab.classList.toggle('active',on);
+}
+
+// close music if click outside
+document.addEventListener('click',e=>{
+  const panel=document.getElementById('music-panel');
+  const fab=document.getElementById('music-fab');
+  if(!panel.contains(e.target)&&e.target!==fab){
+    panel.classList.remove('on');fab.classList.remove('active');
+  }
+});
+
+// ══ TIMER ════════════════════════════════════════════════════
+const TIMER_CIRC=2*Math.PI*84; // r=84 → ~527.8
+let timerSt={total:300,remaining:300,running:false,interval:null};
+
+function timerSet(s){
+  clearInterval(timerSt.interval);
+  timerSt.total=s;timerSt.remaining=s;timerSt.running=false;
+  document.getElementById('timerStartBtn').textContent='Iniciar';
+  renderTimer();
+  document.querySelectorAll('.timer-preset').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.sec)===s));
+}
+
+function timerToggle(){
+  if(timerSt.running){
+    clearInterval(timerSt.interval);timerSt.running=false;
+    document.getElementById('timerStartBtn').textContent='Continuar';
+    document.getElementById('timerLbl').textContent='Pausado';
+  } else {
+    if(timerSt.remaining<=0)timerSt.remaining=timerSt.total;
+    timerSt.running=true;
+    document.getElementById('timerStartBtn').textContent='Pausar';
+    document.getElementById('timerLbl').textContent='Rodando';
+    timerSt.interval=setInterval(()=>{
+      timerSt.remaining--;renderTimer();
+      if(timerSt.remaining<=0){
+        clearInterval(timerSt.interval);timerSt.running=false;
+        document.getElementById('timerStartBtn').textContent='Reiniciar';
+        document.getElementById('timerLbl').textContent='Concluído!';
+        timerDone();
+      }
+    },1000);
+  }
+}
+
+function timerReset(){
+  clearInterval(timerSt.interval);timerSt.running=false;
+  timerSt.remaining=timerSt.total;
+  document.getElementById('timerStartBtn').textContent='Iniciar';
+  document.getElementById('timerLbl').textContent='Pronto';
+  renderTimer();
+}
+
+function renderTimer(){
+  const r=timerSt.remaining,t=timerSt.total;
+  const min=Math.floor(r/60).toString().padStart(2,'0');
+  const sec=(r%60).toString().padStart(2,'0');
+  document.getElementById('timerTime').textContent=`${min}:${sec}`;
+  const progress=t>0?r/t:1;
+  document.getElementById('timerCircle').style.strokeDashoffset=`${TIMER_CIRC*(1-progress)}`;
+}
+
+function timerDone(){
+  const ov=document.getElementById('timer-overlay');
+  ov.classList.add('timer-done-anim');
+  setTimeout(()=>ov.classList.remove('timer-done-anim'),1600);
+  if(navigator.vibrate)navigator.vibrate([200,100,200,100,200]);
+  // beep sound
+  try{
+    const ctx2=new(window.AudioContext||window.webkitAudioContext)();
+    [880,1100,1320].forEach((f,i)=>{
+      const o=ctx2.createOscillator(),g=ctx2.createGain();
+      o.frequency.value=f;g.gain.value=0.35;
+      g.gain.exponentialRampToValueAtTime(0.001,ctx2.currentTime+0.45+i*0.55);
+      o.connect(g);g.connect(ctx2.destination);
+      o.start(ctx2.currentTime+i*0.55);o.stop(ctx2.currentTime+0.45+i*0.55);
+    });
+  }catch(e){}
+}
+
+function openTimerFrom(overlayEl){
+  if(overlayEl)overlayEl.classList.remove('on');
+  document.getElementById('timer-overlay').classList.add('on');
+}
+
+function closeTimer(){
+  document.getElementById('timer-overlay').classList.remove('on');
+}
+
+// init timer display
+timerSet(300);
+document.getElementById('musicVol').style.setProperty('--p','35%');
+
+// ══ PIN SYSTEM ════════════════════════════════════════════════
+let pinState={target:'',buf:'',callback:null};
+
+function openPin(playerNum,cb){
+  const pname=playerNum===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  pinState={target:playerNum===1?players.p1.pin:players.p2.pin,buf:'',callback:cb};
+  document.getElementById('pinTitle').textContent=`Vez de ${pname}`;
+  document.getElementById('pinSub').textContent='Digite seu PIN para continuar';
+  document.getElementById('pinErr').textContent='';
+  renderPinDots();
+  document.getElementById('pin-overlay').classList.add('on');
+}
+
+function renderPinDots(){
+  for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('on',i<pinState.buf.length);
+}
+
+function pinKey(k){
+  if(pinState.buf.length>=4)return;
+  pinState.buf+=k;renderPinDots();
+  if(pinState.buf.length===4){
+    setTimeout(()=>{
+      if(pinState.buf===pinState.target){
+        document.getElementById('pin-overlay').classList.remove('on');
+        pinState.buf='';renderPinDots();
+        if(pinState.callback)pinState.callback();
+      } else {
+        document.getElementById('pinErr').textContent='PIN incorreto. Tente novamente.';
+        pinState.buf='';renderPinDots();
+      }
+    },180);
+  }
+}
+
+function pinDel(){
+  pinState.buf=pinState.buf.slice(0,-1);
+  document.getElementById('pinErr').textContent='';
+  renderPinDots();
+}
+
+// Enter key for login
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.getElementById('login').classList.contains('active'))doLogin();
 });
 </script>
 </body>
