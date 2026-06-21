@@ -342,8 +342,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   h2.screen-title{font-size:1.5rem}
 }
 </style>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 </head>
 <body>
 <canvas id="bg"></canvas>
@@ -2152,8 +2151,30 @@ const fbCfg={
   messagingSenderId:'352596745880',
   appId:'1:352596745880:web:f2e5db4d8d7f9a83df7aed'
 };
-firebase.initializeApp(fbCfg);
-const fbdb=firebase.database();
+let fbdb=null;
+let _fbLoaded=false;
+async function carregarFirebase(){
+  if(_fbLoaded)return true;
+  return new Promise(resolve=>{
+    const s1=document.createElement('script');
+    s1.src='https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
+    s1.onerror=()=>resolve(false);
+    s1.onload=()=>{
+      const s2=document.createElement('script');
+      s2.src='https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js';
+      s2.onerror=()=>resolve(false);
+      s2.onload=()=>{
+        try{
+          if(!firebase.apps.length)firebase.initializeApp(fbCfg);
+          fbdb=firebase.database();
+          _fbLoaded=true;resolve(true);
+        }catch(e){console.error('Firebase init:',e);resolve(false);}
+      };
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s1);
+  });
+}
 
 // ── Multiplayer state ─────────────────────────────────────────────
 const mp={ativo:false,eu:null,codigo:null,vezAtual:'p1',salaRef:null,_p2Listener:null};
@@ -2184,6 +2205,10 @@ async function doLoginMpCriar(){
   const campos=mpValidarCampos();if(!campos)return;
   const err=document.getElementById('loginErr-mp');
   const{nome,pin}=campos;
+  err.textContent='Conectando…';
+  const ok=await carregarFirebase();
+  if(!ok){err.textContent='❌ Sem conexão com o servidor. Verifique sua internet.';return;}
+  err.textContent='';
   try{
     const codigo=gerarCodigo();
     mp.eu='p1';mp.codigo=codigo;mp.ativo=true;
@@ -2213,6 +2238,10 @@ async function doLoginMpEntrar(){
   const codigo=(document.getElementById('mpSalaInput').value||'').trim().toUpperCase();
   const err=document.getElementById('loginErr-mp');
   if(codigo.length<4){err.textContent='Digite o código da sala.';return;}
+  err.textContent='Conectando…';
+  const ok=await carregarFirebase();
+  if(!ok){err.textContent='❌ Sem conexão com o servidor. Verifique sua internet.';return;}
+  err.textContent='';
   try{
     const ref=fbdb.ref('salas/'+codigo);
     const snap=await ref.once('value');
