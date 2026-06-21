@@ -317,33 +317,82 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 </head>
 <body>
 <canvas id="bg"></canvas>
+<div id="mp-banner">
+  <span class="mp-b-code">Sala <b id="mp-b-code-val"></b></span>
+  <span class="mp-b-vez">Vez de <b id="mp-vez-nome">—</b></span>
+</div>
 
 <!-- ══ LOGIN ══ -->
 <div class="screen active" id="login">
   <div class="login-logo">
     <h1>Jogos do Desejo</h1>
-    <p>Registrem os dois jogadores para começar</p>
+    <p id="login-subtitle">Registrem os dois jogadores para começar</p>
   </div>
-  <div class="login-players">
-    <div class="login-player">
-      <div class="login-player-label">Jogador 1</div>
-      <input class="login-input" id="p1name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
-      <div class="pin-wrap">
-        <input class="login-input" id="p1pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
-        <button class="pin-toggle" onclick="togglePin('p1pin',this)">👁</button>
+
+  <!-- modo -->
+  <div class="login-mode">
+    <button class="mode-btn on" id="modeSolo" onclick="setLoginMode('solo')">📱 Mesmo celular</button>
+    <button class="mode-btn" id="modeDuo" onclick="setLoginMode('duo')">📱📱 Celulares separados</button>
+  </div>
+
+  <!-- solo -->
+  <div id="login-solo-section">
+    <div class="login-players">
+      <div class="login-player">
+        <div class="login-player-label">Jogador 1</div>
+        <input class="login-input" id="p1name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
+        <div class="pin-wrap">
+          <input class="login-input" id="p1pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+          <button class="pin-toggle" onclick="togglePin('p1pin',this)">👁</button>
+        </div>
+      </div>
+      <div class="login-player">
+        <div class="login-player-label">Jogador 2</div>
+        <input class="login-input" id="p2name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
+        <div class="pin-wrap">
+          <input class="login-input" id="p2pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+          <button class="pin-toggle" onclick="togglePin('p2pin',this)">👁</button>
+        </div>
       </div>
     </div>
-    <div class="login-player">
-      <div class="login-player-label">Jogador 2</div>
-      <input class="login-input" id="p2name" type="text" placeholder="Seu nome" maxlength="16" autocomplete="off">
-      <div class="pin-wrap">
-        <input class="login-input" id="p2pin" type="password" placeholder="PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
-        <button class="pin-toggle" onclick="togglePin('p2pin',this)">👁</button>
+    <button class="btn-gold" onclick="doLogin()">Começar a Noite</button>
+  </div>
+
+  <!-- duo -->
+  <div id="login-duo-section" style="display:none">
+    <div class="mp-duo-wrap">
+      <div class="login-player">
+        <div class="login-player-label">Seu nome</div>
+        <input class="login-input" id="mpname" type="text" placeholder="Como você se chama?" maxlength="16" autocomplete="off">
+        <div class="pin-wrap">
+          <input class="login-input" id="mppin" type="password" placeholder="Seu PIN (4 dígitos)" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+          <button class="pin-toggle" onclick="togglePin('mppin',this)">👁</button>
+        </div>
+      </div>
+      <div class="mp-action-btns">
+        <button class="btn-ghost" onclick="doLoginMpCriar()">✨ Criar sala</button>
+        <button class="btn-ghost" onclick="showJoinInput()">🔑 Entrar na sala</button>
+      </div>
+      <div class="sala-join-wrap" id="join-input-wrap" style="display:none">
+        <input class="mp-code-input" id="mpSalaInput" type="text" maxlength="6" placeholder="CÓDIGO" autocomplete="off" oninput="this.value=this.value.toUpperCase()">
+        <button class="btn-gold" onclick="doLoginMpEntrar()">Entrar na Sala</button>
       </div>
     </div>
   </div>
+
   <div class="login-err" id="loginErr"></div>
-  <button class="btn-gold" onclick="doLogin()">Começar a Noite</button>
+</div>
+
+<!-- ══ SALA ══ -->
+<div class="screen" id="screen-sala">
+  <div class="login-logo"><h1>Jogos do Desejo</h1></div>
+  <div class="sala-pulse-icon">💞</div>
+  <div>
+    <div class="sala-code-box" id="sala-display-code" onclick="copiarCodigo()" title="Toque para copiar"></div>
+    <div class="sala-code-hint">Toque para copiar · Mande pelo WhatsApp para seu parceiro(a)</div>
+  </div>
+  <div id="sala-status">Aguardando parceiro(a) entrar…</div>
+  <button class="btn-ghost" onclick="cancelarSala()">← Cancelar</button>
 </div>
 
 <!-- ══ HOME ══ -->
@@ -2041,6 +2090,273 @@ document.addEventListener('keydown',e=>{
   }
   if(e.key==='Enter'&&document.getElementById('login').classList.contains('active'))doLogin();
 });
+
+// ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
+const fbCfg={
+  apiKey:'AIzaSyCFC73ybsKQJBkpwHS3FJxV18BaM5s5lIE',
+  authDomain:'jogos-do-desejo.firebaseapp.com',
+  databaseURL:'https://jogos-do-desejo-default-rtdb.firebaseio.com',
+  projectId:'jogos-do-desejo',
+  storageBucket:'jogos-do-desejo.firebasestorage.app',
+  messagingSenderId:'352596745880',
+  appId:'1:352596745880:web:f2e5db4d8d7f9a83df7aed'
+};
+firebase.initializeApp(fbCfg);
+const fbdb=firebase.database();
+
+// ── Multiplayer state ─────────────────────────────────────────────
+const mp={ativo:false,eu:null,codigo:null,vezAtual:'p1',salaRef:null,_p2Listener:null};
+
+// ── Login mode toggle ─────────────────────────────────────────────
+function setLoginMode(mode){
+  const solo=mode==='solo';
+  document.getElementById('modeSolo').classList.toggle('on',solo);
+  document.getElementById('modeDuo').classList.toggle('on',!solo);
+  document.getElementById('login-solo-section').style.display=solo?'':'none';
+  document.getElementById('login-duo-section').style.display=solo?'none':'';
+  document.getElementById('login-subtitle').textContent=solo?'Registrem os dois jogadores para começar':'Cada um entra com seu próprio celular';
+  document.getElementById('loginErr').textContent='';
+}
+
+function showJoinInput(){
+  document.getElementById('join-input-wrap').style.display='flex';
+  document.getElementById('mpSalaInput').focus();
+}
+
+// ── Helpers ──────────────────────────────────────────────────────
+function gerarCodigo(){
+  const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c='';for(let i=0;i<6;i++)c+=ch[Math.floor(Math.random()*ch.length)];return c;
+}
+
+function mpValidarCampos(){
+  const nome=document.getElementById('mpname').value.trim();
+  const pin=document.getElementById('mppin').value.trim();
+  const err=document.getElementById('loginErr');
+  if(!nome){err.textContent='Digite seu nome.';return null;}
+  if(!/^\d{4}$/.test(pin)){err.textContent='PIN deve ter 4 dígitos numéricos.';return null;}
+  err.textContent='';
+  return{nome,pin};
+}
+
+// ── Criar sala ───────────────────────────────────────────────────
+async function doLoginMpCriar(){
+  const campos=mpValidarCampos();if(!campos)return;
+  const{nome,pin}=campos;
+  const codigo=gerarCodigo();
+  mp.eu='p1';mp.codigo=codigo;mp.ativo=true;
+  mp.salaRef=fbdb.ref('salas/'+codigo);
+  await mp.salaRef.set({
+    criada:firebase.database.ServerValue.TIMESTAMP,
+    p1:{nome,pin},vez:'p1'
+  });
+  players.p1={name:nome,pin};
+  document.getElementById('sala-display-code').textContent=codigo;
+  document.getElementById('sala-status').textContent='Aguardando parceiro(a) entrar…';
+  go('screen-sala');
+  // Listen for p2 to join
+  mp._p2Listener=mp.salaRef.child('p2').on('value',snap=>{
+    if(!snap.exists())return;
+    const d=snap.val();
+    players.p2={name:d.nome,pin:d.pin};
+    mpIniciarJogo();
+  });
+}
+
+// ── Entrar na sala ────────────────────────────────────────────────
+async function doLoginMpEntrar(){
+  const campos=mpValidarCampos();if(!campos)return;
+  const{nome,pin}=campos;
+  const codigo=(document.getElementById('mpSalaInput').value||'').trim().toUpperCase();
+  const err=document.getElementById('loginErr');
+  if(codigo.length<4){err.textContent='Digite o código da sala.';return;}
+  const ref=fbdb.ref('salas/'+codigo);
+  const snap=await ref.once('value');
+  if(!snap.exists()){err.textContent='❌ Sala não encontrada. Verifique o código.';return;}
+  const d=snap.val();
+  mp.eu='p2';mp.codigo=codigo;mp.ativo=true;mp.salaRef=ref;
+  mp.vezAtual=d.vez||'p1';
+  players.p1={name:d.p1.nome,pin:d.p1.pin};
+  players.p2={name:nome,pin};
+  await ref.child('p2').set({nome,pin});
+  mpIniciarJogo();
+}
+
+// ── Iniciar jogo (ambos conectados) ──────────────────────────────
+function mpIniciarJogo(){
+  if(mp._p2Listener){mp.salaRef.child('p2').off('value',mp._p2Listener);mp._p2Listener=null;}
+  document.getElementById('hP1').textContent=players.p1.name;
+  document.getElementById('hP2').textContent=players.p2.name;
+  document.getElementById('vdPlayer').textContent='Vez de '+players.p1.name;
+  vdCurrent=1;
+  mpBannerUpdate();
+  mpStartListeners();
+  go('home');
+}
+
+// ── Firebase listeners ────────────────────────────────────────────
+function mpStartListeners(){
+  if(!mp.salaRef)return;
+  mp.salaRef.child('vez').on('value',snap=>{
+    if(!snap.exists())return;
+    mp.vezAtual=snap.val();
+    mpBannerUpdate();
+  });
+  mp.salaRef.child('carta').on('value',snap=>{
+    if(!snap.exists())return;
+    const carta=snap.val();
+    if(carta.fase==='ativa'&&carta.puxadoPor!==mp.eu){
+      mpMostrarCarta(carta);
+    } else if(carta.fase==='concluida'){
+      document.getElementById('mp-card-overlay').classList.remove('on');
+    }
+  });
+}
+
+// ── Sync card to Firebase ─────────────────────────────────────────
+function mpSyncCarta(dados){
+  if(!mp.ativo||!mp.salaRef)return;
+  mp.salaRef.child('carta').set({...dados,puxadoPor:mp.eu,fase:'ativa',ts:firebase.database.ServerValue.TIMESTAMP});
+  mp.salaRef.child('vez').set(mp.eu);
+}
+
+// ── Confirm done (other player) ───────────────────────────────────
+function mpConfirmar(){
+  document.getElementById('mp-card-overlay').classList.remove('on');
+  if(!mp.ativo||!mp.salaRef)return;
+  const proxVez=mp.eu==='p1'?'p2':'p1';
+  mp.salaRef.child('vez').set(proxVez);
+  mp.salaRef.child('carta/fase').set('concluida');
+}
+
+// ── Show card on other player's phone ────────────────────────────
+function mpMostrarCarta(carta){
+  const quem=carta.puxadoPor==='p1'?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  document.getElementById('mp-who-label').textContent=quem+' revelou uma carta para você';
+  let nivel='',cat='',texto='',extra='';
+  if(carta.jogo==='vd'){
+    nivel=carta.nivel;cat=carta.categoria;texto=carta.texto;
+  } else if(carta.jogo==='roleta'){
+    nivel=carta.nivel;cat=carta.categoria;texto=carta.texto;
+  } else if(carta.jogo==='dado'){
+    nivel='Dado dos Prazeres';cat=carta.acao+' o '+carta.parte;texto=carta.texto;
+  } else if(carta.jogo==='missao'){
+    nivel=carta.nivel;cat='Missão da Noite';
+    texto=(carta.steps||[]).join('
+');
+  } else if(carta.jogo==='strip'){
+    nivel=carta.nivel;cat='Striptease';texto=carta.texto;
+  } else if(carta.jogo==='quiz'){
+    nivel='Quiz';cat=carta.jogo==='quiz'?'Resposta':'';
+    texto=carta.pergunta||'';
+    if(carta.opcoes&&carta.respostaCorreta!==undefined){
+      extra='✓ Resposta certa: '+carta.opcoes[carta.respostaCorreta];
+    }
+  }
+  document.getElementById('mp-cv-level').textContent=nivel.toUpperCase();
+  document.getElementById('mp-cv-cat').textContent=cat;
+  document.getElementById('mp-cv-text').textContent=texto;
+  const extraEl=document.getElementById('mp-cv-answer');
+  extraEl.textContent=extra;extraEl.style.display=extra?'':'none';
+  document.getElementById('mp-card-overlay').classList.add('on');
+}
+
+// ── Banner update ─────────────────────────────────────────────────
+function mpBannerUpdate(){
+  const banner=document.getElementById('mp-banner');
+  if(!mp.ativo){banner.classList.remove('on');return;}
+  banner.classList.add('on');
+  document.getElementById('mp-b-code-val').textContent=mp.codigo;
+  const vezNome=mp.vezAtual==='p1'?(players.p1.name||'J1'):(players.p2.name||'J2');
+  document.getElementById('mp-vez-nome').textContent=vezNome;
+}
+
+// ── Copy room code ────────────────────────────────────────────────
+function copiarCodigo(){
+  const code=document.getElementById('sala-display-code').textContent;
+  if(navigator.clipboard)navigator.clipboard.writeText(code);
+  const el=document.getElementById('sala-display-code');
+  el.textContent='✓ Copiado!';setTimeout(()=>{el.textContent=code;},1400);
+}
+
+// ── Cancel room ───────────────────────────────────────────────────
+function cancelarSala(){
+  if(mp.salaRef)mp.salaRef.remove();
+  mp.ativo=false;mp.eu=null;mp.codigo=null;mp.salaRef=null;
+  go('login');
+}
+
+// ── Hooks into existing game functions ───────────────────────────
+// VD
+const _vdPickOrig=vdPick;
+vdPick=function(tipo){
+  _vdPickOrig(tipo);
+  if(!mp.ativo)return;
+  setTimeout(()=>{
+    mpSyncCarta({jogo:'vd',nivel:getLevel('vdLevels'),tipo,
+      categoria:document.getElementById('vdCCat').textContent,
+      texto:document.getElementById('vdCText').textContent});
+  },60);
+};
+
+// Roleta (MutationObserver on rOverlay)
+new MutationObserver(()=>{
+  const ov=document.getElementById('rOverlay');
+  if(ov.classList.contains('on')&&mp.ativo){
+    mpSyncCarta({jogo:'roleta',
+      nivel:document.getElementById('rCLevel').textContent,
+      categoria:document.getElementById('rCCat').textContent,
+      texto:document.getElementById('rCText').textContent});
+  }
+}).observe(document.getElementById('rOverlay'),{attributes:true,attributeFilter:['class']});
+
+// Dado (fires 700ms after button click, after animation)
+document.getElementById('dadoBtn').addEventListener('click',()=>{
+  if(!mp.ativo)return;
+  setTimeout(()=>{
+    const r=document.getElementById('dadoResult').textContent;
+    if(r&&r!=='Role os dados para descobrir'&&r!=='…'){
+      mpSyncCarta({jogo:'dado',nivel:getLevel('dadoLevels'),
+        parte:document.getElementById('dv0').textContent,
+        acao:document.getElementById('dv1').textContent,
+        duracao:document.getElementById('dv2').textContent,
+        local:document.getElementById('dv3').textContent,
+        texto:r});
+    }
+  },700);
+});
+
+// Missão (MutationObserver on missaoCard)
+new MutationObserver(()=>{
+  if(!mp.ativo)return;
+  const steps=[...document.querySelectorAll('#missaoCard .step-text')].map(e=>e.textContent);
+  if(steps.length)mpSyncCarta({jogo:'missao',nivel:getLevel('missaoLevels'),steps,texto:steps.join(' → ')});
+}).observe(document.getElementById('missaoCard'),{childList:true,subtree:true});
+
+// Striptease — hook into renderStrip
+const _renderStripOrig=renderStrip;
+renderStrip=function(){
+  _renderStripOrig();
+  if(!mp.ativo||stripStep<0)return;
+  const lvl=getLevel('stripLevels');
+  const txt=document.getElementById('stripCardText')?document.getElementById('stripCardText').textContent:'';
+  mpSyncCarta({jogo:'strip',nivel:lvl,passo:stripStep,texto:txt});
+};
+
 </script>
+
+<!-- ══ MULTIPLAYER CARD VIEW ══ -->
+<div id="mp-card-overlay">
+  <div class="mp-who" id="mp-who-label"></div>
+  <div class="mp-card-view">
+    <div class="mp-cv-level" id="mp-cv-level"></div>
+    <div class="mp-cv-cat" id="mp-cv-cat"></div>
+    <div class="mp-cv-rule"></div>
+    <div class="mp-cv-text" id="mp-cv-text"></div>
+    <div class="mp-cv-answer" id="mp-cv-answer" style="display:none"></div>
+  </div>
+  <button class="btn-mp-ok" onclick="mpConfirmar()">✓ Feito! Próxima rodada</button>
+  <button class="btn-ghost" style="font-size:0.7rem" onclick="mpConfirmar()">↩ Pular</button>
+</div>
 </body>
 </html>
