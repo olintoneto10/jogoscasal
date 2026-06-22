@@ -350,6 +350,12 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   .login-logo h1{font-size:2rem}
   h2.screen-title{font-size:1.5rem}
 }
+/* ══ MOOD CHOICE OVERLAY ══ */
+.mood-choice-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:10px;padding:0.9rem 1.5rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.18s;text-align:left;width:100%}
+.mood-choice-btn:hover,.mood-choice-btn:active{border-color:var(--gold);background:rgba(200,148,58,0.08);color:var(--gold-l)}
+.game-card{position:relative}
+.game-card.mood-rec{border-color:rgba(212,133,90,0.5)!important;box-shadow:0 0 14px rgba(212,133,90,0.18)}
+.game-card.mood-rec::after{content:'✦ Recomendado';position:absolute;top:0.42rem;right:0.65rem;font-size:0.58rem;color:var(--gold);letter-spacing:0.08em;font-family:'Jost',sans-serif;text-transform:uppercase}
 /* ══ WHATSAPP BUTTON ══ */
 .btn-whatsapp{display:flex;align-items:center;justify-content:center;gap:0.6rem;background:linear-gradient(135deg,#25D366,#128C7E);border:none;border-radius:10px;padding:0.9rem 2.2rem;color:#fff;font-family:'Jost',sans-serif;font-size:1rem;font-weight:500;letter-spacing:0.04em;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 18px rgba(37,211,102,0.35);width:calc(100% - 3rem);max-width:320px}
 .btn-whatsapp:hover,.btn-whatsapp:active{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.5)}
@@ -719,6 +725,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <div id="missaoCard" style="width:100%"><p class="missao-empty">Gere uma missão para começar a noite</p></div>
   <button class="btn-gold" id="missaoBtn">Gerar Missão</button>
+  <button class="btn-skip" id="missaoSkip" style="display:none" onclick="document.getElementById('missaoBtn').click()">↩ Pular — gerar outra missão</button>
 </div>
 
 <!-- ══ POSIÇÕES ══ -->
@@ -1012,12 +1019,20 @@ function doLogout(){
 
 
 // ══ CONSENT GATE (Explosivo) ═════════════════════════════════════
-let _consentPendingLvl=null,_consentPendingGroup=null;
+let _consentPendingLvl=null,_consentPendingGroup=null,_consentStep=0;
 function pedirConsentExplosivo(btn,groupId){
-  _consentPendingLvl=btn;_consentPendingGroup=groupId;
+  _consentPendingLvl=btn;_consentPendingGroup=groupId;_consentStep=1;
+  const p1=players.p1.name||'Jogador 1';
+  document.getElementById('consentWho').textContent=p1;
   document.getElementById('consent-overlay').classList.add('on');
 }
 function consentAceitar(){
+  if(_consentStep===1){
+    _consentStep=2;
+    const p2=players.p2.name||'Jogador 2';
+    document.getElementById('consentWho').textContent=p2;
+    return;
+  }
   document.getElementById('consent-overlay').classList.remove('on');
   if(_consentPendingLvl&&_consentPendingGroup){
     const grp=document.getElementById(_consentPendingGroup);
@@ -1025,11 +1040,11 @@ function consentAceitar(){
     _consentPendingLvl.classList.add('on');
     levelState[_consentPendingGroup]='Explosivo';
   }
-  _consentPendingLvl=null;_consentPendingGroup=null;
+  _consentPendingLvl=null;_consentPendingGroup=null;_consentStep=0;
 }
 function consentRecusar(){
   document.getElementById('consent-overlay').classList.remove('on');
-  _consentPendingLvl=null;_consentPendingGroup=null;
+  _consentPendingLvl=null;_consentPendingGroup=null;_consentStep=0;
 }
 // ══ LEVELS ══════════════════════════════════════════════════
 const levelState={};
@@ -1375,6 +1390,8 @@ document.getElementById('missaoBtn').addEventListener('click',function(){
   const aftercareBtn=lv==='Explosivo'?'<button class="btn-ghost" style="margin-top:1.2rem;align-self:center" onclick="showAftercare()">🌿 Momento de Aftercare</button>':'';
   salvarCarta('Missão da Noite',m[0]);verificarConquista('missao');
   card.innerHTML=`<div class="missao-card"><div class="missao-card-title">Missão de Hoje</div><div class="missao-rule"></div><div class="missao-steps">${m.map((s,i)=>`<div class="missao-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div>${aftercareBtn}</div>`;
+  document.getElementById('missaoSkip').style.display='';
+  document.getElementById('missaoBtn').textContent='Nova Missão →';
 });
 
 // ══ POSIÇÕES DATA ═════════════════════════════════════════════
@@ -2112,8 +2129,31 @@ function fecharHistorico(){
 const _goOrigGamif=go;
 go=function(id){
   _goOrigGamif(id);
-  if(id==='home'){atualizarStreak();carregarMissaoSemana();}
+  if(id==='home'){
+    atualizarStreak();carregarMissaoSemana();
+    if(!sessionStorage.getItem('jd_mood')){
+      setTimeout(()=>{document.getElementById('mood-overlay').style.display='flex';},350);
+    }
+  }
 };
+
+// ── Mood overlay ─────────────────────────────────────────────────
+const _moodMap={
+  sintonia:['screen-roleta','screen-dado','screen-strip','screen-vd'],
+  reconexao:['screen-reconexao','screen-vd','screen-mapa','screen-quiz'],
+  diversao:['screen-quiz','screen-mapa','screen-missao','screen-posicoes'],
+  skip:[]
+};
+function setMood(mood){
+  sessionStorage.setItem('jd_mood',mood);
+  document.getElementById('mood-overlay').style.display='none';
+  document.querySelectorAll('.game-card').forEach(c=>c.classList.remove('mood-rec'));
+  const ids=_moodMap[mood]||[];
+  ids.forEach(id=>{
+    const btn=document.querySelector(`.game-card[onclick*="${id}"]`);
+    if(btn)btn.classList.add('mood-rec');
+  });
+}
 
 
 // ══ CONQUISTAS ════════════════════════════════════════════════════
@@ -2541,6 +2581,39 @@ function compartilharApp(){
     <div id="hist-list" style="display:flex;flex-direction:column;gap:0.6rem"></div>
     <div id="hist-empty" style="text-align:center;color:var(--muted);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;padding:2rem;display:none">Nenhuma carta jogada ainda.<br>Comece uma brincadeira!</div>
     <button onclick="fecharHistorico()" class="btn-ghost" style="margin-top:1.5rem;width:100%">Fechar</button>
+  </div>
+</div>
+
+<!-- ══ MOOD OVERLAY ══ -->
+<div id="mood-overlay" style="display:none;position:fixed;inset:0;background:rgba(14,4,8,0.93);backdrop-filter:blur(14px);z-index:450;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:0">
+  <div style="max-width:340px;width:100%;display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center">
+    <div style="font-size:2.2rem;line-height:1">💑</div>
+    <div style="font-family:'Cormorant SC',serif;font-size:1.45rem;color:var(--gold-l);letter-spacing:0.05em">Como estão vocês hoje?</div>
+    <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);line-height:1.65">Isso nos ajuda a sugerir o melhor começo para a noite.</p>
+    <div style="display:flex;flex-direction:column;gap:0.7rem;width:100%">
+      <button class="mood-choice-btn" onclick="setMood('sintonia')">💞 Em sintonia total — vamos fundo</button>
+      <button class="mood-choice-btn" onclick="setMood('reconexao')">🤝 Queremos nos reconectar</button>
+      <button class="mood-choice-btn" onclick="setMood('diversao')">😄 Só querendo se divertir juntos</button>
+    </div>
+    <button onclick="setMood('skip')" style="background:none;border:none;color:var(--muted);font-size:0.78rem;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline;padding:0.2rem">Pular esta pergunta</button>
+  </div>
+</div>
+
+<!-- ══ CONSENT OVERLAY (Explosivo) ══ -->
+<div id="consent-overlay">
+  <div class="consent-card">
+    <div class="consent-icon">🔞</div>
+    <div class="consent-title">Nível Explosivo</div>
+    <div class="consent-text">
+      <strong id="consentWho" style="color:var(--text)">—</strong>, você confirma que ambos estão bem e consentiram livremente com este nível?
+    </div>
+    <div style="font-size:0.78rem;color:rgba(212,133,90,0.65);font-family:'Libre Caslon Text',serif;font-style:italic;padding:0.2rem 0.2rem 0;line-height:1.6">
+      💬 Combinem antes uma <strong style="color:var(--gold-l)">palavra de pausa</strong> — qualquer um pode usá-la a qualquer momento, sem explicação.
+    </div>
+    <div class="consent-btns">
+      <button class="btn-gold" onclick="consentAceitar()" style="animation:none;margin:0">Sim, confirmo</button>
+      <button class="btn-ghost" onclick="consentRecusar()" style="margin:0">Não agora</button>
+    </div>
   </div>
 </div>
 
