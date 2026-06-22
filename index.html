@@ -948,6 +948,15 @@ function ageConfirm(){
 function ageDecline(){
   document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0E0408;color:#B8887A;font-family:sans-serif;font-size:1rem;text-align:center;padding:2rem">Este app é exclusivo para maiores de 18 anos.</div>';
 }
+function abrirPrivacidade(){
+  const el=document.getElementById('priv-overlay');
+  if(el){el.style.display='flex';}
+}
+function apagarTodosDados(){
+  if(!confirm('Apagar todos os dados? Esta ação não pode ser desfeita.'))return;
+  Object.keys(localStorage).filter(k=>k.startsWith('jd_')).forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
 (function(){
   const seen=localStorage.getItem('jd_seen');
   const aged=localStorage.getItem('jd_age');
