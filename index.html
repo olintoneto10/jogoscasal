@@ -406,8 +406,14 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .bg-p{position:fixed;border-radius:50%;background:rgba(212,133,90,1);pointer-events:none;z-index:0;bottom:-4px;will-change:transform;animation:bgFloat linear infinite;}
 @keyframes bgFloat{0%{transform:translateY(0);opacity:0}8%{opacity:var(--a,.3)}88%{opacity:var(--a,.3)}100%{transform:translateY(-108vh);opacity:0}}
 .pos-icon-txt{font-size:4rem;text-align:center;padding:1.5rem 0;line-height:1}
+.import-input{display:none}
 </style>
 
+<!-- Analytics (substitua G-XXXXXXXX pelo seu ID do Google Analytics) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXX');</script>
+<!-- Service Worker -->
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/jogoscasal/sw.js').catch(()=>{});}</script>
 </head>
 <body>
 <div id="bg"><div class="bg-p" style="left:61%;width:1.5px;height:1.5px;--a:0.27;animation-duration:9.2s;animation-delay:-8.6s"></div><div class="bg-p" style="left:93%;width:2.0px;height:2.0px;--a:0.31;animation-duration:9.9s;animation-delay:-5.4s"></div><div class="bg-p" style="left:32%;width:2.4px;height:2.4px;--a:0.31;animation-duration:10.9s;animation-delay:-10.2s"></div><div class="bg-p" style="left:68%;width:2.6px;height:2.6px;--a:0.37;animation-duration:10.4s;animation-delay:-7.5s"></div><div class="bg-p" style="left:91%;width:1.8px;height:1.8px;--a:0.14;animation-duration:15.5s;animation-delay:-9.8s"></div><div class="bg-p" style="left:27%;width:2.5px;height:2.5px;--a:0.31;animation-duration:17.2s;animation-delay:-2.0s"></div><div class="bg-p" style="left:84%;width:1.5px;height:1.5px;--a:0.18;animation-duration:11.5s;animation-delay:-0.6s"></div><div class="bg-p" style="left:8%;width:2.7px;height:2.7px;--a:0.28;animation-duration:12.1s;animation-delay:-1.5s"></div><div class="bg-p" style="left:93%;width:2.6px;height:2.6px;--a:0.32;animation-duration:11.3s;animation-delay:-9.4s"></div><div class="bg-p" style="left:45%;width:2.7px;height:2.7px;--a:0.2;animation-duration:11.6s;animation-delay:-10.5s"></div><div class="bg-p" style="left:73%;width:1.6px;height:1.6px;--a:0.35;animation-duration:9.5s;animation-delay:-5.8s"></div><div class="bg-p" style="left:6%;width:2.6px;height:2.6px;--a:0.32;animation-duration:17.7s;animation-delay:-1.6s"></div><div class="bg-p" style="left:34%;width:2.8px;height:2.8px;--a:0.2;animation-duration:17.6s;animation-delay:-8.9s"></div><div class="bg-p" style="left:91%;width:2.0px;height:2.0px;--a:0.15;animation-duration:16.4s;animation-delay:-3.9s"></div><div class="bg-p" style="left:78%;width:2.7px;height:2.7px;--a:0.18;animation-duration:12.1s;animation-delay:-7.1s"></div><div class="bg-p" style="left:18%;width:1.6px;height:1.6px;--a:0.25;animation-duration:16.2s;animation-delay:-11.9s"></div><div class="bg-p" style="left:19%;width:1.7px;height:1.7px;--a:0.28;animation-duration:10.7s;animation-delay:-1.7s"></div><div class="bg-p" style="left:91%;width:3.1px;height:3.1px;--a:0.24;animation-duration:8.9s;animation-delay:-1.1s"></div><div class="bg-p" style="left:90%;width:2.7px;height:2.7px;--a:0.15;animation-duration:17.2s;animation-delay:-1.8s"></div><div class="bg-p" style="left:75%;width:2.5px;height:2.5px;--a:0.15;animation-duration:16.3s;animation-delay:-15.4s"></div><div class="bg-p" style="left:1%;width:2.9px;height:2.9px;--a:0.23;animation-duration:9.6s;animation-delay:-5.4s"></div><div class="bg-p" style="left:30%;width:1.4px;height:1.4px;--a:0.33;animation-duration:9.6s;animation-delay:-9.5s"></div><div class="bg-p" style="left:60%;width:2.3px;height:2.3px;--a:0.25;animation-duration:16.7s;animation-delay:-10.5s"></div><div class="bg-p" style="left:85%;width:3.0px;height:3.0px;--a:0.17;animation-duration:7.8s;animation-delay:-4.6s"></div><div class="bg-p" style="left:39%;width:1.7px;height:1.7px;--a:0.27;animation-duration:15.0s;animation-delay:-8.4s"></div><div class="bg-p" style="left:68%;width:1.4px;height:1.4px;--a:0.18;animation-duration:9.1s;animation-delay:-5.0s"></div><div class="bg-p" style="left:50%;width:1.5px;height:1.5px;--a:0.34;animation-duration:10.5s;animation-delay:-3.3s"></div><div class="bg-p" style="left:97%;width:2.5px;height:2.5px;--a:0.33;animation-duration:13.4s;animation-delay:-1.6s"></div></div>
@@ -563,7 +569,11 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
-  <button class="home-logout" onclick="doLogout()">← Trocar jogadores</button>
+  <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
+    <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
+    <button class="home-logout" onclick="doLogout()">← Trocar jogadores</button>
+    <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
+  </div>
 </div>
 
 <!-- ══ ROLETA ══ -->
@@ -874,6 +884,11 @@ function onbContinuar(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-mode').classList.add('active');
   window.scrollTo(0,0);
+  if('Notification' in window && Notification.permission==='default'){
+    setTimeout(()=>Notification.requestPermission().then(p=>{
+      if(p==='granted')localStorage.setItem('jd_notif','1');
+    }),2000);
+  }
 }
 (function(){
   if(localStorage.getItem('jd_seen')){
@@ -888,6 +903,14 @@ function onbContinuar(){
       if(si)si.value=sala.toUpperCase();
     } else {
       document.getElementById('screen-mode').classList.add('active');
+    }
+    // Lembrete se ausente 5+ dias
+    const last=localStorage.getItem('jd_lastDay');
+    if(last){
+      const dias=Math.floor((Date.now()-new Date(last).getTime())/(86400000));
+      if(dias>=5&&localStorage.getItem('jd_notif')==='1'&&'Notification' in window&&Notification.permission==='granted'){
+        new Notification('Jogos do Desejo 💞',{body:'Faz '+dias+' dias — que tal uma noite especial hoje?',icon:'/jogoscasal/manifest.json'});
+      }
     }
   }
 })();
@@ -1244,34 +1267,55 @@ function quizReset(){
 // ══ MISSÃO DATA ════════════════════════════════════════════
 const MISSOES={
   'Romântico':[
-    ['Apaguem as luzes, acendam uma vela e coloquem uma música suave.','Sentem frente a frente e contem 3 memórias favoritas de vocês dois.','Massagem nos ombros e costas do seu parceiro(a) por 10 minutos.','Terminem com um abraço longo e um beijo apaixonado — sem pressa.'],
-    ['Escrevam um bilhete um para o outro dizendo o que mais amam na pessoa.','Preparem juntos uma bebida especial e brindem à noite de vocês.','Dancem juntos por duas músicas — escolham uma cada um.','Testa na testa, olhos fechados, respirem juntos por 2 minutos.'],
-    ['Cada um conta um sonho que ainda quer realizar com o outro.','Massagem nas mãos — dedo por dedo — por 5 minutos.','Inventem juntos um nome para o casal que só vocês conhecem.','Abracem-se por trás durante 1 minuto sem dizer nada.'],
-    ['Coloquem uma música que representa o casal e dancem até acabar.','Cada um faz 3 elogios sobre algo que o outro faz que passa despercebido.','Beijos leves em 5 lugares diferentes do rosto do parceiro(a).','Terminam deitados de frente um para o outro — em silêncio por 2 minutos.'],
-    ['Preparem um espaço aconchegante: almofadas, luz baixa, coberta.','Cada um diz uma coisa que admira no outro que nunca disse antes.','Uma massagem nos pés — 5 minutos cada — com atenção total.','Adormeçam abraçados sem celular nessa noite.'],
-    ['Sentem juntos na varanda ou perto de uma janela — só observando.','Cada um escreve 3 palavras que representam o outro — e lê em voz alta.','Troquem um beijo a cada 5 minutos por 30 minutos.','Terminem com um "obrigado(a) por existir" dito olho no olho.'],
-    ['Cada um escolhe uma música favorita e conta por que ela importa.','Toque suave: um de vocês fica de olhos fechados enquanto o outro acaricia o rosto.','Inventem juntos um plano de viagem dos sonhos — pode ser simples.','Durmam abraçados no mesmo travesseiro.'],
-    ['Apaguem o celular por 1 hora — só vocês dois.','Cada um conta uma memória nossa que o outro talvez tenha esquecido.','Massagem na cabeça — 5 minutos cada — com música baixa.','Fechem os olhos e imaginem o próximo ano juntos — depois contem um ao outro.'],
+    ['Apaguem as luzes e acendam uma vela.','Sentem frente a frente e contem 3 memórias favoritas.','Massagem nos ombros por 10 minutos.','Terminem com um abraço longo e um beijo — sem pressa.'],
+    ['Escrevam um bilhete um para o outro dizendo o que mais amam.','Preparem uma bebida especial e brindem à noite de vocês.','Dancem juntos por duas músicas — escolham uma cada um.','Testa na testa, olhos fechados, respirem juntos por 2 minutos.'],
+    ['Cada um conta um sonho que quer realizar com o outro.','Massagem nas mãos — dedo por dedo — por 5 minutos.','Inventem juntos um nome para o casal que só vocês conhecem.','Abracem-se por trás durante 1 minuto sem dizer nada.'],
+    ['Coloquem uma música que representa o casal e dancem até acabar.','Cada um faz 3 elogios sobre algo que passa despercebido no outro.','Beijos leves em 5 lugares diferentes do rosto do parceiro(a).','Deitados de frente um para o outro — em silêncio por 2 minutos.'],
+    ['Preparem um espaço aconchegante: almofadas, luz baixa, coberta.','Cada um diz uma coisa que admira no outro que nunca disse antes.','Massagem nos pés — 5 minutos cada — com atenção total.','Adormeçam abraçados sem celular essa noite.'],
+    ['Sentem juntos perto de uma janela — só observando.','Cada um escreve 3 palavras que representam o outro — e lê em voz alta.','Troquem um beijo a cada 5 minutos durante 30 minutos.','Terminem com um "obrigado(a) por existir" dito olho no olho.'],
+    ['Cada um escolhe uma música favorita e conta por que ela importa.','Toque suave: olhos fechados enquanto o outro acaricia o rosto.','Inventem juntos um plano de viagem dos sonhos.','Durmam abraçados no mesmo travesseiro.'],
+    ['Apaguem o celular por 1 hora — só vocês dois.','Cada um conta uma memória que o outro talvez tenha esquecido.','Massagem na cabeça — 5 minutos cada — com música baixa.','Fechem os olhos e imaginem o próximo ano juntos — contem um ao outro.'],
+    ['Leiam juntos um trecho de um livro — qualquer um que tiverem.','Cada um diz o que mais gostou da semana passada com o outro.','Massagem nos ombros e pescoço por 8 minutos.','Terminem com um abraço que dure até os dois quererem soltar.'],
+    ['Façam um jantar simples juntos — cada um prepara uma parte.','Sentem à mesa sem celular e conversem sobre um sonho futuro.','Cada um dá um presente simbólico improvisado com o que tiver.','Durmam juntos mais cedo que o normal — priorizem o descanso a dois.'],
+    ['Cada um escreve 5 coisas que ama no outro — em papel.','Trocam os papéis e leem em voz alta.','Massagem nas mãos um do outro simultaneamente.','Terminem com uma promessa pequena para essa semana.'],
+    ['Montem um "cantinho" especial: luzes, almofadas, chá ou vinho.','Contem histórias engraçadas de vocês dois — pelo menos 3.','Cada um faz uma caricatura engraçada do outro.','Guardem as caricaturas — tirem foto e mandem uma para o outro.'],
+    ['Caminhem juntos por 20 minutos — sem destino, só conversando.','De volta, sentem e cada um conta o que mais gostou do passeio.','Massagem nos pés do(a) parceiro(a) com atenção.','Terminem assistindo algo que os dois escolham juntos.'],
+    ['Cada um prepara uma surpresa de carinho para o outro — em 5 min.','Trocam as surpresas ao mesmo tempo.','Fiquem em silêncio confortável por 10 minutos — só presença.','Terminem dizendo uma coisa que querem melhorar no relacionamento.'],
+    ['Sem celular, só música e vocês dois.','Dancem sem coreografia — como vier.','Um cozinha enquanto o outro escolhe a trilha sonora.','Comam juntos o que prepararam — com vela acesa.'],
   ],
   'Quente':[
-    ['Apaguem as luzes. Só luz de vela — ou a tela do celular longe.','Escolham uma música sensual e dancem muito próximos.','Um de vocês faz uma massagem nas costas do outro — 10 minutos.','Terminem com um beijo lento, sem pressa, como se tivessem voltado da saudade.'],
-    ['Cada um diz em voz alta o que mais deseja do outro essa noite.','Massagem com óleo ou hidratante — das costas até os pés.','Um beijo no pescoço que dure pelo menos 30 segundos cada.','Fiquem abraçados sem roupa por 5 minutos — apenas sentindo.'],
-    ['Banho junto: lavar o cabelo um do outro devagar.','Cada um diz um elogio físico que nunca disse com essas palavras.','Massagem nos ombros com contato de lábios na nuca.','Terminem sem pressa — o que acontecer a seguir é decisão de vocês.'],
-    ['Olhos nos olhos por 3 minutos inteiros — sem falar.','Cada um retira uma peça de roupa do outro lentamente.','Massagem nos pés com o foco em cada dedo — 7 minutos cada.','Juntos sob o lençol: sem celular, apenas presença.'],
-    ['Inventem juntos uma fantasia de roleplay — sem executar ainda, só criar.','Massagem na barriga e lombar do parceiro(a) por 8 minutos.','Cada um diz uma coisa que quer que o outro faça essa noite.','Executem uma parte da fantasia criada — a que os dois se sentirem confortáveis.'],
-    ['Escolham uma música que deixe os dois no clima.','Um de cada: massagem nos ombros, beijo no pescoço, abraço por trás.','Cada um sussurra no ouvido do outro o que está sentindo.','Terminem juntos — no ritmo que for.'],
-    ['Cada um prepara uma surpresa física para o outro — em 2 minutos.','Troquem as surpresas e reajam sem filtro.','Massagem nas coxas — 5 minutos cada — com atenção.','Fiquem juntos sem pressa pelo tempo que quiserem.'],
-    ['Cada um lista em voz alta 3 desejos para essa noite.','Tentam realizar pelo menos dois desses desejos juntos.','Massagem de relaxamento completa nas costas — 10 minutos.','Terminem como quiserem — a noite é de vocês.'],
+    ['Apaguem as luzes. Só luz de vela ou tela distante.','Escolham uma música sensual e dancem muito próximos.','Massagem nas costas por 10 minutos.','Terminem com um beijo lento, como se tivessem voltado da saudade.'],
+    ['Cada um diz em voz alta o que mais deseja do outro essa noite.','Massagem com óleo ou hidratante — das costas até os pés.','Um beijo no pescoço que dure pelo menos 30 segundos cada.','Fiquem abraçados por 5 minutos — apenas sentindo.'],
+    ['Banho juntos: lavar o cabelo um do outro devagar.','Cada um diz um elogio físico que nunca disse com essas palavras.','Massagem nos ombros com contato de lábios na nuca.','Terminem sem pressa — o que acontecer a seguir é de vocês.'],
+    ['Olhos nos olhos por 3 minutos inteiros — sem falar.','Cada um retira uma peça de roupa do outro lentamente.','Massagem nos pés com foco em cada dedo — 7 minutos cada.','Juntos sob o lençol: sem celular, apenas presença.'],
+    ['Inventem juntos uma fantasia de roleplay — só criar, não executar.','Massagem na barriga e lombar por 8 minutos.','Cada um diz uma coisa que quer que o outro faça essa noite.','Executem parte da fantasia criada — o que os dois sentirem confortável.'],
+    ['Escolham uma música que deixe os dois no clima.','Massagem nos ombros, beijo no pescoço, abraço por trás — um de cada.','Cada um sussurra no ouvido do outro o que está sentindo.','Terminem juntos — no ritmo que for.'],
+    ['Cada um prepara uma surpresa física para o outro — em 2 minutos.','Trocam as surpresas e reagem sem filtro.','Massagem nas coxas — 5 minutos cada.','Fiquem juntos sem pressa pelo tempo que quiserem.'],
+    ['Cada um lista em voz alta 3 desejos para essa noite.','Tentam realizar pelo menos dois desses desejos juntos.','Massagem completa nas costas — 10 minutos.','Terminem como quiserem — a noite é de vocês.'],
+    ['Vistam algo especial — pode ser simples, mas com intenção.','Cada um diz o que achou do visual do outro com detalhes.','Massagem nos pés com foco no calcanhar e arco por 6 minutos.','Um ritual de preparo: perfume, música, luz baixa — antes de continuar.'],
+    ['Cada um escreve em papel algo que quer fazer com o outro.','Trocam os papéis e reagem com honestidade.','Massagem no couro cabeludo — 5 minutos cada.','Executem o que foi escrito — ou conversem sobre como realizá-lo.'],
+    ['Dançem juntos com os olhos fechados por 2 músicas.','Um de vocês guia — o outro segue com os olhos ainda fechados.','Massagem nas mãos e pulsos por 5 minutos.','Terminem descansando juntos sem falar por 5 minutos.'],
+    ['Cada um conta uma fantasia ainda não realizada.','Escolhem uma para planejar juntos — mesmo que para o futuro.','Massagem profunda nas costas com pressão gradual.','Terminem num abraço que os dois saibam que é de promessa.'],
+    ['Banho separado mas com a mesma música — ao mesmo tempo.','Encontrem-se depois: qual foi a primeira sensação ao se ver?','Massagem nas panturrilhas por 5 minutos.','Terminem numa posição relaxada que os dois gostem.'],
+    ['Cada um escolhe um ponto do corpo do outro para dar atenção.','Dedicam 5 minutos exclusivos a esse ponto — com toque ou beijo.','Massagem na lombar com polegar e palma por 8 minutos.','Terminem em silêncio junto — sem instrução, só sentindo.'],
+    ['Criação livre: os dois têm 1 hora para criar a noite que quiserem.','Sem regras, só consentimento e vontade mútua.','Cuidado pós: massagem de 5 minutos um no outro.','Terminem conversando sobre o que mais gostaram.'],
   ],
   'Explosivo':[
-    ['Definem juntos uma palavra de parada — e um sinal de continuação.','Cada um diz sua maior vontade para essa noite — sem filtro.','Um de vocês tem controle por 10 minutos: o outro só segue.','Invertem os papéis por mais 10 minutos.'],
-    ['Cada um tira uma peça de roupa do outro a cada 2 minutos.','Entre cada peça: um beijo intenso em qualquer lugar.','Um de vocês fica de olhos fechados 5 minutos enquanto o outro age.','Terminam de um jeito que os dois queiram repetir.'],
-    ['Criem juntos um cenário: personagens, local e situação.','Entram no personagem por 15 minutos — de verdade.','Saem do personagem e conversam sobre o que sentiram.','Terminam como vocês mesmos — não como os personagens.'],
-    ['Cada um escreve no papel um desejo ousado — dobram e trocam.','Leem o desejo do outro em voz alta.','Tentam realizar o desejo lido — com o consentimento de ambos.','O que não for possível agora, vira meta para a próxima vez.'],
-    ['Massagem intensa nas costas — lenta e sem pressa — 15 minutos.','Cada um diz onde quer ser tocado — e o outro executa por 5 minutos.','Um de vocês escolhe a posição — o outro escolhe o ritmo.','Terminem em consenso — juntos, no tempo de vocês.'],
-    ['Cada um escolhe uma fantasia que nunca realizaram.','Discutem qual executar essa noite.','Executam a fantasia escolhida com atenção mútua.','Depois: 5 minutos de silêncio abraçados — processando.'],
-    ['Um de vocês conduz toda a noite — 30 minutos de liderança.','O outro diz apenas sim ou não — sem mais explicações.','Invertem: o outro conduz por mais 30 minutos.','Encerram juntos, sem hierarquia — só os dois.'],
-    ['Cada um lista 3 proibições — e 3 permissões especiais para essa noite.','Respeitam as proibições. Exploram as permissões.','No meio da noite: podem renegociar qualquer item.','Encerram com 5 minutos de carinho puro — sem intensidade.'],
+    ['Definem juntos uma palavra de parada e um sinal de continuação.','Cada um diz sua maior vontade para essa noite — sem filtro.','Um de vocês tem controle por 10 minutos.','Invertem os papéis por mais 10 minutos.'],
+    ['Cada um tira uma peça de roupa do outro a cada 2 minutos.','Entre cada peça: um beijo intenso em qualquer lugar.','Um de vocês fica de olhos fechados 5 minutos.','Terminam de um jeito que os dois queiram repetir.'],
+    ['Criem juntos um cenário: personagens, local e situação.','Entram no personagem por 15 minutos.','Saem do personagem e conversam sobre o que sentiram.','Terminam como vocês mesmos — não como os personagens.'],
+    ['Cada um escreve um desejo ousado em papel — dobram e trocam.','Leem em voz alta o desejo do outro.','Tentam realizar o desejo lido — com consentimento mútuo.','O que não for possível agora vira meta para próxima vez.'],
+    ['Massagem intensa nas costas — 15 minutos.','Cada um diz onde quer ser tocado — o outro executa por 5 minutos.','Um de vocês escolhe a posição — o outro escolhe o ritmo.','Terminem em consenso — juntos, no tempo de vocês.'],
+    ['Cada um escolhe uma fantasia que nunca realizaram.','Discutem qual executar essa noite.','Executam com atenção mútua.','Depois: 5 minutos de silêncio abraçados.'],
+    ['Um de vocês conduz por 30 minutos.','O outro diz apenas sim ou não.','Invertem: o outro conduz por mais 30 minutos.','Encerram juntos, sem hierarquia.'],
+    ['Cada um lista 3 proibições e 3 permissões especiais para essa noite.','Respeitam as proibições. Exploram as permissões.','No meio da noite: podem renegociar qualquer item.','Encerram com 5 minutos de carinho puro.'],
+    ['Montem um kit: venda, amarrações suaves, óleo — o que tiverem.','Cada um usa um item no outro por 5 minutos.','Invertem.','Encerram com massagem de relaxamento de 10 minutos.'],
+    ['Cada um prepara uma "surpresa corporal" — um toque novo que nunca fizeram.','Aplicam a surpresa um no outro.','Conversam sobre o que sentiram — sem julgamento.','Guardem o que funcionou como ritual futuro.'],
+    ['Criem um jogo de apostas: para cada rodada, quem perder cumpre.','5 rodadas — cada um escolhe 2 desafios para o outro.','Cumprem os desafios — dentro dos limites de ambos.','Encerram com cuidado mútuo — toque gentil por 5 minutos.'],
+    ['Cada um tem 10 minutos para criar o ambiente ideal.','Revezam: cada um vive o ambiente do outro.','Conversam sobre o que preferiram.','Combinam o melhor dos dois para usar mais vezes.'],
+    ['Uma noite sem palavras: tudo por gestos, olhares e toques.','Regra: não podem falar até terminar.','Qualquer coisa que quiserem comunicar — usem o corpo.','Encerram falando: o que foi mais intenso sem palavras?'],
+    ['Cada um define um tema: tempo, intensidade, foco.','Executam o tema do outro por 15 minutos.','Invertem os temas.','Encerram em posição de descanso a dois.'],
+    ['Noite de exploração livre: nenhuma regra além do consentimento.','Podem mudar de ideia a qualquer momento.','Qualquer coisa que aparecer — conversem antes.','Encerram com uma conversa de 5 minutos: o que foi melhor essa noite?'],
   ],
 }
 document.getElementById('missaoBtn').addEventListener('click',function(){
@@ -1856,7 +1900,19 @@ const QUIZ_DEEP=[
   {p:'Se você pudesse mudar uma coisa na nossa intimidade, o que seria?',o:['Mais frequência','Mais variedade','Mais conversa antes','Mais tempo depois']},
   {p:'Como prefere ser reconquistado(a) em dias difíceis?',o:['Silêncio amoroso','Palavras de afirmação','Gesto concreto','Toque gentil']},
   {p:'O que significa se sentir completamente amado(a) por mim?',o:['Ser aceito(a) como sou','Ser surpreendido(a)','Ter prioridade','Ser desejado(a) sempre']},
-];
+  {p:'Qual é sua linguagem do amor principal?',o:['Palavras de afirmação','Toque físico','Tempo de qualidade','Atos de serviço']},
+  {p:'O que você mais precisa depois de um momento íntimo?',o:['Ficar abraçado(a)','Conversar','Ficar em silêncio','Comer algo juntos']},
+  {p:'Qual é o seu maior medo dentro do nosso relacionamento?',o:['Distância emocional','Rotina','Deixar de ser desejado(a)','Conflito não resolvido']},
+  {p:'O que eu poderia fazer toda semana que faria diferença para você?',o:['Uma surpresa','Uma conversa profunda','Um gesto físico','Um tempo só nosso']},
+  {p:'O que você mais admira em como eu te amo?',o:['Minha consistência','Minha criatividade','Minha paciência','Minha intensidade']},
+  {p:'Qual parte da nossa rotina você mais quer mudar?',o:['Como começamos o dia','Como terminamos o dia','Nossos finais de semana','Nossa comunicação']},
+  {p:'O que te faz sentir mais próximo(a) de mim emocionalmente?',o:['Quando me ouço','Quando te surpreendo','Quando compartilhamos algo novo','Quando resolvo algo por você']},
+  {p:'Se você pudesse ter um ritual diário conosco, qual seria?',o:['Café da manhã juntos','Abraço antes de dormir','Mensagem no meio do dia','Jantar sem tela']},
+  {p:'O que você mais sente falta quando ficamos dias sem nos ver?',o:['Seu toque','Sua voz','Seu jeito de olhar','Nossa cumplicidade']},
+  {p:'Qual é o seu ponto mais sensível — não físico, mas emocional?',o:['Me sentir ignorado(a)','Me sentir criticado(a)','Me sentir pouco atraente','Me sentir inseguro(a)']},
+  {p:'Como você prefere resolver conflitos entre nós?',o:['Falar na hora','Esperar esfriar','Escrever antes de falar','Com mediação de algo externo']},
+  {p:'O que você gostaria que eu fizesse mais fora da intimidade?',o:['Me elogiar mais','Me tocar sem intenção','Me incluir em planos','Me ouvir mais ativamente']},
+]
 let quizQuestions=QUIZ;
 // init timer display
 document.getElementById('musicVol').style.setProperty('--p','60%');
@@ -2371,6 +2427,43 @@ renderStrip=function(){
   const txt=document.getElementById('stripInstruction')?document.getElementById('stripInstruction').textContent:'';
   mpSyncCarta({jogo:'strip',nivel:lvl,passo:stripStep,texto:txt});
 };
+
+// ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
+function exportarDados(){
+  const keys=['jd_seen','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'];
+  const data={v:1,ts:Date.now()};
+  keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='jogos-do-desejo-backup.json';a.click();
+}
+function importarDados(){
+  const input=document.createElement('input');input.type='file';input.accept='.json';
+  input.onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        ['jd_seen','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'].forEach(k=>{
+          if(data[k])localStorage.setItem(k,data[k]);
+        });
+        alert('Progresso restaurado com sucesso!');location.reload();
+      }catch(err){alert('Arquivo inválido.');}
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function compartilharApp(){
+  const url='https://olintoneto10.github.io/jogoscasal/';
+  const msg='Encontrei esse app incrível para casais — Jogos do Desejo 💞\n\nTem roleta, verdade ou desafio, missões e muito mais:\n'+url;
+  if(navigator.share){
+    navigator.share({title:'Jogos do Desejo',text:'App de jogos para casais 💞',url}).catch(()=>{});
+  } else {
+    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  }
+}
 
 </script>
 
