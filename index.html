@@ -43,6 +43,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lvl.on[data-level="Romântico"]{color:var(--rose-l);background:rgba(196,107,122,0.12)}
 .lvl.on[data-level="Quente"]{color:var(--gold-l);background:rgba(200,148,58,0.13)}
 .lvl.on[data-level="Explosivo"]{color:#EE5555;background:rgba(200,50,50,0.13)}
+.lvl.on[data-level="Memórias"]{color:#A8D8B0;background:rgba(80,160,100,0.12)}
 .lvl.on[data-level="Iniciante"]{color:var(--rose-l);background:rgba(196,107,122,0.12)}
 .lvl.on[data-level="Intermediário"]{color:var(--gold-l);background:rgba(200,148,58,0.13)}
 .lvl.on[data-level="Avançado"]{color:#EE5555;background:rgba(200,50,50,0.13)}
@@ -395,6 +396,13 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .hist-jogo{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .hist-texto{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--text);line-height:1.5}
 .hist-data{font-size:0.6rem;color:rgba(184,136,122,0.45);text-align:right}
+/* ══ CONQUISTAS / TOAST ══ */
+.achiev-toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(135deg,#2E1022,#1A080F);border:1px solid var(--gold);border-radius:12px;padding:0.8rem 1.3rem;display:flex;align-items:center;gap:0.75rem;opacity:0;pointer-events:none;transition:opacity 0.35s,transform 0.35s;z-index:900;box-shadow:0 8px 32px rgba(212,133,90,0.35);white-space:nowrap}
+.achiev-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.achiev-toast-icon{font-size:1.6rem;line-height:1}
+.achiev-toast-txt{display:flex;flex-direction:column}
+.achiev-toast-title{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.achiev-toast-name{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--text);letter-spacing:0.04em}
 </style>
 
 </head>
@@ -593,6 +601,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="lvl on" data-level="Romântico">Romântico</button>
     <button class="lvl" data-level="Quente">Quente</button>
     <button class="lvl" data-level="Explosivo">Explosivo</button>
+    <button class="lvl" data-level="Memórias">Memórias</button>
   </div>
   <p class="vd-player" id="vdPlayer">Vez do Jogador 1</p>
   <div class="vd-btns">
@@ -942,7 +951,7 @@ document.querySelectorAll('.levels').forEach(grp=>{
   levelState[id]=firstOn?firstOn.dataset.level:'Romântico';
   grp.querySelectorAll('.lvl').forEach(btn=>{
     btn.addEventListener('click',function(){
-      if(this.dataset.level==='Explosivo'){pedirConsentExplosivo(this,id);return;}
+      if(this.dataset.level==='Explosivo'&&id!=='posLevels'){pedirConsentExplosivo(this,id);return;}
       grp.querySelectorAll('.lvl').forEach(b=>b.classList.remove('on'));
       this.classList.add('on');levelState[id]=this.dataset.level;
     });
@@ -1182,6 +1191,7 @@ sizeRWheel();addEventListener('resize',sizeRWheel);
 document.getElementById('rSpinBtn').addEventListener('click',function(){
   if(rSpinning)return;rSpinning=true;this.disabled=true;this.textContent='Girando…';
   if(navigator.vibrate)navigator.vibrate([40,20,40]);
+  verificarConquista('roleta');
   rCanvas.classList.add('spinning');document.getElementById('rOverlay').classList.remove('on');
   const from=rAngle,to=from+(6+Math.random()*4)*2*Math.PI+Math.random()*2*Math.PI;
   const dur=4300,t0=performance.now();const btn=this;
@@ -1196,7 +1206,7 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
     const lv=getLevel('rLevels'),cat=RCATS[winner].name;
     document.getElementById('rCLevel').textContent=lv.toUpperCase();
     document.getElementById('rCCat').textContent=cat;
-    const rPool=RCARDS[lv][cat];const rText=Array.isArray(rPool)?rPool[Math.floor(Math.random()*rPool.length)]:rPool;
+    const rPool=RCARDS[lv][cat];const rText=Array.isArray(rPool)?deckPick('r_'+lv+'_'+cat,rPool):rPool;
     document.getElementById('rCText').textContent=rText;
     salvarCarta('Roleta — '+cat,rText);
     document.getElementById('rCard').classList.remove('flipped');
@@ -1323,14 +1333,53 @@ const VD={
       'Surpreenda-me com um gesto que eu nunca vi de você antes.',
     ],
   },
+  'Memórias':{
+    verdade:[
+      'Qual foi o nosso melhor dia juntos até hoje?',
+      'Qual momento seu eu nunca vou esquecer?',
+      'Qual foi a primeira coisa que você pensou quando me viu pela primeira vez?',
+      'Qual conversa nossa te marcou mais?',
+      'Qual viagem ou passeio que fizemos juntos você mais quer repetir?',
+      'Qual presente seu — com ou sem dinheiro — mais me emocionou?',
+      'Qual foi o momento em que você mais sentiu orgulho de nós dois?',
+      'O que você lembra do nosso primeiro beijo?',
+      'Qual foi a fase mais difícil que superamos juntos?',
+      'Qual foto nossa te faz mais feliz quando você vê?',
+      'Qual foi a noite mais especial que passamos juntos?',
+      'O que você mudaria se pudesse rever algum momento nosso?',
+      'Qual músicaou filme te lembra de um momento especial nosso?',
+      'Qual foi a melhor surpresa que já te fiz?',
+      'Qual momento nosso você gostaria de reviver hoje?',
+      'O que você descobriu sobre mim que te surpreendeu positivamente?',
+    ],
+    desafio:[
+      'Reviva com gestos o nosso primeiro encontro — sem palavras.',
+      'Escolha uma foto nossa no celular e me conte o que estava sentindo naquele dia.',
+      'Escreva no papel a sua memória favorita nossa — e leia em voz alta.',
+      'Imite como você me contou que me amava pela primeira vez.',
+      'Recrie o abraço que nos demos no momento que você mais gostou.',
+      'Conte uma memória nossa que nunca me contou antes.',
+      'Mostre no mapa onde você gostaria que nossa próxima memória fosse criada.',
+      'Ligue para o número que aparece mais no histórico do seu celular agora — que sou eu.',
+      'Cante a música que tocava em algum momento especial nosso.',
+      'Me diga o que você estava usando no dia em que mais se sentiu apaixonado(a) por mim.',
+      'Reconstitua com as mãos o gesto mais carinhoso que já te fiz.',
+      'Escreva com o dedo nas minhas costas o nome do lugar onde nossa melhor memória aconteceu.',
+      'Me mostre uma mensagem antiga nossa que você ainda guarda.',
+      'Tente lembrar o que eu pedi no nosso primeiro jantar juntos.',
+      'Descreva com os olhos fechados como eu estava no dia mais feliz nosso.',
+      'Me diga em uma frase o que nossas memórias juntos significam para você.',
+    ],
+  },
 };
 function vdPick(tipo){
   const lv=getLevel('vdLevels');
-  const pool=VD[lv][tipo];const text=pool[Math.floor(Math.random()*pool.length)];
+  const pool=VD[lv][tipo];const text=deckPick('vd_'+lv+'_'+tipo,pool);
   document.getElementById('vdCLevel').textContent=lv.toUpperCase();
   document.getElementById('vdCCat').textContent=tipo==='verdade'?'Verdade':'Desafio';
   document.getElementById('vdCText').textContent=text;
   salvarCarta('Verdade ou Desafio — '+tipo,text);
+  verificarConquista('vd');
   document.getElementById('vdSealIcon').textContent=tipo==='verdade'?'💬':'🔥';
   document.getElementById('vdCard').classList.remove('flipped');
   document.getElementById('vdOverlay').classList.add('on');
@@ -1371,7 +1420,10 @@ document.getElementById('dadoBtn').addEventListener('click',function(){
     const dur=DADO.duracao[Math.floor(Math.random()*DADO.duracao.length)];
     const local=DADO.local[Math.floor(Math.random()*DADO.local.length)];
     ['dv0','dv1','dv2','dv3'].forEach((id,i)=>{const el=document.getElementById(id);el.textContent=[parte,acao,dur,local][i];el.classList.remove('blank');});
-    document.getElementById('dadoResult').textContent=`${acao.charAt(0).toUpperCase()+acao.slice(1)} o ${parte} por ${dur} — ${local}.`;
+    const dadoTxt=`${acao.charAt(0).toUpperCase()+acao.slice(1)} o ${parte} por ${dur} — ${local}.`;
+    document.getElementById('dadoResult').textContent=dadoTxt;
+    salvarCarta('Dado dos Prazeres',dadoTxt);
+    verificarConquista('dado');
     document.getElementById('dadoSkip').style.display='';
     dadoRolling=false;const btn=document.getElementById('dadoBtn');btn.disabled=false;btn.textContent='Rolar os Dados';
   },600);
@@ -1430,6 +1482,8 @@ function showQuizResults(){
       list.appendChild(card);
     });
     document.getElementById('qScoreNum').textContent=`${score}/${quizQuestions.length}`;
+    salvarCarta('Quiz do Casal',score+'/'+quizQuestions.length+' respostas iguais');
+    verificarConquista('quiz',score,quizQuestions.length);
     document.getElementById('qBar').style.width='100%';
   });
 }
@@ -1473,6 +1527,7 @@ document.getElementById('missaoBtn').addEventListener('click',function(){
   const arr=MISSOES[lv],m=arr[Math.floor(Math.random()*arr.length)];
   const card=document.getElementById('missaoCard');
   const aftercareBtn=lv==='Explosivo'?'<button class="btn-ghost" style="margin-top:1.2rem;align-self:center" onclick="showAftercare()">🌿 Momento de Aftercare</button>':'';
+  salvarCarta('Missão da Noite',m[0]);verificarConquista('missao');
   card.innerHTML=`<div class="missao-card"><div class="missao-card-title">Missão de Hoje</div><div class="missao-rule"></div><div class="missao-steps">${m.map((s,i)=>`<div class="missao-step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('')}</div>${aftercareBtn}</div>`;
 });
 
@@ -2159,6 +2214,8 @@ function mapaConfirm(){
 function showMapaResults(){
   document.getElementById('mapaGame').style.display='none';
   document.getElementById('mapaResults').style.display='flex';
+  verificarConquista('mapa');
+  salvarCarta('Mapa do Desejo',matchCount+' desejos em comum descobertos');
   const yes=[],curious=[];
   MAPA_ITEMS.forEach((item,i)=>{
     const a1=mapaAnswers[0][i]||'no',a2=mapaAnswers[1][i]||'no';
@@ -2286,6 +2343,7 @@ function atualizarStreak(){
     document.getElementById('streak-count').textContent=streak;
     const lbl=document.getElementById('home-streak').querySelector('.streak-label');
     lbl.textContent=streak===1?'noite jogando':streak+' noites seguidas';
+    verificarStreakConquista(streak);
   }
 }
 
@@ -2362,6 +2420,62 @@ go=function(id){
   _goOrigGamif(id);
   if(id==='home'){atualizarStreak();carregarMissaoSemana();}
 };
+
+
+// ══ CONQUISTAS ════════════════════════════════════════════════════
+const CONQUISTAS={
+  primeira:{icon:'🕯️',nome:'Primeira Chama',trigger:'vd'},
+  roleta10:{icon:'🎡',nome:'Rodou Muito',trigger:'roleta10'},
+  mapa:{icon:'🗺️',nome:'Mapa Aberto',trigger:'mapa'},
+  missao:{icon:'🌙',nome:'Missão Aceita',trigger:'missao'},
+  quiz6:{icon:'🧠',nome:'Quiz Certeiros',trigger:'quiz6'},
+  streak3:{icon:'🔥',nome:'3 Noites Seguidas',trigger:'streak3'},
+  dado:{icon:'🎲',nome:'Dados Lançados',trigger:'dado'},
+  completo:{icon:'👑',nome:'Noite Completa',trigger:'completo'},
+};
+let _rSpins=0;
+function verificarConquista(tipo,a,b){
+  const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
+  const ganhar=(k)=>{
+    if(ganhas.includes(k))return;
+    ganhas.push(k);
+    localStorage.setItem('jd_conquistas',JSON.stringify(ganhas));
+    mostrarConquista(CONQUISTAS[k]);
+  };
+  if(tipo==='vd')ganhar('primeira');
+  if(tipo==='dado')ganhar('dado');
+  if(tipo==='missao')ganhar('missao');
+  if(tipo==='mapa')ganhar('mapa');
+  if(tipo==='quiz'&&a>=6)ganhar('quiz6');
+  if(tipo==='roleta'){_rSpins++;if(_rSpins>=10)ganhar('roleta10');}
+  // Noite completa: roleta + vd + missao
+  if(['vd','dado','missao','mapa','roleta'].includes(tipo)){
+    const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
+    const jogos=new Set(hist.slice(0,20).map(h=>h.jogo.split(' ')[0]));
+    if(jogos.size>=4)ganhar('completo');
+  }
+}
+function verificarStreakConquista(streak){
+  if(streak>=3){
+    const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
+    if(!ganhas.includes('streak3')){
+      ganhas.push('streak3');
+      localStorage.setItem('jd_conquistas',JSON.stringify(ganhas));
+      mostrarConquista(CONQUISTAS.streak3);
+    }
+  }
+}
+let _achievTimer=null;
+function mostrarConquista(c){
+  if(!c)return;
+  document.getElementById('achiev-icon').textContent=c.icon;
+  document.getElementById('achiev-name').textContent=c.nome;
+  const t=document.getElementById('achiev-toast');
+  t.classList.add('on');
+  if(_achievTimer)clearTimeout(_achievTimer);
+  _achievTimer=setTimeout(()=>t.classList.remove('on'),3200);
+  if(navigator.vibrate)navigator.vibrate([30,40,80]);
+}
 
 // ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
 const fbCfg={
