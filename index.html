@@ -2513,9 +2513,12 @@ const fbCfg={
 };
 let fbdb=null;
 let _fbLoaded=false;
+function _withTimeout(p,ms){
+  return Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);
+}
 async function carregarFirebase(){
   if(_fbLoaded)return true;
-  return new Promise(resolve=>{
+  return _withTimeout(new Promise(resolve=>{
     const s1=document.createElement('script');
     s1.src='https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js';
     s1.onerror=()=>resolve(false);
@@ -2533,7 +2536,7 @@ async function carregarFirebase(){
       document.head.appendChild(s2);
     };
     document.head.appendChild(s1);
-  });
+  }),12000).catch(()=>false);
 }
 
 // ── Multiplayer state ─────────────────────────────────────────────
@@ -2565,15 +2568,16 @@ async function doLoginMpCriar(){
   const campos=mpValidarCampos();if(!campos)return;
   const err=document.getElementById('loginErr-mp');
   const{nome,pin}=campos;
-  err.textContent='Conectando…';
-  const ok=await carregarFirebase();
-  if(!ok){err.textContent='❌ Sem conexão com o servidor. Verifique sua internet.';return;}
-  err.textContent='';
+  err.textContent='⏳ Carregando servidor…';
+  let ok=false;
+  try{ok=await carregarFirebase();}catch(e){ok=false;}
+  if(!ok){err.textContent='❌ Servidor indisponível. Verifique sua internet e tente de novo.';return;}
+  err.textContent='⏳ Criando sala…';
   try{
     const codigo=gerarCodigo();
     mp.eu='p1';mp.codigo=codigo;mp.ativo=true;
     mp.salaRef=fbdb.ref('salas/'+codigo);
-    await mp.salaRef.set({criada:Date.now(),expiraEm:Date.now()+7200000,p1:{nome},vez:'p1'});
+    await _withTimeout(mp.salaRef.set({criada:Date.now(),expiraEm:Date.now()+7200000,p1:{nome},vez:'p1'}),8000);
     players.p1={name:nome,pin};
     document.getElementById('sala-display-code').textContent=codigo;
     document.getElementById('sala-status').textContent='Aguardando parceiro(a) entrar…';
@@ -2585,8 +2589,12 @@ async function doLoginMpCriar(){
       mpIniciarJogo();
     });
   }catch(e){
-    mp.ativo=false;mp.eu=null;mp.salaRef=null;
-    err.textContent='❌ Erro ao criar sala. Verifique sua conexao.';
+    mp.ativo=false;mp.eu=null;mp.codigo=null;mp.salaRef=null;
+    if(e.message==='timeout'){
+      err.textContent='❌ Servidor lento demais. Tente novamente.';
+    } else {
+      err.textContent='❌ Erro: '+e.message+'. Verifique o banco de dados Firebase.';
+    }
     console.error('Firebase criar:',e);
   }
 }
@@ -2598,24 +2606,30 @@ async function doLoginMpEntrar(){
   const codigo=(document.getElementById('mpSalaInput').value||'').trim().toUpperCase();
   const err=document.getElementById('loginErr-mp');
   if(codigo.length<4){err.textContent='Digite o código da sala.';return;}
-  err.textContent='Conectando…';
-  const ok=await carregarFirebase();
-  if(!ok){err.textContent='❌ Sem conexão com o servidor. Verifique sua internet.';return;}
-  err.textContent='';
+  err.textContent='⏳ Carregando servidor…';
+  let ok=false;
+  try{ok=await carregarFirebase();}catch(e){ok=false;}
+  if(!ok){err.textContent='❌ Servidor indisponível. Verifique sua internet e tente de novo.';return;}
+  err.textContent='⏳ Buscando sala…';
   try{
     const ref=fbdb.ref('salas/'+codigo);
-    const snap=await ref.once('value');
+    const snap=await _withTimeout(ref.once('value'),8000);
     if(!snap.exists()){err.textContent='❌ Sala não encontrada. Verifique o código.';return;}
     const d=snap.val();
+    if(d.expiraEm&&Date.now()>d.expiraEm){err.textContent='❌ Esta sala já expirou. Peça um novo convite.';return;}
     mp.eu='p2';mp.codigo=codigo;mp.ativo=true;mp.salaRef=ref;
     mp.vezAtual=d.vez||'p1';
     players.p1={name:d.p1.nome,pin:'0000'};
     players.p2={name:nome,pin};
-    await ref.child('p2').set({nome});
+    await _withTimeout(ref.child('p2').set({nome}),8000);
     mpIniciarJogo();
   }catch(e){
     mp.ativo=false;mp.eu=null;mp.salaRef=null;
-    err.textContent='❌ Erro ao entrar na sala. Verifique sua conexao.';
+    if(e.message==='timeout'){
+      err.textContent='❌ Servidor lento demais. Tente novamente.';
+    } else {
+      err.textContent='❌ Erro: '+e.message;
+    }
     console.error('Firebase entrar:',e);
   }
 }
