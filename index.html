@@ -581,9 +581,16 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="streak-hist-btn" onclick="abrirHistorico()">📖 Histórico</button>
   </div>
   <div class="home-mission" id="home-mission" style="display:none">
-    <div class="mission-week-label">Missão da Semana</div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="mission-week-label">Missão da Semana</div>
+      <div class="mission-week-label" id="mission-total-label" style="color:var(--muted)"></div>
+    </div>
     <div class="mission-week-text" id="mission-week-text"></div>
     <button class="mission-done-btn" id="mission-done-btn" onclick="missaoDaSemanaFeita()">✓ Concluímos!</button>
+    <div id="mission-nota-wrap" style="display:none;flex-direction:column;gap:0.5rem;margin-top:0.2rem">
+      <textarea id="mission-nota-input" placeholder="Escreva uma lembrança desta missão… (opcional)" rows="3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:8px;color:var(--text);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;padding:0.7rem 0.8rem;resize:none;width:100%;line-height:1.55"></textarea>
+      <button onclick="salvarNotaMissao()" style="align-self:flex-end;background:none;border:1px solid rgba(200,148,58,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:3px;cursor:pointer">💾 Guardar lembrança</button>
+    </div>
   </div>
   <div class="games-grid">
     <div class="game-card" onclick="go('screen-reconexao')" style="grid-column:1/-1;border-color:rgba(196,107,122,0.3)"><div class="icon">💬</div><div class="name">Reconexão</div><div class="desc">Comece aqui — 3 perguntas para se reencontrar antes de tudo</div></div>
@@ -2095,15 +2102,55 @@ function carregarMissaoSemana(){
   el.style.display='flex';
   document.getElementById('mission-week-text').textContent=texto;
   const btn=document.getElementById('mission-done-btn');
-  if(feita){btn.classList.add('done');btn.textContent='✓ Concluída!';}
-  else{btn.classList.remove('done');btn.textContent='✓ Concluímos!';}
+  const total=parseInt(localStorage.getItem('jd_missaoTotal')||'0');
+  const lbl=document.getElementById('mission-total-label');
+  if(total>0)lbl.textContent=total+' '+(total===1?'concluída':'concluídas');
+  if(feita){
+    btn.classList.add('done');btn.textContent='↩ Desmarcar';
+    const wrap=document.getElementById('mission-nota-wrap');
+    wrap.style.display='flex';
+    const nota=stored.nota||'';
+    document.getElementById('mission-nota-input').value=nota;
+  } else {
+    btn.classList.remove('done');btn.textContent='✓ Concluímos!';
+    document.getElementById('mission-nota-wrap').style.display='none';
+  }
 }
 function missaoDaSemanaFeita(){
   const sem=Math.floor(Date.now()/(7*86400000));
-  localStorage.setItem('jd_missaoSem',JSON.stringify({sem,feita:true}));
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  const jaFeita=stored.sem===sem&&stored.feita;
   const btn=document.getElementById('mission-done-btn');
-  btn.classList.add('done');btn.textContent='✓ Concluída!';
-  if(navigator.vibrate)navigator.vibrate([30,20,60]);
+  const wrap=document.getElementById('mission-nota-wrap');
+  if(jaFeita){
+    // desmarcar
+    localStorage.setItem('jd_missaoSem',JSON.stringify({sem,feita:false,nota:stored.nota||''}));
+    let total=parseInt(localStorage.getItem('jd_missaoTotal')||'0');
+    if(total>0){total--;localStorage.setItem('jd_missaoTotal',String(total));}
+    btn.classList.remove('done');btn.textContent='✓ Concluímos!';
+    wrap.style.display='none';
+    const lbl=document.getElementById('mission-total-label');
+    lbl.textContent=total>0?total+' '+(total===1?'concluída':'concluídas'):'';
+  } else {
+    // marcar como feita
+    localStorage.setItem('jd_missaoSem',JSON.stringify({sem,feita:true,nota:stored.nota||''}));
+    const total=(parseInt(localStorage.getItem('jd_missaoTotal')||'0')+1);
+    localStorage.setItem('jd_missaoTotal',String(total));
+    btn.classList.add('done');btn.textContent='↩ Desmarcar';
+    wrap.style.display='flex';
+    document.getElementById('mission-nota-input').value=stored.nota||'';
+    document.getElementById('mission-total-label').textContent=total+' '+(total===1?'concluída':'concluídas');
+    if(navigator.vibrate)navigator.vibrate([30,20,60]);
+  }
+}
+function salvarNotaMissao(){
+  const sem=Math.floor(Date.now()/(7*86400000));
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  const nota=document.getElementById('mission-nota-input').value.trim();
+  localStorage.setItem('jd_missaoSem',JSON.stringify({...stored,sem,nota}));
+  const btn=document.querySelector('#mission-nota-wrap button');
+  btn.textContent='✓ Guardada!';
+  setTimeout(()=>{btn.textContent='💾 Guardar lembrança';},2000);
 }
 
 // ── Histórico ────────────────────────────────────────────────────
@@ -2136,12 +2183,20 @@ function fecharHistorico(){
 
 // ── Init gamification on home load ───────────────────────────────
 const _goOrigGamif=go;
+let _moodTimer=null;
 go=function(id){
+  if(_moodTimer){clearTimeout(_moodTimer);_moodTimer=null;}
+  document.getElementById('mood-overlay').style.display='none';
   _goOrigGamif(id);
   if(id==='home'){
     atualizarStreak();carregarMissaoSemana();
     if(!sessionStorage.getItem('jd_mood')){
-      setTimeout(()=>{document.getElementById('mood-overlay').style.display='flex';},350);
+      _moodTimer=setTimeout(()=>{
+        if(document.getElementById('home').classList.contains('active')){
+          document.getElementById('mood-overlay').style.display='flex';
+        }
+        _moodTimer=null;
+      },400);
     }
   }
 };
