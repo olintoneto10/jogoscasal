@@ -865,6 +865,30 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 </div>
 
 <script>
+// ══ ONBOARDING ══════════════════════════════════════════════════════
+function onbContinuar(){
+  localStorage.setItem('jd_seen','1');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-mode').classList.add('active');
+  window.scrollTo(0,0);
+}
+(function(){
+  if(localStorage.getItem('jd_seen')){
+    document.getElementById('screen-onboarding').classList.remove('active');
+    const sala=new URLSearchParams(location.search).get('sala');
+    if(sala&&sala.length>=4){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('login-mp').classList.add('active');
+      var jw=document.getElementById('join-input-wrap');
+      if(jw)jw.style.display='flex';
+      var si=document.getElementById('mpSalaInput');
+      if(si)si.value=sala.toUpperCase();
+    } else {
+      document.getElementById('screen-mode').classList.add('active');
+    }
+  }
+})();
+
 // ══ STATE ══════════════════════════════════════════════════
 let players = {p1:{name:'',pin:''},p2:{name:'',pin:''}};
 let vdCurrent = 1;
