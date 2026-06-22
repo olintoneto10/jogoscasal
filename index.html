@@ -423,6 +423,36 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 @keyframes bgFloat{0%{transform:translateY(0);opacity:0}8%{opacity:var(--a,.3)}88%{opacity:var(--a,.3)}100%{transform:translateY(-108vh);opacity:0}}
 .pos-icon-txt{font-size:4rem;text-align:center;padding:1.5rem 0;line-height:1}
 .import-input{display:none}
+/* ══ INSTALL BANNER ══ */
+#install-banner{position:fixed;left:0;right:0;bottom:0;z-index:550;background:linear-gradient(145deg,var(--ground-2),var(--ground-3));border-top:1px solid rgba(212,133,90,0.3);box-shadow:0 -8px 32px rgba(0,0,0,0.45);padding:0.95rem 1.1rem;display:flex;align-items:center;gap:0.85rem;transform:translateY(120%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+#install-banner.on{transform:translateY(0)}
+.ib-icon{font-size:1.7rem;flex-shrink:0;line-height:1}
+.ib-txt{flex:1;min-width:0}
+.ib-title{font-family:'Cormorant SC',serif;font-size:0.98rem;color:var(--gold-l);letter-spacing:0.03em;line-height:1.2}
+.ib-sub{font-size:0.7rem;color:var(--muted);margin-top:0.12rem;line-height:1.3}
+.ib-install{background:linear-gradient(135deg,#F0A070,#D4855A);color:#120508;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem 1.1rem;border-radius:6px;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(212,133,90,0.35)}
+.ib-close{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;flex-shrink:0;line-height:1;padding:0 0.2rem}
+/* ══ iOS INSTALL INSTRUCTIONS ══ */
+#ios-install-overlay{position:fixed;inset:0;z-index:560;background:rgba(14,4,8,0.96);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#ios-install-overlay.on{opacity:1;pointer-events:all}
+.ios-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.3);border-radius:16px;padding:2rem 1.7rem;max-width:330px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1rem}
+.ios-card h3{font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);letter-spacing:0.04em}
+.ios-steps{display:flex;flex-direction:column;gap:0.85rem;text-align:left;margin:0.3rem 0}
+.ios-step{display:flex;align-items:center;gap:0.8rem;font-size:0.86rem;color:var(--text);line-height:1.4}
+.ios-step .num{flex-shrink:0;width:1.7rem;height:1.7rem;border-radius:50%;background:rgba(212,133,90,0.18);color:var(--gold-l);display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-weight:700}
+.ios-step .ic{font-size:1.2rem}
+/* ══ MP APPROVE (host) ══ */
+#mp-approve-overlay{position:fixed;inset:0;z-index:570;background:rgba(14,4,8,0.96);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#mp-approve-overlay.on{opacity:1;pointer-events:all}
+.mpa-card{background:var(--ground-2);border:1px solid rgba(238,104,136,0.35);border-radius:16px;padding:2rem 1.7rem;max-width:330px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1.1rem}
+.mpa-icon{font-size:2.8rem;line-height:1}
+.mpa-title{font-family:'Cormorant SC',serif;font-size:1.3rem;color:var(--gold-l);letter-spacing:0.04em}
+.mpa-name{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.15rem;color:var(--rose-l)}
+.mpa-sub{font-size:0.8rem;color:var(--muted);line-height:1.5}
+.mpa-btns{display:flex;gap:0.7rem;margin-top:0.3rem}
+.mpa-btns button{flex:1;font-family:'Jost',sans-serif;font-size:0.74rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem 0.5rem;border-radius:7px;cursor:pointer;border:none}
+.mpa-yes{background:linear-gradient(135deg,#F0A070,#D4855A);color:#120508;box-shadow:0 4px 14px rgba(212,133,90,0.35)}
+.mpa-no{background:transparent;color:var(--rose-l);border:1px solid rgba(238,104,136,0.4)!important}
 </style>
 
 <!-- Analytics (substitua G-XXXXXXXX pelo seu ID do Google Analytics) -->
@@ -912,6 +942,44 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <div class="pin-err" id="pinErr"></div>
 </div>
 
+<!-- ══ INSTALL BANNER ══ -->
+<div id="install-banner">
+  <span class="ib-icon">📲</span>
+  <div class="ib-txt">
+    <div class="ib-title">Instalar na tela inicial</div>
+    <div class="ib-sub">Abra como um app, em tela cheia e offline.</div>
+  </div>
+  <button class="ib-install" onclick="instalarApp()">Instalar</button>
+  <button class="ib-close" onclick="fecharInstallBanner()" aria-label="Fechar">×</button>
+</div>
+
+<!-- ══ iOS INSTALL INSTRUCTIONS ══ -->
+<div id="ios-install-overlay">
+  <div class="ios-card">
+    <h3>Adicionar à Tela de Início</h3>
+    <div class="ios-steps">
+      <div class="ios-step"><span class="num">1</span><span class="ic">⬆️</span><span>Toque no botão <strong>Compartilhar</strong> na barra do Safari.</span></div>
+      <div class="ios-step"><span class="num">2</span><span class="ic">➕</span><span>Escolha <strong>“Adicionar à Tela de Início”</strong>.</span></div>
+      <div class="ios-step"><span class="num">3</span><span class="ic">💞</span><span>Toque em <strong>Adicionar</strong> e abra pelo ícone.</span></div>
+    </div>
+    <button class="btn-ghost" onclick="fecharIosInstall()">Entendi</button>
+  </div>
+</div>
+
+<!-- ══ MP APPROVE (host confirma entrada) ══ -->
+<div id="mp-approve-overlay">
+  <div class="mpa-card">
+    <div class="mpa-icon">🔐</div>
+    <div class="mpa-title">Alguém quer entrar</div>
+    <div class="mpa-name" id="mpa-name">—</div>
+    <div class="mpa-sub">Só aceite se for a pessoa que você convidou. Assim ninguém entra na sua sala sem permissão.</div>
+    <div class="mpa-btns">
+      <button class="mpa-no" onclick="mpRecusarEntrada()">Recusar</button>
+      <button class="mpa-yes" onclick="mpAprovarEntrada()">Aceitar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ══ ONBOARDING ══════════════════════════════════════════════════════
 function onbContinuar(){
@@ -929,6 +997,7 @@ function onbContinuar(){
 function ageConfirm(){
   localStorage.setItem('jd_age','1');
   document.getElementById('screen-agegate').classList.remove('active');
+  mostrarInstallBanner();
   if(!localStorage.getItem('jd_seen')){
     document.getElementById('screen-onboarding').classList.add('active');
   } else {
@@ -987,6 +1056,54 @@ function apagarTodosDados(){
     document.getElementById('screen-onboarding').classList.add('active');
   }
 })();
+
+// ══ INSTALL (Adicionar à tela inicial) ══════════════════════
+let _deferredInstall=null;
+function _isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+}
+function _isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+}
+function mostrarInstallBanner(){
+  if(_isStandalone())return;
+  if(localStorage.getItem('jd_inst_dismiss')==='1')return;
+  // não cobre o aviso de idade — aguarda ser aceito
+  if(!localStorage.getItem('jd_age'))return;
+  // só mostra se há prompt nativo OU é iOS Safari (sem prompt nativo)
+  if(!_deferredInstall && !_isIOS())return;
+  const b=document.getElementById('install-banner');
+  if(b)setTimeout(()=>b.classList.add('on'),1200);
+}
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  _deferredInstall=e;
+  mostrarInstallBanner();
+});
+window.addEventListener('appinstalled',()=>{
+  fecharInstallBanner();
+  _deferredInstall=null;
+});
+function instalarApp(){
+  if(_deferredInstall){
+    _deferredInstall.prompt();
+    _deferredInstall.userChoice.finally(()=>{_deferredInstall=null;fecharInstallBanner();});
+  } else if(_isIOS()){
+    document.getElementById('ios-install-overlay').classList.add('on');
+  } else {
+    fecharInstallBanner();
+  }
+}
+function fecharInstallBanner(){
+  const b=document.getElementById('install-banner');
+  if(b)b.classList.remove('on');
+  localStorage.setItem('jd_inst_dismiss','1');
+}
+function fecharIosInstall(){
+  document.getElementById('ios-install-overlay').classList.remove('on');
+}
+// iOS não dispara beforeinstallprompt — tenta mostrar mesmo assim
+if(_isIOS() && !_isStandalone()) mostrarInstallBanner();
 
 // ══ STATE ══════════════════════════════════════════════════
 let players = {p1:{name:'',pin:''},p2:{name:'',pin:''}};
@@ -2326,7 +2443,7 @@ async function carregarFirebase(){
 }
 
 // ── Multiplayer state ─────────────────────────────────────────────
-const mp={ativo:false,eu:null,codigo:null,vezAtual:'p1',salaRef:null,_p2Listener:null};
+const mp={ativo:false,eu:null,codigo:null,vezAtual:'p1',salaRef:null,_p2Listener:null,_statusListener:null,_pendingNome:null};
 
 function showJoinInput(){
   document.getElementById('join-input-wrap').style.display='flex';
@@ -2371,8 +2488,12 @@ async function doLoginMpCriar(){
     mp._p2Listener=mp.salaRef.child('p2').on('value',snap=>{
       if(!snap.exists())return;
       const d=snap.val();
-      players.p2={name:d.nome,pin:'0000'};
-      mpIniciarJogo();
+      // Só pede confirmação para entradas pendentes (privacidade)
+      if(d.status==='pendente'){
+        mp._pendingNome=d.nome||'Alguém';
+        document.getElementById('mpa-name').textContent=mp._pendingNome;
+        document.getElementById('mp-approve-overlay').classList.add('on');
+      }
     });
   }catch(e){
     mp.ativo=false;mp.eu=null;mp.codigo=null;mp.salaRef=null;
@@ -2407,8 +2528,21 @@ async function doLoginMpEntrar(){
     mp.vezAtual=d.vez||'p1';
     players.p1={name:d.p1.nome,pin:'0000'};
     players.p2={name:nome,pin};
-    await _withTimeout(ref.child('p2').set({nome}),8000);
-    mpIniciarJogo();
+    // Entrada pendente — aguarda o anfitrião confirmar
+    await _withTimeout(ref.child('p2').set({nome,status:'pendente'}),8000);
+    err.textContent='⏳ Aguardando o anfitrião confirmar sua entrada…';
+    mp._statusListener=ref.child('p2/status').on('value',s=>{
+      const st=s.val();
+      if(st==='aprovado'){
+        if(mp._statusListener){ref.child('p2/status').off('value',mp._statusListener);mp._statusListener=null;}
+        err.textContent='';
+        mpIniciarJogo();
+      } else if(st==='recusado'){
+        if(mp._statusListener){ref.child('p2/status').off('value',mp._statusListener);mp._statusListener=null;}
+        mp.ativo=false;mp.eu=null;mp.codigo=null;mp.salaRef=null;
+        err.textContent='❌ O anfitrião não confirmou sua entrada.';
+      }
+    });
   }catch(e){
     mp.ativo=false;mp.eu=null;mp.salaRef=null;
     if(e.message==='timeout'){
@@ -2420,9 +2554,27 @@ async function doLoginMpEntrar(){
   }
 }
 
+// ── Anfitrião aprova/recusa a entrada ────────────────────────────
+function mpAprovarEntrada(){
+  if(!mp.salaRef)return;
+  document.getElementById('mp-approve-overlay').classList.remove('on');
+  players.p2={name:mp._pendingNome||'Parceiro(a)',pin:'0000'};
+  mp.salaRef.child('p2/status').set('aprovado');
+  mpIniciarJogo();
+}
+function mpRecusarEntrada(){
+  document.getElementById('mp-approve-overlay').classList.remove('on');
+  if(!mp.salaRef)return;
+  mp.salaRef.child('p2/status').set('recusado');
+  // limpa a entrada recusada para permitir nova tentativa
+  setTimeout(()=>{if(mp.salaRef)mp.salaRef.child('p2').remove();},2500);
+}
+
 // ── Iniciar jogo (ambos conectados) ──────────────────────────────
 function mpIniciarJogo(){
   if(mp._p2Listener){mp.salaRef.child('p2').off('value',mp._p2Listener);mp._p2Listener=null;}
+  if(mp._statusListener){mp.salaRef.child('p2/status').off('value',mp._statusListener);mp._statusListener=null;}
+  document.getElementById('mp-approve-overlay').classList.remove('on');
   document.getElementById('hP1').textContent=players.p1.name;
   document.getElementById('hP2').textContent=players.p2.name;
   document.getElementById('vdPlayer').textContent='Vez de '+players.p1.name;
