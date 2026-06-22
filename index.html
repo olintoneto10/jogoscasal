@@ -1184,16 +1184,19 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
     if(p<1){requestAnimationFrame(tick);return;}
     rAngle=to;rSpinning=false;rCanvas.classList.remove('spinning');
     btn.disabled=false;btn.textContent='Girar a Roleta';
-    const norm=((-rAngle%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
-    const winner=Math.floor(norm/RSEG)%RN;
-    const lv=getLevel('rLevels'),cat=RCATS[winner].name;
-    document.getElementById('rCLevel').textContent=lv.toUpperCase();
-    document.getElementById('rCCat').textContent=cat;
-    const rPool=RCARDS[lv][cat];const rText=Array.isArray(rPool)?deckPick('r_'+lv+'_'+cat,rPool):rPool;
-    document.getElementById('rCText').textContent=rText;
-    salvarCarta('Roleta — '+cat,rText);
+    try{
+      const norm=((-rAngle%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+      const winner=Math.floor(norm/RSEG)%RN;
+      const lv=getLevel('rLevels'),cat=RCATS[winner].name;
+      document.getElementById('rCLevel').textContent=lv.toUpperCase();
+      document.getElementById('rCCat').textContent=cat;
+      const rPool=RCARDS[lv][cat];const rText=Array.isArray(rPool)?deckPick('r_'+lv+'_'+cat,rPool):rPool;
+      document.getElementById('rCText').textContent=rText||'';
+      salvarCarta('Roleta — '+cat,rText);
+    }catch(e){}
     document.getElementById('rCard').classList.remove('flipped');
     document.getElementById('rOverlay').classList.add('on');
+    setTimeout(function(){document.getElementById('rCard').classList.add('flipped');},700);
   })(performance.now());
 });
 document.getElementById('rCard').addEventListener('click',function(){if(!this.classList.contains('flipped'))this.classList.add('flipped');});
