@@ -10,7 +10,8 @@
 <meta name="apple-mobile-web-app-title" content="Jogos do Desejo">
 <link rel="manifest" href="manifest.json">
 <title>Jogos do Desejo</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💞</text></svg>">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -354,6 +355,15 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .btn-whatsapp:hover,.btn-whatsapp:active{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.5)}
 .btn-whatsapp span{font-size:1.3rem;line-height:1}
 .sala-status-txt{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);text-align:center;padding:0 1.5rem}
+/* ══ AGE GATE ══ */
+#screen-agegate{justify-content:center;gap:0;padding:0;background:rgba(14,4,8,0.98)}
+.age-wrap{display:flex;flex-direction:column;align-items:center;gap:1.6rem;padding:3rem 2rem;text-align:center;max-width:360px;width:100%}
+.age-badge{font-size:4.5rem;line-height:1;filter:drop-shadow(0 0 30px rgba(208,69,110,0.6))}
+.age-title{font-family:'Cormorant SC',serif;font-size:2.4rem;font-weight:700;color:var(--gold-l);letter-spacing:0.06em;line-height:1}
+.age-body{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;max-width:300px}
+.age-confirm-btn{background:linear-gradient(135deg,var(--rose),#A0234E);border:none;border-radius:10px;padding:1rem 2.4rem;color:#fff;font-family:'Jost',sans-serif;font-size:1rem;font-weight:500;letter-spacing:0.06em;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 20px rgba(208,69,110,0.45);width:calc(100% - 2rem);max-width:320px}
+.age-confirm-btn:active{transform:translateY(1px)}
+.age-decline-link{font-size:0.78rem;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:none;font-family:'Jost',sans-serif}
 /* ══ ONBOARDING ══ */
 #screen-onboarding{justify-content:center;gap:0;padding:0}
 .onb-wrap{display:flex;flex-direction:column;align-items:center;gap:1.4rem;padding:2.5rem 2rem;text-align:center;max-width:360px;width:100%}
@@ -422,8 +432,19 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <span class="mp-b-vez">Vez de <b id="mp-vez-nome">—</b></span>
 </div>
 
+<!-- ══ AGE GATE ══ -->
+<div class="screen" id="screen-agegate">
+  <div class="age-wrap">
+    <div class="age-badge">🔞</div>
+    <div class="age-title">+18</div>
+    <p class="age-body">Este aplicativo contém conteúdo adulto criado exclusivamente para casais maiores de 18 anos.<br><br>Ao continuar, você confirma que é maior de idade e concorda com os <button onclick="abrirPrivacidade()" style="background:none;border:none;color:var(--gold-l);cursor:pointer;font-family:inherit;font-size:inherit;text-decoration:underline;padding:0">Termos de Uso e Política de Privacidade</button>.</p>
+    <button class="age-confirm-btn" onclick="ageConfirm()">Tenho 18 anos ou mais</button>
+    <button class="age-decline-link" onclick="ageDecline()">Sou menor de idade — sair</button>
+  </div>
+</div>
+
 <!-- ══ ONBOARDING ══ -->
-<div class="screen active" id="screen-onboarding">
+<div class="screen" id="screen-onboarding">
   <div class="onb-wrap">
     <div class="onb-logo">💞</div>
     <h1 class="onb-title">Jogos do Desejo</h1>
@@ -890,12 +911,39 @@ function onbContinuar(){
     }),2000);
   }
 }
-(function(){
-  if(localStorage.getItem('jd_seen')){
-    document.getElementById('screen-onboarding').classList.remove('active');
+// ── Age gate helpers ──────────────────────────────────────────
+function ageConfirm(){
+  localStorage.setItem('jd_age','1');
+  document.getElementById('screen-agegate').classList.remove('active');
+  if(!localStorage.getItem('jd_seen')){
+    document.getElementById('screen-onboarding').classList.add('active');
+  } else {
     const sala=new URLSearchParams(location.search).get('sala');
     if(sala&&sala.length>=4){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('login-mp').classList.add('active');
+      var jw=document.getElementById('join-input-wrap');
+      if(jw)jw.style.display='flex';
+      var si=document.getElementById('mpSalaInput');
+      if(si)si.value=sala.toUpperCase();
+    } else {
+      document.getElementById('screen-mode').classList.add('active');
+    }
+  }
+  window.scrollTo(0,0);
+}
+function ageDecline(){
+  document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0E0408;color:#B8887A;font-family:sans-serif;font-size:1rem;text-align:center;padding:2rem">Este app é exclusivo para maiores de 18 anos.</div>';
+}
+(function(){
+  const seen=localStorage.getItem('jd_seen');
+  const aged=localStorage.getItem('jd_age');
+  if(!aged){
+    document.getElementById('screen-agegate').classList.add('active');
+    return;
+  }
+  if(seen){
+    const sala=new URLSearchParams(location.search).get('sala');
+    if(sala&&sala.length>=4){
       document.getElementById('login-mp').classList.add('active');
       var jw=document.getElementById('join-input-wrap');
       if(jw)jw.style.display='flex';
@@ -912,6 +960,8 @@ function onbContinuar(){
         new Notification('Jogos do Desejo 💞',{body:'Faz '+dias+' dias — que tal uma noite especial hoje?',icon:'/jogoscasal/manifest.json'});
       }
     }
+  } else {
+    document.getElementById('screen-onboarding').classList.add('active');
   }
 })();
 
@@ -2430,7 +2480,7 @@ renderStrip=function(){
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
-  const keys=['jd_seen','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'];
+  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'];
   const data={v:1,ts:Date.now()};
   keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -2445,7 +2495,7 @@ function importarDados(){
     reader.onload=ev=>{
       try{
         const data=JSON.parse(ev.target.result);
-        ['jd_seen','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'].forEach(k=>{
+        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'].forEach(k=>{
           if(data[k])localStorage.setItem(k,data[k]);
         });
         alert('Progresso restaurado com sucesso!');location.reload();
@@ -2496,20 +2546,41 @@ function compartilharApp(){
 
 <!-- ══ PRIVACIDADE / TERMOS ══ -->
 <div id="priv-overlay" style="display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(18px);z-index:500;flex-direction:column;align-items:center;padding:2rem 1.5rem;overflow-y:auto">
-  <div style="max-width:420px;width:100%;display:flex;flex-direction:column;gap:1.2rem">
+  <div style="max-width:420px;width:100%;display:flex;flex-direction:column;gap:1.4rem">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div style="font-family:'Cormorant SC',serif;font-size:1.2rem;color:var(--gold-l)">Privacidade e Termos</div>
+      <div style="font-family:'Cormorant SC',serif;font-size:1.3rem;color:var(--gold-l)">Termos de Uso e Privacidade</div>
       <button onclick="document.getElementById('priv-overlay').style.display='none'" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer">✕</button>
     </div>
-    <div style="font-family:'Libre Caslon Text',serif;font-size:0.87rem;color:var(--muted);line-height:1.7;display:flex;flex-direction:column;gap:1rem">
-      <p><strong style="color:var(--text)">Seus dados ficam no seu aparelho.</strong> Nomes e respostas são salvos apenas no armazenamento local do seu celular (localStorage). Nenhuma informação pessoal é enviada para servidores de terceiros sem sua ação.</p>
-      <p><strong style="color:var(--text)">Modo dois celulares (Firebase).</strong> Ao usar a função de dois celulares, o código da sala e os nomes dos jogadores são temporariamente armazenados no Firebase (Google) para sincronizar a sessão. As salas expiram automaticamente em 2 horas. Nenhum PIN ou resposta é enviado.</p>
-      <p><strong style="color:var(--text)">Conteúdo adulto.</strong> Este app contém conteúdo para casais adultos. Ao usar o nível "Explosivo", ambos os parceiros confirmam que são maiores de 18 anos e consentiram com o conteúdo.</p>
-      <p><strong style="color:var(--text)">Exclusão de dados.</strong> Para apagar todos os dados salvos localmente, use o botão abaixo.</p>
-      <p><strong style="color:var(--text)">Consentimento.</strong> O uso do app implica concordância com estes termos. O app é gratuito e sem fins comerciais.</p>
+    <div style="font-family:'Libre Caslon Text',serif;font-size:0.87rem;color:var(--muted);line-height:1.7;display:flex;flex-direction:column;gap:1.1rem">
+
+      <div style="font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);border-bottom:1px solid rgba(212,133,90,0.2);padding-bottom:0.4rem">TERMOS DE USO</div>
+
+      <p><strong style="color:var(--text)">1. Público-alvo.</strong> Este aplicativo é destinado exclusivamente a casais adultos com 18 anos ou mais. O acesso por menores de idade é proibido. Ao usar o app, você declara ter 18 anos ou mais e concordar com estes termos.</p>
+
+      <p><strong style="color:var(--text)">2. Natureza do conteúdo.</strong> Jogos do Desejo contém atividades lúdicas, perguntas e desafios de natureza íntima e adulta. O conteúdo é criado para enriquecer a conexão entre casais em ambiente consensual. O app não substitui aconselhamento terapêutico, médico ou psicológico profissional.</p>
+
+      <p><strong style="color:var(--text)">3. Consentimento entre parceiros.</strong> Todas as atividades pressupõem consentimento mútuo, livre e informado entre os participantes. O uso do app não obriga nenhum dos parceiros a realizar qualquer atividade. O direito de recusar qualquer desafio ou resposta é sempre preservado.</p>
+
+      <p><strong style="color:var(--text)">4. Responsabilidade.</strong> Os criadores do app não se responsabilizam por qualquer consequência decorrente do uso das atividades sugeridas. O casal é responsável por adaptar as sugestões à sua realidade, limites e saúde.</p>
+
+      <p><strong style="color:var(--text)">5. Propriedade intelectual.</strong> Todo o conteúdo (textos, design, código) é de propriedade dos criadores do Jogos do Desejo. É proibida a reprodução, cópia ou distribuição sem autorização expressa.</p>
+
+      <div style="font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);border-bottom:1px solid rgba(212,133,90,0.2);padding-bottom:0.4rem;margin-top:0.4rem">POLÍTICA DE PRIVACIDADE (LGPD)</div>
+
+      <p><strong style="color:var(--text)">6. Dados locais.</strong> Nomes, progresso, conquistas e preferências são salvos exclusivamente no armazenamento local do seu dispositivo (localStorage). Estes dados nunca saem do seu aparelho de forma automática.</p>
+
+      <p><strong style="color:var(--text)">7. Modo multijogador (Firebase).</strong> Ao usar a função de dois celulares, o código temporário da sala e os apelidos dos jogadores são transmitidos ao Firebase Realtime Database (Google LLC) exclusivamente para sincronizar a sessão em tempo real. As salas expiram em 2 horas. Nenhum PIN, resposta ou dado sensível é transmitido. Base legal: consentimento (LGPD Art. 7°, I).</p>
+
+      <p><strong style="color:var(--text)">8. Notificações.</strong> Se você conceder permissão de notificação, o app poderá enviar lembretes locais. Nenhum dado é enviado a servidores para fins de notificação. Você pode revogar a permissão a qualquer momento nas configurações do seu dispositivo.</p>
+
+      <p><strong style="color:var(--text)">9. Seus direitos (LGPD).</strong> Você tem direito de acessar, corrigir e excluir todos os seus dados a qualquer momento. Use o botão abaixo para apagar todos os dados locais. Para dados transmitidos via Firebase, eles expiram automaticamente em até 2 horas.</p>
+
+      <p><strong style="color:var(--text)">10. Contato.</strong> Dúvidas sobre privacidade podem ser enviadas para o responsável pelo app via GitHub: olintoneto10.</p>
+
+      <p style="font-size:0.78rem;color:rgba(184,136,122,0.6)">Última atualização: junho de 2025. Este app é gratuito e sem fins lucrativos.</p>
     </div>
     <button onclick="apagarTodosDados()" class="btn-ghost" style="border-color:rgba(238,104,136,0.35);color:var(--rose-l)">🗑️ Apagar todos os meus dados</button>
-    <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Entendido</button>
+    <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Li e entendi</button>
   </div>
 </div>
 </body>
