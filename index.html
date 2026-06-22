@@ -1062,6 +1062,15 @@ document.querySelectorAll('.levels').forEach(grp=>{
 });
 function getLevel(id){return levelState[id]||'Romântico';}
 
+// ══ DECK PICK (deduplication) ═══════════════════════════════════
+function deckPick(key,pool){
+  let deck=JSON.parse(localStorage.getItem('jd_dk_'+key)||'[]');
+  if(!deck.length)deck=[...pool].sort(()=>Math.random()-0.5);
+  const item=deck.pop();
+  localStorage.setItem('jd_dk_'+key,JSON.stringify(deck));
+  return item;
+}
+
 // ══ ROLETA DATA ══════════════════════════════════════════════
 const RCATS=[
   {name:'Beijo',color:'#6E1535'},{name:'Massagem',color:'#38186A'},
