@@ -705,6 +705,21 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .ng-epil-card{margin:1rem 1.2rem;padding:1.4rem 1.4rem;background:rgba(238,104,136,0.055);border:1px solid rgba(238,104,136,0.22);border-radius:10px;text-align:center}
 .ng-epil-titulo{font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--rose-l);margin-bottom:0.9rem}
 .ng-epil-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+/* ══ NOSSA JORNADA ══ */
+#screen-jornada{gap:0;padding-top:0}
+.jornada-hero{text-align:center;padding:0.5rem 1.2rem 0.6rem;flex-shrink:0}
+.jornada-hero-num{font-family:'Cormorant SC',serif;font-size:1.05rem;color:rgba(200,148,58,0.75);letter-spacing:0.05em}
+.jornada-hero-sub{font-size:0.65rem;color:rgba(180,140,90,0.45);font-style:italic;margin-top:0.1rem;font-family:'Libre Caslon Text',serif}
+.jornada-empty{text-align:center;padding:2rem 1.5rem;font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:rgba(180,140,100,0.45);line-height:1.7}
+.jornada-list{flex:1;overflow-y:auto;padding:0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:0.65rem}
+.jornada-entry{background:rgba(255,255,255,0.015);border:1px solid rgba(200,148,58,0.12);border-radius:14px;padding:0.85rem 1rem;transition:border-color 0.15s}
+.jornada-entry:hover{border-color:rgba(200,148,58,0.28);background:rgba(255,255,255,0.025)}
+.jornada-entry-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem}
+.jornada-entry-data{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,148,58,0.45);font-family:'Jost',sans-serif}
+.jornada-entry-cap{font-size:0.6rem;color:rgba(180,130,90,0.4);font-style:italic;font-family:'Libre Caslon Text',serif}
+.jornada-entry-titulo{font-family:'Cormorant SC',serif;font-size:0.95rem;color:rgba(225,185,135,0.92);margin-bottom:0.28rem;letter-spacing:0.02em}
+.jornada-entry-epilogo{font-size:0.7rem;color:rgba(180,145,115,0.6);font-style:italic;line-height:1.55;font-family:'Libre Caslon Text',serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.jornada-entry-sem{font-size:0.67rem;color:rgba(160,120,90,0.38);font-style:italic;font-family:'Libre Caslon Text',serif}
 /* ══ CARTA DE INTENÇÃO ══ */
 .carta-overlay{display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(20px);z-index:460;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
 .carta-overlay.on{display:flex}
@@ -937,7 +952,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span class="streak-fire">🔥</span>
     <span class="streak-count" id="streak-count">1</span>
     <span class="streak-label">noite seguida</span>
-    <button class="streak-hist-btn" onclick="abrirHistorico()">📖 Histórico</button>
+    <button class="streak-hist-btn" onclick="go('screen-jornada')">💞 Jornada</button>
   </div>
   <div class="semaforo-banner vazio" id="semaforo-banner" onclick="abrirSemaforo()">
     <div class="semaforo-dot"></div>
@@ -1483,6 +1498,20 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
 </div>
 
+<!-- ══ NOSSA JORNADA ══ -->
+<div class="screen" id="screen-jornada">
+  <div class="game-header">
+    <button class="back-btn" onclick="go('home')">← Voltar</button>
+    <span class="game-title">Nossa Jornada</span>
+    <span style="width:48px"></span>
+  </div>
+  <div class="jornada-hero">
+    <div class="jornada-hero-num" id="jornada-hero-num">✦ 0 noites guardadas</div>
+    <div class="jornada-hero-sub">cada uma é um capítulo da história de vocês</div>
+  </div>
+  <div class="jornada-list" id="jornada-list"></div>
+</div>
+
 <!-- ══ SÓ CARINHO ══ -->
 <div class="screen" id="screen-socarinho">
   <div class="sc-topnav">
@@ -1894,6 +1923,7 @@ function go(id){
   if(id==='screen-strip')verificarConquista('ritual');
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
   if(id==='screen-conquistas')renderConquistas();
+  if(id==='screen-jornada')renderJornada();
   const _swPill=document.getElementById('safeword-pill');
   if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
   const _acBar=document.getElementById('aftercare-bar');
@@ -3769,6 +3799,29 @@ function abrirSafeword(){
   const el=document.getElementById('safeword-display');
   if(el)el.textContent=word;
   document.getElementById('safeword-overlay').classList.add('on');
+}
+
+// ══ NOSSA JORNADA ════════════════════════════════════════════════════
+function renderJornada(){
+  const hist=JSON.parse(localStorage.getItem('jd_historico')||'[]');
+  const numEl=document.getElementById('jornada-hero-num');
+  const listEl=document.getElementById('jornada-list');
+  if(!listEl)return;
+  if(numEl){numEl.textContent='✦ '+hist.length+' '+(hist.length===1?'noite guardada':'noites guardadas');}
+  if(!hist.length){
+    listEl.innerHTML='<div class="jornada-empty">Nenhuma noite guardada ainda.<br>Ao finalizar uma Noite Guiada, ela aparece aqui.</div>';
+    return;
+  }
+  listEl.innerHTML=hist.map((n,i)=>{
+    const cap=n.capitulo?'Capítulo '+n.capitulo:'';
+    const titulo=n.titulo||'Nossa Noite';
+    const epilogo=n.epilogo?'<div class="jornada-entry-epilogo">'+n.epilogo+'</div>':'<div class="jornada-entry-sem">Noite sem epílogo escrito.</div>';
+    return '<div class="jornada-entry">'
+      +'<div class="jornada-entry-top"><span class="jornada-entry-data">'+(n.data||'')+'</span><span class="jornada-entry-cap">'+cap+'</span></div>'
+      +'<div class="jornada-entry-titulo">'+titulo+'</div>'
+      +epilogo
+      +'</div>';
+  }).join('');
 }
 
 // ══ SÓ CARINHO ══════════════════════════════════════════════════════
