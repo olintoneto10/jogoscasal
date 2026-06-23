@@ -270,6 +270,24 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .strip-instruction{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.05rem;line-height:1.7;color:var(--text)}
 .strip-step{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em}
 .strip-btns{display:flex;gap:0.8rem;align-items:center;justify-content:center}
+.ritual-step{display:flex;flex-direction:column;align-items:center;gap:1.2rem;width:100%}
+.ritual-lead{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.95rem;color:var(--muted);text-align:center;padding:0 1.6rem;line-height:1.7}
+.ritual-moods{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;width:100%;padding:0 1.2rem}
+.ritual-mood{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:14px;padding:1rem 0.8rem;display:flex;flex-direction:column;align-items:center;gap:0.4rem;text-align:center;cursor:pointer;transition:all 0.2s}
+.ritual-mood:hover{border-color:rgba(200,148,58,0.5)}
+.ritual-mood.on{border-color:var(--rose-l);background:rgba(238,104,136,0.08);box-shadow:0 0 18px rgba(238,104,136,0.18)}
+.ritual-mood-ic{font-size:1.8rem;line-height:1}
+.ritual-mood-nm{font-family:'Cormorant SC',serif;font-size:0.95rem;color:var(--gold-l);letter-spacing:0.03em}
+.ritual-mood-ds{font-size:0.68rem;color:var(--muted);line-height:1.4}
+.ritual-songpanel{background:var(--ground-2);border:1px solid rgba(200,148,58,0.25);border-radius:16px;margin:0 1.2rem;padding:1.4rem;display:flex;flex-direction:column;align-items:center;gap:0.9rem;width:calc(100% - 2.4rem)}
+.ritual-song-title{font-family:'Cormorant SC',serif;font-size:1.15rem;color:var(--rose-l);letter-spacing:0.04em;text-align:center}
+.ritual-song-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.4rem;width:100%}
+.ritual-song-list li{font-family:'Libre Caslon Text',serif;font-size:0.86rem;color:var(--text);text-align:center;padding:0.35rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.ritual-mood-hint{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.78rem;color:var(--muted);text-align:center;line-height:1.5}
+.ritual-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.3);border-radius:16px;margin:0 1.2rem;padding:1.8rem 1.6rem;display:flex;flex-direction:column;align-items:center;gap:0.9rem;text-align:center;min-height:210px;justify-content:center}
+.ritual-fase{font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rose-l);background:rgba(238,104,136,0.12);border:1px solid rgba(238,104,136,0.3);border-radius:20px;padding:0.25rem 0.85rem}
+.ritual-mov{font-family:'Cormorant SC',serif;font-size:1.12rem;color:var(--gold-l);line-height:1.5;letter-spacing:0.02em}
+.ritual-divider{width:42px;height:1px;background:rgba(200,148,58,0.3);margin:0.1rem 0}
 /* ══ AFTERCARE ══ */
 #aftercare-overlay{position:fixed;inset:0;background:rgba(14,4,8,0.96);backdrop-filter:blur(18px);z-index:350;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;opacity:0;pointer-events:none;transition:opacity 0.4s;padding:2rem}
 #aftercare-overlay.on{opacity:1;pointer-events:all}
@@ -692,7 +710,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
     <div class="game-card" onclick="go('screen-quiz')"><div class="icon">❤️</div><div class="name">Quiz do Casal</div><div class="desc">Descubram o quanto se conhecem</div></div>
     <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
-    <div class="game-card" onclick="go('screen-strip')"><div class="icon">🪄</div><div class="name">Striptease</div><div class="desc">Peça por peça, ao ritmo que quiser</div></div>
+    <div class="game-card" onclick="go('screen-strip')"><div class="icon">🪄</div><div class="name">Ritual do Desejo</div><div class="desc">Uma dança guiada, no clima certo</div></div>
     <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
@@ -870,27 +888,52 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 
 <!-- ══ STRIPTEASE ══ -->
 <div class="screen" id="screen-strip">
-  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Striptease</span></div>
-  <div style="height:1rem"></div>
-  <div class="levels" id="stripLevels">
-    <button class="lvl on" data-level="Romântico">Romântico</button>
-    <button class="lvl" data-level="Quente">Quente</button>
-    <button class="lvl" data-level="Explosivo">Explosivo</button>
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Ritual do Desejo</span></div>
+  <div style="height:0.7rem"></div>
+
+  <!-- Passo 1: clima musical -->
+  <div class="ritual-step" id="ritual-step-mood">
+    <p class="ritual-lead">Toda dança precisa de uma trilha. Escolham o clima que vai guiar o corpo esta noite.</p>
+    <div class="ritual-moods" id="ritualMoods"></div>
+    <div class="ritual-songpanel" id="ritualSongPanel" style="display:none">
+      <div class="ritual-song-title" id="ritualSongTitle"></div>
+      <ul class="ritual-song-list" id="ritualSongList"></ul>
+      <button class="btn-ghost" id="ritualOpenBtn">▶ Abrir o clima no YouTube</button>
+      <div class="ritual-mood-hint">Coloquem para tocar e deixem o som conduzir cada movimento.</div>
+      <button class="btn-gold" onclick="ritualToWho()">Estamos no clima →</button>
+    </div>
   </div>
-  <p class="vd-player" id="stripPlayer">Quem vai se apresentar?</p>
-  <div class="vd-btns" id="stripChoose">
-    <button class="vd-btn verdade" onclick="stripChoose(1)">👤 <span id="stripN1">Jogador 1</span></button>
-    <button class="vd-btn desafio" onclick="stripChoose(2)">👤 <span id="stripN2">Jogador 2</span></button>
+
+  <!-- Passo 2: intensidade + quem dança -->
+  <div class="ritual-step" id="ritual-step-who" style="display:none">
+    <div class="levels" id="stripLevels">
+      <button class="lvl on" data-level="Romântico">Romântico</button>
+      <button class="lvl" data-level="Quente">Quente</button>
+      <button class="lvl" data-level="Explosivo">Explosivo</button>
+    </div>
+    <p class="vd-player" id="stripPlayer">Quem abre o ritual?</p>
+    <div class="vd-btns" id="stripChoose">
+      <button class="vd-btn verdade" onclick="stripChoose(1)">👤 <span id="stripN1">Jogador 1</span></button>
+      <button class="vd-btn desafio" onclick="stripChoose(2)">👤 <span id="stripN2">Jogador 2</span></button>
+    </div>
+    <button class="btn-skip" onclick="ritualBackToMood()">↩ Trocar a trilha</button>
   </div>
-  <div class="strip-card" id="stripCard" style="display:none">
-    <div class="strip-instruction" id="stripInstruction"></div>
-    <div class="strip-step" id="stripStep"></div>
+
+  <!-- Passo 3: as rodadas do ritual -->
+  <div class="ritual-step" id="ritual-step-play" style="display:none">
+    <div class="ritual-card" id="stripCard">
+      <div class="ritual-fase" id="ritualFase"></div>
+      <div class="ritual-mov" id="ritualMov"></div>
+      <div class="ritual-divider"></div>
+      <div class="strip-instruction" id="stripInstruction"></div>
+      <div class="strip-step" id="stripStep"></div>
+    </div>
+    <div class="strip-btns" id="stripBtns">
+      <button class="btn-ghost" onclick="openTimerFrom(null)">⏱ Timer</button>
+      <button class="btn-drink" onclick="drinkAndSkipStrip()">🍹 Beber e Pular</button>
+    </div>
+    <button class="btn-gold" id="stripBtn" onclick="stripNext()">Próxima Rodada →</button>
   </div>
-  <div class="strip-btns" id="stripBtns" style="display:none">
-    <button class="btn-ghost" onclick="openTimerFrom(null)">⏱ Timer</button>
-    <button class="btn-drink" onclick="drinkAndSkipStrip()">🍹 Beber e Pular</button>
-  </div>
-  <button class="btn-gold" id="stripBtn" style="display:none" onclick="stripNext()">Próxima Peça →</button>
 </div>
 
 <!-- ══ RECONEXÃO ══ -->
@@ -1255,7 +1298,7 @@ const NOITE_SEQ={
   'Explosivo':[
     {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'Comecem com intensidade total'},
     {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Sem limites'},
-    {jogo:'screen-strip',icon:'✨',nome:'Striptease',desc:'A noite esquenta de vez'},
+    {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A noite esquenta de vez'},
     {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Missão final — explosiva'},
   ],
 };
@@ -2154,29 +2197,95 @@ async function searchMusic(){
   playStation();
 }
 
-// ══ STRIPTEASE ════════════════════════════════════════════════
-const STRIP={
-  'Romântico':['Remova os sapatos lentamente — um de cada vez. Faça contato visual.','Tire as meias com calma. Sem pressa nenhuma.','Dê uma volta de 360° para que seu parceiro(a) possa te admirar por inteiro.','Retire o cinto ou o acessório que estiver usando.','Remova a camisa ou blusa pelos ombros — devagar, centímetro por centímetro.','Baixe a calça ou saia. Vire de costas enquanto faz isso.','Fique só na roupa íntima. Fica parado(a) 30 segundos. Deixa ele(a) olhar.','Retire o sutiã ou camiseta interior — do jeito que preferir.','Última peça. A escolha é sua. Faça cada segundo valer.','Pausa: olhe nos olhos do seu parceiro(a) por 1 minuto antes de continuar.','Agora a roupa toda está no chão. Fique imóvel por 30 segundos.','Sente no colo do(a) parceiro(a) e fica assim por 2 minutos.'],
-  'Quente':['Remova um sapato e passe-o pelo rosto do parceiro(a) antes de largar.','Tire as meias de forma lenta e sensual — sem pressa.','Dance por 30 segundos antes de tirar qualquer peça.','Retire o cinto de forma ousada — use os dentes se tiver coragem.','Tire a camisa virando de costas. Só se vire quando ela cair completamente.','Baixe a calça ou saia 3 cm por vez. Pause entre cada movimento.','Fique na roupa íntima por 1 minuto. Ele(a) não pode te tocar — só olhar.','Tire o sutiã por baixo da camisa sem tirá-la — ou o inverso. Surpreenda.','Última peça. Olhe nos olhos enquanto faz isso. Devagar, sem desviar o olhar.','Dê uma volta lenta — muito lenta — de 360°.','Sente na beira da cama ou sofá — de pernas cruzadas — e espera.','Chame o(a) parceiro(a) para perto e fique de mãos dadas por 1 minuto.'],
-  'Explosivo':['Começa pelos sapatos. Jogue cada um na direção do parceiro(a).','Tire as meias — use-as como acessório de dança.','Dance por 1 minuto. Retire o que quiser no ritmo da música.','O cinto vai. Use-o como chicote — dê uma pequena estalada no ar.','Camisa fora — de uma vez, sem cerimônia. Ou muito devagar. Você decide.','Calça ou saia: tudo de uma vez ou centímetro a centímetro. Agora.','Fique só na roupa íntima. Peça para ele(a) não tirar os olhos de você.','Retire o que restar do jeito mais ousado que conseguir imaginar.','Última peça. Você tem 60 segundos. Faça valer cada segundo.','Com tudo fora: se aproxime devagar até ficar a 10 cm do(a) parceiro(a).','Olhe direto nos olhos e não se mova por 30 segundos.','Agora: o(a) parceiro(a) tem 2 minutos para fazer o que quiser.'],
+// ══ RITUAL DO DESEJO ══════════════════════════════════════════
+const RITUAL_MOODS=[
+  {id:'lento',icon:'🔥',nome:'Sensual & Lento',desc:'R&B e soul para mover bem devagar',
+   songs:['Sade — No Ordinary Love','The Weeknd — Earned It','Miguel — Adorn','FKA twigs — Two Weeks'],
+   busca:'sensual slow rnb playlist'},
+  {id:'latino',icon:'💃',nome:'Latino & Quente',desc:'Reggaeton e batida para rebolar',
+   songs:['Bad Bunny — Yonaguni','Rosalía — Despechá','Shakira — Objection (Tango)','Don Omar — Danza Kuduro'],
+   busca:'reggaeton sensual baile playlist'},
+  {id:'jazz',icon:'🎷',nome:'Burlesco & Elegante',desc:'Jazz e pop com ar de cabaré',
+   songs:['Beyoncé — Partition','Christina Aguilera — Express','Lana Del Rey — Cola','Adam Lambert — Fever'],
+   busca:'burlesque striptease jazz playlist'},
+  {id:'eletronico',icon:'🌙',nome:'Hipnótico & Eletrônico',desc:'Batida grave para hipnotizar',
+   songs:['Massive Attack — Angel','The Weeknd — Wicked Games','Billie Eilish — Oxytocin','Kavinsky — Nightcall'],
+   busca:'dark sensual electronic playlist'},
+];
+const RITUAL={
+  'Romântico':[
+    {fase:'Aquecimento',mov:'Feche os olhos e balance o corpo no ritmo por 30 segundos. Sinta a música antes de qualquer coisa.',acao:'Ainda vestido(a), aproxime-se e afaste-se devagar — sem tocar.'},
+    {fase:'Primeiro olhar',mov:'Mantenha o olhar fixo no seu par enquanto move os quadris lentamente.',acao:'Tire os sapatos — um de cada vez — sem desviar o olhar.'},
+    {fase:'Provocação',mov:'Passe as mãos pelo próprio corpo, de cima para baixo, no tempo da música.',acao:'Retire as meias com calma, deslizando devagar.'},
+    {fase:'Revelação',mov:'Dê uma volta completa de 360° para que ele(a) te admire por inteiro.',acao:'Abra a peça de cima pelos ombros — centímetro por centímetro.'},
+    {fase:'Aproximação',mov:'Caminhe até seu par e contorne ele(a) uma vez, roçando de leve.',acao:'Baixe a calça ou a saia virando de costas.'},
+    {fase:'Quase lá',mov:'Pare. Respire fundo. Deixe o olhar dele(a) percorrer você por 30 segundos.',acao:'Fique apenas na roupa íntima e permaneça assim, imóvel.'},
+    {fase:'Entrega',mov:'Sente no colo do seu par e mova-se devagar no ritmo da música.',acao:'Retire a próxima peça — do jeito que o momento pedir.'},
+    {fase:'Final',mov:'Aproxime o rosto do dele(a) até quase um beijo — e segure ali.',acao:'A última peça é sua escolha. Faça cada segundo durar.'},
+  ],
+  'Quente':[
+    {fase:'Aquecimento',mov:'Dance por 30 segundos antes de tocar em qualquer peça. Deixe o corpo solto.',acao:'Provoque: leve a mão à primeira peça e desista — duas vezes.'},
+    {fase:'Provocação',mov:'Rebole devagar, de costas para o seu par, olhando por cima do ombro.',acao:'Remova um sapato e deslize-o pelo corpo antes de largar.'},
+    {fase:'Calor',mov:'Passe as mãos no cabelo e desça pelo pescoço no ritmo da música.',acao:'Tire as meias de forma lenta e sensual.'},
+    {fase:'Revelação',mov:'Abra a peça de cima virando de costas — só se vire quando ela cair.',acao:'Deixe a peça cair no chão. Não a recolha.'},
+    {fase:'Tensão',mov:'Aproxime-se e mantenha o rosto a um palmo do dele(a), sem encostar.',acao:'Baixe a calça ou saia 3 cm por vez, pausando entre cada movimento.'},
+    {fase:'No limite',mov:'Fique na roupa íntima e dance por um minuto. Ele(a) só pode olhar — não tocar.',acao:'Deixe o desejo dele(a) crescer. Não facilite.'},
+    {fase:'Entrega',mov:'Pegue a mão do seu par e guie-a por onde você quer que ele(a) toque... depois.',acao:'Retire a próxima peça olhando nos olhos dele(a).'},
+    {fase:'Clímax',mov:'Sente de frente sobre o seu par e mova-se devagar.',acao:'Última peça — sem desviar o olhar. A noite é de vocês agora.'},
+  ],
+  'Explosivo':[
+    {fase:'Ignição',mov:'Dance com tudo por 1 minuto. Solte o corpo sem vergonha nenhuma.',acao:'Comece pelos sapatos — jogue cada um na direção do seu par.'},
+    {fase:'Domínio',mov:'Aproxime-se com o olhar fixo e faça seu par recostar — só com a presença.',acao:'Tire as meias e use-as como acessório de dança.'},
+    {fase:'Provocação',mov:'Sente no colo dele(a) e rebole, mas não deixe que toque você ainda.',acao:'Abra a peça de cima de uma vez — ou muito devagar. Você decide.'},
+    {fase:'Comando',mov:'Sussurre no ouvido do seu par exatamente o que vai acontecer esta noite.',acao:'Baixe a calça ou saia — tudo de uma vez.'},
+    {fase:'No fogo',mov:'Guie as mãos dele(a) pelo seu corpo, controlando onde e por quanto tempo.',acao:'Fique só na roupa íntima e peça para ele(a) não tirar os olhos de você.'},
+    {fase:'Sem freio',mov:'Dance bem perto, roçando, mas mantenha o controle total do ritmo.',acao:'Retire o que restar do jeito mais ousado que você imaginar.'},
+    {fase:'Entrega',mov:'Prenda os pulsos dele(a) acima da cabeça por 10 segundos. Depois solte.',acao:'A última peça é sua. Você tem 60 segundos. Faça valer.'},
+    {fase:'Clímax',mov:'Agora inverta: dê ao seu par 2 minutos para fazer com você o que quiser.',acao:'O ritual acabou. O resto é de vocês dois.'},
+  ],
+};
+let stripCards=[],stripStep=-1,stripPerformer=0,ritualMood=null;
+function ritualShowStep(step){
+  document.getElementById('ritual-step-mood').style.display=step==='mood'?'flex':'none';
+  document.getElementById('ritual-step-who').style.display=step==='who'?'flex':'none';
+  document.getElementById('ritual-step-play').style.display=step==='play'?'flex':'none';
 }
-let stripCards=[],stripStep=-1,stripPerformer=0;
+function ritualRenderMoods(){
+  const wrap=document.getElementById('ritualMoods');if(!wrap)return;wrap.innerHTML='';
+  RITUAL_MOODS.forEach(m=>{
+    const d=document.createElement('div');d.className='ritual-mood';d.dataset.id=m.id;
+    d.innerHTML=`<div class="ritual-mood-ic">${m.icon}</div><div class="ritual-mood-nm">${m.nome}</div><div class="ritual-mood-ds">${m.desc}</div>`;
+    d.onclick=()=>ritualPickMood(m.id);
+    wrap.appendChild(d);
+  });
+}
+function ritualPickMood(id){
+  ritualMood=RITUAL_MOODS.find(m=>m.id===id);
+  document.querySelectorAll('#ritualMoods .ritual-mood').forEach(el=>el.classList.toggle('on',el.dataset.id===id));
+  const panel=document.getElementById('ritualSongPanel');panel.style.display='flex';
+  document.getElementById('ritualSongTitle').textContent=ritualMood.icon+' '+ritualMood.nome;
+  const ul=document.getElementById('ritualSongList');ul.innerHTML='';
+  ritualMood.songs.forEach(s=>{const li=document.createElement('li');li.textContent=s;ul.appendChild(li);});
+  document.getElementById('ritualOpenBtn').onclick=()=>window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(ritualMood.busca),'_blank');
+}
+function ritualToWho(){ritualShowStep('who');}
+function ritualBackToMood(){ritualShowStep('mood');}
 function stripChoose(p){
   stripPerformer=p;
   const name=p===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
   document.getElementById('stripPlayer').textContent=`${name} vai se apresentar`;
-  document.getElementById('stripChoose').style.display='none';
   const lv=getLevel('stripLevels');
-  stripCards=[...STRIP[lv]];stripStep=0;
-  document.getElementById('stripCard').style.display='';
-  document.getElementById('stripBtns').style.display='';
-  document.getElementById('stripBtn').style.display='';
+  stripCards=[...RITUAL[lv]];stripStep=0;
+  ritualShowStep('play');
   renderStrip();
 }
 function renderStrip(){
-  document.getElementById('stripInstruction').textContent=stripCards[stripStep];
-  document.getElementById('stripStep').textContent=`Peça ${stripStep+1} de ${stripCards.length}`;
-  document.getElementById('stripBtn').textContent=stripStep<stripCards.length-1?'Próxima Peça →':'Finalizar ✓';
+  const c=stripCards[stripStep];if(!c)return;
+  document.getElementById('ritualFase').textContent=c.fase;
+  document.getElementById('ritualMov').textContent=c.mov;
+  document.getElementById('stripInstruction').textContent=c.acao;
+  document.getElementById('stripStep').textContent=`Rodada ${stripStep+1} de ${stripCards.length}`;
+  document.getElementById('stripBtn').textContent=stripStep<stripCards.length-1?'Próxima Rodada →':'Finalizar ✓';
 }
 function stripNext(){
   if(stripStep<stripCards.length-1){stripStep++;renderStrip();}
@@ -2189,14 +2298,12 @@ function drinkAndSkipStrip(){
 }
 function resetStrip(){
   stripStep=-1;stripCards=[];stripPerformer=0;
-  document.getElementById('stripChoose').style.display='';
-  document.getElementById('stripCard').style.display='none';
-  document.getElementById('stripBtns').style.display='none';
-  document.getElementById('stripBtn').style.display='none';
-  document.getElementById('stripPlayer').textContent='Quem vai se apresentar?';
+  ritualShowStep('mood');
+  document.getElementById('stripPlayer').textContent='Quem abre o ritual?';
 }
+ritualRenderMoods();
 document.getElementById('stripLevels').querySelectorAll('.lvl').forEach(btn=>{
-  btn.addEventListener('click',()=>{if(stripPerformer)resetStrip();});
+  btn.addEventListener('click',()=>{if(stripPerformer)stripChoose(stripPerformer);});
 });
 // Update player names on strip screen when navigating
 const _goOrig=go;
@@ -3003,7 +3110,7 @@ function mpMostrarCarta(carta){
     nivel=carta.nivel;cat='Missão da Noite';
     texto=(carta.steps||[]).join(' | ');
   } else if(carta.jogo==='strip'){
-    nivel=carta.nivel;cat='Striptease';texto=carta.texto;
+    nivel=carta.nivel;cat='Ritual do Desejo';texto=carta.texto;
   } else if(carta.jogo==='quiz'){
     nivel='Quiz';cat=carta.jogo==='quiz'?'Resposta':'';
     texto=carta.pergunta||'';
