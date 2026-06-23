@@ -1644,7 +1644,13 @@ const CAPITULOS_NOMES=[
   'O Silêncio que Conecta','Quando Tudo É Permitido','A Profundidade que Assusta',
   'Volta para Você','O Que Ainda Não Exploramos','A Noite Sem Regras',
   'Tudo o Que Precisávamos Dizer','O Corpo como Linguagem','Um Novo Começo',
-  'A Última Carta','Além do Que Imaginávamos'
+  'A Última Carta','Além do Que Imaginávamos',
+  'O Que o Corpo Guarda','Entre Nós, Nada','A Noite Que Restou',
+  'O Ponto de Partida','Quando o Tempo Para','A Intimidade Que Cresce',
+  'O Que Só Existe Entre Nós','A Noite do Reencontro','Sem Pressa, Sem Filtro',
+  'O Que a Luz Esconde','Mais Fundo Ainda','A Escolha de Ficar',
+  'O Que Não Precisa de Nome','A Noite Mais Real','Tudo Começa Aqui de Novo',
+  'O Fim que É um Começo'
 ];
 const JORNADAS_DATA={
   prologo:{
@@ -1677,70 +1683,64 @@ const JORNADAS_DATA={
   },
   passos:{
     'curta-cansados':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'3 perguntas para se reencontrar',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Uma atividade suave para fechar juntos',começa:'p2'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'3 perguntas para se reencontrar',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Uma atividade suave para fechar juntos',começa:'p2'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Descubram o que querem um do outro',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Fechem com palavras verdadeiras',começa:'p2'}],
+      [{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'Explorem juntos sem pressa',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual suave para encerrar',começa:'p1'}]
     ],
     'curta-animados':[
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'3 rodadas para acender a chama',começa:'p1'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'Um giro para o acaso decidir',começa:'p2'}
+      [{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'3 rodadas para acender a chama',começa:'p1'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'Um giro para o acaso decidir',começa:'p2'}],
+      [{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso decide como começa',começa:'p1'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações que o corpo escolhe',começa:'p2'}],
+      [{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Deixem o corpo falar primeiro',começa:'p2'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade antes de fechar',começa:'p1'}]
     ],
     'curta-reconectar':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas para fechar a distância',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade que ainda não foi dita',começa:'p2'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas para fechar a distância',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade que ainda não foi dita',começa:'p2'}],
+      [{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Descubram o quanto ainda se conhecem',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Fechem com escuta real',começa:'p1'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Marquem o que querem descobrir juntos',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma pergunta que aproxima',começa:'p2'}]
     ],
     'media-cansados':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem pelo que é real e presente',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Romântico — leve e honesto',começa:'p2'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com um ritual a dois',começa:'p1'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem pelo que é real e presente',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Romântico — leve e honesto',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com um ritual a dois',começa:'p1'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Descubram o que ainda querem viver',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas suaves de reencontro',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem a noite com intenção',começa:'p1'}],
+      [{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'Comecem pelo toque, sem pressa',começa:'p2'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade romântica antes de fechar',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual leve para encerrar',começa:'p2'}]
     ],
     'media-animados':[
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Comecem com perguntas que ardem',começa:'p1'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso leva a noite para onde quiser',começa:'p2'},
-      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações que o corpo pede',começa:'p1'}
+      [{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Comecem com perguntas que ardem',começa:'p1'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso leva a noite para onde quiser',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações que o corpo pede',começa:'p1'}],
+      [{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'Comecem deixando o acaso decidir',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O corpo escolhe o caminho',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com um ritual intenso',começa:'p2'}],
+      [{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Direto ao ponto — sem enrolação',começa:'p1'},{jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'Inventem um cenário juntos',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Uma missão para selar o capítulo',começa:'p1'}]
     ],
     'media-reconectar':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas para abrir o coração',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que ficaram guardadas',começa:'p2'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar a reconexão',começa:'p1'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas para abrir o coração',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que ficaram guardadas',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar a reconexão',começa:'p1'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Encontrem o que ainda está por descobrir',começa:'p2'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade que reaproxima',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem a distância com um ritual',começa:'p2'}],
+      [{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Redescubram o quanto se conhecem',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que importa',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um passo de volta um ao outro',começa:'p1'}]
     ],
     'longa-cansados':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem onde se sentirem seguros',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Alguns desafios que pedem pouca energia',começa:'p2'},
-      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Deixem o corpo falar',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com cuidado mútuo',começa:'p2'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem onde se sentirem seguros',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Alguns desafios que pedem pouca energia',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Deixem o corpo falar',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com cuidado mútuo',começa:'p2'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Marquem o que querem um do outro',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas de reencontro suaves',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade dita com calma',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem a noite com intenção',começa:'p1'}],
+      [{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'Comecem pelo toque — sem exigência',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Palavras que relaxam e aproximam',começa:'p2'},{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Redescoberta leve de vocês dois',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual delicado para encerrar',começa:'p2'}]
     ],
     'longa-animados':[
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com intensidade',começa:'p1'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso escolhe o próximo passo',começa:'p2'},
-      {jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'Um cenário para soltar a imaginação',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para fechar com intensidade',começa:'p2'}
+      [{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com intensidade',começa:'p1'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso escolhe o próximo passo',começa:'p2'},{jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'Um cenário para soltar a imaginação',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para fechar com intensidade',começa:'p2'}],
+      [{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso abre a noite',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações que o corpo pede',começa:'p1'},{jogo:'screen-comando',icon:'🖤',nome:'Comando & Entrega',desc:'Um conduz, o outro se entrega',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com o que ninguém esquece',começa:'p1'}],
+      [{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Direto ao que o corpo pede',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que acendem ainda mais',começa:'p2'},{jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual final intenso',começa:'p2'}]
     ],
     'longa-reconectar':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas de reencontro',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Profundo — o que ainda não foi dito',começa:'p2'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como aliado da reconexão',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar o capítulo',começa:'p2'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas de reencontro',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Profundo — o que ainda não foi dito',começa:'p2'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como aliado da reconexão',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar o capítulo',começa:'p2'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Encontrem o que foi deixado pra depois',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que fecham a distância',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade que reconecta de vez',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com um gesto real',começa:'p1'}],
+      [{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Redescubram quem são hoje, juntos',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que ficou',começa:'p2'},{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'O corpo também reconecta',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que une o que foi separado',começa:'p2'}]
     ],
     'noite-cansados':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'A noite começa do modo mais suave',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que podem ser ditas com calma',começa:'p2'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso decide a intensidade',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que encerra a jornada',começa:'p2'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'A noite começa do modo mais suave',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que podem ser ditas com calma',começa:'p2'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso decide a intensidade',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que encerra a jornada',começa:'p2'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Descubram o que querem ainda viver',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que suavizam a chegada',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade leve antes de mais',começa:'p2'},{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'O toque certo para uma noite cansada',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com presença e cuidado',começa:'p2'}],
+      [{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Redescubram-se sem esforço',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas de reencontro gentil',começa:'p2'},{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Marquem o que vem pela frente',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma última verdade antes de fechar',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual final de uma noite completa',começa:'p1'}]
     ],
     'noite-animados':[
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com fogo',começa:'p1'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso guia o segundo capítulo',começa:'p2'},
-      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O corpo escolhe o próximo passo',começa:'p1'},
-      {jogo:'screen-comando',icon:'🖤',nome:'Comando & Entrega',desc:'Um conduz, o outro se entrega — com segurança',começa:'p2'},
-      {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p1'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O capítulo mais completo da história de vocês',começa:'p2'}
+      [{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com fogo',começa:'p1'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso guia o segundo capítulo',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O corpo escolhe o próximo passo',começa:'p1'},{jogo:'screen-comando',icon:'🖤',nome:'Comando & Entrega',desc:'Um conduz, o outro se entrega — com segurança',começa:'p2'},{jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O capítulo mais completo da história de vocês',começa:'p2'}],
+      [{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso decide como a noite começa',começa:'p2'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações ousadas que o corpo escolhe',começa:'p1'},{jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'Um cenário para soltar tudo',começa:'p2'},{jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que acende a noite',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma última verdade antes de fechar',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem a noite mais intensa de vocês',começa:'p1'}],
+      [{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Sem enrolação — direto ao que importa',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que acendem ainda mais',começa:'p2'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso assume o controle',começa:'p1'},{jogo:'screen-comando',icon:'🖤',nome:'Comando & Entrega',desc:'Uma noite com alguém no comando',começa:'p2'},{jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'O cenário que vocês sempre quiseram',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que sela a noite mais real',começa:'p2'}]
     ],
     'noite-reconectar':[
-      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que ficou guardado',começa:'p1'},
-      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades profundas, ditas com coragem',começa:'p2'},
-      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como companheiro da reconexão',começa:'p1'},
-      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O toque que reconecta o corpo',começa:'p2'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual final de uma noite de reencontro',começa:'p1'}
+      [{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que ficou guardado',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades profundas, ditas com coragem',começa:'p2'},{jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como companheiro da reconexão',começa:'p1'},{jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O toque que reconecta o corpo',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual final de uma noite de reencontro',começa:'p1'}],
+      [{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Descubram o que ficou esperando',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que fecham o que ficou aberto',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade dita com coragem',começa:'p2'},{jogo:'screen-posicoes',icon:'🌸',nome:'Posições do Casal',desc:'O corpo também reencontra',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual que marca o retorno',começa:'p2'}],
+      [{jogo:'screen-quiz',icon:'❤️',nome:'Quiz do Casal',desc:'Redescubram quem vocês se tornaram',começa:'p1'},{jogo:'screen-mapa',icon:'🗺️',nome:'Mapa do Desejo',desc:'Marquem o que ainda querem juntos',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'As palavras que faltaram',começa:'p1'},{jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A última verdade desta noite',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com o que os trouxe de volta',começa:'p1'}]
     ]
   }
 };
@@ -1767,7 +1767,9 @@ function iniciarJornadaCurada(){
   noite.titulo=CAPITULOS_NOMES[nomeCapIdx];
   noite.prologo=JORNADAS_DATA.prologo[chave]||'Esta noite foi feita para vocês dois.';
   noite.epilogo=JORNADAS_DATA.epilogo[chave]||'Mais um capítulo escrito juntos.';
-  noite.passos=(JORNADAS_DATA.passos[chave]||JORNADAS_DATA.passos['media-animados']).slice();
+  const _pv=JORNADAS_DATA.passos[chave]||JORNADAS_DATA.passos['media-animados'];
+  const _vi=(cap-1)%3;
+  noite.passos=(Array.isArray(_pv[0])?_pv[_vi]:_pv).slice();
   const nivelMap={cansados:'Romântico',reconectar:'Romântico',animados:'Quente'};
   noite.nivel=(tempo==='longa'||tempo==='noite')&&estado==='animados'?'Explosivo':(nivelMap[estado]||'Romântico');
   ['rLevels','vdLevels','dadoLevels','missaoLevels','stripLevels'].forEach(gid=>{
