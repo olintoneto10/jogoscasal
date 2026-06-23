@@ -19,7 +19,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ground:#1A080F;--ground-2:#240C18;--ground-3:#2E1022;
-  --text:#FAE8DC;--muted:#B8887A;--gold:#D4855A;--gold-l:#F0A070;
+  --text:#FAE8DC;--muted:#C8A090;--gold:#D4855A;--gold-l:#F0A070;
   --rose:#D0456E;--rose-l:#EE6888;--glow-gold:rgba(212,133,90,0.5);
 }
 html,body{min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#4D0A24 0%,#280B14 38%,#1A080F 62%,#090204 100%);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden}
@@ -33,13 +33,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* ── Header ── */
 .game-header{width:100%;display:flex;align-items:center;padding:1.2rem 1.2rem 0;gap:0.8rem}
-.back-btn{background:none;border:1px solid rgba(212,133,90,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:3px;cursor:pointer;transition:background 0.18s;flex-shrink:0}
+.back-btn{background:none;border:1px solid rgba(212,133,90,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.55rem 0.9rem;border-radius:3px;cursor:pointer;transition:background 0.18s;flex-shrink:0;min-height:2.75rem;display:inline-flex;align-items:center}
 .back-btn:hover{background:rgba(200,148,58,0.1)}
 .game-title{font-family:'Cormorant SC',serif;font-size:1.1rem;color:var(--gold-l);letter-spacing:0.06em}
 
 /* ── Levels ── */
 .levels{display:flex;border:1px solid rgba(212,133,90,0.25);border-radius:4px;overflow:hidden}
-.lvl{background:transparent;border:none;border-right:1px solid rgba(212,133,90,0.25);color:var(--muted);font-family:'Jost',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1rem;cursor:pointer;transition:background 0.2s,color 0.2s}
+.lvl{background:transparent;border:none;border-right:1px solid rgba(212,133,90,0.25);color:var(--muted);font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1rem;cursor:pointer;transition:background 0.2s,color 0.2s}
 .lvl:last-child{border-right:none}
 .lvl:hover{color:var(--text);background:rgba(200,148,58,0.07)}
 .lvl.on[data-level="Romântico"]{color:var(--rose-l);background:rgba(196,107,122,0.12)}
@@ -55,7 +55,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes breathe{0%,100%{box-shadow:0 4px 22px rgba(212,133,90,0.38)}50%{box-shadow:0 4px 40px rgba(238,104,136,0.6)}}
 .btn-gold:hover:not(:disabled){transform:translateY(-2px)}
 .btn-gold:disabled{opacity:0.5;cursor:not-allowed;animation:none}
-.btn-ghost{background:transparent;border:1px solid rgba(212,133,90,0.35);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.66rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:0.55rem 1.6rem;border-radius:3px;cursor:pointer;transition:background 0.18s,color 0.18s}
+.btn-ghost{background:transparent;border:1px solid rgba(212,133,90,0.35);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;padding:0.6rem 1.6rem;border-radius:3px;cursor:pointer;transition:background 0.18s,color 0.18s;min-height:2.75rem;display:inline-flex;align-items:center;justify-content:center}
 .btn-ghost:hover{background:rgba(212,133,90,0.13);color:var(--gold-l)}
 
 /* ── Card flip overlay ── */
@@ -69,11 +69,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .face.front{background:var(--ground-2);border:1px solid rgba(238,104,136,0.35);box-shadow:0 24px 64px rgba(0,0,0,0.55);transform:rotateY(180deg);text-align:center}
 .seal{font-size:4rem;color:var(--gold);text-shadow:0 0 30px var(--glow-gold)}
 .seal-hint{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.78rem;color:var(--muted);letter-spacing:0.09em}
-.c-level{font-size:0.62rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted)}
+.c-level{font-size:0.75rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted)}
 .c-cat{font-family:'Cormorant SC',serif;font-size:1.8rem;font-weight:700;color:var(--gold-l);letter-spacing:0.06em;text-shadow:0 0 28px var(--glow-gold)}
 .c-rule{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--rose-l),transparent);flex-shrink:0}
 .c-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.97rem;line-height:1.72;color:var(--text)}
-.c-timer-hint{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+.c-timer-hint{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
 .c-timer-hint:hover{color:var(--gold)}
 
 /* ══ LOGIN ══ */
@@ -104,8 +104,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .game-card:hover{border-color:rgba(238,104,136,0.6);transform:translateY(-4px);box-shadow:0 8px 32px rgba(208,69,110,0.22)}
 .game-card .icon{font-size:2rem;line-height:1}
 .game-card .name{font-family:'Cormorant SC',serif;font-size:0.95rem;font-weight:600;color:var(--gold-l);letter-spacing:0.04em}
-.game-card .desc{font-size:0.68rem;color:var(--muted);line-height:1.4}
-.home-logout{font-size:0.65rem;color:var(--muted);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline dotted;text-underline-offset:3px}
+.game-card .desc{font-size:0.75rem;color:var(--muted);line-height:1.4}
+.home-logout{font-size:0.75rem;color:var(--muted);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline dotted;text-underline-offset:3px;padding:0.55rem 0.5rem;min-height:2.75rem;display:inline-flex;align-items:center}
 .home-logout:hover{color:var(--text)}
 
 /* ══ ROLETA ══ */
@@ -130,7 +130,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .die-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:1rem 0.8rem;text-align:center;display:flex;flex-direction:column;gap:0.5rem}
 .die-card.rolling{animation:diceShake 0.5s ease-in-out}
 @keyframes diceShake{0%,100%{transform:rotate(0deg)}20%{transform:rotate(-6deg) scale(1.04)}40%{transform:rotate(6deg) scale(1.06)}60%{transform:rotate(-4deg) scale(1.04)}80%{transform:rotate(4deg) scale(1.02)}}
-.die-label{font-size:0.6rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.die-label{font-size:0.75rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .die-value{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;color:var(--gold-l);min-height:1.4em;transition:opacity 0.2s}
 .die-value.blank{opacity:0.2}
 .dado-result{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;line-height:1.7;color:var(--text);text-align:center;padding:1rem 1.5rem;border:1px solid rgba(200,148,58,0.25);border-radius:10px;background:var(--ground-2);margin:0 1.2rem;min-height:3.5rem;display:flex;align-items:center;justify-content:center}
@@ -218,7 +218,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 @keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
 .pos-card.entering{animation:slideIn 0.22s ease-out}
 /* ══ SKIP BUTTON ══ */
-.btn-skip{background:none;border:none;color:var(--muted);font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;padding:0.2rem 0.5rem;text-decoration:underline dotted;text-underline-offset:3px;transition:color 0.15s;touch-action:manipulation}
+.btn-skip{background:none;border:none;color:var(--muted);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Jost',sans-serif;cursor:pointer;padding:0.55rem 0.75rem;text-decoration:underline dotted;text-underline-offset:3px;transition:color 0.15s;touch-action:manipulation;min-height:2.75rem;display:inline-flex;align-items:center}
 .btn-skip:hover{color:var(--rose-l)}
 /* ══ POSIÇÕES BENEFÍCIOS ══ */
 .pos-benefits{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.3rem}
@@ -428,7 +428,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mission-done-btn.done{color:var(--muted);border-color:rgba(255,255,255,0.1);text-decoration:line-through}
 /* ══ HISTORY CARD ══ */
 .hist-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:8px;padding:0.7rem 0.9rem;display:flex;flex-direction:column;gap:0.25rem}
-.hist-jogo{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.hist-jogo{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .hist-texto{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--text);line-height:1.5}
 .hist-data{font-size:0.6rem;color:rgba(184,136,122,0.45);text-align:right}
 /* ══ CONQUISTAS / TOAST ══ */
@@ -442,7 +442,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 /* ══ CAPÍTULOS ══ */
 .home-capitulo{display:flex;flex-direction:column;gap:0.45rem;background:linear-gradient(135deg,rgba(120,60,140,0.09),rgba(212,133,90,0.06));border:1px solid rgba(140,80,180,0.18);border-radius:10px;padding:0.65rem 1rem;width:100%}
 .cap-header{display:flex;justify-content:space-between;align-items:baseline}
-.cap-num{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.cap-num{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .cap-xp{font-size:0.58rem;color:var(--muted);letter-spacing:0.04em}
 .cap-nome{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);letter-spacing:0.06em}
 .cap-bar-wrap{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
@@ -575,11 +575,18 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .fant-sec{font-family:'Libre Caslon Text',serif;font-size:0.88rem;color:var(--text);line-height:1.6;text-align:left;display:flex;flex-direction:column;gap:0.15rem}
 .fant-lbl{font-family:'Jost',sans-serif;font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold)}
 .fant-gancho{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.98rem;color:var(--gold-l);line-height:1.6;border-top:1px solid rgba(200,148,58,0.18);padding-top:0.7rem;margin-top:0.2rem}
+#mp-card-overlay{position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(18px);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;opacity:0;pointer-events:none;transition:opacity 0.4s;padding:2rem}
+#mp-card-overlay.on{opacity:1;pointer-events:all}
+.mp-who{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.mp-card-view{background:var(--ground-2);border:1px solid rgba(212,133,90,0.28);border-radius:18px;padding:2rem 1.8rem;display:flex;flex-direction:column;gap:0.8rem;text-align:center;max-width:320px;width:100%}
+.mp-cv-level{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.mp-cv-cat{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);letter-spacing:0.06em}
+.mp-cv-rule{height:1px;background:rgba(212,133,90,0.18);width:100%}
+.mp-cv-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;color:var(--text);line-height:1.65}
+.btn-mp-ok{background:none;border:1px solid rgba(212,133,90,0.35);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.7rem 2rem;border-radius:6px;cursor:pointer;transition:all 0.2s}
+.btn-mp-ok:hover{background:rgba(212,133,90,0.1);border-color:var(--gold)}
 </style>
 
-<!-- Analytics (substitua G-XXXXXXXX pelo seu ID do Google Analytics) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXX');</script>
 <!-- Service Worker -->
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/jogoscasal/sw.js').catch(()=>{});navigator.serviceWorker.addEventListener('controllerchange',()=>{window.location.reload();});}</script>
 <!-- Captura beforeinstallprompt antes do script principal carregar -->
@@ -608,7 +615,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <div class="onb-wrap">
     <div class="onb-logo">💞</div>
     <h1 class="onb-title">Jogos do Desejo</h1>
-    <p class="onb-sub">9 brincadeiras para casais que querem se conectar mais</p>
+    <p class="onb-sub">10 jogos e atividades para casais que querem se conectar mais</p>
     <div class="onb-features">
       <div class="onb-feat"><span>🎡</span><span>Roleta, desafios e missões</span></div>
       <div class="onb-feat"><span>🃏</span><span>Verdade ou desafio com níveis</span></div>
@@ -773,7 +780,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
-    <button class="home-logout" onclick="doLogout()">← Trocar jogadores</button>
+    <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
     <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
   </div>
 </div>
@@ -1234,7 +1241,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <span class="ib-icon">📲</span>
   <div class="ib-txt">
     <div class="ib-title">Instalar na tela inicial</div>
-    <div class="ib-sub">Abra como um app, em tela cheia e offline.</div>
+    <div class="ib-sub">Instale e use em tela cheia, sem navegador.</div>
   </div>
   <button class="ib-install" onclick="instalarApp()">Instalar</button>
   <button class="ib-close" onclick="fecharInstallBanner()" aria-label="Fechar">×</button>
@@ -1302,7 +1309,7 @@ function ageConfirm(){
   window.scrollTo(0,0);
 }
 function ageDecline(){
-  document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0E0408;color:#B8887A;font-family:sans-serif;font-size:1rem;text-align:center;padding:2rem">Este app é exclusivo para maiores de 18 anos.</div>';
+  document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#0E0408;color:#B8887A;font-family:sans-serif;font-size:1rem;text-align:center;padding:2rem">Esta aplicação é exclusiva para maiores de 18 anos.</div>';
 }
 function abrirPrivacidade(){
   const el=document.getElementById('priv-overlay');
@@ -1337,7 +1344,7 @@ function apagarTodosDados(){
     if(last){
       const dias=Math.floor((Date.now()-new Date(last).getTime())/(86400000));
       if(dias>=5&&localStorage.getItem('jd_notif')==='1'&&'Notification' in window&&Notification.permission==='granted'){
-        new Notification('Jogos do Desejo 💞',{body:'Faz '+dias+' dias — que tal uma noite especial hoje?',icon:'/jogoscasal/manifest.json'});
+        new Notification('Jogos do Desejo 💞',{body:'Faz '+dias+' dias — que tal uma noite especial hoje?',icon:'/jogoscasal/icon-192.png'});
       }
     }
   } else {
@@ -1401,7 +1408,7 @@ let vdCurrent = 1;
 function go(id){
   // Modo Noite Guiada: ao voltar ao home após jogar um passo, avança para o próximo
   if(id==='home'&&noite.ativa&&noite.emJogo){
-    noite.emJogo=false;noite.atual++;
+    noite.emJogo=false;noite.atual++;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
     if(noite.atual>=noite.passos.length){
       // Noite concluída!
       noite.ativa=false;
@@ -1453,6 +1460,7 @@ const NOITE_SEQ={
   ],
 };
 const noite={ativa:false,nivel:'Romântico',passos:[],atual:0,emJogo:false};
+(()=>{try{const _ns=sessionStorage.getItem('jd_noite');if(_ns){const _nd=JSON.parse(_ns);Object.assign(noite,_nd);}}catch(e){}})();
 
 function renderNoiteGuiada(){
   const body=document.getElementById('ng-body');
@@ -1504,6 +1512,7 @@ function iniciarNoiteGuiada(nivel){
     grp.querySelectorAll('.lvl').forEach(b=>b.classList.toggle('on',b.dataset.level===nivel));
     levelState[gid]=nivel;
   });
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
   renderNoiteGuiada();
 }
 
@@ -1515,6 +1524,7 @@ function noiteJogarPasso(){
 
 function encerrarNoiteGuiada(){
   noite.ativa=false;noite.emJogo=false;
+  sessionStorage.removeItem('jd_noite');
   go('home');
 }
 
@@ -1535,6 +1545,8 @@ function doLogin(){
   if(!/^\d{4}$/.test(pin1)||!/^\d{4}$/.test(pin2)){err.textContent='Use apenas números no PIN.';return;}
   err.textContent='';
   players={p1:{name:n1,pin:pin1},p2:{name:n2,pin:pin2}};
+  localStorage.setItem('jd_p1name',n1);
+  localStorage.setItem('jd_p2name',n2);
   document.getElementById('hP1').textContent=n1;
   document.getElementById('hP2').textContent=n2;
   document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
@@ -1542,7 +1554,10 @@ function doLogin(){
   go('home');
 }
 function doLogout(){
+  if(!confirm('Encerrar a sessão atual e voltar para a tela inicial?'))return;
   players={p1:{name:'',pin:''},p2:{name:'',pin:''}};
+  localStorage.removeItem('jd_p1name');
+  localStorage.removeItem('jd_p2name');
   if(mp.ativo){cancelarSala();}
   go('screen-mode');
 }
@@ -1595,7 +1610,10 @@ function getLevel(id){return levelState[id]||'Romântico';}
 // ══ DECK PICK (deduplication) ═══════════════════════════════════
 function deckPick(key,pool){
   let deck=JSON.parse(localStorage.getItem('jd_dk_'+key)||'[]');
-  if(!deck.length)deck=[...pool].sort(()=>Math.random()-0.5);
+  if(!deck.length){
+    deck=[...pool];
+    for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
+  }
   const item=deck.pop();
   localStorage.setItem('jd_dk_'+key,JSON.stringify(deck));
   return item;
@@ -1849,7 +1867,9 @@ const QUIZ=[
 ]
 let qState={phase:0,q:0,ans:[[],[]]};
 function quizStart(){
-  quizQuestions=getLevel('quizLevels')==='Profundo'?QUIZ_DEEP:QUIZ;
+  const _pool=getLevel('quizLevels')==='Profundo'?QUIZ_DEEP:QUIZ;
+  quizQuestions=[..._pool];
+  for(let i=quizQuestions.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[quizQuestions[i],quizQuestions[j]]=[quizQuestions[j],quizQuestions[i]];}
   qState={phase:1,q:0,ans:[[],[]]};
   document.getElementById('quizIntro').style.display='none';
   document.getElementById('quizGame').style.display='flex';
@@ -1958,7 +1978,7 @@ const MISSOES={
 }
 document.getElementById('missaoBtn').addEventListener('click',function(){
   const lv=getLevel('missaoLevels');
-  const arr=MISSOES[lv],m=arr[Math.floor(Math.random()*arr.length)];
+  const arr=MISSOES[lv],m=deckPick('missao_'+lv,arr);
   const card=document.getElementById('missaoCard');
   const aftercareBtn=lv==='Explosivo'?'<button class="btn-ghost" style="margin-top:1.2rem;align-self:center" onclick="showAftercare()">🌿 Momento de Aftercare</button>':'';
   salvarCarta('Missão da Noite',m[0]);verificarConquista('missao');
@@ -2190,7 +2210,7 @@ document.addEventListener('click',e=>{
 
 // ══ TIMER ════════════════════════════════════════════════════
 const TIMER_CIRC=2*Math.PI*84; // r=84 → ~527.8
-let timerSt={total:300,remaining:300,running:false,interval:null};
+let timerSt={total:300,remaining:300,running:false,interval:null,startTs:0,remAtStart:300};
 
 function timerSet(s){
   clearInterval(timerSt.interval);
@@ -2202,16 +2222,19 @@ function timerSet(s){
 
 function timerToggle(){
   if(timerSt.running){
+    timerSt.remaining=Math.max(0,timerSt.remAtStart-Math.round((Date.now()-timerSt.startTs)/1000));
     clearInterval(timerSt.interval);timerSt.running=false;
     document.getElementById('timerStartBtn').textContent='Continuar';
     document.getElementById('timerLbl').textContent='Pausado';
   } else {
     if(timerSt.remaining<=0)timerSt.remaining=timerSt.total;
+    timerSt.startTs=Date.now();timerSt.remAtStart=timerSt.remaining;
     timerSt.running=true;
     document.getElementById('timerStartBtn').textContent='Pausar';
     document.getElementById('timerLbl').textContent='Rodando';
     timerSt.interval=setInterval(()=>{
-      timerSt.remaining--;renderTimer();
+      timerSt.remaining=Math.max(0,timerSt.remAtStart-Math.round((Date.now()-timerSt.startTs)/1000));
+      renderTimer();
       if(timerSt.remaining<=0){
         clearInterval(timerSt.interval);timerSt.running=false;
         document.getElementById('timerStartBtn').textContent='Reiniciar';
@@ -2467,13 +2490,29 @@ go=function(id){
 };
 
 // ══ RECONEXÃO ════════════════════════════════════════════════
-const RECON_QUESTIONS=[
+const RECON_QUESTIONS_ALL=[
   {q:'O que foi bom no seu dia hoje?',i:'Cada um responde — sem pressa, sem julgamento. Ouçam de verdade.'},
   {q:'O que você mais admira em mim essa semana?',i:'Olhem um para o outro enquanto respondem. Uma coisa específica, não genérica.'},
   {q:'O que você precisa dessa noite?',i:'Sejam honestos. Pode ser um abraço, conversa, calma — ou mais que isso.'},
+  {q:'O que está te ocupando a cabeça ultimamente?',i:'Sem resolver — só contar. Às vezes só precisamos ser ouvidos.'},
+  {q:'Qual foi o momento mais gostoso que vivemos essa semana?',i:'Um detalhe específico. O pequeno é o que fica.'},
+  {q:'Tem algo que você queria me dizer mas não encontrou o momento?',i:'Pode ser qualquer coisa. Não precisa ser grande — só verdadeiro.'},
+  {q:'Como você está se sentindo no nosso relacionamento agora?',i:'Não precisa ser perfeito. Só honesto. Ouçam sem defender.'},
+  {q:'O que posso fazer por você essa noite?',i:'Uma coisa concreta — que faça diferença agora, não amanhã.'},
+  {q:'O que você mais gosta no jeito que nos relacionamos?',i:'Uma qualidade do nosso jeito único de estar juntos.'},
+  {q:'Qual é uma memória nossa que você revisita com carinho?',i:'Descrevam a cena. O que vocês sentiam naquele momento?'},
+  {q:'O que mais te faz sentir amado(a) por mim?',i:'Linguagens do amor são diferentes. Conheçam a do outro.'},
+  {q:'Tem algo que quer experimentar juntos e ainda não pediu?',i:'Qualquer coisa — uma atividade, uma conversa, uma aventura.'},
+  {q:'O que você aprendeu sobre si mesmo(a) nas últimas semanas?',i:'Relacionamentos nos fazem crescer. O que mudou em você?'},
+  {q:'O que você precisa que eu entenda melhor sobre você?',i:'Uma coisa específica. O outro ouve sem interromper.'},
+  {q:'Tem algo que você está evitando falar que poderia abrir espaço entre nós?',i:'Gentileza primeiro. Ouçam com curiosidade, não com defesa.'},
 ];
+let RECON_QUESTIONS=RECON_QUESTIONS_ALL.slice(0,3);
 let reconStep=0;
 function reconStart(){
+  const _rsh=[...RECON_QUESTIONS_ALL];
+  for(let i=_rsh.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[_rsh[i],_rsh[j]]=[_rsh[j],_rsh[i]];}
+  RECON_QUESTIONS=_rsh.slice(0,3);
   reconStep=0;
   document.getElementById('reconGame').style.display='flex';
   document.getElementById('reconDone').style.display='none';
@@ -2565,6 +2604,8 @@ function mapaToggle(btn){
   mapaAnswers[mapaPhaseIdx][idx]=btn.dataset.val;
 }
 function mapaConfirm(){
+  const unanswered=MAPA_ITEMS.filter((_,i)=>!mapaAnswers[mapaPhaseIdx][i]).length;
+  if(unanswered>0&&!confirm(unanswered+' item'+(unanswered>1?'ns':'')+' sem resposta. Continuar assim mesmo?'))return;
   const pinTarget=mapaPhaseIdx===0?2:1;
   openPin(pinTarget,()=>{
     if(mapaPhaseIdx===0){mapaPhaseIdx=1;renderMapa();}
@@ -2671,7 +2712,7 @@ let quizQuestions=QUIZ;
 document.getElementById('musicVol').style.setProperty('--p','60%');
 
 // ══ PIN SYSTEM ════════════════════════════════════════════════
-let pinState={target:'',buf:'',callback:null};
+let pinState={target:'',buf:'',callback:null,attempts:0,locked:false,lockUntil:0};
 
 function openPin(playerNum,cb){
   // In multiplayer mode the remote player is on their own device — skip PIN overlay
@@ -2680,7 +2721,7 @@ function openPin(playerNum,cb){
     if(playerNum!==localNum){cb();return;}
   }
   const pname=playerNum===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
-  pinState={target:playerNum===1?players.p1.pin:players.p2.pin,buf:'',callback:cb};
+  pinState={target:playerNum===1?players.p1.pin:players.p2.pin,buf:'',callback:cb,attempts:0,locked:false,lockUntil:0};
   document.getElementById('pinTitle').textContent=`Vez de ${pname}`;
   document.getElementById('pinSub').textContent='Digite seu PIN para continuar';
   document.getElementById('pinErr').textContent='';
@@ -2693,6 +2734,11 @@ function renderPinDots(){
 }
 
 function pinKey(k){
+  if(pinState.locked){
+    const rem=Math.ceil((pinState.lockUntil-Date.now())/1000);
+    if(rem>0){document.getElementById('pinErr').textContent='Bloqueado — aguarde '+rem+'s.';return;}
+    pinState.locked=false;pinState.attempts=0;
+  }
   if(pinState.buf.length>=4)return;
   pinState.buf+=k;renderPinDots();
   if(pinState.buf.length===4){
@@ -2702,8 +2748,13 @@ function pinKey(k){
         pinState.buf='';renderPinDots();
         if(pinState.callback)pinState.callback();
       } else {
-        document.getElementById('pinErr').textContent='PIN incorreto. Tente novamente.';
-        pinState.buf='';renderPinDots();
+        pinState.attempts++;pinState.buf='';renderPinDots();
+        if(pinState.attempts>=5){
+          pinState.locked=true;pinState.lockUntil=Date.now()+30000;
+          document.getElementById('pinErr').textContent='5 tentativas incorretas. Bloqueado por 30s.';
+        } else {
+          document.getElementById('pinErr').textContent='PIN incorreto. Tentativa '+pinState.attempts+'/5.';
+        }
       }
     },180);
   }
@@ -2756,7 +2807,7 @@ const ARCOS_SEMANA=[
    tarefa:'Jantar sem celular — dois pratos, uma conversa que vocês nunca tiveram',
    encerramento:'Esse retorno intencional um ao outro é a raiz de tudo. O que parecia rotina ganhou outra textura.'},
   {titulo:'A Arte da Escuta',
-   setup:'Escutar para entender é diferente de escutar para responder. Esta semana, practiquem a diferença.',
+   setup:'Escutar para entender é diferente de escutar para responder. Esta semana, pratiquem a diferença.',
    tarefa:'Cada um fala 5 minutos ininterruptos sobre algo que sente — o outro só ouve, sem resolver',
    encerramento:'Sentiram a diferença de serem ouvidos de verdade? Esse é um dos maiores presentes que casais podem trocar.'},
   {titulo:'Toque com Presença',
@@ -2800,12 +2851,13 @@ const ARCOS_SEMANA=[
    tarefa:'Abordem algo que evitavam: uma mágoa pequena, uma necessidade não dita, um "precisamos conversar"',
    encerramento:'As conversas difíceis, feitas com amor, são as que mais fortalecem. Vocês tiveram coragem.'},
 ];
+// Semanas começam segunda-feira 00:00 BRT (UTC-3); âncora = 1970-01-05 03:00 UTC = 442800000ms
+function getSemanaAtual(){return Math.floor((Date.now()-442800000)/(7*86400000));}
 function getMissaoDaSemana(){
-  const sem=Math.floor(Date.now()/(7*86400000));
-  return ARCOS_SEMANA[sem%ARCOS_SEMANA.length];
+  return ARCOS_SEMANA[getSemanaAtual()%ARCOS_SEMANA.length];
 }
 function carregarMissaoSemana(){
-  const sem=Math.floor(Date.now()/(7*86400000));
+  const sem=getSemanaAtual();
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
   const feita=stored.sem===sem&&stored.feita;
   const arc=getMissaoDaSemana();
@@ -2832,7 +2884,7 @@ function carregarMissaoSemana(){
   }
 }
 function missaoDaSemanaFeita(){
-  const sem=Math.floor(Date.now()/(7*86400000));
+  const sem=getSemanaAtual();
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
   const jaFeita=stored.sem===sem&&stored.feita;
   const btn=document.getElementById('mission-done-btn');
@@ -2858,13 +2910,14 @@ function missaoDaSemanaFeita(){
     const arc=getMissaoDaSemana();
     const encEl=document.getElementById('mission-encerramento');
     if(encEl){encEl.style.display='block';encEl.textContent=arc.encerramento;}
+    salvarCarta('Missão Semanal',arc.titulo+' — '+arc.tarefa);
     ganharXP(40);
     verificarConquista('missao_sem',total);
     if(navigator.vibrate)navigator.vibrate([30,20,60]);
   }
 }
 function salvarNotaMissao(){
-  const sem=Math.floor(Date.now()/(7*86400000));
+  const sem=getSemanaAtual();
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
   const nota=document.getElementById('mission-nota-input').value.trim();
   localStorage.setItem('jd_missaoSem',JSON.stringify({...stored,sem,nota}));
@@ -2878,7 +2931,7 @@ function salvarCarta(jogo,texto){
   if(!texto||texto.length<5)return;
   const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
   hist.unshift({jogo,texto,data:new Date().toLocaleDateString('pt-BR')});
-  if(hist.length>20)hist.pop();
+  if(hist.length>50)hist.pop();
   localStorage.setItem('jd_hist',JSON.stringify(hist));
   ganharXP(3);
   if(jogo.startsWith('Encen'))verificarConquista('encenacao');
@@ -2941,6 +2994,14 @@ go=function(id){
       },400);
     }
   }
+  if(id==='login'){
+    const _n1=localStorage.getItem('jd_p1name')||'';
+    const _n2=localStorage.getItem('jd_p2name')||'';
+    const _i1=document.getElementById('p1name');
+    const _i2=document.getElementById('p2name');
+    if(_n1&&_i1&&!_i1.value)_i1.value=_n1;
+    if(_n2&&_i2&&!_i2.value)_i2.value=_n2;
+  }
 };
 
 // ── Mood overlay ─────────────────────────────────────────────────
@@ -2981,7 +3042,7 @@ const CONQUISTAS={
   cap5:{icon:'🌟',nome:'Capítulo 5',historia:'Metade da jornada. A tensão entre vocês já tem uma linguagem própria.'},
   cap10:{icon:'💎',nome:'A História de Vocês',historia:'Chegaram ao último capítulo. A história que escreveram é só de vocês — e ela continua.'},
 };
-let _rSpins=0;
+let _rSpins=parseInt(localStorage.getItem('jd_rSpins')||'0');
 function verificarConquista(tipo,a,b){
   const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
   let _novas=0;
@@ -2998,7 +3059,7 @@ function verificarConquista(tipo,a,b){
   if(tipo==='missao_sem'){ganhar('missao');if(a>=5)ganhar('missao5');}
   if(tipo==='mapa')ganhar('mapa');
   if(tipo==='quiz'&&a>=6)ganhar('quiz6');
-  if(tipo==='roleta'){_rSpins++;if(_rSpins>=10)ganhar('roleta10');}
+  if(tipo==='roleta'){_rSpins++;localStorage.setItem('jd_rSpins',String(_rSpins));if(_rSpins>=10)ganhar('roleta10');}
   if(tipo==='ritual')ganhar('ritual');
   if(tipo==='encenacao')ganhar('encenacao');
   if(tipo==='comando')ganhar('comando');
@@ -3195,7 +3256,7 @@ async function doLoginMpCriar(){
     if(e.message==='timeout'){
       err.textContent='❌ Servidor lento demais. Tente novamente.';
     } else {
-      err.textContent='❌ Erro: '+e.message+'. Verifique o banco de dados Firebase.';
+      err.textContent='❌ Não foi possível criar a sala. Verifique sua conexão e tente novamente.';
     }
     console.error('Firebase criar:',e);
   }
@@ -3243,7 +3304,7 @@ async function doLoginMpEntrar(){
     if(e.message==='timeout'){
       err.textContent='❌ Servidor lento demais. Tente novamente.';
     } else {
-      err.textContent='❌ Erro: '+e.message;
+      err.textContent='❌ Não foi possível entrar na sala. Verifique sua conexão e tente novamente.';
     }
     console.error('Firebase entrar:',e);
   }
@@ -3260,8 +3321,7 @@ async function doQuickJoin(){
   if(!nome){err.textContent='Digite seu nome.';return;}
   if(!/^\d{4}$/.test(pin)){err.textContent='PIN deve ter 4 dígitos numéricos.';return;}
   err.textContent='';btn.disabled=true;btn.textContent='Conectando…';
-  // Garante flags de primeira vez para não cair em age-gate depois
-  localStorage.setItem('jd_age','1');
+  // jd_seen marca onboarding visto nesta entrada rápida
   localStorage.setItem('jd_seen','1');
   let ok=false;
   try{ok=await carregarFirebase();}catch(e){ok=false;}
@@ -3302,7 +3362,7 @@ async function doQuickJoin(){
     });
   }catch(e){
     mp.ativo=false;mp.eu=null;mp.salaRef=null;
-    err.textContent='❌ '+(e.message==='timeout'?'Servidor lento demais. Tente novamente.':e.message);
+    err.textContent='❌ '+(e.message==='timeout'?'Servidor lento demais. Tente novamente.':'Não foi possível conectar. Verifique sua internet.');
     btn.disabled=false;btn.textContent='Entrar na sala →';
   }
 }
@@ -3741,12 +3801,15 @@ function fantNext(){
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
-  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal'];
+  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins'];
   const data={v:1,ts:Date.now()};
   keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
+  Object.keys(localStorage).filter(k=>k.startsWith('jd_dk_')).forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='jogos-do-desejo-backup.json';a.click();
+  const _expBtn=document.querySelector('.home-logout[onclick*="exportar"]');
+  if(_expBtn){const _orig=_expBtn.textContent;_expBtn.textContent='✓ Backup salvo!';setTimeout(()=>{_expBtn.textContent=_orig;},2200);}
 }
 function importarDados(){
   const input=document.createElement('input');input.type='file';input.accept='.json';
@@ -3756,9 +3819,10 @@ function importarDados(){
     reader.onload=ev=>{
       try{
         const data=JSON.parse(ev.target.result);
-        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal'].forEach(k=>{
+        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins'].forEach(k=>{
           if(data[k])localStorage.setItem(k,data[k]);
         });
+        Object.keys(data).filter(k=>k.startsWith('jd_dk_')).forEach(k=>{if(data[k])localStorage.setItem(k,data[k]);});
         alert('Progresso restaurado com sucesso!');location.reload();
       }catch(err){alert('Arquivo inválido.');}
     };
