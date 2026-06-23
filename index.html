@@ -705,6 +705,26 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .ng-epil-card{margin:1rem 1.2rem;padding:1.4rem 1.4rem;background:rgba(238,104,136,0.055);border:1px solid rgba(238,104,136,0.22);border-radius:10px;text-align:center}
 .ng-epil-titulo{font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--rose-l);margin-bottom:0.9rem}
 .ng-epil-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+/* ══ CARTA DE INTENÇÃO ══ */
+.carta-overlay{display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(20px);z-index:460;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
+.carta-overlay.on{display:flex}
+.carta-card{max-width:320px;width:100%;display:flex;flex-direction:column;gap:0}
+.carta-eyebrow{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,148,58,0.45);text-align:center;margin-bottom:0.5rem}
+.carta-title{font-family:'Cormorant SC',serif;font-size:1.22rem;color:rgba(235,195,145,0.92);text-align:center;letter-spacing:0.04em;margin-bottom:0.3rem}
+.carta-sub{font-size:0.7rem;color:rgba(180,140,100,0.5);font-style:italic;text-align:center;line-height:1.5;margin-bottom:1.1rem;font-family:'Libre Caslon Text',serif}
+.carta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0.85rem}
+.carta-selo{border-radius:14px;padding:12px 10px;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;border:1px solid rgba(200,148,58,0.12);background:rgba(255,255,255,0.02)}
+.carta-selo:hover,.carta-selo.on{border-color:rgba(200,148,58,0.48);background:rgba(200,148,58,0.07)}
+.carta-selo-emoji{font-size:1.6rem;line-height:1}
+.carta-selo-nome{font-family:'Cormorant SC',serif;font-size:0.82rem;color:rgba(220,180,120,0.88);letter-spacing:0.03em}
+.carta-selo-desc{font-size:0.6rem;color:rgba(170,130,90,0.5);font-style:italic;line-height:1.3}
+.carta-confirm{background:rgba(255,255,255,0.02);border:1px solid rgba(200,148,58,0.14);border-radius:12px;padding:0.75rem 1rem;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;margin-bottom:0.85rem;transition:border-color 0.3s}
+.carta-confirm.on{border-color:rgba(200,148,58,0.32)}
+.carta-confirm-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(200,148,58,0.4)}
+.carta-confirm-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.78rem;color:rgba(220,185,130,0.75);line-height:1.5;transition:color 0.3s}
+.carta-cta{background:linear-gradient(135deg,rgba(238,104,136,0.16),rgba(212,133,90,0.12));border:1px solid rgba(238,104,136,0.32);color:rgba(238,150,170,0.9);font-family:'Cormorant SC',serif;font-size:1rem;letter-spacing:0.05em;padding:0.72rem;border-radius:10px;text-align:center;cursor:pointer;width:100%;transition:all 0.2s}
+.carta-cta:hover{background:linear-gradient(135deg,rgba(238,104,136,0.24),rgba(212,133,90,0.18));border-color:rgba(238,104,136,0.5)}
+.carta-skip{text-align:center;font-size:0.64rem;color:rgba(180,140,100,0.28);cursor:pointer;font-style:italic;margin-top:0.55rem;font-family:'Libre Caslon Text',serif}
 /* ══ PERFIL SCREEN ══ */
 .perfil-wrap{display:flex;flex-direction:column;padding:1.4rem 1.4rem 1.2rem;gap:1.1rem;width:100%;max-width:400px;margin:0 auto}
 .perfil-header{text-align:center}
@@ -1368,6 +1388,43 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ ACHIEVEMENT TOAST ══ -->
+<!-- ══ CARTA DE INTENÇÃO ══ -->
+<div class="carta-overlay" id="carta-overlay">
+  <div class="carta-card">
+    <div class="carta-eyebrow">Antes de começar</div>
+    <div class="carta-title">Selar a intenção da noite</div>
+    <div class="carta-sub">Escolham o tom que vai guiar a experiência de vocês.</div>
+    <div class="carta-grid">
+      <div class="carta-selo" onclick="cartaSelo(this,'reconexao')">
+        <span class="carta-selo-emoji">🕯️</span>
+        <div class="carta-selo-nome">Reconexão</div>
+        <div class="carta-selo-desc">Presença, carinho e escuta</div>
+      </div>
+      <div class="carta-selo" onclick="cartaSelo(this,'leveza')">
+        <span class="carta-selo-emoji">🎲</span>
+        <div class="carta-selo-nome">Leveza</div>
+        <div class="carta-selo-desc">Jogo, risada e exploração</div>
+      </div>
+      <div class="carta-selo" onclick="cartaSelo(this,'intensidade')">
+        <span class="carta-selo-emoji">🔥</span>
+        <div class="carta-selo-nome">Intensidade</div>
+        <div class="carta-selo-desc">Desejo e aventura juntos</div>
+      </div>
+      <div class="carta-selo" onclick="cartaSelo(this,'cuidado')">
+        <span class="carta-selo-emoji">🌿</span>
+        <div class="carta-selo-nome">Cuidado</div>
+        <div class="carta-selo-desc">Ternura sem agenda</div>
+      </div>
+    </div>
+    <div class="carta-confirm" id="carta-confirm">
+      <div class="carta-confirm-label">Nossa intenção</div>
+      <div class="carta-confirm-text" id="carta-confirm-text">Escolham um selo acima</div>
+    </div>
+    <button class="carta-cta" id="carta-cta" onclick="cartaSelar()" style="opacity:0.4;pointer-events:none">✦ Selar e começar a noite</button>
+    <div class="carta-skip" onclick="cartaPular()">Entrar sem intenção</div>
+  </div>
+</div>
+
 <!-- ══ SAFEWORD ══ -->
 <div class="safeword-pill" id="safeword-pill" onclick="abrirSafeword()">
   <div class="safeword-pill-dot"></div>
@@ -2092,6 +2149,17 @@ function ncSel(btn,groupId){
 }
 
 function iniciarJornadaCurada(){
+  // Mostrar carta de intenção antes de iniciar
+  document.querySelectorAll('.carta-selo').forEach(s=>s.classList.remove('on'));
+  const conf=document.getElementById('carta-confirm');
+  const txt=document.getElementById('carta-confirm-text');
+  const cta=document.getElementById('carta-cta');
+  if(conf)conf.classList.remove('on');
+  if(txt)txt.textContent='Escolham um selo acima';
+  if(cta){cta.style.opacity='0.4';cta.style.pointerEvents='none';}
+  document.getElementById('carta-overlay').classList.add('on');
+}
+function _iniciarJornadaReal(){
   const tEl=document.querySelector('#nc-tempo .nc-opt.on');
   const eEl=document.querySelector('#nc-estado .nc-opt.on');
   if(!tEl||!eEl)return;
@@ -3661,6 +3729,38 @@ function renderSemaforo(){
 }
 function abrirSemaforo(){
   document.getElementById('semaforo-overlay').classList.add('on');
+}
+
+// ══ CARTA DE INTENÇÃO ═══════════════════════════════════════════════
+const _cartaFrases={
+  reconexao:'Esta noite escolhemos a reconexão — presença plena, escuta e carinho.',
+  leveza:'Esta noite é de leveza — risada, jogo e exploração sem pressão.',
+  intensidade:'Esta noite vamos fundo — intensidade, desejo e aventura juntos.',
+  cuidado:'Esta noite é de cuidado — ternura, toque e presença sem agenda.'
+};
+let _cartaSelo=null;
+function cartaSelo(el,tipo){
+  document.querySelectorAll('.carta-selo').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  _cartaSelo=tipo;
+  const conf=document.getElementById('carta-confirm');
+  const txt=document.getElementById('carta-confirm-text');
+  const cta=document.getElementById('carta-cta');
+  if(conf){conf.classList.add('on');}
+  if(txt){txt.textContent='"'+(_cartaFrases[tipo]||'')+'"';}
+  if(cta){cta.style.opacity='1';cta.style.pointerEvents='auto';}
+}
+function cartaSelar(){
+  if(!_cartaSelo)return;
+  sessionStorage.setItem('jd_carta',JSON.stringify({selo:_cartaSelo,frase:_cartaFrases[_cartaSelo]||''}));
+  document.getElementById('carta-overlay').classList.remove('on');
+  _cartaSelo=null;
+  _iniciarJornadaReal();
+}
+function cartaPular(){
+  document.getElementById('carta-overlay').classList.remove('on');
+  _cartaSelo=null;
+  _iniciarJornadaReal();
 }
 
 // ══ SAFEWORD ══════════════════════════════════════════════════════════
