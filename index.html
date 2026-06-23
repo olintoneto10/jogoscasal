@@ -1475,6 +1475,7 @@ if(_isIOS() && !_isStandalone()) mostrarInstallBanner();
 // ══ STATE ══════════════════════════════════════════════════
 let players = {p1:{name:'',pin:''},p2:{name:'',pin:''}};
 let vdCurrent = 1;
+let _vdLocal = 1;
 
 // (background via CSS particles)
 
@@ -1813,7 +1814,7 @@ function doLogin(){
   document.getElementById('hP1').textContent=n1;
   document.getElementById('hP2').textContent=n2;
   document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
-  vdCurrent=1;
+  vdCurrent=1;_vdLocal=1;
   go('home');
   setTimeout(atualizarHomeCap,50);
 }
@@ -1998,8 +1999,8 @@ document.getElementById('rSpinBtn').addEventListener('click',function(){
   })(performance.now());
 });
 document.getElementById('rCard').addEventListener('click',function(){if(!this.classList.contains('flipped'))this.classList.add('flipped');});
-document.getElementById('rOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
-document.getElementById('rNewBtn').addEventListener('click',e=>{e.stopPropagation();document.getElementById('rOverlay').classList.remove('on');});
+document.getElementById('rOverlay').addEventListener('click',function(e){if(e.target===this){this.classList.remove('on');_vdLocal=_vdLocal===1?2:1;mpBannerUpdate();}});
+document.getElementById('rNewBtn').addEventListener('click',e=>{e.stopPropagation();document.getElementById('rOverlay').classList.remove('on');_vdLocal=_vdLocal===1?2:1;mpBannerUpdate();});
 
 // ══ VD DATA ══════════════════════════════════════════════════
 const VD={
@@ -3746,7 +3747,15 @@ function mpBannerUpdate(){
   const banner=document.getElementById('mp-banner');
   if(!mp.ativo){
     banner.classList.remove('on','minha-vez');
-    ['roleta-vez-ind','dado-vez-ind'].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove('on','minha-vez');el.textContent='';}});
+    const _p1n=players&&players.p1&&players.p1.name;
+    const _p2n=players&&players.p2&&players.p2.name;
+    ['roleta-vez-ind','dado-vez-ind'].forEach(id=>{
+      const el=document.getElementById(id);if(!el)return;
+      if(_p1n&&_p2n){
+        el.textContent='Vez de '+(_vdLocal===2?_p2n:_p1n);
+        el.classList.add('on');el.classList.remove('minha-vez');
+      } else {el.classList.remove('on','minha-vez');el.textContent='';}
+    });
     return;
   }
   banner.classList.add('on');
