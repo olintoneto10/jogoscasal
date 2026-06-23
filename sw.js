@@ -1,4 +1,4 @@
-const CACHE = 'jd-v19';
+const CACHE = 'jd-v20';
 const ASSETS = ['./', './index.html', './manifest.json',
   'https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap'];
 
@@ -14,10 +14,26 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  const req = e.request;
+  // App shell (HTML/navegação): network-first — sempre busca a versão mais
+  // recente quando online, garantindo que correções cheguem ao usuário.
+  // Cai para o cache só quando offline.
+  const isShell = req.mode === 'navigate' || req.destination === 'document' ||
+                  req.url.endsWith('/') || req.url.endsWith('index.html');
+  if (isShell) {
+    e.respondWith(
+      fetch(req).then(res => {
+        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+        return res;
+      }).catch(() => caches.match(req).then(c => c || caches.match('./index.html')))
+    );
+    return;
+  }
+  // Demais assets (fontes, ícones): cache-first com atualização em segundo plano.
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      const fresh = fetch(e.request).then(res => {
-        if (res.ok) caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+    caches.match(req).then(cached => {
+      const fresh = fetch(req).then(res => {
+        if (res.ok) caches.open(CACHE).then(c => c.put(req, res.clone()));
         return res;
       }).catch(() => cached);
       return cached || fresh;
