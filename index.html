@@ -705,6 +705,20 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .ng-epil-card{margin:1rem 1.2rem;padding:1.4rem 1.4rem;background:rgba(238,104,136,0.055);border:1px solid rgba(238,104,136,0.22);border-radius:10px;text-align:center}
 .ng-epil-titulo{font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--rose-l);margin-bottom:0.9rem}
 .ng-epil-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+/* ══ PERFIL SCREEN ══ */
+.perfil-wrap{display:flex;flex-direction:column;padding:1.4rem 1.4rem 1.2rem;gap:1.1rem;width:100%;max-width:400px;margin:0 auto}
+.perfil-header{text-align:center}
+.perfil-title{font-family:'Cormorant SC',serif;font-size:1.2rem;color:rgba(230,185,130,0.92);letter-spacing:0.04em}
+.perfil-subtitle{font-size:0.72rem;color:rgba(180,140,100,0.55);font-style:italic;margin-top:0.3rem;line-height:1.55;font-family:'Libre Caslon Text',serif}
+.perfil-divider{height:1px;background:rgba(200,148,58,0.1)}
+.perfil-section{}
+.perfil-section-q{font-family:'Cormorant SC',serif;font-size:0.9rem;color:rgba(220,175,120,0.85);margin-bottom:0.5rem;letter-spacing:0.02em}
+.perfil-chips{display:flex;gap:0.45rem;flex-wrap:wrap}
+.perfil-chip{background:rgba(255,255,255,0.03);border:1px solid rgba(200,148,58,0.18);border-radius:20px;padding:0.32rem 0.85rem;font-size:0.75rem;color:rgba(200,165,110,0.72);cursor:pointer;transition:all 0.18s;font-family:'Libre Caslon Text',serif;font-style:italic}
+.perfil-chip.on{background:rgba(200,148,58,0.12);border-color:rgba(200,148,58,0.55);color:rgba(230,195,130,0.95);font-style:normal}
+.perfil-cta{background:linear-gradient(135deg,rgba(200,148,58,0.16),rgba(180,120,40,0.1));border:1px solid rgba(200,148,58,0.32);color:rgba(220,185,100,0.9);font-family:'Cormorant SC',serif;font-size:1rem;letter-spacing:0.05em;padding:0.75rem;border-radius:10px;text-align:center;cursor:pointer;transition:all 0.2s;width:100%}
+.perfil-cta:hover{background:linear-gradient(135deg,rgba(200,148,58,0.24),rgba(180,120,40,0.16));border-color:rgba(200,148,58,0.5)}
+.perfil-skip{text-align:center;font-size:0.67rem;color:rgba(180,140,100,0.32);cursor:pointer;font-style:italic;font-family:'Libre Caslon Text',serif}
 /* ══ HOME — CAPÍTULO BADGE ═══════════════════════════════════════ */
 .home-cap-badge{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0.2rem 1.2rem 0.6rem;font-family:'Jost',sans-serif;line-height:1.5}
 .home-cap-nome{font-family:'Cormorant SC',serif;font-size:1.1rem;letter-spacing:0.04em;color:var(--gold-l);display:block;margin-top:0.05rem}
@@ -747,6 +761,47 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     </div>
     <button class="btn-gold" onclick="onbContinuar()" style="margin-top:0.5rem">Começar Agora →</button>
     <p class="onb-privacy">Nenhum dado é enviado sem sua permissão</p>
+  </div>
+</div>
+
+<!-- ══ PERFIL ══ -->
+<div class="screen" id="screen-perfil">
+  <div class="perfil-wrap">
+    <div class="perfil-header">
+      <div class="perfil-title">✦ Esta noite</div>
+      <div class="perfil-subtitle">Três perguntas rápidas para personalizar a experiência de hoje.</div>
+    </div>
+    <div class="perfil-divider"></div>
+    <div class="perfil-section">
+      <div class="perfil-section-q">Como se descrevem como casal?</div>
+      <div class="perfil-chips" id="perf-estilo">
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-estilo')">Românticos</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-estilo')">Aventureiros</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-estilo')">Equilibrados</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-estilo')">Exploradores</div>
+      </div>
+    </div>
+    <div class="perfil-divider"></div>
+    <div class="perfil-section">
+      <div class="perfil-section-q">O que buscam esta noite?</div>
+      <div class="perfil-chips" id="perf-intencao">
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-intencao')">Conexão emocional</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-intencao')">Diversão e jogo</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-intencao')">Intimidade intensa</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-intencao')">Só estar juntos</div>
+      </div>
+    </div>
+    <div class="perfil-divider"></div>
+    <div class="perfil-section">
+      <div class="perfil-section-q">Nível de conforto hoje?</div>
+      <div class="perfil-chips" id="perf-nivel">
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-nivel')">Suave</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-nivel')">Moderado</div>
+        <div class="perfil-chip" onclick="perfilChip(this,'perf-nivel')">Intenso</div>
+      </div>
+    </div>
+    <button class="perfil-cta" onclick="perfilContinuar()">✦ Personalizar minha noite</button>
+    <div class="perfil-skip" onclick="perfilPular()">Pular e entrar direto</div>
   </div>
 </div>
 
@@ -1568,10 +1623,45 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 
 <script>
 // ══ ONBOARDING ══════════════════════════════════════════════════════
+// ══ PERFIL DE CASAL ══════════════════════════════════════════════════
+function perfilChip(el,groupId){
+  document.querySelectorAll('#'+groupId+' .perfil-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+function _perfilGetVal(groupId){
+  const on=document.querySelector('#'+groupId+' .perfil-chip.on');
+  return on?on.textContent.trim():null;
+}
+function _perfilAplicar(){
+  const p={
+    estilo:_perfilGetVal('perf-estilo'),
+    intencao:_perfilGetVal('perf-intencao'),
+    nivel:_perfilGetVal('perf-nivel')
+  };
+  sessionStorage.setItem('jd_perfil',JSON.stringify(p));
+  sessionStorage.setItem('jd_perfil_done','1');
+  // Aplicar semáforo automático baseado na intenção
+  if(p.intencao==='Só estar juntos'){
+    sessionStorage.setItem('jd_sema','vermelho');
+  } else if(p.intencao==='Conexão emocional'){
+    sessionStorage.setItem('jd_sema','amarelo');
+  } else if(p.intencao==='Intimidade intensa'||p.intencao==='Diversão e jogo'){
+    sessionStorage.setItem('jd_sema','verde');
+  }
+}
+function perfilContinuar(){
+  _perfilAplicar();
+  go('screen-mode');
+}
+function perfilPular(){
+  sessionStorage.setItem('jd_perfil_done','1');
+  go('screen-mode');
+}
+
 function onbContinuar(){
   localStorage.setItem('jd_seen','1');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-mode').classList.add('active');
+  document.getElementById('screen-perfil').classList.add('active');
   window.scrollTo(0,0);
   if('Notification' in window && Notification.permission==='default'){
     setTimeout(()=>Notification.requestPermission().then(p=>{
@@ -1586,6 +1676,8 @@ function ageConfirm(){
   mostrarInstallBanner();
   if(!localStorage.getItem('jd_seen')){
     document.getElementById('screen-onboarding').classList.add('active');
+  } else if(!sessionStorage.getItem('jd_perfil_done')){
+    document.getElementById('screen-perfil').classList.add('active');
   } else {
     const sala=new URLSearchParams(location.search).get('sala');
     if(sala&&sala.length>=4){
