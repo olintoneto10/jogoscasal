@@ -1162,8 +1162,9 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <div id="reconDone" style="display:none;flex-direction:column;align-items:center;gap:1.4rem;padding:0 1.5rem;text-align:center">
     <div style="font-size:2.8rem">🌿</div>
     <p style="font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);letter-spacing:0.05em">Agora vocês estão presentes</p>
-    <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7">A conexão emocional já começou.<br>Escolham um jogo para continuar a noite.</p>
-    <button class="btn-ghost" onclick="go('home')">Escolher um Jogo</button>
+    <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7">A conexão emocional já começou.<br>Escolham como continuar a noite.</p>
+    <button class="btn-noite" style="margin:0;width:100%" onclick="go('screen-noite-config')">✨ Começar a Noite Guiada</button>
+    <button class="btn-ghost" style="width:100%;font-size:0.88rem" onclick="go('home')">Explorar jogos individuais</button>
     <button class="btn-skip" onclick="reconStart()">↩ Repetir as perguntas</button>
   </div>
   <button class="btn-gold" id="reconBtn" onclick="reconNext()">Próxima Pergunta →</button>
