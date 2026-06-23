@@ -530,6 +530,30 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mp-vez-screen{display:none;font-family:'Cormorant SC',serif;font-size:0.92rem;color:var(--muted);text-align:center;letter-spacing:0.04em;padding:0.3rem 0;transition:color 0.3s}
 .mp-vez-screen.on{display:block}
 .mp-vez-screen.minha-vez{color:var(--rose-l);font-weight:600}
+/* ══ COMANDO & ENTREGA / ENCENAÇÕES ══ */
+.cmd-step{display:flex;flex-direction:column;align-items:center;gap:1.1rem;width:100%}
+.cmd-lead{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.92rem;color:var(--muted);text-align:center;padding:0 1.5rem;line-height:1.7}
+.cmd-safe-box,.cmd-limits-box{background:var(--ground-2);border:1px solid rgba(200,148,58,0.22);border-radius:14px;padding:1.1rem 1.2rem;width:calc(100% - 2.4rem);margin:0 1.2rem;display:flex;flex-direction:column;gap:0.55rem;box-sizing:border-box}
+.cmd-field-lbl{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);letter-spacing:0.03em}
+.cmd-input{background:rgba(0,0,0,0.3);border:1px solid rgba(238,104,136,0.35);border-radius:8px;padding:0.6rem 0.8rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.95rem;text-align:center;letter-spacing:0.05em}
+.cmd-input:focus{outline:none;border-color:var(--rose-l)}
+.cmd-hint{font-size:0.7rem;color:var(--muted);line-height:1.5;font-family:'Jost',sans-serif}
+.cmd-limits{display:flex;flex-wrap:wrap;gap:0.45rem}
+.cmd-limit{display:flex;align-items:center;gap:0.32rem;background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:20px;padding:0.4rem 0.7rem;font-size:0.76rem;color:var(--muted);cursor:pointer;transition:all 0.18s;font-family:'Jost',sans-serif}
+.cmd-limit.on{background:rgba(238,104,136,0.14);border-color:rgba(238,104,136,0.5);color:var(--rose-l)}
+.cmd-roleline{font-family:'Cormorant SC',serif;font-size:1.05rem;color:var(--gold-l);text-align:center;letter-spacing:0.04em}
+.cmd-card{background:var(--ground-2);border:1px solid rgba(238,104,136,0.3);border-radius:16px;margin:0 1.2rem;padding:2rem 1.6rem;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.9rem;text-align:center}
+.cmd-card-lvl{font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rose-l);background:rgba(238,104,136,0.12);border:1px solid rgba(238,104,136,0.3);border-radius:20px;padding:0.25rem 0.85rem}
+.cmd-card-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.08rem;line-height:1.65;color:var(--text)}
+.cmd-actions{display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap}
+.cmd-safeword-bar{background:rgba(120,20,20,0.22);border:1px solid rgba(238,80,80,0.35);border-radius:10px;color:#F0A0A0;font-family:'Jost',sans-serif;font-size:0.76rem;letter-spacing:0.04em;padding:0.55rem 1rem;cursor:pointer;margin-top:0.2rem}
+.cmd-safeword-bar b{color:#FFC0C0;letter-spacing:0.1em}
+.fant-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.3);border-radius:16px;margin:0 1.2rem;padding:1.6rem 1.4rem;display:flex;flex-direction:column;gap:0.8rem;text-align:center}
+.fant-emoji{font-size:2.4rem;line-height:1}
+.fant-titulo{font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--rose-l);letter-spacing:0.03em}
+.fant-sec{font-family:'Libre Caslon Text',serif;font-size:0.88rem;color:var(--text);line-height:1.6;text-align:left;display:flex;flex-direction:column;gap:0.15rem}
+.fant-lbl{font-family:'Jost',sans-serif;font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold)}
+.fant-gancho{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.98rem;color:var(--gold-l);line-height:1.6;border-top:1px solid rgba(200,148,58,0.18);padding-top:0.7rem;margin-top:0.2rem}
 </style>
 
 <!-- Analytics (substitua G-XXXXXXXX pelo seu ID do Google Analytics) -->
@@ -712,6 +736,8 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
     <div class="game-card" onclick="go('screen-strip')"><div class="icon">🪄</div><div class="name">Ritual do Desejo</div><div class="desc">Uma dança guiada, no clima certo</div></div>
     <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
+    <div class="game-card" onclick="go('screen-comando')"><div class="icon">🖤</div><div class="name">Comando &amp; Entrega</div><div class="desc">Um conduz, o outro se entrega — com segurança</div></div>
+    <div class="game-card" onclick="go('screen-fantasia')"><div class="icon">🎭</div><div class="name">Encenações</div><div class="desc">Cenários para encenar e soltar a imaginação</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
@@ -934,6 +960,72 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     </div>
     <button class="btn-gold" id="stripBtn" onclick="stripNext()">Próxima Rodada →</button>
   </div>
+</div>
+
+<!-- ══ COMANDO & ENTREGA ══ -->
+<div class="screen" id="screen-comando">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Comando &amp; Entrega</span></div>
+  <div style="height:0.6rem"></div>
+  <div class="cmd-step" id="cmd-setup">
+    <p class="cmd-lead">Um conduz, o outro se entrega. Antes de começar, combinem com calma — confiança é o que torna tudo gostoso.</p>
+    <div class="cmd-safe-box">
+      <label class="cmd-field-lbl">🔴 Palavra de segurança</label>
+      <input id="cmdSafeword" class="cmd-input" type="text" value="Vermelho" maxlength="20" autocomplete="off">
+      <div class="cmd-hint">Quem disser essa palavra, a qualquer momento, para tudo na hora — sem perguntas.</div>
+    </div>
+    <div class="cmd-limits-box">
+      <div class="cmd-field-lbl">O que está liberado hoje?</div>
+      <div class="cmd-limits" id="cmdLimits"></div>
+      <div class="cmd-hint">Só aparecem cartas dentro do que vocês marcarem. Podem mudar quando quiserem.</div>
+    </div>
+    <button class="btn-gold" onclick="cmdToRoles()">Combinado — continuar →</button>
+  </div>
+  <div class="cmd-step" id="cmd-roles" style="display:none">
+    <div class="levels" id="cmdLevels">
+      <button class="lvl on" data-level="Provocação">Provocação</button>
+      <button class="lvl" data-level="Intenso">Intenso</button>
+      <button class="lvl" data-level="Sem Limites">Sem Limites</button>
+    </div>
+    <p class="vd-player">Quem comanda esta rodada?</p>
+    <div class="vd-btns">
+      <button class="vd-btn verdade" onclick="cmdStart(1)">🖤 <span id="cmdN1">Jogador 1</span></button>
+      <button class="vd-btn desafio" onclick="cmdStart(2)">🖤 <span id="cmdN2">Jogador 2</span></button>
+    </div>
+    <button class="btn-skip" onclick="cmdBackSetup()">↩ Ajustar limites</button>
+  </div>
+  <div class="cmd-step" id="cmd-play" style="display:none">
+    <div class="cmd-roleline" id="cmdRoleLine"></div>
+    <div class="cmd-card" id="cmdCard">
+      <div class="cmd-card-lvl" id="cmdCardLvl"></div>
+      <div class="cmd-card-text" id="cmdCardText"></div>
+    </div>
+    <div class="cmd-actions">
+      <button class="btn-ghost" onclick="cmdSwap()">🔄 Trocar papéis</button>
+      <button class="btn-ghost" onclick="openTimerFrom(null)">⏱ Timer</button>
+    </div>
+    <button class="btn-gold" onclick="cmdNext()">Próximo comando →</button>
+    <button class="cmd-safeword-bar" onclick="cmdSafe()">🔴 Palavra de segurança: <b id="cmdSafeShow">Vermelho</b></button>
+  </div>
+</div>
+
+<!-- ══ ENCENAÇÕES ══ -->
+<div class="screen" id="screen-fantasia">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Encenações</span></div>
+  <div style="height:0.6rem"></div>
+  <div class="levels" id="fantLevels">
+    <button class="lvl on" data-level="Leve">Leve</button>
+    <button class="lvl" data-level="Picante">Picante</button>
+    <button class="lvl" data-level="Ousado">Ousado</button>
+  </div>
+  <p class="cmd-lead" id="fantIntro">Sorteiem um cenário e deixem a imaginação assumir. Entrem no personagem — vale figurino, sotaque e muita cara de pau.</p>
+  <div class="fant-card" id="fantCard" style="display:none">
+    <div class="fant-emoji" id="fantEmoji"></div>
+    <div class="fant-titulo" id="fantTitulo"></div>
+    <div class="fant-sec"><span class="fant-lbl">🎬 Clima</span><span id="fantClima"></span></div>
+    <div class="fant-sec"><span class="fant-lbl">🎭 Papéis</span><span id="fantPapeis"></span></div>
+    <div class="fant-gancho" id="fantGancho"></div>
+  </div>
+  <button class="btn-gold" id="fantBtn" onclick="fantNext()">Sortear cena 🎭</button>
 </div>
 
 <!-- ══ RECONEXÃO ══ -->
@@ -1279,6 +1371,8 @@ function go(id){
   if(id==='screen-reconexao')reconStart();
   if(id==='screen-mapa')mapaReset();
   if(id==='screen-noite-guiada')renderNoiteGuiada();
+  if(id==='screen-comando')cmdEnter();
+  if(id==='screen-fantasia')fantEnter();
 }
 
 
@@ -3233,6 +3327,156 @@ renderStrip=function(){
   const txt=document.getElementById('stripInstruction')?document.getElementById('stripInstruction').textContent:'';
   mpSyncCarta({jogo:'strip',nivel:lvl,passo:stripStep,texto:txt});
 };
+
+// ══ COMANDO & ENTREGA ════════════════════════════════════════
+const CMD_LIMITS=[
+  {id:'venda',emoji:'👁️',label:'Venda nos olhos',def:true},
+  {id:'pena',emoji:'🪶',label:'Pena / seda',def:true},
+  {id:'gelo',emoji:'🧊',label:'Gelo / temperatura',def:true},
+  {id:'edge',emoji:'⏳',label:'Controle do prazer',def:true},
+  {id:'fala',emoji:'🗣️',label:'Palavras de comando',def:true},
+  {id:'amarra',emoji:'🪢',label:'Amarras leves',def:false},
+  {id:'tapa',emoji:'✋',label:'Tapinhas',def:false},
+];
+const CMD_CARDS={
+  'Provocação':[
+    {t:'Ordene que {s} feche os olhos e só abra quando você permitir.'},
+    {t:'Comande {s} a ficar completamente imóvel enquanto você explora o corpo dele(a) só com as mãos.'},
+    {t:'Diga a {s} exatamente onde quer ser beijado(a) — e exija que seja bem feito.'},
+    {t:'Segure o queixo de {s}, olhe fundo nos olhos e dê a primeira ordem da noite.'},
+    {t:'Proíba {s} de te tocar. Só você toca — pelo tempo que quiser.'},
+    {t:'Conduza as mãos de {s} pelo seu corpo, devagar, decidindo cada parada.'},
+    {t:'Comande {s} a te provocar com beijos no pescoço — sem usar as mãos.'},
+    {t:'Decida o ritmo: faça {s} se mover lentamente e parar quando você disser.'},
+    {t:'Ordene que {s} descreva em voz alta o que está sentindo agora.'},
+  ],
+  'Intenso':[
+    {t:'Prenda os pulsos de {s} acima da cabeça com as suas mãos e comande o que vem agora.'},
+    {t:'Ordene que {s} implore pelo próximo toque — e só conceda quando achar que mereceu.'},
+    {t:'Faça {s} contar cada beijo que você der. Se perder a conta, recomeça do zero.'},
+    {t:'Coloque a venda em {s}. A partir de agora, só o seu toque guia.',req:['venda']},
+    {t:'Passe uma pena ou um tecido macio pela pele de {s} — sem avisar de onde vem.',req:['pena']},
+    {t:'Deslize um cubo de gelo pela pele de {s} enquanto ordena que não se mexa.',req:['gelo']},
+    {t:'Sussurre no ouvido de {s}, em detalhes, o que você vai fazer a seguir.',req:['fala']},
+    {t:'Leve {s} quase ao limite do prazer e então pare. Repita quando quiser.',req:['edge']},
+  ],
+  'Sem Limites':[
+    {t:'Escolha uma posição e comande {s} a assumi-la — você dita cada detalhe.'},
+    {t:'Dê três ordens seguidas. {s} deve obedecer todas, sem hesitar.'},
+    {t:'Vire o jogo: {s} comanda você por uma rodada inteira. Depois o controle volta para {d}.'},
+    {t:'Amarre os pulsos de {s} com um lenço ou gravata. {d} no controle total agora.',req:['amarra']},
+    {t:'Um tapinha leve onde {s} permitiu — seguido de um carinho no mesmo lugar.',req:['tapa']},
+    {t:'De olhos vendados, leve {s} ao limite três vezes — sem deixar chegar lá.',req:['venda','edge']},
+    {t:'Alterne gelo e um sopro quente pela pele de {s}. Faça cada arrepio durar.',req:['gelo']},
+    {t:'Ordene, com todas as palavras, o que {s} deve fazer com você agora.',req:['fala']},
+  ],
+};
+let cmdLimits={},cmdDeck=[],cmdDom=1;
+function cmdEnter(){
+  document.getElementById('cmdN1').textContent=players.p1.name||'Jogador 1';
+  document.getElementById('cmdN2').textContent=players.p2.name||'Jogador 2';
+  if(!Object.keys(cmdLimits).length)CMD_LIMITS.forEach(l=>{cmdLimits[l.id]=l.def;});
+  cmdRenderLimits();
+  cmdShow('setup');
+}
+function cmdShow(step){
+  document.getElementById('cmd-setup').style.display=step==='setup'?'flex':'none';
+  document.getElementById('cmd-roles').style.display=step==='roles'?'flex':'none';
+  document.getElementById('cmd-play').style.display=step==='play'?'flex':'none';
+}
+function cmdRenderLimits(){
+  const w=document.getElementById('cmdLimits');w.innerHTML='';
+  CMD_LIMITS.forEach(l=>{
+    const b=document.createElement('div');
+    b.className='cmd-limit'+(cmdLimits[l.id]?' on':'');
+    b.innerHTML=`${l.emoji} ${l.label}`;
+    b.onclick=()=>{cmdLimits[l.id]=!cmdLimits[l.id];b.classList.toggle('on',cmdLimits[l.id]);cmdDeck=[];};
+    w.appendChild(b);
+  });
+}
+function cmdToRoles(){cmdShow('roles');}
+function cmdBackSetup(){cmdShow('setup');}
+function cmdSafewordVal(){const v=(document.getElementById('cmdSafeword').value||'').trim();return v||'Vermelho';}
+function cmdStart(domNum){
+  cmdDom=domNum;cmdDeck=[];
+  document.getElementById('cmdSafeShow').textContent=cmdSafewordVal();
+  cmdShow('play');cmdNext();
+}
+function cmdSwap(){cmdDom=cmdDom===1?2:1;cmdRenderRole();}
+function cmdNames(){
+  const dom=cmdDom===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
+  const sub=cmdDom===1?(players.p2.name||'Jogador 2'):(players.p1.name||'Jogador 1');
+  return {dom,sub};
+}
+function cmdRenderRole(){
+  const n=cmdNames();
+  document.getElementById('cmdRoleLine').innerHTML=`🖤 <b>${n.dom}</b> comanda &nbsp;•&nbsp; ${n.sub} se entrega`;
+}
+function cmdPool(){
+  const lvl=getLevel('cmdLevels');
+  return (CMD_CARDS[lvl]||[]).filter(c=>!c.req||c.req.every(r=>cmdLimits[r]));
+}
+function cmdNext(){
+  cmdRenderRole();
+  if(!cmdDeck.length)cmdDeck=cmdPool().sort(()=>Math.random()-0.5);
+  if(!cmdDeck.length){
+    document.getElementById('cmdCardLvl').textContent='—';
+    document.getElementById('cmdCardText').textContent='Nenhuma carta nesse nível com os limites atuais. Libere mais opções no setup.';
+    return;
+  }
+  const card=cmdDeck.pop();
+  const n=cmdNames();
+  const txt=card.t.split('{s}').join(n.sub).split('{d}').join(n.dom);
+  document.getElementById('cmdCardLvl').textContent=getLevel('cmdLevels');
+  document.getElementById('cmdCardText').textContent=txt;
+  salvarCarta('Comando & Entrega',txt);
+}
+function cmdSafe(){
+  document.getElementById('aftercareText').textContent='Parem tudo agora. Respirem juntos, abracem-se, bebam água. Conversem com carinho sobre o que sentiram — o cuidado depois é tão importante quanto o jogo. Sem pressa para voltar.';
+  document.getElementById('aftercare-overlay').classList.add('on');
+  cmdShow('setup');
+}
+
+// ══ ENCENAÇÕES (FANTASIA & ROLEPLAY) ═════════════════════════
+const FANTASIAS={
+  'Leve':[
+    {emoji:'🍸',titulo:'Estranhos num bar',clima:'Cada um se arruma como se fosse sair. Luz baixa, uma música ambiente e duas bebidas.',papeis:'Vocês não se conhecem. Um chega primeiro; o outro puxa assunto.',gancho:'Posso te pagar uma bebida? Prometo que não mordo... a não ser que você peça.'},
+    {emoji:'✈️',titulo:'Reencontro depois da viagem',clima:'Finjam que ficaram semanas sem se ver. Recebam um ao outro na porta.',papeis:'O que chegou de viagem e o que estava morrendo de saudade.',gancho:'Você não tem ideia de como eu contei os dias para te ter de novo assim.'},
+    {emoji:'💆',titulo:'Massagista particular',clima:'Toalha, óleo ou creme, luz de vela. Um deita; o outro atende.',papeis:'Cliente e massagista. O atendimento começa bem profissional...',gancho:'Pode relaxar. Hoje o atendimento é completo — me avise se quiser mais pressão.'},
+    {emoji:'📸',titulo:'Fotógrafo & modelo',clima:'Um celular fazendo de câmera e uma sessão de fotos improvisada.',papeis:'O fotógrafo dirige as poses; o modelo obedece e provoca.',gancho:'Perfeito. Agora me olha como se eu fosse a única pessoa nesta sala.'},
+  ],
+  'Picante':[
+    {emoji:'🛎️',titulo:'Hóspede & camareiro(a)',clima:'Quarto arrumado como hotel. Uma batida na porta: arrumação!',papeis:'Hóspede de roupão e o(a) camareiro(a) que veio deixar tudo impecável.',gancho:'Desculpe incomodar... posso entrar pra deixar o seu quarto perfeito?'},
+    {emoji:'🚗',titulo:'Motorista & passageiro(a)',clima:'O sofá vira banco de carro. Viagem longa, só vocês dois e o trânsito parado.',papeis:'Motorista de app e passageiro(a) que começa a flertar no banco de trás.',gancho:'Já que o trânsito não anda, a gente pode se distrair de algum jeito...'},
+    {emoji:'👔',titulo:'Chefe & assistente',clima:'Reunião depois do expediente. Camisa, postura séria... no começo.',papeis:'Chefe exigente e o(a) assistente que ficou até tarde.',gancho:'Feche a porta. Precisamos discutir o seu desempenho com calma.'},
+    {emoji:'🎓',titulo:'Aula particular',clima:'Um livro ou caderno de adereço. Um ensina, o outro não entendeu nada.',papeis:'Professor(a) paciente e aluno(a) que precisa de atenção redobrada.',gancho:'Se você acertar a próxima, ganha um prêmio. Se errar... também.'},
+  ],
+  'Ousado':[
+    {emoji:'🕵️',titulo:'Encontro às escuras',clima:'Combinem por mensagem como dois desconhecidos e se encontrem pela primeira vez.',papeis:'Dois match de app que decidiram não perder tempo com formalidade.',gancho:'Você é ainda melhor que as fotos. Que tal pularmos a parte do jantar?'},
+    {emoji:'🎭',titulo:'O amante mascarado',clima:'Uma venda ou máscara. Identidade secreta por uma noite inteira.',papeis:'Um age como um amante misterioso; o outro não pode perguntar quem é.',gancho:'Sem nomes, sem perguntas. Só o que o corpo pedir esta noite.'},
+    {emoji:'👑',titulo:'Realeza & servo(a)',clima:'Um se porta como majestade; o outro está ali para servir cada desejo.',papeis:'Realeza mimada e servo(a) devotado(a) à coroa.',gancho:'Aproxime-se. Sua majestade tem algumas exigências para esta noite.'},
+    {emoji:'🔥',titulo:'O ex que voltou',clima:'Finjam que terminaram e se reencontram com toda a tensão acumulada.',papeis:'Dois ex que conhecem de cor cada ponto fraco um do outro.',gancho:'A gente sempre foi péssimo em ficar longe. Vem cá.'},
+  ],
+};
+function fantEnter(){
+  document.getElementById('fantCard').style.display='none';
+  document.getElementById('fantIntro').style.display='';
+  document.getElementById('fantBtn').textContent='Sortear cena 🎭';
+}
+function fantNext(){
+  const lvl=getLevel('fantLevels');
+  const c=deckPick('fant_'+lvl,FANTASIAS[lvl]);
+  if(!c)return;
+  document.getElementById('fantIntro').style.display='none';
+  document.getElementById('fantCard').style.display='flex';
+  document.getElementById('fantEmoji').textContent=c.emoji;
+  document.getElementById('fantTitulo').textContent=c.titulo;
+  document.getElementById('fantClima').textContent=c.clima;
+  document.getElementById('fantPapeis').textContent=c.papeis;
+  document.getElementById('fantGancho').textContent='“'+c.gancho+'”';
+  document.getElementById('fantBtn').textContent='Outra cena 🎲';
+  salvarCarta('Encenações',c.titulo);
+}
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
