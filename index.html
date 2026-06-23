@@ -438,6 +438,22 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .achiev-toast-txt{display:flex;flex-direction:column}
 .achiev-toast-title{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:500}
 .achiev-toast-name{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--text);letter-spacing:0.04em}
+.achiev-toast-hist{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:0.12rem;max-width:220px;white-space:normal;line-height:1.3}
+/* ══ CAPÍTULOS ══ */
+.home-capitulo{display:flex;flex-direction:column;gap:0.45rem;background:linear-gradient(135deg,rgba(120,60,140,0.09),rgba(212,133,90,0.06));border:1px solid rgba(140,80,180,0.18);border-radius:10px;padding:0.65rem 1rem;width:100%}
+.cap-header{display:flex;justify-content:space-between;align-items:baseline}
+.cap-num{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.cap-xp{font-size:0.58rem;color:var(--muted);letter-spacing:0.04em}
+.cap-nome{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-l);letter-spacing:0.06em}
+.cap-bar-wrap{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
+.cap-bar-fill{height:100%;background:linear-gradient(90deg,#C8943A,#D96E92);border-radius:2px;transition:width 0.7s ease}
+.cap-up-overlay{position:fixed;inset:0;background:rgba(10,4,12,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.3rem;z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.5s;text-align:center;padding:2.5rem 2rem}
+.cap-up-overlay.on{opacity:1;pointer-events:all}
+.cap-up-stars{font-size:1.8rem;letter-spacing:0.5rem;color:var(--gold);animation:pulse 1.4s ease infinite}
+.cap-up-number{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted)}
+.cap-up-nome{font-family:'Cormorant SC',serif;font-size:2rem;color:var(--gold-l);letter-spacing:0.08em}
+.cap-up-hist{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.92rem;color:var(--text);line-height:1.68;max-width:280px}
+
 .bg-p{position:fixed;border-radius:50%;background:rgba(212,133,90,1);pointer-events:none;z-index:0;bottom:-4px;will-change:transform;animation:bgFloat linear infinite;}
 @keyframes bgFloat{0%{transform:translateY(0);opacity:0}8%{opacity:var(--a,.3)}88%{opacity:var(--a,.3)}100%{transform:translateY(-108vh);opacity:0}}
 .pos-icon-txt{font-size:4rem;text-align:center;padding:1.5rem 0;line-height:1}
@@ -713,12 +729,22 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span class="streak-label">noite seguida</span>
     <button class="streak-hist-btn" onclick="abrirHistorico()">📖 Histórico</button>
   </div>
+  <div class="home-capitulo" id="home-capitulo">
+    <div class="cap-header">
+      <span class="cap-num" id="cap-num-label">Capítulo 1</span>
+      <span class="cap-xp" id="cap-xp-label"></span>
+    </div>
+    <div class="cap-nome" id="cap-nome-label">A Faísca</div>
+    <div class="cap-bar-wrap"><div class="cap-bar-fill" id="cap-bar-fill" style="width:0%"></div></div>
+  </div>
   <div class="home-mission" id="home-mission" style="display:none">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div class="mission-week-label">Missão da Semana</div>
       <div class="mission-week-label" id="mission-total-label" style="color:var(--muted)"></div>
     </div>
+    <div id="mission-week-subtitle" style="font-size:0.73rem;color:var(--muted);font-style:italic;line-height:1.4;margin-bottom:0.15rem"></div>
     <div class="mission-week-text" id="mission-week-text"></div>
+    <div id="mission-encerramento" style="display:none;font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.84rem;color:var(--gold-l);line-height:1.55;padding:0.5rem 0;border-top:1px solid rgba(200,148,58,0.15);margin-top:0.2rem"></div>
     <button class="mission-done-btn" id="mission-done-btn" onclick="missaoDaSemanaFeita()">✓ Concluímos!</button>
     <div id="mission-nota-wrap" style="display:none;flex-direction:column;gap:0.5rem;margin-top:0.2rem">
       <textarea id="mission-nota-input" placeholder="Escreva uma lembrança desta missão… (opcional)" rows="3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:8px;color:var(--text);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;padding:0.7rem 0.8rem;resize:none;width:100%;line-height:1.55"></textarea>
@@ -1104,6 +1130,26 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <!-- ══ DRINK TOAST ══ -->
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
+<!-- ══ ACHIEVEMENT TOAST ══ -->
+<div id="achiev-toast" class="achiev-toast">
+  <div class="achiev-toast-icon" id="achiev-icon">🏆</div>
+  <div class="achiev-toast-txt">
+    <div class="achiev-toast-title">Conquista Desbloqueada</div>
+    <div class="achiev-toast-name" id="achiev-name"></div>
+    <div class="achiev-toast-hist" id="achiev-hist"></div>
+  </div>
+</div>
+
+<!-- ══ CAPÍTULO UP ══ -->
+<div class="cap-up-overlay" id="cap-up-overlay">
+  <div class="cap-up-stars">✦ ✦ ✦</div>
+  <div class="cap-up-number" id="cap-up-num">Capítulo 2 desbloqueado</div>
+  <div class="cap-up-nome" id="cap-up-nome"></div>
+  <div class="cap-up-hist" id="cap-up-hist"></div>
+  <button class="btn-gold" onclick="document.getElementById('cap-up-overlay').classList.remove('on')" style="margin-top:0.4rem;padding:0.7rem 2.2rem;font-size:0.82rem;letter-spacing:0.1em">Continuar →</button>
+</div>
+
+
 <!-- ══ TIMER FAB ══ -->
 <button class="fab" id="timer-fab" onclick="openTimerFrom(null)" title="Cronômetro">⏱</button>
 
@@ -1356,7 +1402,8 @@ function go(id){
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById('home').classList.add('active');
       window.scrollTo(0,0);
-      setTimeout(()=>mostrarConquista({icon:'🌙',nome:'Noite Guiada concluída!',desc:'Vocês completaram todos os passos da noite juntos.'}),400);
+      ganharXP(50);verificarConquista('completo');
+      setTimeout(()=>mostrarConquista({icon:'🌙',nome:'Noite Guiada Completa',historia:'Vocês completaram todos os passos juntos. Essa consistência é o que os separa.'}),400);
       return;
     }
     renderNoiteGuiada();
@@ -1373,6 +1420,7 @@ function go(id){
   if(id==='screen-noite-guiada')renderNoiteGuiada();
   if(id==='screen-comando')cmdEnter();
   if(id==='screen-fantasia')fantEnter();
+  if(id==='screen-strip')verificarConquista('ritual');
 }
 
 
@@ -2687,32 +2735,72 @@ function atualizarStreak(){
 }
 
 // ── Missão da Semana ─────────────────────────────────────────────
-const MISSOES_SEMANA=[
-  'Jantar sem celular — dois pratos, uma conversa profunda',
-  'Troca de massagem completa — 10 minutos cada',
-  'Uma surpresa para o outro — pequena ou grande, o que vier do coração',
-  'Assistam um filme que o outro escolher, sem reclamar',
-  'Escrevam 5 coisas que admiram um no outro e leiam em voz alta',
-  'Um passeio novo juntos — pode ser só uma caminhada diferente',
-  'Cozinhem juntos uma receita que nunca fizeram',
-  'Uma noite sem tela — só vocês dois e conversa',
-  'Cada um conta um sonho que ainda quer realizar com o outro',
-  'Tirem uma foto juntos em cada lugar que visitarem essa semana',
-  'Façam algo que o outro escolher, sem questionar',
-  'Durmam abraçados toda a noite, sem celular na cama',
+const ARCOS_SEMANA=[
+  {titulo:'Semana da Reconexão',
+   setup:'Às vezes a vida separa sem avisar. Esta semana é sobre voltar deliberadamente para o centro.',
+   tarefa:'Jantar sem celular — dois pratos, uma conversa que vocês nunca tiveram',
+   encerramento:'Esse retorno intencional um ao outro é a raiz de tudo. O que parecia rotina ganhou outra textura.'},
+  {titulo:'A Arte da Escuta',
+   setup:'Escutar para entender é diferente de escutar para responder. Esta semana, practiquem a diferença.',
+   tarefa:'Cada um fala 5 minutos ininterruptos sobre algo que sente — o outro só ouve, sem resolver',
+   encerramento:'Sentiram a diferença de serem ouvidos de verdade? Esse é um dos maiores presentes que casais podem trocar.'},
+  {titulo:'Toque com Presença',
+   setup:'O toque sem intenção de chegar a algum lugar é uma das formas mais profundas de conexão.',
+   tarefa:'Cinco minutos de toque — mãos, costas, cabelo — sem agenda e sem pressa para o que vem depois',
+   encerramento:'O corpo guarda memórias. Esse toque ficou registrado em vocês dois.'},
+  {titulo:'A Surpresa Pequena',
+   setup:'Casais felizes não precisam de grandes gestos — precisam de atenção cotidiana ao outro.',
+   tarefa:'Façam algo que o outro ama sem ser pedido: o café do jeito certo, a música favorita, a mensagem certa',
+   encerramento:'A surpresa pequena diz: eu te vejo. Continuem se vendo assim.'},
+  {titulo:'Vulnerabilidade em Voz Alta',
+   setup:'A intimidade real começa onde a performance termina. Esta semana, arrisquem ser vistos.',
+   tarefa:'Contem um ao outro algo que guardam há tempo — um medo, uma insegurança, um desejo antigo',
+   encerramento:'Isso levou coragem. A vulnerabilidade compartilhada é o tecido da intimidade duradoura.'},
+  {titulo:'O Jogo da Observação',
+   setup:'Com o tempo, paramos de realmente ver quem está ao lado. Esta semana, redescubram.',
+   tarefa:'Descrevam três coisas que notaram no outro esta semana — algo físico, algo de caráter, algo novo',
+   encerramento:'Ver e ser visto — esse é o núcleo do amor. Vocês praticaram isso juntos.'},
+  {titulo:'Semana do Ritual',
+   setup:'Rituais são a linguagem silenciosa dos casais. Um ritual simples, repetido, vira âncora.',
+   tarefa:'Criem um ritual de 5 minutos para fazer toda semana — um brinde, uma dança, uma pergunta especial',
+   encerramento:'O ritual que criaram agora pertence a vocês. Repitam — com o tempo, vai ficar precioso.'},
+  {titulo:'Fantasia Compartilhada',
+   setup:'Desejos não ditos criam distância. Ditos com cuidado, criam cumplicidade.',
+   tarefa:'Compartilhem uma fantasia que nunca disseram em voz alta — sem pressão de realizar, só de contar',
+   encerramento:'A fantasia compartilhada não precisa virar realidade para criar conexão. Ela já funcionou.'},
+  {titulo:'A Noite Sem Agenda',
+   setup:'Quando foi a última vez que passaram uma noite sem planos, só presentes um para o outro?',
+   tarefa:'Uma noite sem roteiro: sem celular, sem série, sem decisão prévia — só estar juntos e ver o que surge',
+   encerramento:'O inesperado que surgiu dessa noite? É o melhor de vocês. Guardem isso.'},
+  {titulo:'Gratidão em Detalhes',
+   setup:'A gratidão genérica não toca ninguém. A gratidão específica muda relacionamentos.',
+   tarefa:'Cada um lista cinco coisas muito específicas que admira no outro — não o quê, mas por quê',
+   encerramento:'Essa especificidade é a diferença entre um elogio e uma declaração. Vocês se declararam.'},
+  {titulo:'Redescoberta',
+   setup:'Pessoas mudam. O casal que se reconhece em constante descoberta permanece vivo.',
+   tarefa:'Façam uma pergunta que nunca fizeram um ao outro — sonho, medo, prazer, infância ou futuro',
+   encerramento:'Havia algo que vocês não sabiam. E há mais. Continuem perguntando.'},
+  {titulo:'A Conversa Adiada',
+   setup:'Toda relação tem conversas que foram postergadas. Esta semana, escolham ter uma delas — com cuidado.',
+   tarefa:'Abordem algo que evitavam: uma mágoa pequena, uma necessidade não dita, um "precisamos conversar"',
+   encerramento:'As conversas difíceis, feitas com amor, são as que mais fortalecem. Vocês tiveram coragem.'},
 ];
 function getMissaoDaSemana(){
   const sem=Math.floor(Date.now()/(7*86400000));
-  return MISSOES_SEMANA[sem%MISSOES_SEMANA.length];
+  return ARCOS_SEMANA[sem%ARCOS_SEMANA.length];
 }
 function carregarMissaoSemana(){
   const sem=Math.floor(Date.now()/(7*86400000));
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
   const feita=stored.sem===sem&&stored.feita;
-  const texto=getMissaoDaSemana();
+  const arc=getMissaoDaSemana();
   const el=document.getElementById('home-mission');
   el.style.display='flex';
-  document.getElementById('mission-week-text').textContent=texto;
+  const sub=document.getElementById('mission-week-subtitle');
+  if(sub)sub.textContent=arc.setup;
+  document.getElementById('mission-week-text').textContent=arc.titulo+' — '+arc.tarefa;
+  const encEl=document.getElementById('mission-encerramento');
+  if(encEl){encEl.style.display=feita?'block':'none';if(feita)encEl.textContent=arc.encerramento;}
   const btn=document.getElementById('mission-done-btn');
   const total=parseInt(localStorage.getItem('jd_missaoTotal')||'0');
   const lbl=document.getElementById('mission-total-label');
@@ -2752,6 +2840,11 @@ function missaoDaSemanaFeita(){
     wrap.style.display='flex';
     document.getElementById('mission-nota-input').value=stored.nota||'';
     document.getElementById('mission-total-label').textContent=total+' '+(total===1?'concluída':'concluídas');
+    const arc=getMissaoDaSemana();
+    const encEl=document.getElementById('mission-encerramento');
+    if(encEl){encEl.style.display='block';encEl.textContent=arc.encerramento;}
+    ganharXP(40);
+    verificarConquista('missao_sem',total);
     if(navigator.vibrate)navigator.vibrate([30,20,60]);
   }
 }
@@ -2772,6 +2865,9 @@ function salvarCarta(jogo,texto){
   hist.unshift({jogo,texto,data:new Date().toLocaleDateString('pt-BR')});
   if(hist.length>20)hist.pop();
   localStorage.setItem('jd_hist',JSON.stringify(hist));
+  ganharXP(3);
+  if(jogo.startsWith('Encen'))verificarConquista('encenacao');
+  if(jogo.startsWith('Comando'))verificarConquista('comando');
 }
 function abrirHistorico(){
   const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
@@ -2820,7 +2916,7 @@ go=function(id){
   document.getElementById('mood-overlay').style.display='none';
   _goOrigGamif(id);
   if(id==='home'){
-    atualizarStreak();carregarMissaoSemana();
+    atualizarStreak();carregarMissaoSemana();renderCapituloHome();
     if(!sessionStorage.getItem('jd_mood')){
       _moodTimer=setTimeout(()=>{
         if(document.getElementById('home').classList.contains('active')){
@@ -2853,57 +2949,129 @@ function setMood(mood){
 
 // ══ CONQUISTAS ════════════════════════════════════════════════════
 const CONQUISTAS={
-  primeira:{icon:'🕯️',nome:'Primeira Chama',trigger:'vd'},
-  roleta10:{icon:'🎡',nome:'Rodou Muito',trigger:'roleta10'},
-  mapa:{icon:'🗺️',nome:'Mapa Aberto',trigger:'mapa'},
-  missao:{icon:'🌙',nome:'Missão Aceita',trigger:'missao'},
-  quiz6:{icon:'🧠',nome:'Quiz Certeiros',trigger:'quiz6'},
-  streak3:{icon:'🔥',nome:'3 Noites Seguidas',trigger:'streak3'},
-  dado:{icon:'🎲',nome:'Dados Lançados',trigger:'dado'},
-  completo:{icon:'👑',nome:'Noite Completa',trigger:'completo'},
+  primeira:{icon:'🕯️',nome:'Primeira Chama',historia:'Vocês acenderam a primeira chama. O que vem agora está nas mãos de vocês.'},
+  roleta10:{icon:'🎡',nome:'Dez Giros',historia:'Dez giros. A sorte ficou ao lado de vocês.'},
+  mapa:{icon:'🗺️',nome:'Mapa Aberto',historia:'Deram o passo mais corajoso — mostrar o que querem de verdade.'},
+  missao:{icon:'🌙',nome:'Missão Aceita',historia:'A primeira missão concluída. O hábito começa aqui.'},
+  quiz6:{icon:'🧠',nome:'Em Sintonia',historia:'Seis acertos ou mais. Vocês se conhecem melhor do que imaginavam.'},
+  streak3:{icon:'🔥',nome:'Três Noites',historia:'Três noites seguidas. O compromisso virou rotina — da melhor forma.'},
+  dado:{icon:'🎲',nome:'Dados Lançados',historia:'Deixaram o acaso guiar. Às vezes o melhor que acontece é o inesperado.'},
+  completo:{icon:'👑',nome:'Noite Completa',historia:'Uma noite inteira juntos, de verdade. Isso é raro e precioso.'},
+  ritual:{icon:'🪄',nome:'Ritual Iniciado',historia:'Criaram um momento só de vocês. Rituais são a linguagem do casal.'},
+  encenacao:{icon:'🎭',nome:'Primeiros Papéis',historia:'Saíram do cotidiano por uma noite. A imaginação é o maior afrodisíaco.'},
+  comando:{icon:'🖤',nome:'Confiança Entregue',historia:'Confiar assim leva coragem. Cuidem desta confiança — ela é preciosa.'},
+  missao5:{icon:'⭐',nome:'Cinco Semanas',historia:'Cinco missões juntos. Estão construindo algo sólido, semana a semana.'},
+  streak7:{icon:'💫',nome:'Sete Noites',historia:'Uma semana inteira de presença. A consistência é a forma mais profunda de amor.'},
+  cap3:{icon:'📖',nome:'Capítulo 3',historia:'O jogo ficou sério. Vocês estão dispostos a ir mais fundo — isso importa.'},
+  cap5:{icon:'🌟',nome:'Capítulo 5',historia:'Metade da jornada. A tensão entre vocês já tem uma linguagem própria.'},
+  cap10:{icon:'💎',nome:'A História de Vocês',historia:'Chegaram ao último capítulo. A história que escreveram é só de vocês — e ela continua.'},
 };
 let _rSpins=0;
 function verificarConquista(tipo,a,b){
   const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
+  let _novas=0;
   const ganhar=(k)=>{
     if(ganhas.includes(k))return;
     ganhas.push(k);
     localStorage.setItem('jd_conquistas',JSON.stringify(ganhas));
+    _novas++;
     mostrarConquista(CONQUISTAS[k]);
   };
   if(tipo==='vd')ganhar('primeira');
   if(tipo==='dado')ganhar('dado');
   if(tipo==='missao')ganhar('missao');
+  if(tipo==='missao_sem'){ganhar('missao');if(a>=5)ganhar('missao5');}
   if(tipo==='mapa')ganhar('mapa');
   if(tipo==='quiz'&&a>=6)ganhar('quiz6');
   if(tipo==='roleta'){_rSpins++;if(_rSpins>=10)ganhar('roleta10');}
-  // Noite completa: roleta + vd + missao
+  if(tipo==='ritual')ganhar('ritual');
+  if(tipo==='encenacao')ganhar('encenacao');
+  if(tipo==='comando')ganhar('comando');
+  if(tipo==='cap3')ganhar('cap3');
+  if(tipo==='cap5')ganhar('cap5');
+  if(tipo==='cap10')ganhar('cap10');
+  if(tipo==='streak'){if(a>=3)ganhar('streak3');if(a>=7)ganhar('streak7');}
+  if(tipo==='completo')ganhar('completo');
   if(['vd','dado','missao','mapa','roleta'].includes(tipo)){
     const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
     const jogos=new Set(hist.slice(0,20).map(h=>h.jogo.split(' ')[0]));
     if(jogos.size>=4)ganhar('completo');
   }
+  if(_novas>0)ganharXP(_novas*20);
 }
-function verificarStreakConquista(streak){
-  if(streak>=3){
-    const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
-    if(!ganhas.includes('streak3')){
-      ganhas.push('streak3');
-      localStorage.setItem('jd_conquistas',JSON.stringify(ganhas));
-      mostrarConquista(CONQUISTAS.streak3);
-    }
-  }
-}
+function verificarStreakConquista(streak){verificarConquista('streak',streak);}
 let _achievTimer=null;
 function mostrarConquista(c){
   if(!c)return;
   document.getElementById('achiev-icon').textContent=c.icon;
   document.getElementById('achiev-name').textContent=c.nome;
+  const histEl=document.getElementById('achiev-hist');
+  if(histEl)histEl.textContent=c.historia||'';
   const t=document.getElementById('achiev-toast');
   t.classList.add('on');
   if(_achievTimer)clearTimeout(_achievTimer);
-  _achievTimer=setTimeout(()=>t.classList.remove('on'),3200);
+  _achievTimer=setTimeout(()=>t.classList.remove('on'),4500);
   if(navigator.vibrate)navigator.vibrate([30,40,80]);
+}
+
+// ══ XP & CAPÍTULOS ════════════════════════════════════════════════
+const CAPITULOS=[
+  {n:1,nome:'A Faísca',xp:0,hist:'O começo de tudo. Cada grande história começa com uma escolha.'},
+  {n:2,nome:'Descobrindo o Mapa',xp:60,hist:'Vocês começaram a traçar o mapa um do outro — ainda há muito a explorar.'},
+  {n:3,nome:'O Jogo Fica Sério',xp:160,hist:'O que era jogo virou algo mais profundo. Estão prontos para ir além?'},
+  {n:4,nome:'Sem Guardar Segredos',xp:320,hist:'Mostraram para um ao outro o que poucos veem. Isso é coragem.'},
+  {n:5,nome:'A Tensão Certa',xp:540,hist:'Aprenderam a criar tensão — e a resolvê-la do jeito que só vocês sabem.'},
+  {n:6,nome:'Fora do Roteiro',xp:820,hist:'Largaram o script. O que restou foi real.'},
+  {n:7,nome:'Confiança Total',xp:1160,hist:'Confiar assim em alguém é raro. Cuidem disso.'},
+  {n:8,nome:'Nossa Linguagem',xp:1560,hist:'Criaram uma linguagem só de vocês. Ninguém mais precisa entender.'},
+  {n:9,nome:'Profundidade',xp:2020,hist:'Chegaram onde poucos casais chegam. A profundidade que construíram é um privilégio.'},
+  {n:10,nome:'A História de Vocês',xp:2540,hist:'Esta história não tem fim — ela só fica mais rica. Continuem escrevendo.'},
+];
+function getCapituloAtual(){
+  const xp=parseInt(localStorage.getItem('jd_xp')||'0');
+  let cap=CAPITULOS[0];
+  for(let i=CAPITULOS.length-1;i>=0;i--){if(xp>=CAPITULOS[i].xp){cap=CAPITULOS[i];break;}}
+  return cap;
+}
+let _xpLocked=false;
+function ganharXP(n){
+  const atual=parseInt(localStorage.getItem('jd_xp')||'0');
+  if(_xpLocked){localStorage.setItem('jd_xp',String(atual+n));return;}
+  _xpLocked=true;
+  const capAntes=getCapituloAtual();
+  localStorage.setItem('jd_xp',String(atual+n));
+  const capDepois=getCapituloAtual();
+  renderCapituloHome();
+  if(capDepois.n>capAntes.n)mostrarCapituloUp(capDepois);
+  _xpLocked=false;
+}
+function renderCapituloHome(){
+  const xp=parseInt(localStorage.getItem('jd_xp')||'0');
+  const cap=getCapituloAtual();
+  const el=document.getElementById('home-capitulo');
+  if(!el)return;
+  document.getElementById('cap-num-label').textContent='Capítulo '+cap.n;
+  document.getElementById('cap-nome-label').textContent=cap.nome;
+  const next=CAPITULOS[cap.n]||null;
+  if(next){
+    const pct=Math.min(100,Math.round((xp-cap.xp)/(next.xp-cap.xp)*100));
+    document.getElementById('cap-bar-fill').style.width=pct+'%';
+    document.getElementById('cap-xp-label').textContent=(next.xp-xp)+' xp → cap. '+(cap.n+1);
+  }else{
+    document.getElementById('cap-bar-fill').style.width='100%';
+    document.getElementById('cap-xp-label').textContent='Nível máximo ✦';
+  }
+}
+let _capUpTimer=null;
+function mostrarCapituloUp(cap){
+  document.getElementById('cap-up-num').textContent='Capítulo '+cap.n+' desbloqueado';
+  document.getElementById('cap-up-nome').textContent=cap.nome;
+  document.getElementById('cap-up-hist').textContent=cap.hist;
+  document.getElementById('cap-up-overlay').classList.add('on');
+  if(navigator.vibrate)navigator.vibrate([40,30,80,30,120]);
+  if(cap.n===3)setTimeout(()=>verificarConquista('cap3'),600);
+  if(cap.n===5)setTimeout(()=>verificarConquista('cap5'),600);
+  if(cap.n===10)setTimeout(()=>verificarConquista('cap10'),600);
 }
 
 // ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
@@ -3548,7 +3716,7 @@ function fantNext(){
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
-  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'];
+  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal'];
   const data={v:1,ts:Date.now()};
   keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -3563,7 +3731,7 @@ function importarDados(){
     reader.onload=ev=>{
       try{
         const data=JSON.parse(ev.target.result);
-        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif'].forEach(k=>{
+        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal'].forEach(k=>{
           if(data[k])localStorage.setItem(k,data[k]);
         });
         alert('Progresso restaurado com sucesso!');location.reload();
