@@ -476,6 +476,15 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .semaforo-opt-info{}
 .semaforo-opt-nome{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--text);letter-spacing:0.03em}
 .semaforo-opt-desc{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.15rem;font-family:'Libre Caslon Text',serif;line-height:1.4}
+/* ══ AFTERCARE BAR ══ */
+.aftercare-bar{display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:linear-gradient(180deg,transparent 0%,rgba(14,4,8,0.96) 22%,rgba(14,4,8,1) 100%);padding:22px 1.2rem 1rem;z-index:300;align-items:center;gap:0.75rem;pointer-events:none}
+.aftercare-bar.on{display:flex;pointer-events:auto}
+.aftercare-bar-icon{font-size:1.3rem;flex-shrink:0}
+.aftercare-bar-info{flex:1}
+.aftercare-bar-nome{font-family:'Cormorant SC',serif;font-size:0.88rem;color:rgba(210,160,220,0.9);letter-spacing:0.03em}
+.aftercare-bar-sub{font-size:0.62rem;color:rgba(170,120,180,0.55);font-style:italic;margin-top:1px;font-family:'Libre Caslon Text',serif}
+.aftercare-bar-btn{background:rgba(160,80,180,0.13);border:1px solid rgba(180,100,200,0.28);border-radius:9px;padding:0.42rem 0.85rem;color:rgba(200,150,220,0.85);font-size:0.72rem;font-family:'Cormorant SC',serif;letter-spacing:0.04em;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.2s}
+.aftercare-bar-btn:hover{background:rgba(160,80,180,0.22);border-color:rgba(200,120,220,0.45)}
 /* ══ SÓ CARINHO SCREEN ══ */
 #screen-socarinho{gap:0;padding-top:0}
 .sc-topnav{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.2rem 0.4rem}
@@ -1291,6 +1300,16 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ ACHIEVEMENT TOAST ══ -->
+<!-- ══ AFTERCARE BAR ══ -->
+<div class="aftercare-bar" id="aftercare-bar">
+  <span class="aftercare-bar-icon">🤍</span>
+  <div class="aftercare-bar-info">
+    <div class="aftercare-bar-nome">Encerrar com presença</div>
+    <div class="aftercare-bar-sub">Sempre disponível quando quiserem fechar</div>
+  </div>
+  <button class="aftercare-bar-btn" onclick="go('screen-socarinho')">Acessar →</button>
+</div>
+
 <!-- ══ SEMÁFORO OVERLAY ══ -->
 <div class="semaforo-overlay" id="semaforo-overlay">
   <div style="max-width:320px;width:100%;display:flex;flex-direction:column;align-items:center">
@@ -1697,6 +1716,8 @@ function go(id){
   if(id==='screen-strip')verificarConquista('ritual');
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
   if(id==='screen-conquistas')renderConquistas();
+  const _acBar=document.getElementById('aftercare-bar');
+  if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
   if(id==='home')atualizarHomeCap();
 }
