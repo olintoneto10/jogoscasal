@@ -370,7 +370,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   h2.screen-title{font-size:1.5rem}
 }
 /* ══ MOOD CHOICE OVERLAY ══ */
-.mood-choice-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:10px;padding:0.9rem 1.5rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.18s;text-align:left;width:100%}
+.mood-choice-btn-REMOVED{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:10px;padding:0.9rem 1.5rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.18s;text-align:left;width:100%}
 .mood-choice-btn:hover,.mood-choice-btn:active{border-color:var(--gold);background:rgba(200,148,58,0.08);color:var(--gold-l)}
 .game-card{position:relative}
 .game-card.mood-rec{border-color:rgba(212,133,90,0.5)!important;box-shadow:0 0 14px rgba(212,133,90,0.18)}
@@ -3247,21 +3247,10 @@ function fecharHistorico(){
 
 // ── Init gamification on home load ───────────────────────────────
 const _goOrigGamif=go;
-let _moodTimer=null;
 go=function(id){
-  if(_moodTimer){clearTimeout(_moodTimer);_moodTimer=null;}
-  const _moEl=document.getElementById('mood-overlay');if(_moEl)_moEl.style.display='none';
   _goOrigGamif(id);
   if(id==='home'){
     atualizarStreak();carregarMissaoSemana();renderCapituloHome();
-    if(!sessionStorage.getItem('jd_mood')){
-      _moodTimer=setTimeout(()=>{
-        if(document.getElementById('home').classList.contains('active')){
-          document.getElementById('mood-overlay').style.display='flex';
-        }
-        _moodTimer=null;
-      },400);
-    }
   }
   if(id==='login'){
     const _n1=localStorage.getItem('jd_p1name')||'';
@@ -3273,23 +3262,6 @@ go=function(id){
   }
 };
 
-// ── Mood overlay ─────────────────────────────────────────────────
-const _moodMap={
-  sintonia:['screen-roleta','screen-dado','screen-strip','screen-vd'],
-  reconexao:['screen-reconexao','screen-vd','screen-mapa','screen-quiz'],
-  diversao:['screen-quiz','screen-mapa','screen-missao','screen-posicoes'],
-  skip:[]
-};
-function setMood(mood){
-  sessionStorage.setItem('jd_mood',mood);
-  const _moEl2=document.getElementById('mood-overlay');if(_moEl2)_moEl2.style.display='none';
-  document.querySelectorAll('.game-card').forEach(c=>c.classList.remove('mood-rec'));
-  const ids=_moodMap[mood]||[];
-  ids.forEach(id=>{
-    const btn=document.querySelector(`.game-card[onclick*="${id}"]`);
-    if(btn)btn.classList.add('mood-rec');
-  });
-}
 
 
 // ══ CONQUISTAS ════════════════════════════════════════════════════
@@ -4145,20 +4117,7 @@ function compartilharApp(){
   </div>
 </div>
 
-<!-- ══ MOOD OVERLAY ══ -->
-<div id="mood-overlay" style="display:none;position:fixed;inset:0;background:rgba(14,4,8,0.93);backdrop-filter:blur(14px);z-index:450;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:0">
-  <div style="max-width:340px;width:100%;display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center">
-    <div style="font-size:2.2rem;line-height:1">💑</div>
-    <div style="font-family:'Cormorant SC',serif;font-size:1.45rem;color:var(--gold-l);letter-spacing:0.05em">Como estão vocês hoje?</div>
-    <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:var(--muted);line-height:1.65">Isso nos ajuda a sugerir o melhor começo para a noite.</p>
-    <div style="display:flex;flex-direction:column;gap:0.7rem;width:100%">
-      <button class="mood-choice-btn" onclick="setMood('sintonia')">💞 Em sintonia total — vamos fundo</button>
-      <button class="mood-choice-btn" onclick="setMood('reconexao')">🤝 Queremos nos reconectar</button>
-      <button class="mood-choice-btn" onclick="setMood('diversao')">😄 Só querendo se divertir juntos</button>
-    </div>
-    <button onclick="setMood('skip')" style="background:none;border:none;color:var(--muted);font-size:0.78rem;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline;padding:0.2rem">Pular esta pergunta</button>
-  </div>
-</div>
+
 
 <!-- ══ CONSENT OVERLAY (Explosivo) ══ -->
 <div id="consent-overlay">
