@@ -585,6 +585,34 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mp-cv-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;color:var(--text);line-height:1.65}
 .btn-mp-ok{background:none;border:1px solid rgba(212,133,90,0.35);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.7rem 2rem;border-radius:6px;cursor:pointer;transition:all 0.2s}
 .btn-mp-ok:hover{background:rgba(212,133,90,0.1);border-color:var(--gold)}
+/* ══ NOITE CONFIG ══════════════════════════════════════════════ */
+#screen-noite-config{gap:0;padding:0;justify-content:flex-start}
+.nc-body{display:flex;flex-direction:column;gap:1.6rem;padding:1.5rem 1.2rem 2rem;overflow-y:auto;flex:1}
+.nc-q{font-family:'Cormorant SC',serif;font-size:0.95rem;letter-spacing:0.04em;color:var(--text);margin-bottom:0.5rem}
+.nc-opts{display:grid;gap:0.5rem}
+.nc-opts.two{grid-template-columns:1fr 1fr}
+.nc-opt{background:rgba(255,255,255,0.03);border:1px solid rgba(212,133,90,0.18);color:var(--text);font-family:'Jost',sans-serif;font-size:0.82rem;padding:0.8rem 0.9rem;border-radius:8px;cursor:pointer;transition:all 0.2s;min-height:2.75rem;text-align:left;line-height:1.35;display:block}
+.nc-opt:hover{background:rgba(212,133,90,0.08);border-color:rgba(212,133,90,0.35)}
+.nc-opt.on{background:rgba(212,133,90,0.14);border-color:var(--gold);color:var(--gold)}
+.nc-opt small{display:block;font-size:0.72rem;color:var(--muted);margin-top:0.15rem}
+.nc-opt.on small{color:var(--gold-l)}
+/* ══ CAPÍTULO / PRÓLOGO / EPÍLOGO ═══════════════════════════════ */
+.ng-cap-tag{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-align:center;padding:1.2rem 1.2rem 0.4rem;font-family:'Jost',sans-serif}
+.ng-prolog-card{margin:0 1.2rem 0.5rem;padding:1.4rem 1.4rem;background:rgba(255,255,255,0.025);border:1px solid rgba(212,133,90,0.18);border-radius:10px}
+.ng-prolog-titulo{font-family:'Cormorant SC',serif;font-size:1.18rem;letter-spacing:0.04em;color:var(--text);margin-bottom:0.5rem;line-height:1.3}
+.ng-prolog-tempo{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);opacity:0.8;margin-bottom:0.9rem}
+.ng-prolog-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem}
+.ng-prolog-steps{padding:0 1.2rem 0.5rem}
+.ng-prolog-step-label{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;font-family:'Jost',sans-serif}
+.ng-prolog-step-item{display:flex;align-items:center;gap:0.7rem;padding:0.35rem 0;border-bottom:1px solid rgba(212,133,90,0.07)}
+.ng-prolog-step-item:last-child{border-bottom:none}
+.começa-badge{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(212,133,90,0.1);border:1px solid rgba(212,133,90,0.28);border-radius:4px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);padding:0.18rem 0.5rem;margin-top:0.35rem}
+.ng-epil-card{margin:1rem 1.2rem;padding:1.4rem 1.4rem;background:rgba(238,104,136,0.055);border:1px solid rgba(238,104,136,0.22);border-radius:10px;text-align:center}
+.ng-epil-titulo{font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--rose-l);margin-bottom:0.9rem}
+.ng-epil-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+/* ══ HOME — CAPÍTULO BADGE ═══════════════════════════════════════ */
+.home-cap-badge{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0.2rem 1.2rem 0.6rem;font-family:'Jost',sans-serif;line-height:1.5}
+.home-cap-nome{font-family:'Cormorant SC',serif;font-size:0.95rem;letter-spacing:0.04em;color:var(--gold-l);display:block;margin-top:0.05rem}
 </style>
 
 <!-- Service Worker -->
@@ -763,7 +791,8 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       <button onclick="salvarNotaMissao()" style="align-self:flex-end;background:none;border:1px solid rgba(200,148,58,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:3px;cursor:pointer">💾 Guardar lembrança</button>
     </div>
   </div>
-  <button class="btn-noite" onclick="go('screen-noite-guiada')">✨ Começar a Noite Guiada</button>
+  <div class="home-cap-badge" id="home-cap-badge" style="display:none">Capítulo <span id="home-cap-num">1</span> da história de vocês<span class="home-cap-nome" id="home-cap-nome">A Primeira Faísca</span></div>
+  <button class="btn-noite" onclick="go('screen-noite-config')">✨ Começar a Noite Guiada</button>
   <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão — comece aqui</button>
   <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
   <div class="games-grid" id="games-grid">
@@ -786,6 +815,35 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 </div>
 
 <!-- ══ NOITE GUIADA ══ -->
+<!-- ══ NOITE CONFIG ══ -->
+<div class="screen" id="screen-noite-config">
+  <div class="ng-header">
+    <button class="back-btn" onclick="go('home')">← Voltar</button>
+    <span class="ng-title">Nossa Noite</span>
+    <div style="width:5rem"></div>
+  </div>
+  <div class="nc-body">
+    <div>
+      <div class="nc-q">Quanto tempo temos?</div>
+      <div class="nc-opts two" id="nc-tempo">
+        <button class="nc-opt" data-val="curta" onclick="ncSel(this,'nc-tempo')">20 minutos<small>Pequeno, mas presente</small></button>
+        <button class="nc-opt" data-val="media" onclick="ncSel(this,'nc-tempo')">45 minutos<small>Uma noite real</small></button>
+        <button class="nc-opt" data-val="longa" onclick="ncSel(this,'nc-tempo')">1h 30min<small>Sem pressa</small></button>
+        <button class="nc-opt" data-val="noite" onclick="ncSel(this,'nc-tempo')">A noite toda<small>O capítulo completo</small></button>
+      </div>
+    </div>
+    <div>
+      <div class="nc-q">Como estamos chegando?</div>
+      <div class="nc-opts" id="nc-estado">
+        <button class="nc-opt" data-val="cansados" onclick="ncSel(this,'nc-estado')">😌 Cansados, mas presentes<small>Querem conexão leve</small></button>
+        <button class="nc-opt" data-val="animados" onclick="ncSel(this,'nc-estado')">🔥 Animados e com energia<small>Prontos para intensidade</small></button>
+        <button class="nc-opt" data-val="reconectar" onclick="ncSel(this,'nc-estado')">💬 Precisamos reconectar<small>A distância pede cuidado</small></button>
+      </div>
+    </div>
+    <button class="btn-gold" id="nc-iniciar" style="opacity:0.4;pointer-events:none" onclick="iniciarJornadaCurada()">Começar nossa noite →</button>
+  </div>
+</div>
+
 <div class="screen" id="screen-noite-guiada">
   <div class="ng-header">
     <button class="back-btn" onclick="encerrarNoiteGuiada()">← Encerrar</button>
@@ -1410,10 +1468,10 @@ function go(id){
   if(id==='home'&&noite.ativa&&noite.emJogo){
     noite.emJogo=false;noite.atual++;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
     if(noite.atual>=noite.passos.length){
-      // Noite concluída!
-      noite.ativa=false;
+      // Noite concluída — mostra epílogo antes de ir para home
+      renderNoiteGuiada();
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById('home').classList.add('active');
+      document.getElementById('screen-noite-guiada').classList.add('active');
       window.scrollTo(0,0);
       ganharXP(50);verificarConquista('completo');
       setTimeout(()=>mostrarConquista({icon:'🌙',nome:'Noite Guiada Completa',historia:'Vocês completaram todos os passos juntos. Essa consistência é o que os separa.'}),400);
@@ -1435,6 +1493,8 @@ function go(id){
   if(id==='screen-fantasia')fantEnter();
   if(id==='screen-strip')verificarConquista('ritual');
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
+  if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
+  if(id==='home')atualizarHomeCap();
 }
 
 
@@ -1460,45 +1520,61 @@ const NOITE_SEQ={
     {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Missão final — explosiva'},
   ],
 };
-const noite={ativa:false,nivel:'Romântico',passos:[],atual:0,emJogo:false};
+const noite={ativa:false,nivel:'Romântico',passos:[],atual:0,emJogo:false,tempo:'',estado:'',prologo:'',epilogo:'',titulo:'',capitulo:0,prologoVisto:false};
 (()=>{try{const _ns=sessionStorage.getItem('jd_noite');if(_ns){const _nd=JSON.parse(_ns);Object.assign(noite,_nd);}}catch(e){}})();
 
 function renderNoiteGuiada(){
   const body=document.getElementById('ng-body');
   if(!body)return;
-  if(!noite.ativa){
-    body.innerHTML='<div class="ng-level-pick">'
-      +'<div class="ng-level-title">Como está a noite de vocês?</div>'
-      +'<div class="ng-level-sub">Escolha a intensidade e a gente cuida do resto.</div>'
-      +'<div class="ng-level-opts">'
-      +'<div class="ng-level-opt" data-nivel="Romântico" onclick="iniciarNoiteGuiada(this.dataset.nivel)">'
-        +'<span class="ng-level-icon">🌹</span>'
-        +'<div><div class="ng-level-name">Romântico</div><div class="ng-level-desc">Conexão, carinho e descobertas suaves</div></div></div>'
-      +'<div class="ng-level-opt" data-nivel="Quente" onclick="iniciarNoiteGuiada(this.dataset.nivel)">'
-        +'<span class="ng-level-icon">🔥</span>'
-        +'<div><div class="ng-level-name">Quente</div><div class="ng-level-desc">Desafios ousados, tensão e prazer</div></div></div>'
-      +'<div class="ng-level-opt" data-nivel="Explosivo" onclick="iniciarNoiteGuiada(this.dataset.nivel)">'
-        +'<span class="ng-level-icon">💥</span>'
-        +'<div><div class="ng-level-name">Explosivo</div><div class="ng-level-desc">Sem filtros — intensidade máxima</div></div></div>'
-      +'</div></div>';
+  if(!noite.ativa){go('screen-noite-config');return;}
+  // Fase epílogo: todos os passos concluídos
+  if(noite.atual>=noite.passos.length){
+    const cap=noite.capitulo||'';
+    body.innerHTML=
+      '<div class="ng-cap-tag">'+(cap?'Capítulo '+cap+' · ':'')+'Concluído</div>'
+      +'<div class="ng-epil-card">'
+        +'<div class="ng-epil-titulo">'+(noite.titulo||'Nossa Noite')+'</div>'
+        +'<div class="ng-epil-text">'+(noite.epilogo||'Mais um capítulo escrito juntos.')+'</div>'
+        +'<button class="btn-gold" style="width:100%;font-size:0.84rem" onclick="concluirNoite()">Fechar o capítulo →</button>'
+      +'</div>';
     return;
   }
+  // Fase prólogo: antes de começar os jogos
+  if(!noite.prologoVisto){
+    const tempoLabel={curta:'20 min',media:'45 min',longa:'90 min',noite:'A noite toda'}[noite.tempo]||'';
+    const estadoLabel={cansados:'presença suave',animados:'energia total',reconectar:'reencontro'}[noite.estado]||'';
+    body.innerHTML=
+      '<div class="ng-cap-tag">'+(noite.capitulo?'Capítulo '+noite.capitulo+' da história de vocês':'Sua Noite')+'</div>'
+      +'<div class="ng-prolog-card">'
+        +'<div class="ng-prolog-titulo">'+(noite.titulo||'Nossa Noite')+'</div>'
+        +(tempoLabel?'<div class="ng-prolog-tempo">'+tempoLabel+(estadoLabel?' · '+estadoLabel:'')+'</div>':'')
+        +'<div class="ng-prolog-text">'+(noite.prologo||'Esta noite foi feita para vocês dois.')+'</div>'
+        +'<button class="btn-gold" style="width:100%;font-size:0.84rem" onclick="noitePrologoOk()">Começar →</button>'
+      +'</div>'
+      +'<div class="ng-prolog-steps">'
+        +'<div class="ng-prolog-step-label">Etapas desta noite</div>'
+        +noite.passos.map(p=>'<div class="ng-prolog-step-item"><span style="font-size:1rem;width:1.4rem;text-align:center">'+p.icon+'</span><span style="font-size:0.82rem;color:var(--text)">'+p.nome+'</span></div>').join('')
+      +'</div>';
+    return;
+  }
+  // Fase principal: etapas
   const ps=noite.passos,cur=noite.atual;
-  // Progress dots
   const dots=ps.map((_,i)=>'<div class="ng-prog-dot '+(i<cur?'feito':i===cur?'ativo':'')+'" ></div>').join('');
-  let html='<div class="ng-progress"><span class="ng-prog-label">Modo '+noite.nivel+'</span><div class="ng-prog-dots">'+dots+'</div></div>';
+  let html='<div class="ng-progress"><span class="ng-prog-label">'+(noite.titulo||'Modo '+noite.nivel)+'</span><div class="ng-prog-dots">'+dots+'</div></div>';
   ps.forEach((p,i)=>{
     const feito=i<cur,ativo=i===cur;
     const cls=feito?'feito':ativo?'ativo':'futuro';
     const numHtml=feito?'✓':ativo?'▶':String(i+1);
     const statusTxt=feito?'concluído':ativo?'agora':'em breve';
+    const começaNome=p.começa==='p2'?(players.p2&&players.p2.name||'Jogador 2'):(players.p1&&players.p1.name||'Jogador 1');
     html+='<div class="ng-passo '+cls+'">'
       +'<div class="ng-passo-num">'+numHtml+'</div>'
       +'<div class="ng-passo-info">'
         +'<div class="ng-passo-status">'+statusTxt+'</div>'
         +'<div class="ng-passo-nome">'+p.icon+' '+p.nome+'</div>'
         +(ativo?'<div class="ng-passo-desc">'+p.desc+'</div>'
-          +'<button class="btn-gold" style="margin-top:0.7rem;width:100%;font-size:0.82rem;padding:0.6rem 1rem" onclick="noiteJogarPasso()">Jogar agora →</button>':'')
+          +'<div class="começa-badge">▶ Começa '+começaNome+'</div>'
+          +'<button class="btn-gold" style="margin-top:0.65rem;width:100%;font-size:0.82rem;padding:0.6rem 1rem" onclick="noiteJogarPasso()">Jogar agora →</button>':'')
       +'</div></div>';
   });
   body.innerHTML=html;
@@ -1529,6 +1605,173 @@ function encerrarNoiteGuiada(){
   go('home');
 }
 
+function noitePrologoOk(){
+  noite.prologoVisto=true;
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+  renderNoiteGuiada();
+}
+
+function concluirNoite(){
+  if(noite.capitulo>0)localStorage.setItem('jd_capitulo',String(noite.capitulo));
+  atualizarHomeCap();
+  noite.ativa=false;noite.emJogo=false;
+  sessionStorage.removeItem('jd_noite');
+  go('home');
+}
+
+// ══ NOITE CONFIG ══════════════════════════════════════════════════
+const CAPITULOS_NOMES=[
+  'A Primeira Faísca','O Que Não Foi Dito','Noite de Reconhecimento',
+  'O Mapa do Desejo','Quando as Palavras Acabam','A Linguagem do Toque',
+  'Segredos que Ficaram','A Noite da Escolha','Entre o Medo e o Querer',
+  'O Silêncio que Conecta','Quando Tudo É Permitido','A Profundidade que Assusta',
+  'Volta para Você','O Que Ainda Não Exploramos','A Noite Sem Regras',
+  'Tudo o Que Precisávamos Dizer','O Corpo como Linguagem','Um Novo Começo',
+  'A Última Carta','Além do Que Imaginávamos'
+];
+const JORNADAS_DATA={
+  prologo:{
+    'curta-cansados':'Nem todo capítulo precisa ser intenso. Esta noite é sobre estar presente — mesmo que por pouco tempo.',
+    'curta-animados':'Às vezes o desejo não precisa de cerimônia. Vocês chegaram prontos — e a noite já sabe disso.',
+    'curta-reconectar':'A distância não precisa ser física para existir. Esta noite, vocês se aproximam — devagar, um passo de cada vez.',
+    'media-cansados':'Quarenta e cinco minutos podem mudar o tom de uma noite. Esta jornada foi pensada para quem chega cansado mas não abre mão da conexão.',
+    'media-animados':'Vocês têm energia e tempo. A noite foi desenhada para aproveitar os dois — com ritmo, intenção e algumas surpresas.',
+    'media-reconectar':'Às vezes dois corpos no mesmo espaço ainda estão em mundos diferentes. Esta jornada foi feita para fechar essa distância.',
+    'longa-cansados':'Uma hora e meia é tempo suficiente para uma transformação. Esta noite, vocês não precisam de pressa — apenas de presença.',
+    'longa-animados':'A noite de vocês tem combustível e roteiro. Cada etapa foi desenhada para levar mais fundo — no desejo e em vocês dois.',
+    'longa-reconectar':'Reconectar leva tempo e coragem. Esta jornada foi feita com cuidado para quem quer voltar — para si mesmo e para o outro.',
+    'noite-cansados':'Uma noite inteira mesmo cansados é um presente raro. Esta jornada vai no ritmo de vocês — suave no começo, mais intensa quando estiverem prontos.',
+    'noite-animados':'Esta é a jornada completa — sem atalhos. Vocês têm tempo, disposição e companhia. O que acontece esta noite vai ficar na história de vocês.',
+    'noite-reconectar':'Quando se quer reconectar de verdade, é preciso tempo e intenção. Esta noite tem os dois. Começa pelo que foi guardado e termina no que não precisa mais de palavras.'
+  },
+  epilogo:{
+    'curta-cansados':'Uma noite pequena, mas presente. O que importa foi dito — com ou sem palavras.',
+    'curta-animados':'Rápido, intenso, real. Este capítulo foi sobre vocês no agora.',
+    'curta-reconectar':'O primeiro passo de volta sempre parece pequeno. Não é.',
+    'media-cansados':'Cansados, mas aqui. Isso já é um ato de amor.',
+    'media-animados':'Esta noite foi de vocês — do começo ao fim.',
+    'media-reconectar':'A distância diminuiu esta noite. Guardem isso.',
+    'longa-cansados':'Mesmo exaustos, escolheram estar juntos. Esse capítulo vai durar.',
+    'longa-animados':'Intenso, desinibido, real. Assim se escreve uma história.',
+    'longa-reconectar':'Vocês voltaram um para o outro. Este capítulo é prova disso.',
+    'noite-cansados':'Uma noite inteira entregue um ao outro — mesmo sem energia, com toda a intenção.',
+    'noite-animados':'Esta noite foi completa. O capítulo acabou, mas o que foi criado aqui fica.',
+    'noite-reconectar':'Reconectar leva coragem. Esta noite, vocês tiveram as duas coisas.'
+  },
+  passos:{
+    'curta-cansados':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'3 perguntas para se reencontrar',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Uma atividade suave para fechar juntos',começa:'p2'}
+    ],
+    'curta-animados':[
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'3 rodadas para acender a chama',começa:'p1'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'Um giro para o acaso decidir',começa:'p2'}
+    ],
+    'curta-reconectar':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas para fechar a distância',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Uma verdade que ainda não foi dita',começa:'p2'}
+    ],
+    'media-cansados':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem pelo que é real e presente',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Romântico — leve e honesto',começa:'p2'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com um ritual a dois',começa:'p1'}
+    ],
+    'media-animados':[
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Comecem com perguntas que ardem',começa:'p1'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso leva a noite para onde quiser',começa:'p2'},
+      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações que o corpo pede',começa:'p1'}
+    ],
+    'media-reconectar':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas para abrir o coração',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que ficaram guardadas',começa:'p2'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar a reconexão',começa:'p1'}
+    ],
+    'longa-cansados':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Comecem onde se sentirem seguros',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Alguns desafios que pedem pouca energia',começa:'p2'},
+      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Deixem o corpo falar',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com cuidado mútuo',começa:'p2'}
+    ],
+    'longa-animados':[
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com intensidade',começa:'p1'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso escolhe o próximo passo',começa:'p2'},
+      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações ousadas que o corpo escolhe',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para fechar com intensidade',começa:'p2'}
+    ],
+    'longa-reconectar':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas profundas de reencontro',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'No nível Profundo — o que ainda não foi dito',começa:'p2'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como aliado da reconexão',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para selar o capítulo',começa:'p2'}
+    ],
+    'noite-cansados':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'A noite começa do modo mais suave',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades que podem ser ditas com calma',começa:'p2'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso decide a intensidade',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que encerra a jornada',começa:'p2'}
+    ],
+    'noite-animados':[
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com fogo',começa:'p1'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso guia o segundo capítulo',começa:'p2'},
+      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O corpo escolhe o próximo passo',começa:'p1'},
+      {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p2'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O capítulo mais completo da história de vocês',começa:'p1'}
+    ],
+    'noite-reconectar':[
+      {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que ficou guardado',começa:'p1'},
+      {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'Verdades profundas, ditas com coragem',começa:'p2'},
+      {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso como companheiro da reconexão',começa:'p1'},
+      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O toque que reconecta o corpo',começa:'p2'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual final de uma noite de reencontro',começa:'p1'}
+    ]
+  }
+};
+
+function ncSel(btn,groupId){
+  document.querySelectorAll('#'+groupId+' .nc-opt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const t=document.querySelector('#nc-tempo .nc-opt.on');
+  const e=document.querySelector('#nc-estado .nc-opt.on');
+  const ini=document.getElementById('nc-iniciar');
+  if(ini){ini.style.opacity=t&&e?'1':'0.4';ini.style.pointerEvents=t&&e?'all':'none';}
+}
+
+function iniciarJornadaCurada(){
+  const tEl=document.querySelector('#nc-tempo .nc-opt.on');
+  const eEl=document.querySelector('#nc-estado .nc-opt.on');
+  if(!tEl||!eEl)return;
+  const tempo=tEl.dataset.val,estado=eEl.dataset.val;
+  const chave=tempo+'-'+estado;
+  const cap=parseInt(localStorage.getItem('jd_capitulo')||'0')+1;
+  const nomeCapIdx=(cap-1)%CAPITULOS_NOMES.length;
+  noite.ativa=true;noite.atual=0;noite.emJogo=false;noite.prologoVisto=false;
+  noite.tempo=tempo;noite.estado=estado;noite.capitulo=cap;
+  noite.titulo=CAPITULOS_NOMES[nomeCapIdx];
+  noite.prologo=JORNADAS_DATA.prologo[chave]||'Esta noite foi feita para vocês dois.';
+  noite.epilogo=JORNADAS_DATA.epilogo[chave]||'Mais um capítulo escrito juntos.';
+  noite.passos=(JORNADAS_DATA.passos[chave]||JORNADAS_DATA.passos['media-animados']).slice();
+  const nivelMap={cansados:'Romântico',reconectar:'Romântico',animados:'Quente'};
+  noite.nivel=(tempo==='longa'||tempo==='noite')&&estado==='animados'?'Explosivo':(nivelMap[estado]||'Romântico');
+  ['rLevels','vdLevels','dadoLevels','missaoLevels','stripLevels'].forEach(gid=>{
+    const grp=document.getElementById(gid);if(!grp)return;
+    grp.querySelectorAll('.lvl').forEach(b=>b.classList.toggle('on',b.dataset.level===noite.nivel));
+    levelState[gid]=noite.nivel;
+  });
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+  go('screen-noite-guiada');
+}
+
+function atualizarHomeCap(){
+  const cap=parseInt(localStorage.getItem('jd_capitulo')||'0');
+  const badge=document.getElementById('home-cap-badge');
+  if(!badge)return;
+  if(cap>0){
+    badge.style.display='block';
+    const el=document.getElementById('home-cap-num');if(el)el.textContent=cap;
+    const en=document.getElementById('home-cap-nome');if(en)en.textContent=CAPITULOS_NOMES[(cap-1)%CAPITULOS_NOMES.length];
+  }else{badge.style.display='none';}
+}
+
 // ══ LOGIN ══════════════════════════════════════════════════
 function togglePin(id,btn){
   const el=document.getElementById(id);
@@ -1553,6 +1796,7 @@ function doLogin(){
   document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
   vdCurrent=1;
   go('home');
+  setTimeout(atualizarHomeCap,50);
 }
 function doLogout(){
   if(!confirm('Encerrar a sessão atual e voltar para a tela inicial?'))return;
@@ -3802,7 +4046,7 @@ function fantNext(){
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
-  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins'];
+  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins','jd_capitulo'];
   const data={v:1,ts:Date.now()};
   keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
   Object.keys(localStorage).filter(k=>k.startsWith('jd_dk_')).forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
@@ -3820,7 +4064,7 @@ function importarDados(){
     reader.onload=ev=>{
       try{
         const data=JSON.parse(ev.target.result);
-        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins'].forEach(k=>{
+        ['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins','jd_capitulo'].forEach(k=>{
           if(data[k])localStorage.setItem(k,data[k]);
         });
         Object.keys(data).filter(k=>k.startsWith('jd_dk_')).forEach(k=>{if(data[k])localStorage.setItem(k,data[k]);});
