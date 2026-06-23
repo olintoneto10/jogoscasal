@@ -1396,7 +1396,23 @@ function apagarTodosDados(){
     return;
   }
   if(seen){
-    document.getElementById('screen-mode').classList.add('active');
+    const _n1=localStorage.getItem('jd_p1name')||'';
+    const _n2=localStorage.getItem('jd_p2name')||'';
+    const _pin1=localStorage.getItem('jd_p1pin')||'';
+    const _pin2=localStorage.getItem('jd_p2pin')||'';
+    if(_n1&&_n2&&_pin1&&_pin2){
+      setTimeout(()=>{
+        players={p1:{name:_n1,pin:_pin1},p2:{name:_n2,pin:_pin2}};
+        document.getElementById('hP1').textContent=_n1;
+        document.getElementById('hP2').textContent=_n2;
+        document.getElementById('vdPlayer').textContent='Vez de '+_n1;
+        vdCurrent=1;
+        go('home');
+        setTimeout(atualizarHomeCap,50);
+      },0);
+    } else {
+      document.getElementById('screen-mode').classList.add('active');
+    }
     // Lembrete se ausente 5+ dias
     const last=localStorage.getItem('jd_lastDay');
     if(last){
@@ -1695,7 +1711,7 @@ const JORNADAS_DATA={
     'longa-animados':[
       {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com intensidade',começa:'p1'},
       {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso escolhe o próximo passo',começa:'p2'},
-      {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações ousadas que o corpo escolhe',começa:'p1'},
+      {jogo:'screen-fantasia',icon:'🎭',nome:'Encenações',desc:'Um cenário para soltar a imaginação',começa:'p1'},
       {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual para fechar com intensidade',começa:'p2'}
     ],
     'longa-reconectar':[
@@ -1714,8 +1730,9 @@ const JORNADAS_DATA={
       {jogo:'screen-vd',icon:'🃏',nome:'Verdade ou Desafio',desc:'A noite começa com fogo',começa:'p1'},
       {jogo:'screen-roleta',icon:'🎡',nome:'Roleta do Desejo',desc:'O acaso guia o segundo capítulo',começa:'p2'},
       {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'O corpo escolhe o próximo passo',começa:'p1'},
-      {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p2'},
-      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O capítulo mais completo da história de vocês',começa:'p1'}
+      {jogo:'screen-comando',icon:'🖤',nome:'Comando & Entrega',desc:'Um conduz, o outro se entrega — com segurança',começa:'p2'},
+      {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A dança que eleva a noite',começa:'p1'},
+      {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O capítulo mais completo da história de vocês',começa:'p2'}
     ],
     'noite-reconectar':[
       {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que tocam o que ficou guardado',começa:'p1'},
@@ -1791,6 +1808,8 @@ function doLogin(){
   players={p1:{name:n1,pin:pin1},p2:{name:n2,pin:pin2}};
   localStorage.setItem('jd_p1name',n1);
   localStorage.setItem('jd_p2name',n2);
+  localStorage.setItem('jd_p1pin',pin1);
+  localStorage.setItem('jd_p2pin',pin2);
   document.getElementById('hP1').textContent=n1;
   document.getElementById('hP2').textContent=n2;
   document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
@@ -1803,6 +1822,8 @@ function doLogout(){
   players={p1:{name:'',pin:''},p2:{name:'',pin:''}};
   localStorage.removeItem('jd_p1name');
   localStorage.removeItem('jd_p2name');
+  localStorage.removeItem('jd_p1pin');
+  localStorage.removeItem('jd_p2pin');
   if(mp.ativo){cancelarSala();}
   go('screen-mode');
 }
