@@ -494,7 +494,12 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 /* ══ HOME — BOTÃO NOITE GUIADA ══ */
 .btn-noite{width:calc(100% - 2.4rem);margin:0 1.2rem 0.1rem;background:linear-gradient(135deg,rgba(238,104,136,0.18),rgba(212,133,90,0.14));border:1px solid rgba(238,104,136,0.38);color:var(--rose-l);font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.07em;padding:0.85rem 1.5rem;border-radius:10px;cursor:pointer;transition:all 0.22s;box-shadow:0 4px 20px rgba(238,104,136,0.1)}
 .btn-noite:hover{background:linear-gradient(135deg,rgba(238,104,136,0.28),rgba(212,133,90,0.22));border-color:var(--rose-l);box-shadow:0 6px 24px rgba(238,104,136,0.2)}
-.games-grid-sep{text-align:center;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.38);margin:0.5rem 0 0.1rem}
+@keyframes xpFloat{0%{opacity:1;transform:translateY(0) scale(1)}75%{opacity:0.9;transform:translateY(-36px) scale(1.1)}100%{opacity:0;transform:translateY(-52px) scale(0.9)}}
+.xp-pop{position:fixed;right:1.3rem;bottom:6rem;font-family:'Cormorant SC',serif;font-size:0.8rem;color:var(--gold-l);letter-spacing:0.1em;pointer-events:none;z-index:999;animation:xpFloat 1.2s ease forwards}
+.btn-reconexao{width:calc(100% - 2.4rem);margin:0 1.2rem 0;background:rgba(196,107,122,0.08);border:1px solid rgba(196,107,122,0.26);color:var(--rose-l);font-family:'Cormorant SC',serif;font-size:0.92rem;letter-spacing:0.06em;padding:0.68rem 1.5rem;border-radius:10px;cursor:pointer;transition:all 0.22s}
+.btn-reconexao:hover{background:rgba(196,107,122,0.16);border-color:var(--rose-l)}
+.games-grid-sep{text-align:center;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.38);margin:0.5rem 0 0.1rem;cursor:pointer;user-select:none;transition:color 0.2s}
+.games-grid-sep:hover{color:rgba(184,136,122,0.65)}
 /* ══ HISTÓRICO RICO ══ */
 .hs-stats{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-bottom:1.1rem}
 .hs-stat{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:10px;padding:0.65rem 0.8rem;display:flex;flex-direction:column;gap:0.1rem}
@@ -752,9 +757,9 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     </div>
   </div>
   <button class="btn-noite" onclick="go('screen-noite-guiada')">✨ Começar a Noite Guiada</button>
-  <div class="games-grid-sep">ou escolha um jogo</div>
-  <div class="games-grid">
-    <div class="game-card" onclick="go('screen-reconexao')" style="grid-column:1/-1;border-color:rgba(196,107,122,0.3)"><div class="icon">💬</div><div class="name">Reconexão</div><div class="desc">Comece aqui — 3 perguntas para se reencontrar antes de tudo</div></div>
+  <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão — comece aqui</button>
+  <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
+  <div class="games-grid" id="games-grid">
     <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
     <div class="game-card" onclick="go('screen-vd')"><div class="icon">🃏</div><div class="name">Verdade ou Desafio</div><div class="desc">Perguntas íntimas e ações ousadas</div></div>
     <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
@@ -1031,6 +1036,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     </div>
     <button class="btn-gold" onclick="cmdNext()">Próximo comando →</button>
     <button class="cmd-safeword-bar" onclick="cmdSafe()">🔴 Palavra de segurança: <b id="cmdSafeShow">Vermelho</b></button>
+    <button class="btn-ghost" style="margin-top:0.3rem;font-size:0.75rem;letter-spacing:0.06em;width:100%;max-width:320px;opacity:0.8" onclick="cmdFinalizar()">🌿 Encerrar com cuidado</button>
   </div>
 </div>
 
@@ -2607,9 +2613,13 @@ const AFTERCARE_MSGS=[
   'Um copo de água, um carinho demorado. Conversem sobre o que sentiram — sem pressa.',
   'Deitem juntos em silêncio. Esse momento de calma faz parte da noite de vocês.',
 ];
-function showAftercare(){
-  document.getElementById('aftercareText').textContent=AFTERCARE_MSGS[Math.floor(Math.random()*AFTERCARE_MSGS.length)];
+function showAftercare(texto){
+  document.getElementById('aftercareText').textContent=texto||AFTERCARE_MSGS[Math.floor(Math.random()*AFTERCARE_MSGS.length)];
   document.getElementById('aftercare-overlay').classList.add('on');
+}
+function cmdFinalizar(){
+  showAftercare('Sessão encerrada com presença. Saiam do jogo devagar — um abraço longo, água, contato físico gentil. Conversem sobre o que foi bonito, o que foi intenso, o que cuidou de vocês. Esse momento de debrief é o que transforma o jogo em algo que fortalece.');
+  cmdShow('setup');
 }
 
 // ══ QUIZ PROFUNDO (nível extra) ══════════════════════════════
@@ -3048,6 +3058,7 @@ function ganharXP(n){
   const capDepois=getCapituloAtual();
   renderCapituloHome();
   if(capDepois.n>capAntes.n)mostrarCapituloUp(capDepois);
+  const _pop=document.createElement('div');_pop.className='xp-pop';_pop.textContent='+'+n+' xp';document.body.appendChild(_pop);setTimeout(()=>_pop.remove(),1300);
   _xpLocked=false;
 }
 function renderCapituloHome(){
@@ -3077,6 +3088,15 @@ function mostrarCapituloUp(cap){
   if(cap.n===3)setTimeout(()=>verificarConquista('cap3'),600);
   if(cap.n===5)setTimeout(()=>verificarConquista('cap5'),600);
   if(cap.n===10)setTimeout(()=>verificarConquista('cap10'),600);
+}
+
+function toggleGamesGrid(){
+  const g=document.getElementById('games-grid');
+  const t=document.getElementById('games-grid-toggle');
+  if(!g||!t)return;
+  const isOpen=g.style.display!=='none';
+  g.style.display=isOpen?'none':'grid';
+  t.textContent=(isOpen?'▾ ':'▲ ')+'Explorar jogos individuais';
 }
 
 // ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
@@ -3850,7 +3870,7 @@ function compartilharApp(){
 
       <p><strong style="color:var(--text)">10. Contato.</strong> Dúvidas sobre privacidade podem ser enviadas para o responsável pelo app via GitHub: olintoneto10.</p>
 
-      <p style="font-size:0.78rem;color:rgba(184,136,122,0.6)">Última atualização: junho de 2025. Este app é gratuito e sem fins lucrativos.</p>
+      <p style="font-size:0.78rem;color:rgba(184,136,122,0.6)">Última atualização: junho de 2025. © 2025 Jogos do Desejo. Produto digital de uso pessoal. Todos os direitos reservados.</p>
     </div>
     <button onclick="apagarTodosDados()" class="btn-ghost" style="border-color:rgba(238,104,136,0.35);color:var(--rose-l)">🗑️ Apagar todos os meus dados</button>
     <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Li e entendi</button>
