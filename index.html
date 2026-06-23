@@ -124,6 +124,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .vd-btn.desafio{background:linear-gradient(135deg,#F0A070,#D4855A);color:#120508;box-shadow:0 4px 18px rgba(212,133,90,0.38)}
 .vd-btn:hover{transform:translateY(-2px)}
 
+/* ══ DADO REVEAL ══ */
+.dado-rev-wrap{display:none;flex-direction:column;gap:0.65rem;margin:0 1.2rem;width:calc(100% - 2.4rem)}
+.dado-rev-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.25);border-radius:10px;padding:0.85rem 1.2rem;opacity:0;transform:translateY(10px);transition:opacity 0.4s ease,transform 0.4s ease}
+.dado-rev-card.show{opacity:1;transform:none}
+.dado-rev-label{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.28rem;font-family:'Jost',sans-serif;font-weight:500}
+.dado-rev-val{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.05rem;color:var(--text);line-height:1.4}
 /* ══ DADO ══ */
 #screen-dado{gap:1.8rem;padding-top:0}
 .dice-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;width:100%;padding:0 1.2rem}
@@ -431,6 +437,17 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .hist-jogo{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .hist-texto{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--text);line-height:1.5}
 .hist-data{font-size:0.6rem;color:rgba(184,136,122,0.45);text-align:right}
+/* ══ CONQUISTAS SCREEN ══ */
+.cq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;padding:0 1.2rem;width:100%;box-sizing:border-box}
+.cq-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.15);border-radius:12px;padding:1rem 0.85rem 0.85rem;display:flex;flex-direction:column;align-items:center;gap:0.45rem;text-align:center;position:relative}
+.cq-card.desbloqueada{border-color:rgba(200,148,58,0.45);background:linear-gradient(135deg,rgba(200,148,58,0.07),rgba(238,104,136,0.04))}
+.cq-icon{font-size:2rem;line-height:1;filter:grayscale(1);opacity:0.3;transition:filter 0.3s,opacity 0.3s}
+.cq-card.desbloqueada .cq-icon{filter:none;opacity:1}
+.cq-nome{font-family:'Cormorant SC',serif;font-size:0.88rem;color:var(--muted);letter-spacing:0.04em;line-height:1.2}
+.cq-card.desbloqueada .cq-nome{color:var(--gold-l)}
+.cq-hist{font-size:0.66rem;color:var(--muted);font-style:italic;line-height:1.4;font-family:'Libre Caslon Text',serif}
+.cq-badge{display:none;font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:rgba(200,148,58,0.12);border:1px solid rgba(200,148,58,0.3);border-radius:3px;padding:0.15rem 0.4rem;margin-top:0.1rem}
+.cq-card.desbloqueada .cq-badge{display:inline-block}
 /* ══ CONQUISTAS / TOAST ══ */
 .achiev-toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(135deg,#2E1022,#1A080F);border:1px solid var(--gold);border-radius:12px;padding:0.8rem 1.3rem;display:flex;align-items:center;gap:0.75rem;opacity:0;pointer-events:none;transition:opacity 0.35s,transform 0.35s;z-index:900;box-shadow:0 8px 32px rgba(212,133,90,0.35);white-space:nowrap}
 .achiev-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -777,6 +794,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="cap-nome" id="cap-nome-label">A Faísca</div>
     <div class="cap-bar-wrap"><div class="cap-bar-fill" id="cap-bar-fill" style="width:0%"></div></div>
   </div>
+  <button onclick="go('screen-conquistas')" id="home-cq-btn" style="width:100%;background:rgba(200,148,58,0.07);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:0.52rem 1rem;color:var(--gold-l);font-family:'Cormorant SC',serif;font-size:0.9rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;text-align:left">🏆 <span id="home-cq-label">Conquistas</span></button>
   <div class="home-mission" id="home-mission" style="display:none">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div class="mission-week-label">Missão da Semana</div>
@@ -933,7 +951,12 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="die-card" id="die2"><div class="die-label">Duração</div><div class="die-value blank" id="dv2">—</div></div>
     <div class="die-card" id="die3"><div class="die-label">Local</div><div class="die-value blank" id="dv3">—</div></div>
   </div>
-  <div class="dado-result" id="dadoResult">Role os dados para descobrir</div>
+  <div class="dado-rev-wrap" id="dadoReveal">
+    <div class="dado-rev-card" id="drc0"></div>
+    <div class="dado-rev-card" id="drc1"></div>
+    <div class="dado-rev-card" id="drc2"></div>
+  </div>
+  <div class="dado-result" id="dadoResult" style="display:none"></div>
   <button class="btn-skip" id="dadoSkip" style="display:none" onclick="document.getElementById('dadoBtn').click()">↩ Não gostaram? Rolar novamente</button>
   <p class="mp-vez-screen" id="dado-vez-ind"></p>
   <button class="btn-gold" id="dadoBtn">Rolar os Dados</button>
@@ -985,9 +1008,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Posições do Casal</span></div>
   <div style="height:1rem"></div>
   <div class="levels" id="posLevels">
-    <button class="lvl on" data-level="Iniciante">Iniciante</button>
-    <button class="lvl" data-level="Intermediário">Intermediário</button>
-    <button class="lvl" data-level="Avançado">Avançado</button>
+    <button class="lvl on" data-level="Todos">Todos</button>
+    <button class="lvl" data-level="Iniciante">Suave</button>
+    <button class="lvl" data-level="Intermediário">Médio</button>
+    <button class="lvl" data-level="Avançado">Intenso</button>
   </div>
   <div class="pos-card" id="posCard">
     <div class="pos-illustration" id="posIllustration"></div>
@@ -1202,6 +1226,14 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ ACHIEVEMENT TOAST ══ -->
+<!-- ══ CONQUISTAS ══ -->
+<div class="screen" id="screen-conquistas">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Conquistas</span></div>
+  <div style="height:0.3rem"></div>
+  <p id="cq-prog-label" style="font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;text-align:center;padding:0 1.2rem 0.6rem;font-family:'Jost',sans-serif"></p>
+  <div class="cq-grid" id="cq-grid"></div>
+</div>
+
 <div id="achiev-toast" class="achiev-toast">
   <div class="achiev-toast-icon" id="achiev-icon">🏆</div>
   <div class="achiev-toast-txt">
@@ -1510,6 +1542,7 @@ function go(id){
   if(id==='screen-fantasia')fantEnter();
   if(id==='screen-strip')verificarConquista('ritual');
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
+  if(id==='screen-conquistas')renderConquistas();
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
   if(id==='home')atualizarHomeCap();
 }
@@ -1552,7 +1585,8 @@ function renderNoiteGuiada(){
       +'<div class="ng-epil-card">'
         +'<div class="ng-epil-titulo">'+(noite.titulo||'Nossa Noite')+'</div>'
         +'<div class="ng-epil-text">'+(noite.epilogo||'Mais um capítulo escrito juntos.')+'</div>'
-        +'<button class="btn-gold" style="width:100%;font-size:0.84rem" onclick="concluirNoite()">Fechar o capítulo →</button>'
+        +'<button class="btn-gold" style="width:100%;font-size:0.84rem;margin-bottom:0.55rem" onclick="concluirNoite()">💾 Guardar essa memória →</button>'
+      +'<button class="btn-ghost" style="width:100%;font-size:0.82rem;padding:0.55rem" onclick="encerrarNoiteGuiada()">Voltar sem guardar</button>'
       +'</div>';
     return;
   }
@@ -1631,6 +1665,11 @@ function noitePrologoOk(){
 function concluirNoite(){
   if(noite.capitulo>0)localStorage.setItem('jd_capitulo',String(noite.capitulo));
   atualizarHomeCap();
+  const _nh=JSON.parse(localStorage.getItem('jd_historico')||'[]');
+  _nh.unshift({data:new Date().toLocaleDateString('pt-BR'),titulo:noite.titulo||'Nossa Noite',capitulo:noite.capitulo||0,epilogo:noite.epilogo||''});
+  if(_nh.length>50)_nh.length=50;
+  localStorage.setItem('jd_historico',JSON.stringify(_nh));
+  ganharXP(15);
   noite.ativa=false;noite.emJogo=false;
   sessionStorage.removeItem('jd_noite');
   go('home');
@@ -2063,6 +2102,8 @@ let dadoRolling=false;
 document.getElementById('dadoBtn').addEventListener('click',function(){
   if(dadoRolling)return;dadoRolling=true;this.disabled=true;this.textContent='Rolando…';
   document.getElementById('dadoResult').textContent='…';
+  const _rw2=document.getElementById('dadoReveal');if(_rw2)_rw2.style.display='none';
+  [0,1,2].forEach(i=>{const _c=document.getElementById('drc'+i);if(_c){_c.classList.remove('show');_c.innerHTML='';}});
   [0,1,2,3].forEach(i=>{const d=document.getElementById('die'+i),v=document.getElementById('dv'+i);v.classList.add('blank');d.classList.add('rolling');d.addEventListener('animationend',()=>d.classList.remove('rolling'),{once:true});});
   setTimeout(()=>{
     const lv=getLevel('dadoLevels');
@@ -2075,6 +2116,19 @@ document.getElementById('dadoBtn').addEventListener('click',function(){
     document.getElementById('dadoResult').textContent=dadoTxt;
     salvarCarta('Dado dos Prazeres',dadoTxt);
     verificarConquista('dado');
+    // 3 reveal cards animados
+    const _rData=[
+      {label:'Onde',val:local},
+      {label:'O Quê',val:acao.charAt(0).toUpperCase()+acao.slice(1)+' o '+parte},
+      {label:'Como',val:dur}
+    ];
+    const _rw=document.getElementById('dadoReveal');if(_rw)_rw.style.display='flex';
+    _rData.forEach((d,i)=>{
+      const _c=document.getElementById('drc'+i);if(!_c)return;
+      _c.innerHTML='<div class="dado-rev-label">'+d.label+'</div><div class="dado-rev-val">'+d.val+'</div>';
+      _c.classList.remove('show');
+      setTimeout(()=>_c.classList.add('show'),300*i);
+    });
     document.getElementById('dadoSkip').style.display='';
     dadoRolling=false;const btn=document.getElementById('dadoBtn');btn.disabled=false;btn.textContent='Rolar os Dados';
   },600);
@@ -2297,7 +2351,8 @@ let posFiltered=[];
 function getPosFiltered(){
   const lv=getLevel('posLevels');
   if(lv==='Iniciante') return POSICOES.filter(p=>p.level==='Iniciante');
-  if(lv==='Intermediário') return POSICOES.filter(p=>p.level==='Iniciante'||p.level==='Intermediário');
+  if(lv==='Intermediário') return POSICOES.filter(p=>p.level==='Intermediário');
+  if(lv==='Avançado') return POSICOES.filter(p=>p.level==='Avançado');
   return POSICOES;
 }
 
@@ -3251,6 +3306,10 @@ go=function(id){
   _goOrigGamif(id);
   if(id==='home'){
     atualizarStreak();carregarMissaoSemana();renderCapituloHome();
+    const _cqG=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
+    const _cqT=Object.keys(CONQUISTAS).length;
+    const _cqLbl=document.getElementById('home-cq-label');
+    if(_cqLbl)_cqLbl.textContent='Conquistas ('+_cqG.length+'/'+_cqT+')';
   }
   if(id==='login'){
     const _n1=localStorage.getItem('jd_p1name')||'';
@@ -3263,6 +3322,25 @@ go=function(id){
 };
 
 
+
+// ══ RENDER CONQUISTAS ════════════════════════════════════════════════
+function renderConquistas(){
+  const ganhas=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
+  const total=Object.keys(CONQUISTAS).length;
+  const prog=document.getElementById('cq-prog-label');
+  if(prog)prog.textContent=ganhas.length+' de '+total+' desbloqueadas';
+  const grid=document.getElementById('cq-grid');
+  if(!grid)return;
+  grid.innerHTML=Object.entries(CONQUISTAS).map(([k,c])=>{
+    const d=ganhas.includes(k);
+    return '<div class="cq-card'+(d?' desbloqueada':'')+'">'
+      +'<div class="cq-icon">'+c.icon+'</div>'
+      +'<div class="cq-nome">'+c.nome+'</div>'
+      +(d?'<div class="cq-hist">'+c.historia+'</div>':'<div class="cq-hist" style="opacity:0.4">Ainda não desbloqueada</div>')
+      +'<span class="cq-badge">✦ Desbloqueada</span>'
+      +'</div>';
+  }).join('');
+}
 
 // ══ CONQUISTAS ════════════════════════════════════════════════════
 const CONQUISTAS={
