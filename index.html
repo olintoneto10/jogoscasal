@@ -437,6 +437,45 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .hist-jogo{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .hist-texto{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--text);line-height:1.5}
 .hist-data{font-size:0.6rem;color:rgba(184,136,122,0.45);text-align:right}
+/* ══ SEMÁFORO DO HUMOR ══ */
+.semaforo-banner{display:flex;align-items:center;gap:0.75rem;border-radius:12px;padding:0.65rem 1rem;margin:0;transition:background 0.4s,border-color 0.4s;cursor:pointer}
+.semaforo-banner.verde{background:linear-gradient(135deg,rgba(60,160,80,0.1),rgba(40,120,60,0.06));border:1px solid rgba(60,160,80,0.35)}
+.semaforo-banner.amarelo{background:linear-gradient(135deg,rgba(200,160,40,0.1),rgba(160,120,20,0.06));border:1px solid rgba(200,160,40,0.35)}
+.semaforo-banner.vermelho{background:linear-gradient(135deg,rgba(180,70,70,0.1),rgba(140,40,40,0.06));border:1px solid rgba(180,70,70,0.35)}
+.semaforo-banner.vazio{background:rgba(255,255,255,0.03);border:1px dashed rgba(200,148,58,0.22)}
+.semaforo-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;transition:background 0.4s,box-shadow 0.4s}
+.verde .semaforo-dot{background:rgba(80,200,100,0.9);box-shadow:0 0 8px rgba(80,200,100,0.5)}
+.amarelo .semaforo-dot{background:rgba(220,185,60,0.9);box-shadow:0 0 8px rgba(220,185,60,0.45)}
+.vermelho .semaforo-dot{background:rgba(220,90,90,0.9);box-shadow:0 0 8px rgba(220,90,90,0.45)}
+.vazio .semaforo-dot{background:rgba(200,148,58,0.3)}
+.semaforo-info{flex:1}
+.semaforo-label{font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;font-family:'Jost',sans-serif;font-weight:500;transition:color 0.4s}
+.verde .semaforo-label{color:rgba(100,210,120,0.7)}
+.amarelo .semaforo-label{color:rgba(220,185,60,0.7)}
+.vermelho .semaforo-label{color:rgba(220,110,110,0.7)}
+.vazio .semaforo-label{color:var(--muted)}
+.semaforo-val{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;margin-top:0.1rem;transition:color 0.4s}
+.verde .semaforo-val{color:rgba(140,230,160,0.95)}
+.amarelo .semaforo-val{color:rgba(240,210,100,0.95)}
+.vermelho .semaforo-val{color:rgba(240,140,140,0.95)}
+.vazio .semaforo-val{color:var(--muted);font-style:italic}
+.semaforo-change{font-size:0.64rem;color:rgba(200,148,58,0.55);font-family:'Jost',sans-serif;transition:color 0.2s}
+.semaforo-banner:hover .semaforo-change{color:rgba(200,148,58,0.85)}
+/* Overlay de seleção do semáforo */
+.semaforo-overlay{display:none;position:fixed;inset:0;background:rgba(14,4,8,0.88);backdrop-filter:blur(12px);z-index:460;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:0}
+.semaforo-overlay.on{display:flex}
+.semaforo-sel-title{font-family:'Cormorant SC',serif;font-size:1.35rem;color:var(--gold-l);letter-spacing:0.05em;margin-bottom:0.4rem;text-align:center}
+.semaforo-sel-sub{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:var(--muted);line-height:1.6;text-align:center;margin-bottom:1.6rem;max-width:300px}
+.semaforo-opts{display:flex;flex-direction:column;gap:0.75rem;width:100%;max-width:300px}
+.semaforo-opt{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(200,148,58,0.15);border-radius:14px;padding:1rem 1.2rem;cursor:pointer;transition:all 0.2s}
+.semaforo-opt:hover{border-color:rgba(200,148,58,0.4);background:rgba(255,255,255,0.05)}
+.semaforo-opt-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.semaforo-opt.verde .semaforo-opt-dot{background:rgba(80,200,100,0.9);box-shadow:0 0 8px rgba(80,200,100,0.4)}
+.semaforo-opt.amarelo .semaforo-opt-dot{background:rgba(220,185,60,0.9);box-shadow:0 0 8px rgba(220,185,60,0.35)}
+.semaforo-opt.vermelho .semaforo-opt-dot{background:rgba(220,90,90,0.9);box-shadow:0 0 8px rgba(220,90,90,0.35)}
+.semaforo-opt-info{}
+.semaforo-opt-nome{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--text);letter-spacing:0.03em}
+.semaforo-opt-desc{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.15rem;font-family:'Libre Caslon Text',serif;line-height:1.4}
 /* ══ CONQUISTAS SCREEN ══ */
 .cq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;padding:0 1.2rem;width:100%;box-sizing:border-box}
 .cq-card{background:var(--ground-2);border:1px solid rgba(200,148,58,0.15);border-radius:12px;padding:1rem 0.85rem 0.85rem;display:flex;flex-direction:column;align-items:center;gap:0.45rem;text-align:center;position:relative}
@@ -785,6 +824,14 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <span class="streak-count" id="streak-count">1</span>
     <span class="streak-label">noite seguida</span>
     <button class="streak-hist-btn" onclick="abrirHistorico()">📖 Histórico</button>
+  </div>
+  <div class="semaforo-banner vazio" id="semaforo-banner" onclick="abrirSemaforo()">
+    <div class="semaforo-dot"></div>
+    <div class="semaforo-info">
+      <div class="semaforo-label" id="semaforo-label">Clima desta noite</div>
+      <div class="semaforo-val" id="semaforo-val">Como vocês estão agora?</div>
+    </div>
+    <div class="semaforo-change" id="semaforo-change">Definir ↓</div>
   </div>
   <div class="home-capitulo" id="home-capitulo">
     <div class="cap-header">
@@ -1227,6 +1274,38 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ ACHIEVEMENT TOAST ══ -->
+<!-- ══ SEMÁFORO OVERLAY ══ -->
+<div class="semaforo-overlay" id="semaforo-overlay">
+  <div style="max-width:320px;width:100%;display:flex;flex-direction:column;align-items:center">
+    <div class="semaforo-sel-title">Como vocês estão esta noite?</div>
+    <div class="semaforo-sel-sub">Isso ajuda o app a sugerir o caminho mais adequado para vocês agora.</div>
+    <div class="semaforo-opts">
+      <div class="semaforo-opt verde" onclick="setSemaforo('verde')">
+        <div class="semaforo-opt-dot"></div>
+        <div class="semaforo-opt-info">
+          <div class="semaforo-opt-nome">Animados — vamos fundo</div>
+          <div class="semaforo-opt-desc">Energia presente, dispostos a viver uma noite intensa e conectada.</div>
+        </div>
+      </div>
+      <div class="semaforo-opt amarelo" onclick="setSemaforo('amarelo')">
+        <div class="semaforo-opt-dot"></div>
+        <div class="semaforo-opt-info">
+          <div class="semaforo-opt-nome">Suave — com calma</div>
+          <div class="semaforo-opt-desc">Presente, mas sem pressa. Algo tranquilo e aconchegante está ótimo.</div>
+        </div>
+      </div>
+      <div class="semaforo-opt vermelho" onclick="setSemaforo('vermelho')">
+        <div class="semaforo-opt-dot"></div>
+        <div class="semaforo-opt-info">
+          <div class="semaforo-opt-nome">Só carinho — sem agenda</div>
+          <div class="semaforo-opt-desc">Hoje o toque afetivo é suficiente. Proximidade sem expectativa.</div>
+        </div>
+      </div>
+    </div>
+    <button onclick="document.getElementById('semaforo-overlay').classList.remove('on')" style="margin-top:1.2rem;background:none;border:none;color:var(--muted);font-size:0.78rem;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline">Pular por agora</button>
+  </div>
+</div>
+
 <!-- ══ CONQUISTAS ══ -->
 <div class="screen" id="screen-conquistas">
   <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Conquistas</span></div>
@@ -3306,7 +3385,7 @@ const _goOrigGamif=go;
 go=function(id){
   _goOrigGamif(id);
   if(id==='home'){
-    atualizarStreak();carregarMissaoSemana();renderCapituloHome();
+    atualizarStreak();carregarMissaoSemana();renderCapituloHome();renderSemaforo();
     const _cqG=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
     const _cqT=Object.keys(CONQUISTAS).length;
     const _cqLbl=document.getElementById('home-cq-label');
@@ -3323,6 +3402,48 @@ go=function(id){
 };
 
 
+
+// ══ SEMÁFORO DO HUMOR ═══════════════════════════════════════════════
+const _semaMap={
+  verde:{label:'Clima desta noite',val:'Animados — vamos fundo',change:'Mudar clima ↓'},
+  amarelo:{label:'Clima desta noite',val:'Suave — com calma',change:'Mudar clima ↓'},
+  vermelho:{label:'Clima desta noite',val:'Só carinho — sem agenda',change:'Mudar clima ↓'},
+};
+function setSemaforo(tipo){
+  sessionStorage.setItem('jd_sema',tipo);
+  document.getElementById('semaforo-overlay').classList.remove('on');
+  renderSemaforo();
+  // se vermelho → sugere reconexão ao invés de noite guiada
+  const btnNoite=document.querySelector('.btn-noite');
+  if(btnNoite){
+    if(tipo==='vermelho'){btnNoite.textContent='🤍 Modo Só Carinho';}
+    else if(tipo==='amarelo'){btnNoite.textContent='✨ Noite Guiada — ritmo suave';}
+    else{btnNoite.textContent='✨ Começar a Noite Guiada';}
+  }
+}
+function renderSemaforo(){
+  const tipo=sessionStorage.getItem('jd_sema')||null;
+  const banner=document.getElementById('semaforo-banner');
+  const lbl=document.getElementById('semaforo-label');
+  const val=document.getElementById('semaforo-val');
+  const chg=document.getElementById('semaforo-change');
+  if(!banner)return;
+  banner.classList.remove('verde','amarelo','vermelho','vazio');
+  if(tipo&&_semaMap[tipo]){
+    banner.classList.add(tipo);
+    lbl.textContent=_semaMap[tipo].label;
+    val.textContent=_semaMap[tipo].val;
+    chg.textContent=_semaMap[tipo].change;
+  } else {
+    banner.classList.add('vazio');
+    lbl.textContent='Clima desta noite';
+    val.textContent='Como vocês estão agora?';
+    chg.textContent='Definir ↓';
+  }
+}
+function abrirSemaforo(){
+  document.getElementById('semaforo-overlay').classList.add('on');
+}
 
 // ══ RENDER CONQUISTAS ════════════════════════════════════════════════
 function renderConquistas(){
