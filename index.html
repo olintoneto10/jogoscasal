@@ -476,6 +476,19 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .semaforo-opt-info{}
 .semaforo-opt-nome{font-family:'Cormorant SC',serif;font-size:1rem;color:var(--text);letter-spacing:0.03em}
 .semaforo-opt-desc{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.15rem;font-family:'Libre Caslon Text',serif;line-height:1.4}
+/* ══ SAFEWORD ══ */
+.safeword-pill{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:rgba(160,30,30,0.13);border:1px solid rgba(200,50,50,0.28);border-radius:20px;padding:0.38rem 1rem;align-items:center;gap:0.5rem;cursor:pointer;z-index:310;transition:all 0.2s;white-space:nowrap}
+.safeword-pill.on{display:flex}
+.safeword-pill:hover{background:rgba(160,30,30,0.24);border-color:rgba(220,60,60,0.5)}
+.safeword-pill-dot{width:7px;height:7px;border-radius:50%;background:rgba(220,70,70,0.85);box-shadow:0 0 5px rgba(220,60,60,0.45);flex-shrink:0}
+.safeword-pill-txt{font-size:0.7rem;color:rgba(220,110,110,0.82);font-family:'Libre Caslon Text',serif;font-style:italic;letter-spacing:0.02em}
+.safeword-overlay{display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(20px);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:0}
+.safeword-overlay.on{display:flex}
+.safeword-card{max-width:300px;width:100%;display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center}
+.safeword-stop-icon{font-size:2.4rem;line-height:1}
+.safeword-word{font-family:'Cormorant SC',serif;font-size:2rem;color:rgba(220,90,90,0.95);letter-spacing:0.06em;border:1px solid rgba(220,60,60,0.3);border-radius:12px;padding:0.5rem 1.6rem;background:rgba(180,30,30,0.1)}
+.safeword-instruct{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:rgba(200,160,160,0.75);line-height:1.7}
+.safeword-sub{font-size:0.7rem;color:rgba(180,120,120,0.55);font-style:italic;font-family:'Libre Caslon Text',serif;line-height:1.6}
 /* ══ AFTERCARE BAR ══ */
 .aftercare-bar{display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:linear-gradient(180deg,transparent 0%,rgba(14,4,8,0.96) 22%,rgba(14,4,8,1) 100%);padding:22px 1.2rem 1rem;z-index:300;align-items:center;gap:0.75rem;pointer-events:none}
 .aftercare-bar.on{display:flex;pointer-events:auto}
@@ -1163,7 +1176,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <p class="cmd-lead">Um conduz, o outro se entrega. Antes de começar, combinem com calma — confiança é o que torna tudo gostoso.</p>
     <div class="cmd-safe-box">
       <label class="cmd-field-lbl">🔴 Palavra de segurança</label>
-      <input id="cmdSafeword" class="cmd-input" type="text" value="Vermelho" maxlength="20" autocomplete="off">
+      <input id="cmdSafeword" class="cmd-input" type="text" value="Vermelho" maxlength="20" autocomplete="off" oninput="localStorage.setItem('jd_safeword',this.value||'Vermelho')">
       <div class="cmd-hint">Quem disser essa palavra, a qualquer momento, para tudo na hora — sem perguntas.</div>
     </div>
     <div class="cmd-limits-box">
@@ -1300,6 +1313,22 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 <div id="drink-toast">🍹 Saúde! Beba um drink!</div>
 
 <!-- ══ ACHIEVEMENT TOAST ══ -->
+<!-- ══ SAFEWORD ══ -->
+<div class="safeword-pill" id="safeword-pill" onclick="abrirSafeword()">
+  <div class="safeword-pill-dot"></div>
+  <span class="safeword-pill-txt">Palavra de segurança</span>
+</div>
+<div class="safeword-overlay" id="safeword-overlay">
+  <div class="safeword-card">
+    <div class="safeword-stop-icon">🔴</div>
+    <div class="safeword-word" id="safeword-display">Vermelho</div>
+    <div class="safeword-instruct">Digam esta palavra em voz alta.<br>Tudo para imediatamente — sem perguntas.</div>
+    <div class="safeword-sub">Respirem juntos. Bebam água.<br>O cuidado depois é tão importante quanto o jogo.</div>
+    <button class="btn-ghost" style="width:100%" onclick="document.getElementById('safeword-overlay').classList.remove('on');go('screen-socarinho')">🤍 Ir para Só Carinho</button>
+    <button style="background:none;border:none;color:rgba(180,120,120,0.5);font-size:0.75rem;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline;margin-top:0.2rem" onclick="document.getElementById('safeword-overlay').classList.remove('on')">Fechar</button>
+  </div>
+</div>
+
 <!-- ══ AFTERCARE BAR ══ -->
 <div class="aftercare-bar" id="aftercare-bar">
   <span class="aftercare-bar-icon">🤍</span>
@@ -1716,6 +1745,8 @@ function go(id){
   if(id==='screen-strip')verificarConquista('ritual');
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
   if(id==='screen-conquistas')renderConquistas();
+  const _swPill=document.getElementById('safeword-pill');
+  if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
   const _acBar=document.getElementById('aftercare-bar');
   if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
@@ -3538,6 +3569,14 @@ function renderSemaforo(){
 }
 function abrirSemaforo(){
   document.getElementById('semaforo-overlay').classList.add('on');
+}
+
+// ══ SAFEWORD ══════════════════════════════════════════════════════════
+function abrirSafeword(){
+  const word=localStorage.getItem('jd_safeword')||'Vermelho';
+  const el=document.getElementById('safeword-display');
+  if(el)el.textContent=word;
+  document.getElementById('safeword-overlay').classList.add('on');
 }
 
 // ══ SÓ CARINHO ══════════════════════════════════════════════════════
