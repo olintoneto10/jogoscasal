@@ -2569,13 +2569,13 @@ function showMapaResults(){
   document.getElementById('mapaGame').style.display='none';
   document.getElementById('mapaResults').style.display='flex';
   verificarConquista('mapa');
-  salvarCarta('Mapa do Desejo',matchCount+' desejos em comum descobertos');
   const yes=[],curious=[];
   MAPA_ITEMS.forEach((item,i)=>{
     const a1=mapaAnswers[0][i]||'no',a2=mapaAnswers[1][i]||'no';
     if(a1==='yes'&&a2==='yes')yes.push(item);
     else if((a1==='yes'||a1==='curious')&&(a2==='yes'||a2==='curious'))curious.push(item);
   });
+  salvarCarta('Mapa do Desejo',(yes.length+curious.length)+' desejos em comum descobertos');
   document.getElementById('mapaMatchCount').textContent=yes.length+curious.length;
   const cards=document.getElementById('mapaMatchCards');cards.innerHTML='';
   if(!yes.length&&!curious.length){
@@ -2664,6 +2664,11 @@ document.getElementById('musicVol').style.setProperty('--p','60%');
 let pinState={target:'',buf:'',callback:null};
 
 function openPin(playerNum,cb){
+  // In multiplayer mode the remote player is on their own device — skip PIN overlay
+  if(mp&&mp.ativo){
+    const localNum=mp.eu==='p1'?1:2;
+    if(playerNum!==localNum){cb();return;}
+  }
   const pname=playerNum===1?(players.p1.name||'Jogador 1'):(players.p2.name||'Jogador 2');
   pinState={target:playerNum===1?players.p1.pin:players.p2.pin,buf:'',callback:cb};
   document.getElementById('pinTitle').textContent=`Vez de ${pname}`;
