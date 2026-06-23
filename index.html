@@ -509,6 +509,9 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mpa-btns button{flex:1;font-family:'Jost',sans-serif;font-size:0.74rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:0.7rem 0.5rem;border-radius:7px;cursor:pointer;border:none}
 .mpa-yes{background:linear-gradient(135deg,#F0A070,#D4855A);color:#120508;box-shadow:0 4px 14px rgba(212,133,90,0.35)}
 .mpa-no{background:transparent;color:var(--rose-l);border:1px solid rgba(238,104,136,0.4)!important}/* ══ MP BANNER (vez de quem) ══ */#mp-banner{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(14,4,8,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(212,133,90,0.15);padding:0.48rem 1.2rem;display:none;align-items:center;justify-content:space-between;gap:0.8rem;transition:background 0.4s,border-color 0.4s}#mp-banner.on{display:flex}.mp-b-code{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}.mp-b-vez{font-family:'Cormorant SC',serif;font-size:0.97rem;letter-spacing:0.04em;color:var(--muted);transition:color 0.4s,text-shadow 0.4s}#mp-banner.minha-vez{background:rgba(22,4,12,0.97);border-bottom-color:rgba(238,104,136,0.5)}#mp-banner.minha-vez .mp-b-vez{color:var(--rose-l);text-shadow:0 0 16px rgba(238,104,136,0.5);font-weight:700}.mp-b-vez-tag{display:inline-block;background:rgba(238,104,136,0.18);border:1px solid rgba(238,104,136,0.4);border-radius:4px;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose-l);padding:0.1rem 0.35rem;margin-right:0.35rem;vertical-align:middle}
+.mp-vez-screen{display:none;font-family:'Cormorant SC',serif;font-size:0.92rem;color:var(--muted);text-align:center;letter-spacing:0.04em;padding:0.3rem 0;transition:color 0.3s}
+.mp-vez-screen.on{display:block}
+.mp-vez-screen.minha-vez{color:var(--rose-l);font-weight:600}
 </style>
 
 <!-- Analytics (substitua G-XXXXXXXX pelo seu ID do Google Analytics) -->
@@ -720,6 +723,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="lvl" data-level="Explosivo">Explosivo</button>
   </div>
   <div class="wheel-wrap"><div class="pointer"></div><canvas id="rWheel"></canvas></div>
+  <p class="mp-vez-screen" id="roleta-vez-ind"></p>
   <button class="btn-gold" id="rSpinBtn">Girar a Roleta</button>
 </div>
 <div class="overlay" id="rOverlay">
@@ -791,6 +795,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <div class="dado-result" id="dadoResult">Role os dados para descobrir</div>
   <button class="btn-skip" id="dadoSkip" style="display:none" onclick="document.getElementById('dadoBtn').click()">↩ Não gostaram? Rolar novamente</button>
+  <p class="mp-vez-screen" id="dado-vez-ind"></p>
   <button class="btn-gold" id="dadoBtn">Rolar os Dados</button>
 </div>
 
@@ -1617,6 +1622,37 @@ const QUIZ=[
   {p:'Qual é a hora do dia em que mais pensa em mim?',o:['De manhã','À tarde','À noite','Quando acordo']},
   {p:'O que mais gosta no seu próprio corpo?',o:['Olhos','Sorriso','Mãos','Jeito de ser']},
   {p:'Como prefere receber elogios?',o:['Em particular','Em público','Escrito','Não-verbal']},
+
+  {p:'Qual é o momento do dia mais especial ao seu lado?',o:['Acordar juntos','Almoçar','Assistir algo','Adormecer abraçados']},
+  {p:'O que mais sente falta quando estou longe?',o:['Minha voz','Meu cheiro','Meu toque','Minha presença']},
+  {p:'Qual é seu jeito favorito de ser acordado(a)?',o:['Com beijo suave','Com cafezinho','Com abraço','Com música']},
+  {p:'O que mais admira no meu jeito de te amar?',o:['Minha paciência','Minha intensidade','Minha criatividade','Minha consistência']},
+  {p:'Qual palavra descreve nossa relação?',o:['Cumplicidade','Paixão','Paz','Aventura']},
+  {p:'O que te deixa mais feliz em uma data especial?',o:['Surpresa','Janta a dois','Presentinho','Carta escrita']},
+  {p:'Qual sensação define nossa intimidade?',o:['Segurança','Excitação','Leveza','Profundidade']},
+  {p:'Como prefere resolver uma briga?',o:['Conversar logo','Esfriar a cabeça','Escrever o que sinto','Com um abraço']},
+  {p:'O que mais gosta em nossos beijos?',o:['A intensidade','A ternura','A freqüência','O momento']},
+  {p:'O que você gostaria de explorar mais juntos?',o:['Viagens','Novos lugares na cidade','Hobbies juntos','Intimidade']},
+  {p:'Como prefere se sentir durante a intimidade?',o:['Desejado(a)','Seguro(a)','Livre','Surpreendido(a)']},
+  {p:'Qual é o seu tipo de toque preferido?',o:['Leve e devagar','Firme e seguro','Espontâneo','Intencional']},
+  {p:'O que mais valoriza no nosso relacionamento?',o:['Confiança','Cumplicidade','Paixão','Companheirismo']},
+  {p:'Onde sonha ir comigo?',o:['Praia paradísíaca','Cidade europeia','Lugar na natureza','Aventura pelo Brasil']},
+  {p:'Qual é o seu horário favorito para intimidade?',o:['De manhã cedo','À tarde','À noite','Madrugada']},
+  {p:'Qual é o seu ritual de carinho preferido?',o:['Massagem','Beijo na testa','Toque nas mãos','Abraço longo']},
+  {p:'O que você acha mais sedutor em mim?',o:['Minha voz','Meu olhar','Meu jeito','Meu sorriso']},
+  {p:'O que te faz sentir mais amado(a) no dia a dia?',o:['Mensagem inesperada','Gesto carinhoso','Palavras de afirmação','Tempo dedicado']},
+  {p:'O que você quer que eu nunca pare de fazer?',o:['Me beijar bom dia','Me abraçar por trás','Me elogiar','Me olhar com carinho']},
+  {p:'Qual emoção você mais quer viver comigo?',o:['Aventura','Paz profunda','Paixão intensa','Alegria']},
+  {p:'O que mais te atrai emocionalmente em mim?',o:['Minha honestidade','Minha sensibilidade','Minha determinação','Meu humor']},
+  {p:'Qual é o tipo de abraço que mais gosta?',o:['Apertado e longo','Leve e carinhoso','Por trás','Deitados juntos']},
+  {p:'O que você sente quando olha no meu olho?',o:['Segurança','Amor','Desejo','Paz']},
+  {p:'O que te deixa mais com vontade de ficar perto de mim?',o:['Minha voz','Meu perfume','Meu toque','Meu olhar']},
+  {p:'Como prefere receber um pedido de desculpas?',o:['Com palavras sinceras','Com um gesto','Com tempo','Com abraço']},
+  {p:'Qual é o seu maior sonho para nós dois?',o:['Casa própria','Viagem dos sonhos','Família','Velhice juntos']},
+  {p:'Qual é a parte do dia em que mais sente minha falta?',o:['Manhã','Tarde','Noite','Quando algo bom acontece']},
+  {p:'Como prefere que eu demonstre que te amo?',o:['Palavras','Gestos','Tempo juntos','Surpresas']},
+  {p:'Qual é a sua linguagem de amor secundária?',o:['Presentes','Palavras','Toque','Serviço']},
+  {p:'O que você faria se tivéssemos um dia inteiro só para nós dois?',o:['Ficar em casa deitados','Passeio na cidade','Viajar próximo','Spa ou relaxamento']},
 ]
 let qState={phase:0,q:0,ans:[[],[]]};
 function quizStart(){
@@ -2218,6 +2254,30 @@ const MAPA_ITEMS=[
   {label:'Toque muito lento e consciente',e:'🤲'},
   {label:'Ser surpreendido(a)',e:'🎁'},
   {label:'Usar acessórios / brinquedos',e:'✨'},
+
+  {label:'Fazer amor à luz do dia',e:'☀️'},
+  {label:'Beijo lento por 60 segundos',e:'💋'},
+  {label:'Voz ao ouvido durante a intimidade',e:'🗣️'},
+  {label:'Ficar acordados até tarde conversando',e:'🌙'},
+  {label:'Descobrir uma zona erógena nova',e:'🔥'},
+  {label:'Trazer algo do imaginário para o real',e:'🌈'},
+  {label:'Brincadeira com gelo ou temperatura',e:'🧊'},
+  {label:'Intimidade em local inusitado da casa',e:'🏡'},
+  {label:'Escrever desejos num papel e revelar',e:'📝'},
+  {label:'Olho no olho durante todo o momento',e:'👀'},
+  {label:'Slow sex — tudo muito devagar',e:'🕯️'},
+  {label:'Música sensual como trilha sonora',e:'🎵'},
+  {label:'Roleplay de encontro casual',e:'🎲'},
+  {label:'Fazer algo que o(a) parceiro(a) pede sempre',e:'❤️'},
+  {label:'Intimidade logo ao acordar',e:'🌅'},
+  {label:'Priorizar o prazer do(a) parceiro(a) 100%',e:'🪶'},
+  {label:'Conversar sobre fantasias enquanto íntimos',e:'💭'},
+  {label:'Dormir sem roupa juntos',e:'🌜'},
+  {label:'Massagem que vira mais',e:'🌺'},
+  {label:'Ler ou contar uma fantasia em voz alta',e:'📖'},
+  {label:'Tirar foto juntos depois',e:'🤳'},
+  {label:'Usar venda nos olhos e ser surpreendido(a)',e:'🙈'},
+  {label:'Dançar juntos sem música',e:'💃'},
 ];
 let mapaAnswers=[[],[]],mapaPhaseIdx=0;
 function mapaStart(){
@@ -2323,6 +2383,27 @@ const QUIZ_DEEP=[
   {p:'Qual é o seu ponto mais sensível — não físico, mas emocional?',o:['Me sentir ignorado(a)','Me sentir criticado(a)','Me sentir pouco atraente','Me sentir inseguro(a)']},
   {p:'Como você prefere resolver conflitos entre nós?',o:['Falar na hora','Esperar esfriar','Escrever antes de falar','Com mediação de algo externo']},
   {p:'O que você gostaria que eu fizesse mais fora da intimidade?',o:['Me elogiar mais','Me tocar sem intenção','Me incluir em planos','Me ouvir mais ativamente']},
+
+  {p:'O que ainda não falei sobre mim que você gostaria de saber?',o:['Um medo antigo','Um sonho secreto','Uma memória de infância','Um desejo que nunca falei']},
+  {p:'Qual é a coisa que mais teme perder em nosso relacionamento?',o:['A paixão','A amizade','A confiança','A cumplicidade']},
+  {p:'O que você faria diferente se recomeçássemos?',o:['Comunicar melhor','Ser mais presente','Demonstrar mais afeto','Não mudaria nada']},
+  {p:'O que você esconderia de mim por medo de julgamento?',o:['Uma insegurança profunda','Um desejo diferente','Um arrependimento','Uma fantasia']},
+  {p:'Qual é a coisa mais difícil de me pedir?',o:['Mais presença','Mais atenção física','Mais abertura emocional','Mais tempo juntos']},
+  {p:'O que você precisaria de mim em seu pior momento?',o:['Silêncio ao lado','Palavras de apoio','Atitude prática','Abraço sem perguntas']},
+  {p:'O que te fez perceber que me amava de verdade?',o:['Um momento simples','Uma crise superada','Saudade intensa','Quando te vi diferente']},
+  {p:'O que você considera sagrado entre nós dois?',o:['Nossa confiança','Nossos segredos','Nosso toque','Nossa história']},
+  {p:'Como você imagina nossa relação daqui a 10 anos?',o:['Mais estável','Mais apaixonante','Com novos projetos','Igual, mas mais profunda']},
+  {p:'O que te deixa vulnerável de um jeito que não mostra a ningum?',o:['Silêncio do outro','Rejeição','Sentir-se insuficiente','Incerteza sobre o futuro']},
+  {p:'O que você gostaria de ter ouvido de mim quando mais precisou?',o:['Que estou aqui','Que você é suficiente','Que vai passar','Que te amo sem condições']},
+  {p:'O que você considera o nosso maior desafio como casal?',o:['Comunicação','Rotina','Expectativas','Tempo de qualidade']},
+  {p:'Qual é a parte de mim que você ama mas que eu provavelmente subestimo?',o:['Minha sensibilidade','Meu humor','Minha dedicação','Minha intuição']},
+  {p:'Como você se sente quando preciso de espaço?',o:['Respeito e aguardo','Fico inseguro(a)','Uso o tempo para mim','Sinto falta logo']},
+  {p:'Qual é a maneira mais profunda de me dizer que me ama?',o:['Estar presente','Agir sem pedir','Olhar nos meus olhos','Falar meu nome com carinho']},
+  {p:'O que você precisaria para se sentir completamente seguro(a) comigo?',o:['Honestidade total','Consistência','Toque freqüente','Palavras regulares']},
+  {p:'Se tivesse que descrever nossa relação com uma imagem, qual seria?',o:['Fogueira na neve','Mar calmo e profundo','Estrelas no campo','Raízes de uma árvore']},
+  {p:'Qual é a conversa que evitamos mas precisamos ter?',o:['Planos futuros','Medos da relação','Desejos não ditos','Algo do passado']},
+  {p:'O que você gostaria de experienciar comigo antes dos 70 anos?',o:['Uma grande viagem','Uma conquista juntos','Um ritual especial','Crescimento a dois']},
+  {p:'Como você sabe que estou com você de verdade?',o:['Pelo olhar','Pela presença','Pelas palavras','Pelo toque']},
 ]
 let quizQuestions=QUIZ;
 // init timer display
@@ -2941,7 +3022,11 @@ function mpMostrarCarta(carta){
 // ── Banner update ─────────────────────────────────────────────────
 function mpBannerUpdate(){
   const banner=document.getElementById('mp-banner');
-  if(!mp.ativo){banner.classList.remove('on','minha-vez');return;}
+  if(!mp.ativo){
+    banner.classList.remove('on','minha-vez');
+    ['roleta-vez-ind','dado-vez-ind'].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove('on','minha-vez');el.textContent='';}});
+    return;
+  }
   banner.classList.add('on');
   document.getElementById('mp-b-code-val').textContent=mp.codigo;
   const isMyTurn=mp.vezAtual===mp.eu;
@@ -2950,6 +3035,10 @@ function mpBannerUpdate(){
   banner.classList.toggle('minha-vez',isMyTurn);
   const tag=document.getElementById('mp-vez-tag');
   if(tag)tag.style.display=isMyTurn?'inline-block':'none';
+  const rInd=document.getElementById('roleta-vez-ind');
+  if(rInd){rInd.classList.add('on');rInd.classList.toggle('minha-vez',isMyTurn);rInd.textContent=isMyTurn?'É a sua vez de girar! 🎯':('Aguardando '+outrNome+' girar…');}
+  const dInd=document.getElementById('dado-vez-ind');
+  if(dInd){dInd.classList.add('on');dInd.classList.toggle('minha-vez',isMyTurn);dInd.textContent=isMyTurn?'É a sua vez de rolar! 🎲':('Aguardando '+outrNome+' rolar…');}
 }
 
 // ── Copy room code ────────────────────────────────────────────────
