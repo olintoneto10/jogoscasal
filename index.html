@@ -1691,6 +1691,11 @@ body::before{background:
         <span class="nc-ch-nome">A noite toda</span>
         <span class="nc-ch-sub">90 min · sem pressa</span>
       </button>
+      <button class="nc-card-choice" onclick="ncSurpresa()" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(200,148,58,0.09),rgba(155,70,120,0.06));border-color:rgba(200,148,58,0.28)">
+        <span class="nc-ch-icon">✦</span>
+        <span class="nc-ch-nome">Surpreenda-nos</span>
+        <span class="nc-ch-sub">a noite decide — vocês se entregam</span>
+      </button>
     </div>
     <!-- nc-tempo e nc-estado ocultos — compatibilidade JS -->
     <div style="display:none" aria-hidden="true">
@@ -3121,7 +3126,44 @@ const JORNADAS_DATA={
     ]
   }
 };
+// P8: 4th variants integrating P2/P3 games into Noite Guiada
+(function(){
+  const ext={
+    'curta-cansados':
+      [{jogo:'screen-olhar',icon:'👁️',nome:'O Olhar',desc:'Presença pura — só os olhos de vocês',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual suave para fechar juntos',começa:'p2'}],
+    'curta-animados':
+      [{jogo:'screen-toque',icon:'🫧',nome:'Toque Guiado',desc:'Deixem as mãos guiar o começo',começa:'p2'},{jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que ficou guardado',começa:'p1'}],
+    'curta-reconectar':
+      [{jogo:'screen-confissional',icon:'🕯️',nome:'Confissional',desc:'Uma confissão que reaproxima',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Fechem com escuta real',começa:'p2'}],
+    'media-cansados':
+      [{jogo:'screen-olhar',icon:'👁️',nome:'O Olhar',desc:'Comecem pela presença — sem palavras',começa:'p1'},{jogo:'screen-toque',icon:'🫧',nome:'Toque Guiado',desc:'Toque intencional para quem chegou cansado',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual leve para encerrar',começa:'p1'}],
+    'media-animados':
+      [{jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que ficou guardado',começa:'p1'},{jogo:'screen-pandora',icon:'🗝️',nome:'Caixa de Pandora',desc:'Abram o que ficou esperando',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com intensidade',começa:'p1'}],
+    'media-reconectar':
+      [{jogo:'screen-confissional',icon:'🕯️',nome:'Confissional',desc:'Comecem pela confissão mais necessária',começa:'p1'},{jogo:'screen-espelho',icon:'🪞',nome:'O Espelho',desc:'Um imita o outro — sem palavras',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com um gesto de reconexão',começa:'p1'}],
+    'longa-cansados':
+      [{jogo:'screen-toque',icon:'🫧',nome:'Toque Guiado',desc:'Comecem pelo toque — nada mais exigido',começa:'p2'},{jogo:'screen-olhar',icon:'👁️',nome:'O Olhar',desc:'Presença pura, frente a frente',começa:'p1'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Palavras que relaxam e aproximam',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Um ritual delicado para encerrar',começa:'p1'}],
+    'longa-animados':
+      [{jogo:'screen-fotografia',icon:'📸',nome:'Fotografia do Desejo',desc:'Visualizem cenas juntos antes de criá-las',começa:'p1'},{jogo:'screen-espelho',icon:'🪞',nome:'O Espelho',desc:'Um imita o outro — sincronizem',começa:'p2'},{jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que a noite guarda',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com uma noite que fica',começa:'p2'}],
+    'longa-reconectar':
+      [{jogo:'screen-confissional',icon:'🕯️',nome:'Confissional',desc:'Abram com a confissão mais necessária',começa:'p1'},{jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que ficou guardado',começa:'p2'},{jogo:'screen-pandora',icon:'🗝️',nome:'Caixa de Pandora',desc:'Abram o último segredo',começa:'p1'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com uma promessa real',começa:'p2'}],
+    'noite-cansados':
+      [{jogo:'screen-olhar',icon:'👁️',nome:'O Olhar',desc:'Comecem pela presença mais pura',começa:'p1'},{jogo:'screen-toque',icon:'🫧',nome:'Toque Guiado',desc:'O corpo fala quando as palavras cansam',começa:'p2'},{jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas de reencontro gentil',começa:'p1'},{jogo:'screen-espelho',icon:'🪞',nome:'O Espelho',desc:'Movam-se juntos em silêncio',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que encerra a jornada com cuidado',começa:'p1'}],
+    'noite-animados':
+      [{jogo:'screen-fotografia',icon:'📸',nome:'Fotografia do Desejo',desc:'Visualizem as cenas antes de criá-las',começa:'p1'},{jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que ficou guardado',começa:'p2'},{jogo:'screen-pandora',icon:'🗝️',nome:'Caixa de Pandora',desc:'Abram o que ficou esperando',começa:'p1'},{jogo:'screen-espelho',icon:'🪞',nome:'O Espelho',desc:'Sincronizem antes do clímax',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Fechem com a noite que sempre quiseram',começa:'p1'}],
+    'noite-reconectar':
+      [{jogo:'screen-confissional',icon:'🕯️',nome:'Confissional',desc:'A confissão que abre o coração',começa:'p1'},{jogo:'screen-olhar',icon:'👁️',nome:'O Olhar',desc:'Frente a frente — sem escapatória',começa:'p2'},{jogo:'screen-espelho',icon:'🪞',nome:'O Espelho',desc:'Sincronizem o corpo e a presença',começa:'p1'},{jogo:'screen-pandora',icon:'🗝️',nome:'Caixa de Pandora',desc:'Abram o último segredo desta noite',começa:'p2'},{jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'O ritual que fecha a reconexão de vez',começa:'p1'}]
+  };
+  Object.keys(ext).forEach(k=>{if(JORNADAS_DATA.passos[k])JORNADAS_DATA.passos[k].push(ext[k]);});
+})();
 
+function ncSurpresa(){
+  const ts=['curta','curta','media','media','longa'];
+  const es=['animados','reconectar','cansados'];
+  const t=ts[Math.floor(Math.random()*ts.length)];
+  const e=es[Math.floor(Math.random()*es.length)];
+  ncEscolha(t,e);
+}
 function ncSel(btn,groupId){
   document.querySelectorAll('#'+groupId+' .nc-opt').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
@@ -3156,7 +3198,7 @@ function _iniciarJornadaReal(){
   noite.prologo=JORNADAS_DATA.prologo[chave]||'Esta noite foi feita para vocês dois.';
   noite.epilogo=JORNADAS_DATA.epilogo[chave]||'Mais um capítulo escrito juntos.';
   const _pv=JORNADAS_DATA.passos[chave]||JORNADAS_DATA.passos['media-animados'];
-  const _vi=(cap-1)%3;
+  const _vi=(cap-1)%_pv.length;
   noite.passos=(Array.isArray(_pv[0])?_pv[_vi]:_pv).slice();
   const nivelMap={cansados:'Romântico',reconectar:'Romântico',animados:'Quente'};
   noite.nivel=(tempo==='longa'||tempo==='noite')&&estado==='animados'?'Explosivo':(nivelMap[estado]||'Romântico');
@@ -4205,6 +4247,20 @@ const RECON_QUESTIONS_ALL=[
   {q:'O que você aprendeu sobre si mesmo(a) nas últimas semanas?',i:'Relacionamentos nos fazem crescer. O que mudou em você?'},
   {q:'O que você precisa que eu entenda melhor sobre você?',i:'Uma coisa específica. O outro ouve sem interromper.'},
   {q:'Tem algo que você está evitando falar que poderia abrir espaço entre nós?',i:'Gentileza primeiro. Ouçam com curiosidade, não com defesa.'},
+  {q:'Qual é o seu maior medo sobre nós que nunca admitiu?',i:'Não é para resolver agora — só para dizer. Ouçam com cuidado.'},
+  {q:'O que você mais sente falta de quando éramos mais novos juntos?',i:'Uma lembrança específica. Compartilhem o que guardam.'},
+  {q:'Quando foi a última vez que se sentiram realmente em sintonia?',i:'Descrevam o momento — o que acontecia, onde estavam.'},
+  {q:'Tem algo que eu faço que te faz sentir invisível — mesmo sem querer?',i:'Digam com gentileza. Não é acusação — é convite para melhorar.'},
+  {q:'O que você mais admira em como lidamos com as dificuldades?',i:'Uma qualidade nossa que não percebemos no cotidiano.'},
+  {q:'Qual foi a última coisa que fizemos juntos e que você gostaria de repetir?',i:'Pequena ou grande — o que ficou como memória boa.'},
+  {q:'Como você quer ser cuidado(a) nos dias difíceis?',i:'Seja específico(a). Palavras, silêncio, toque — o que ajuda de verdade.'},
+  {q:'Tem algo que você faz por mim que nunca comentou e que gostaria que eu soubesse?',i:'Um gesto silencioso que merece ser visto.'},
+  {q:'O que mais te conecta a mim quando estamos no mesmo espaço sem fazer nada?',i:'Podem ser as pequenas coisas — o olhar, a proximidade, o silêncio.'},
+  {q:'Se pudéssemos criar um ritual novo juntos, o que seria?',i:'Algo que pode ser feito toda semana. Sem julgamento — só imaginação.'},
+  {q:'Como você se sente quando eu saio de casa de manhã?',i:'Uma imagem honesta do começo do dia de cada um.'},
+  {q:'O que você precisa que eu repita mais?',i:'Um gesto, uma palavra, uma atitude. Diga com clareza.'},
+  {q:'O que você descobriu sobre amor vivendo comigo que não sabia antes?',i:'Uma coisa que só essa relação ensinou.'},
+  {q:'Qual parte nossa você mais quer proteger?',i:'O que é precioso e não pode ser perdido — nomeiem juntos.'},
 ];
 let RECON_QUESTIONS=RECON_QUESTIONS_ALL.slice(0,3);
 let reconStep=0;
