@@ -442,6 +442,26 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mission-sel-lbl{display:inline-block;margin-top:3px;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Jost',sans-serif}
 .mission-sel-card.on .mission-sel-lbl{color:rgba(238,104,136,0.7)}
 .mission-sel-card:not(.on) .mission-sel-lbl{color:rgba(180,130,150,0.3)}
+/* ── Home Opção C ── */
+.oc-saudacao{text-align:center;padding:0.9rem 0 0.1rem}
+.oc-sal-pre{font-size:0.57rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(208,69,110,0.4);margin-bottom:6px;font-family:'Jost',sans-serif}
+.oc-sal-nomes{font-family:'Libre Caslon Text',serif;font-size:1.2rem;color:rgba(238,150,170,0.85);font-style:italic}
+.oc-heart{color:rgba(208,69,110,0.55);font-style:normal}
+#home .semaforo-banner{padding:0.36rem 0.9rem;border-radius:9px;gap:0.5rem}
+#home .semaforo-banner .semaforo-val{display:none}
+#home .semaforo-banner .semaforo-label{font-size:0.56rem}
+#home .semaforo-banner .semaforo-dot{width:8px;height:8px}
+#home .semaforo-change{font-size:0.57rem;margin-left:auto}
+.oc-card-noite{background:linear-gradient(160deg,rgba(238,104,136,0.12),rgba(212,133,90,0.07));border:1px solid rgba(238,104,136,0.24);border-radius:18px;padding:22px 20px;text-align:center;cursor:pointer;transition:all 0.2s;width:100%}
+.oc-card-noite:active{background:linear-gradient(160deg,rgba(238,104,136,0.2),rgba(212,133,90,0.13));border-color:rgba(238,104,136,0.42)}
+.oc-card-pre{font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(208,69,110,0.46);margin-bottom:9px;font-family:'Jost',sans-serif}
+.oc-card-icon{font-size:1.85rem;margin-bottom:8px;line-height:1}
+.oc-card-nome{font-family:'Libre Caslon Text',serif;font-size:1.18rem;color:rgba(238,150,170,0.95);margin-bottom:5px}
+.oc-card-desc{font-size:0.77rem;color:rgba(190,140,160,0.56);font-style:italic;line-height:1.5;margin-bottom:14px;font-family:'Libre Caslon Text',serif}
+.oc-card-cta{display:inline-block;background:rgba(238,104,136,0.15);border:1px solid rgba(238,104,136,0.33);color:rgba(238,150,170,0.88);font-family:'Jost',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;padding:8px 22px;border-radius:10px}
+.oc-sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.oc-sec-btn{background:rgba(208,69,110,0.055);border:1px solid rgba(208,69,110,0.12);border-radius:11px;padding:13px 8px;text-align:center;cursor:pointer;color:rgba(220,160,180,0.78);font-family:'Jost',sans-serif;font-size:0.79rem;transition:all 0.18s;letter-spacing:0.01em}
+.oc-sec-btn:active{background:rgba(208,69,110,0.12);border-color:rgba(208,69,110,0.25)}
 .mission-sel-cta{width:100%;background:linear-gradient(135deg,rgba(238,104,136,0.14),rgba(212,133,90,0.1));border:1px solid rgba(238,104,136,0.3);color:rgba(238,150,170,0.9);font-family:'Jost',sans-serif;font-size:0.76rem;letter-spacing:0.08em;text-transform:uppercase;padding:7px;border-radius:9px;text-align:center;cursor:pointer;margin-top:2px}
 /* ══ HISTORY CARD ══ */
 .hist-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:8px;padding:0.7rem 0.9rem;display:flex;flex-direction:column;gap:0.25rem}
@@ -995,21 +1015,19 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 
 <!-- ══ HOME ══ -->
 <div class="screen" id="home">
-  <div class="home-header">
-    <h1>Jogos do Desejo</h1>
-    <p>Escolha como começar a noite</p>
+  <!-- saudação -->
+  <div class="oc-saudacao">
+    <div class="oc-sal-pre">jogos do desejo</div>
+    <div class="oc-sal-nomes"><span id="hP1">—</span> <span class="oc-heart">♥</span> <span id="hP2">—</span></div>
   </div>
-  <div class="home-couple">
-    <span class="pname" id="hP1">—</span>
-    <span class="heart">♥</span>
-    <span class="pname" id="hP2">—</span>
-  </div>
+  <!-- streak (JS controla) -->
   <div class="home-streak" id="home-streak" style="display:none">
     <span class="streak-fire">🔥</span>
     <span class="streak-count" id="streak-count">1</span>
     <span class="streak-label">noite seguida</span>
     <button class="streak-hist-btn" onclick="go('screen-jornada')">💞 Jornada</button>
   </div>
+  <!-- semáforo compacto -->
   <div class="semaforo-banner vazio" id="semaforo-banner" onclick="abrirSemaforo()">
     <div class="semaforo-dot"></div>
     <div class="semaforo-info">
@@ -1018,15 +1036,15 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     </div>
     <div class="semaforo-change" id="semaforo-change">Definir ↓</div>
   </div>
-  <div class="home-capitulo" id="home-capitulo">
-    <div class="cap-header">
-      <span class="cap-num" id="cap-num-label">Capítulo 1</span>
-      <span class="cap-xp" id="cap-xp-label"></span>
-    </div>
-    <div class="cap-nome" id="cap-nome-label">A Faísca</div>
-    <div class="cap-bar-wrap"><div class="cap-bar-fill" id="cap-bar-fill" style="width:0%"></div></div>
+  <!-- card grande — Noite Guiada -->
+  <div class="oc-card-noite" onclick="go('screen-noite-config')">
+    <div class="oc-card-pre">o que faremos?</div>
+    <div class="oc-card-icon">🕯️</div>
+    <div class="oc-card-nome">Noite Guiada</div>
+    <div class="oc-card-desc">Uma experiência completa juntos — com jogos, clima e conexão.</div>
+    <div class="oc-card-cta">Começar →</div>
   </div>
-  <button onclick="go('screen-conquistas')" id="home-cq-btn" style="width:100%;background:rgba(200,148,58,0.07);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:0.52rem 1rem;color:var(--gold-l);font-family:'Cormorant SC',serif;font-size:0.9rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;text-align:left">🏆 <span id="home-cq-label">Conquistas</span></button>
+  <!-- missão da semana (JS controla visibilidade) -->
   <div class="home-mission" id="home-mission" style="display:none">
     <!-- fase de seleção -->
     <div id="mission-sel-wrap" style="display:flex;flex-direction:column;gap:6px">
@@ -1067,10 +1085,14 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
       </div>
     </div>
   </div>
-  <div class="home-cap-badge" id="home-cap-badge" style="display:none">Capítulo <span id="home-cap-num">1</span> da história de vocês<span class="home-cap-nome" id="home-cap-nome">A Primeira Faísca</span></div>
-  <button class="btn-noite" onclick="go('screen-noite-config')">✨ Começar a Noite Guiada</button>
-  <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão — comece aqui</button>
-  <button class="btn-recomeco" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Modo Recomeço</button>
+  <!-- secundários: grade 2×2 -->
+  <div class="oc-sec-grid">
+    <button class="oc-sec-btn" onclick="go('screen-jornada')">📖 Nossa Jornada</button>
+    <button class="oc-sec-btn" onclick="go('screen-socarinho')">🤍 Só Carinho</button>
+    <button class="oc-sec-btn" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Recomeço</button>
+    <button class="oc-sec-btn" onclick="go('screen-conquistas')">🏆 Conquistas</button>
+  </div>
+  <!-- explorar jogos individuais -->
   <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
   <div class="games-grid" id="games-grid" style="display:none">
     <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
@@ -1084,6 +1106,19 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-fantasia')"><div class="icon">🎭</div><div class="name">Encenações</div><div class="desc">Cenários para encenar e soltar a imaginação</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
+  <!-- elementos ocultos — hooks JS (capítulo, conquistas, semaforo-val, cap-badge) -->
+  <div style="display:none" aria-hidden="true">
+    <div id="home-capitulo">
+      <span id="cap-num-label">Capítulo 1</span>
+      <span id="cap-xp-label"></span>
+      <div id="cap-nome-label">A Faísca</div>
+      <div><div id="cap-bar-fill" style="width:0%"></div></div>
+    </div>
+    <div id="home-cap-badge">Capítulo <span id="home-cap-num">1</span> da história de vocês<span id="home-cap-nome">A Primeira Faísca</span></div>
+    <button id="home-cq-btn"><span id="home-cq-label">Conquistas</span></button>
+    <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão</button>
+  </div>
+  <!-- exportar / logout -->
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
     <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
