@@ -99,12 +99,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .home-couple{display:flex;align-items:center;gap:0.5rem;font-size:1.05rem;color:var(--muted);justify-content:center}
 .home-couple .pname{color:var(--gold-l);font-weight:500}
 .home-couple .heart{color:var(--rose)}
-.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;width:100%}
-.game-card{background:linear-gradient(145deg,var(--ground-2),var(--ground-3));border:1px solid rgba(212,133,90,0.22);border-radius:14px;padding:1.4rem 1rem;cursor:pointer;transition:border-color 0.22s,transform 0.18s,box-shadow 0.22s;display:flex;flex-direction:column;align-items:center;gap:0.6rem;text-align:center}
-.game-card:hover{border-color:rgba(238,104,136,0.6);transform:translateY(-4px);box-shadow:0 8px 32px rgba(208,69,110,0.22)}
-.game-card .icon{font-size:2rem;line-height:1}
-.game-card .name{font-family:'Cormorant SC',serif;font-size:1.08rem;font-weight:600;color:var(--gold-l);letter-spacing:0.04em}
-.game-card .desc{font-size:0.86rem;color:var(--muted);line-height:1.4}
 .home-logout{font-size:0.75rem;color:var(--muted);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;text-decoration:underline dotted;text-underline-offset:3px;padding:0.55rem 0.5rem;min-height:2.75rem;display:inline-flex;align-items:center}
 .home-logout:hover{color:var(--text)}
 
@@ -217,7 +211,7 @@ input[type=range].music-vol::-webkit-slider-thumb{-webkit-appearance:none;width:
 .music-stop-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
 .now-playing{font-size:0.62rem;color:var(--muted);text-align:center;padding:0.4rem 0.2rem;border-top:1px solid rgba(200,148,58,0.1);border-bottom:1px solid rgba(200,148,58,0.1);margin:0.5rem 0;min-height:1.5rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:'Jost',sans-serif}
 /* Touch optimization — removes 300ms tap delay on mobile */
-button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:manipulation}
+button,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:manipulation}
 /* Music FAB — pulse when stream is active */
 @keyframes fabPulse{0%,100%{box-shadow:0 0 16px rgba(200,148,58,0.35)}50%{box-shadow:0 0 32px rgba(200,148,58,0.7),0 0 50px rgba(196,107,122,0.28)}}
 .fab.playing{animation:fabPulse 1.8s ease-in-out infinite;border-color:var(--gold)}
@@ -341,7 +335,6 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 
 @media(prefers-reduced-motion:reduce){.btn-gold,.card{animation:none;transition:none}}
 @media(max-width:400px){
-  .games-grid{grid-template-columns:1fr}
   .card{width:270px}
   .vd-btns{flex-direction:column}
   .login-players{grid-template-columns:1fr}
@@ -371,17 +364,10 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 @media(max-width:390px){
   .c-text{font-size:0.88rem;line-height:1.65}
   .btn-gold{padding:0.8rem 1.8rem;font-size:1rem}
-  .game-card{padding:1rem 0.7rem}
-  .game-card .name{font-size:0.76rem}
   .login-logo h1{font-size:2rem}
   h2.screen-title{font-size:1.5rem}
 }
 /* ══ MOOD CHOICE OVERLAY ══ */
-.mood-choice-btn-REMOVED{background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:10px;padding:0.9rem 1.5rem;color:var(--text);font-family:'Jost',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.18s;text-align:left;width:100%}
-.mood-choice-btn:hover,.mood-choice-btn:active{border-color:var(--gold);background:rgba(200,148,58,0.08);color:var(--gold-l)}
-.game-card{position:relative}
-.game-card.mood-rec{border-color:rgba(212,133,90,0.5)!important;box-shadow:0 0 14px rgba(212,133,90,0.18)}
-.game-card.mood-rec::after{content:'✦ Recomendado';position:absolute;top:0.42rem;right:0.65rem;font-size:0.58rem;color:var(--gold);letter-spacing:0.08em;font-family:'Jost',sans-serif;text-transform:uppercase}
 /* ══ WHATSAPP BUTTON ══ */
 .btn-whatsapp{display:flex;align-items:center;justify-content:center;gap:0.6rem;background:linear-gradient(135deg,#25D366,#128C7E);border:none;border-radius:10px;padding:0.9rem 2.2rem;color:#fff;font-family:'Jost',sans-serif;font-size:1rem;font-weight:500;letter-spacing:0.04em;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;box-shadow:0 4px 18px rgba(37,211,102,0.35);width:calc(100% - 3rem);max-width:320px}
 .btn-whatsapp:hover,.btn-whatsapp:active{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.5)}
@@ -625,8 +611,6 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .xp-pop{position:fixed;right:1.3rem;bottom:6rem;font-family:'Cormorant SC',serif;font-size:0.8rem;color:var(--gold-l);letter-spacing:0.1em;pointer-events:none;z-index:999;animation:xpFloat 1.2s ease forwards}
 .btn-reconexao{width:calc(100% - 2.4rem);margin:0 1.2rem 0;background:rgba(196,107,122,0.08);border:1px solid rgba(196,107,122,0.26);color:var(--rose-l);font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.06em;padding:0.72rem 1.5rem;border-radius:10px;cursor:pointer;transition:all 0.22s}
 .btn-reconexao:hover{background:rgba(196,107,122,0.16);border-color:var(--rose-l)}
-.games-grid-sep{text-align:center;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.38);margin:0.5rem 0 0.1rem;cursor:pointer;user-select:none;transition:color 0.2s}
-.games-grid-sep:hover{color:rgba(184,136,122,0.65)}
 /* ══ HISTÓRICO RICO ══ */
 .hs-stats{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-bottom:1.1rem}
 .hs-stat{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:10px;padding:0.65rem 0.8rem;display:flex;flex-direction:column;gap:0.1rem}
@@ -1019,20 +1003,6 @@ body::before{background:
 }
 .home-header p{font-size:1.1rem;color:rgba(205,165,145,0.84);letter-spacing:0.1em}
 
-/* Cards de jogo mais ricos */
-.game-card{
-  background:linear-gradient(155deg,#200B16 0%,#260E1C 55%,#2C1220 100%);
-  border-color:rgba(212,133,90,0.30);
-  box-shadow:0 4px 28px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.035)
-}
-.game-card:hover{
-  border-color:rgba(238,104,136,0.70);
-  box-shadow:0 10px 44px rgba(208,69,110,0.28),0 4px 16px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.035)
-}
-.game-card .icon{filter:drop-shadow(0 0 14px rgba(212,133,90,0.4));font-size:2.2rem}
-.game-card .name{font-size:1.1rem;letter-spacing:0.055em}
-.game-card .desc{font-size:0.88rem}
-
 /* Botão principal — Noite Guiada */
 .btn-noite{
   background:linear-gradient(145deg,rgba(238,104,136,0.24),rgba(212,133,90,0.16));
@@ -1244,7 +1214,6 @@ body::before{background:
 .overlay{background:rgba(8,2,5,0.93)}
 #aftercare-overlay,#timer-overlay{background:rgba(8,2,5,0.97)}
 
-
 /* ── P5: Transições de tela ─────────────────────────────── */
 @keyframes screenEnter{
   from{opacity:0;transform:translateY(12px)}
@@ -1273,16 +1242,6 @@ body::before{background:
 .mission-week-label{font-size:0.65rem;margin-bottom:0.15rem}
 .mission-week-text{font-size:1.08rem!important}
 
-/* ── P5: Stagger nos cards da home ───────────────────────── */
-.games-grid .game-card:nth-child(1){animation-delay:0.03s}
-.games-grid .game-card:nth-child(2){animation-delay:0.07s}
-.games-grid .game-card:nth-child(3){animation-delay:0.11s}
-.games-grid .game-card:nth-child(4){animation-delay:0.15s}
-.games-grid .game-card:nth-child(5){animation-delay:0.19s}
-.games-grid .game-card:nth-child(6){animation-delay:0.23s}
-.games-grid .game-card:nth-child(7){animation-delay:0.27s}
-.games-grid .game-card:nth-child(8){animation-delay:0.31s}
-
 /* ── P5: Trilha cards com stagger ─────────────────────────── */
 .trilha-card:nth-child(1){animation-delay:0.04s}
 .trilha-card:nth-child(2){animation-delay:0.09s}
@@ -1294,7 +1253,6 @@ body::before{background:
 .trilha-card:nth-child(8){animation-delay:0.33s}
 .trilha-card:nth-child(9){animation-delay:0.37s}
 .trilha-card:nth-child(10){animation-delay:0.41s}
-
 
 /* ── P6: Saudação dinâmica ─────────────────────────────────── */
 .oc-sal-pre{
@@ -1312,7 +1270,6 @@ body::before{background:
 /* ── P6: Streak mais visível ──────────────────────────────── */
 .streak-fire{font-size:1.6rem}
 .streak-label{font-size:0.88rem}
-
 
 /* ── P7: Jornada stats 5 itens ─────────────────────────────── */
 .jornada-stats{flex-wrap:wrap}
@@ -1342,7 +1299,6 @@ body::before{background:
 #home-capitulo .cap-header .cap-nome{font-family:'Cormorant SC',serif;font-size:0.9rem;color:var(--gold-l);letter-spacing:0.04em}
 #home-cap-xp-hint{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(185,135,165,0.5);font-family:'Jost',sans-serif;text-align:right;margin-top:0.2rem}
 
-
 /* ── P9: Recomeço pergunta guia ────────────────────────────── */
 .rec-ov-pergunta{
   font-family:'Libre Caslon Text',serif;font-style:italic;
@@ -1354,7 +1310,6 @@ body::before{background:
   background:transparent!important;border-color:rgba(180,100,160,0.22)!important;
   color:rgba(165,115,145,0.6)!important;font-size:0.78rem!important;padding:0.5rem 1.4rem!important
 }
-
 
 /* ══ P10: TEMAS ══════════════════════════════════════════════ */
 /* Veludo = default (no class). Brasa = dark amber. Safira = deep navy. */
@@ -1452,7 +1407,6 @@ html{font-size:17px}
 .btn-trilhas{font-size:0.88rem!important;color:rgba(238,185,210,0.96)!important;border-color:rgba(208,80,140,0.38)!important}
 
 /* Separador jogos individuais */
-.games-grid-sep{font-size:0.72rem!important;color:rgba(200,158,142,0.65)!important}
 
 /* Missão da semana — ativa no home */
 .mission-week-text{font-size:1.05rem!important;color:rgba(240,205,215,0.97)!important}
@@ -1540,7 +1494,6 @@ body.tema-petala #cap-xp-label{color:rgba(140,80,60,0.62)!important;}
 body.tema-petala .btn-sorteio{background:rgba(192,32,96,0.05)!important;border-color:rgba(192,32,96,0.22)!important;color:#8A1040!important;}
 body.tema-petala .btn-sorteio:hover{background:rgba(192,32,96,0.1)!important;}
 body.tema-petala .btn-trilhas{background:linear-gradient(135deg,rgba(192,32,96,0.1),rgba(140,20,70,0.07))!important;border-color:rgba(192,32,96,0.28)!important;color:#8A1040!important;}
-body.tema-petala .games-grid-sep{color:rgba(155,64,80,0.6)!important;}
 
 /* ── Home: trilha recomendada ── */
 body.tema-petala .home-trilha-rec{background:linear-gradient(145deg,rgba(155,64,16,0.08),rgba(155,64,16,0.05))!important;border-color:rgba(155,64,16,0.2)!important;}
@@ -1566,9 +1519,6 @@ body.tema-petala .back-btn{color:#8A1040!important;border-color:rgba(192,32,96,0
 body.tema-petala .game-title{color:#8A1040!important;}
 
 /* ── Cards de jogos (grid) ── */
-body.tema-petala .game-card{background:rgba(192,32,96,0.04)!important;border:1px solid rgba(192,32,96,0.13)!important;}
-body.tema-petala .game-card .name{color:#7A1038!important;}
-body.tema-petala .game-card .desc{color:rgba(100,40,60,0.82)!important;}
 
 /* ── Textos gerais do jogo ── */
 body.tema-petala .c-title{color:#8A1040!important;}
@@ -1652,7 +1602,6 @@ body.tema-petala .install-text{color:#22080F!important;}
 body.tema-petala .achiev-toast{background:rgba(255,248,252,0.98)!important;border-color:rgba(192,32,96,0.3)!important;}
 body.tema-petala .achiev-toast-name{color:#8A1040!important;}
 body.tema-petala .achiev-toast-hist{color:rgba(80,30,50,0.82)!important;}
-
 
 /* === PAGINAÇÃO HOME === */
 #home.active{
@@ -2924,7 +2873,6 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
   <button class="btn-gold" onclick="document.getElementById('cap-up-overlay').classList.remove('on')" style="margin-top:0.4rem;padding:0.7rem 2.2rem;font-size:0.82rem;letter-spacing:0.1em">Continuar →</button>
 </div>
 
-
 <!-- ══ TIMER FAB ══ -->
 <button class="fab" id="timer-fab" onclick="openTimerFrom(null)" title="Cronômetro">⏱</button>
 <!-- ══ CONFIG FAB ══ -->
@@ -3378,7 +3326,6 @@ function go(id){
   if(id==='screen-config'){renderConfigScreen();}
 }
 
-
 // ══ NOITE GUIADA ═══════════════════════════════════════════════════
 const NOITE_SEQ={
   'Romântico':[
@@ -3821,7 +3768,6 @@ function doLogout(){
   if(mp.ativo){cancelarSala();}
   go('screen-mode');
 }
-
 
 // ══ CONSENT GATE (Explosivo) ═════════════════════════════════════
 let _consentPendingLvl=null,_consentPendingGroup=null,_consentStep=0;
@@ -5066,7 +5012,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('login').classList.contains('active'))doLogin();
 });
 
-
 // ══ GAMIFICAÇÃO ═══════════════════════════════════════════════════
 
 // ── Streak ──────────────────────────────────────────────────────
@@ -5325,8 +5270,6 @@ go=function(id){
     if(_n2&&_i2&&!_i2.value)_i2.value=_n2;
   }
 };
-
-
 
 // ══ SEMÁFORO DO HUMOR ═══════════════════════════════════════════════
 const _semaMap={
@@ -5728,14 +5671,7 @@ function mostrarCapituloUp(cap){
   if(cap.n===10)setTimeout(()=>verificarConquista('cap10'),600);
 }
 
-function toggleGamesGrid(){
-  const g=document.getElementById('games-grid');
-  const t=document.getElementById('games-grid-toggle');
-  if(!g||!t)return;
-  const isOpen=g.style.display!=='none';
-  g.style.display=isOpen?'none':'grid';
-  t.textContent=(isOpen?'▾ ':'▴ ')+'Explorar jogos individuais';
-}
+function toggleGamesGrid(){} // no-op: #games-grid removido
 
 // ══ FIREBASE + MULTIPLAYER ════════════════════════════════════════
 const fbCfg={
@@ -7060,7 +6996,6 @@ function iniciarTrilhaNar(id){
   renderNoiteGuiada();
 }
 
-
 // === PAGINAÇÃO HOME ===
 function _hpUpdateDots(idx){
   document.querySelectorAll('.home-dot').forEach(function(d,i){
@@ -7151,8 +7086,6 @@ function cfgZerarDados(){
     <button onclick="fecharHistorico()" class="btn-ghost" style="margin-top:1.2rem;width:100%">Fechar</button>
   </div>
 </div>
-
-
 
 <!-- ══ CONSENT OVERLAY (Explosivo) ══ -->
 <div id="consent-overlay">
@@ -7330,7 +7263,6 @@ function cfgZerarDados(){
   <button class="me-confirm-btn" onclick="missaoEntradaConfirmar()">✓ Confirmar missão desta semana</button>
   <button class="me-skip-btn" onclick="missaoEntradaPular()">Pular por agora</button>
 </div>
-
 
 <!-- ══ CONFIGURAÇÕES ══ -->
 <div class="screen" id="screen-config">
