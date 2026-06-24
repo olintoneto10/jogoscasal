@@ -432,6 +432,17 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mission-week-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.02rem;color:var(--text);line-height:1.55}
 .mission-done-btn{align-self:flex-end;background:none;border:1px solid rgba(102,187,106,0.3);color:#a5d6a7;font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:3px;cursor:pointer}
 .mission-done-btn.done{color:var(--muted);border-color:rgba(255,255,255,0.1);text-decoration:line-through}
+.mission-sel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.mission-sel-title{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(208,69,110,0.65);font-family:'Jost',sans-serif}
+.mission-sel-week{font-size:0.6rem;color:rgba(180,130,100,0.4);font-style:italic}
+.mission-sel-card{background:rgba(208,69,110,0.055);border:1px solid rgba(208,69,110,0.15);border-radius:10px;padding:9px 11px;cursor:pointer;transition:all 0.2s}
+.mission-sel-card.on{border-color:rgba(238,104,136,0.5);background:rgba(208,69,110,0.1);box-shadow:0 2px 10px rgba(238,104,136,0.08)}
+.mission-sel-nome{font-family:'Libre Caslon Text',serif;font-size:0.88rem;color:rgba(230,160,180,0.92);margin-bottom:2px}
+.mission-sel-tarefa{font-size:0.67rem;color:rgba(190,140,160,0.58);font-style:italic;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mission-sel-lbl{display:inline-block;margin-top:3px;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Jost',sans-serif}
+.mission-sel-card.on .mission-sel-lbl{color:rgba(238,104,136,0.7)}
+.mission-sel-card:not(.on) .mission-sel-lbl{color:rgba(180,130,150,0.3)}
+.mission-sel-cta{width:100%;background:linear-gradient(135deg,rgba(238,104,136,0.14),rgba(212,133,90,0.1));border:1px solid rgba(238,104,136,0.3);color:rgba(238,150,170,0.9);font-family:'Jost',sans-serif;font-size:0.76rem;letter-spacing:0.08em;text-transform:uppercase;padding:7px;border-radius:9px;text-align:center;cursor:pointer;margin-top:2px}
 /* ══ HISTORY CARD ══ */
 .hist-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:8px;padding:0.7rem 0.9rem;display:flex;flex-direction:column;gap:0.25rem}
 .hist-jogo{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
@@ -1017,17 +1028,43 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
   <button onclick="go('screen-conquistas')" id="home-cq-btn" style="width:100%;background:rgba(200,148,58,0.07);border:1px solid rgba(200,148,58,0.22);border-radius:10px;padding:0.52rem 1rem;color:var(--gold-l);font-family:'Cormorant SC',serif;font-size:0.9rem;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;text-align:left">🏆 <span id="home-cq-label">Conquistas</span></button>
   <div class="home-mission" id="home-mission" style="display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div class="mission-week-label">Missão da Semana</div>
-      <div class="mission-week-label" id="mission-total-label" style="color:var(--muted)"></div>
+    <!-- fase de seleção -->
+    <div id="mission-sel-wrap" style="display:flex;flex-direction:column;gap:6px">
+      <div class="mission-sel-header">
+        <span class="mission-sel-title">Missão da Semana</span>
+        <span class="mission-sel-week">escolham uma</span>
+      </div>
+      <div class="mission-sel-card on" onclick="missaoSelCard(this,0)">
+        <div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div>
+        <div class="mission-sel-lbl">✦ selecionada</div>
+      </div>
+      <div class="mission-sel-card" onclick="missaoSelCard(this,1)">
+        <div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div>
+        <div class="mission-sel-lbl">· escolher esta</div>
+      </div>
+      <div class="mission-sel-card" onclick="missaoSelCard(this,2)">
+        <div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div>
+        <div class="mission-sel-lbl">· escolher esta</div>
+      </div>
+      <button class="mission-sel-cta" onclick="missaoConfirmar()">✓ Confirmar missão desta semana</button>
     </div>
-    <div id="mission-week-subtitle" style="font-size:0.73rem;color:var(--muted);font-style:italic;line-height:1.4;margin-bottom:0.15rem"></div>
-    <div class="mission-week-text" id="mission-week-text"></div>
-    <div id="mission-encerramento" style="display:none;font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.84rem;color:var(--gold-l);line-height:1.55;padding:0.5rem 0;border-top:1px solid rgba(200,148,58,0.15);margin-top:0.2rem"></div>
-    <button class="mission-done-btn" id="mission-done-btn" onclick="missaoDaSemanaFeita()">✓ Concluímos!</button>
-    <div id="mission-nota-wrap" style="display:none;flex-direction:column;gap:0.5rem;margin-top:0.2rem">
-      <textarea id="mission-nota-input" placeholder="Escreva uma lembrança desta missão… (opcional)" rows="3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:8px;color:var(--text);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;padding:0.7rem 0.8rem;resize:none;width:100%;line-height:1.55"></textarea>
-      <button onclick="salvarNotaMissao()" style="align-self:flex-end;background:none;border:1px solid rgba(200,148,58,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:3px;cursor:pointer">💾 Guardar lembrança</button>
+    <!-- fase ativa -->
+    <div id="mission-active-wrap" style="display:none;flex-direction:column;gap:0.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="mission-week-label">Missão da Semana</div>
+        <div class="mission-week-label" id="mission-total-label" style="color:var(--muted)"></div>
+      </div>
+      <div id="mission-week-subtitle" style="font-size:0.73rem;color:var(--muted);font-style:italic;line-height:1.4;margin-bottom:0.15rem"></div>
+      <div class="mission-week-text" id="mission-week-text"></div>
+      <div id="mission-encerramento" style="display:none;font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.84rem;color:var(--gold-l);line-height:1.55;padding:0.5rem 0;border-top:1px solid rgba(200,148,58,0.15);margin-top:0.2rem"></div>
+      <button class="mission-done-btn" id="mission-done-btn" onclick="missaoDaSemanaFeita()">✓ Concluímos!</button>
+      <div id="mission-nota-wrap" style="display:none;flex-direction:column;gap:0.5rem;margin-top:0.2rem">
+        <textarea id="mission-nota-input" placeholder="Escreva uma lembrança desta missão… (opcional)" rows="3" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,148,58,0.2);border-radius:8px;color:var(--text);font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;padding:0.7rem 0.8rem;resize:none;width:100%;line-height:1.55"></textarea>
+        <button onclick="salvarNotaMissao()" style="align-self:flex-end;background:none;border:1px solid rgba(200,148,58,0.3);color:var(--gold);font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:3px;cursor:pointer">💾 Guardar lembrança</button>
+      </div>
     </div>
   </div>
   <div class="home-cap-badge" id="home-cap-badge" style="display:none">Capítulo <span id="home-cap-num">1</span> da história de vocês<span class="home-cap-nome" id="home-cap-nome">A Primeira Faísca</span></div>
@@ -3649,15 +3686,29 @@ const ARCOS_SEMANA=[
 // Semanas começam segunda-feira 00:00 BRT (UTC-3); âncora = 1970-01-05 03:00 UTC = 442800000ms
 function getSemanaAtual(){return Math.floor((Date.now()-442800000)/(7*86400000));}
 function getMissaoDaSemana(){
-  return ARCOS_SEMANA[getSemanaAtual()%ARCOS_SEMANA.length];
+  const sem=getSemanaAtual();
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  const offset=(stored.sem===sem&&stored.escolha!=null)?stored.escolha:0;
+  return ARCOS_SEMANA[(sem+offset)%ARCOS_SEMANA.length];
 }
 function carregarMissaoSemana(){
   const sem=getSemanaAtual();
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
-  const feita=stored.sem===sem&&stored.feita;
-  const arc=getMissaoDaSemana();
+  const temEscolha=(stored.sem===sem&&stored.escolha!=null);
   const el=document.getElementById('home-mission');
   el.style.display='flex';
+  const selWrap=document.getElementById('mission-sel-wrap');
+  const activeWrap=document.getElementById('mission-active-wrap');
+  if(!temEscolha){
+    if(selWrap)selWrap.style.display='flex';
+    if(activeWrap)activeWrap.style.display='none';
+    _renderMissaoSelCards();
+    return;
+  }
+  if(selWrap)selWrap.style.display='none';
+  if(activeWrap)activeWrap.style.display='flex';
+  const feita=stored.feita;
+  const arc=getMissaoDaSemana();
   const sub=document.getElementById('mission-week-subtitle');
   if(sub)sub.textContent=arc.setup;
   document.getElementById('mission-week-text').textContent=arc.titulo+' — '+arc.tarefa;
@@ -3677,6 +3728,32 @@ function carregarMissaoSemana(){
     btn.classList.remove('done');btn.textContent='✓ Concluímos!';
     document.getElementById('mission-nota-wrap').style.display='none';
   }
+}
+let _missaoSelIdx=0;
+function _renderMissaoSelCards(){
+  _missaoSelIdx=0;
+  const sem=getSemanaAtual();
+  const cards=document.querySelectorAll('.mission-sel-card');
+  cards.forEach((card,i)=>{
+    const arc=ARCOS_SEMANA[(sem+i)%ARCOS_SEMANA.length];
+    card.querySelector('.mission-sel-nome').textContent=arc.titulo;
+    card.querySelector('.mission-sel-tarefa').textContent=arc.tarefa;
+    card.classList.toggle('on',i===0);
+    card.querySelector('.mission-sel-lbl').textContent=i===0?'✦ selecionada':'· escolher esta';
+  });
+}
+function missaoSelCard(el,idx){
+  _missaoSelIdx=idx;
+  document.querySelectorAll('.mission-sel-card').forEach((c,i)=>{
+    c.classList.toggle('on',i===idx);
+    c.querySelector('.mission-sel-lbl').textContent=i===idx?'✦ selecionada':'· escolher esta';
+  });
+}
+function missaoConfirmar(){
+  const sem=getSemanaAtual();
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  localStorage.setItem('jd_missaoSem',JSON.stringify({...stored,sem,escolha:_missaoSelIdx,feita:false}));
+  carregarMissaoSemana();
 }
 function missaoDaSemanaFeita(){
   const sem=getSemanaAtual();
