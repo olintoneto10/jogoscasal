@@ -1714,16 +1714,20 @@ body.tema-petala .cfg-sec-label{border-color:rgba(155,64,16,0.12);}
 body.tema-petala .cfg-tema-nome{color:var(--text);}
 
 /* === GAMES ICON GRID (hp3) === */
-#hp3{overflow-y:auto;height:100dvh;min-height:unset!important;padding:1.1rem 0.9rem 3rem;display:flex;flex-direction:column;align-items:stretch;gap:0.9rem;box-sizing:border-box;}
-.hp3-title{text-align:center;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.5);flex-shrink:0}
-.games-icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;width:100%}
-.game-icon-card{display:flex;flex-direction:column;align-items:center;gap:0.3rem;padding:0.75rem 0.3rem 0.65rem;background:rgba(200,148,58,0.05);border:1px solid rgba(200,148,58,0.13);border-radius:12px;cursor:pointer;transition:border-color 0.18s,background 0.18s;-webkit-tap-highlight-color:transparent}
+#hp3{overflow-y:auto;height:100dvh;min-height:unset!important;padding:0;display:flex;flex-direction:column;align-items:stretch;box-sizing:border-box;}
+.hp3-header{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem 0.5rem;flex-shrink:0}
+.hp3-header-title{font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.55)}
+.hp3-cfg-btn{background:none;border:1px solid rgba(200,148,58,0.28);border-radius:8px;color:var(--gold-l);font-size:0.82rem;padding:0.38rem 0.75rem;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:0.03em}
+.games-icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.55rem;padding:0 0.85rem;box-sizing:border-box;flex:1;align-content:start}
+.game-icon-card{display:flex;flex-direction:column;align-items:center;gap:0.28rem;padding:0.6rem 0.3rem 0.55rem;background:rgba(200,148,58,0.05);border:1px solid rgba(200,148,58,0.13);border-radius:11px;cursor:pointer;transition:border-color 0.18s,background 0.18s;-webkit-tap-highlight-color:transparent}
 .game-icon-card:active{background:rgba(200,148,58,0.13);border-color:rgba(200,148,58,0.42);}
-.gi-icon{font-size:1.75rem;line-height:1;filter:drop-shadow(0 0 8px rgba(212,133,90,0.28))}
-.gi-name{font-family:'Jost',sans-serif;font-size:0.6rem;color:var(--text);text-align:center;line-height:1.3;letter-spacing:0.02em}
-.hp3-actions{display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap;margin-top:auto;padding-top:0.4rem;flex-shrink:0}
+.gi-icon{font-size:1.6rem;line-height:1;filter:drop-shadow(0 0 8px rgba(212,133,90,0.28))}
+.gi-name{font-family:'Jost',sans-serif;font-size:0.58rem;color:var(--text);text-align:center;line-height:1.3;letter-spacing:0.02em}
+.hp3-actions{display:flex;gap:0.65rem;justify-content:center;flex-wrap:wrap;padding:0.6rem 1rem 1.2rem;flex-shrink:0;border-top:1px solid rgba(200,148,58,0.07);margin-top:0.4rem}
 body.tema-petala .game-icon-card{background:rgba(192,32,96,0.04);border-color:rgba(192,32,96,0.12);}
 body.tema-petala .game-icon-card:active{background:rgba(192,32,96,0.1);border-color:rgba(192,32,96,0.35);}
+body.tema-petala .hp3-cfg-btn{border-color:rgba(155,64,16,0.3);color:var(--gold-l);}
+body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
 </style>
 
 <!-- Service Worker -->
@@ -2018,7 +2022,10 @@ body.tema-petala .game-icon-card:active{background:rgba(192,32,96,0.1);border-co
 
   <!-- ── página 3: explorar jogos ── -->
   <div class="home-page" id="hp3">
-  <div class="hp3-title">Explorar jogos</div>
+  <div class="hp3-header">
+    <span class="hp3-header-title">Explorar jogos</span>
+    <button class="hp3-cfg-btn" onclick="go('screen-config')">⚙ Config</button>
+  </div>
   <div class="games-icon-grid">
     <div class="game-icon-card" onclick="go('screen-roleta')"><div class="gi-icon">🎡</div><div class="gi-name">Roleta do Desejo</div></div>
     <div class="game-icon-card" onclick="go('screen-vd')"><div class="gi-icon">🃏</div><div class="gi-name">Verdade ou Desafio</div></div>
@@ -2046,7 +2053,6 @@ body.tema-petala .game-icon-card:active{background:rgba(192,32,96,0.1);border-co
     <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão</button>
   </div>
   <div class="hp3-actions">
-    <button class="home-logout" onclick="go('screen-config')" title="Configurações">⚙ Config</button>
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
     <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
     <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
