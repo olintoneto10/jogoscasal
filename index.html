@@ -1294,6 +1294,24 @@ body::before{background:
 .trilha-card:nth-child(9){animation-delay:0.37s}
 .trilha-card:nth-child(10){animation-delay:0.41s}
 
+
+/* ── P6: Saudação dinâmica ─────────────────────────────────── */
+.oc-sal-pre{
+  transition:opacity 0.6s ease;
+  font-size:0.72rem!important;
+  letter-spacing:0.14em!important
+}
+/* ── P6: Conquistas grid destaque ──────────────────────────── */
+.cq-card.desbloqueada{
+  background:linear-gradient(155deg,rgba(200,148,58,0.09),rgba(238,104,136,0.05));
+  box-shadow:0 3px 18px rgba(200,148,58,0.12)
+}
+.cq-icon{font-size:2.2rem}
+.cq-nome{font-size:0.9rem}
+/* ── P6: Streak mais visível ──────────────────────────────── */
+.streak-fire{font-size:1.6rem}
+.streak-label{font-size:0.88rem}
+
 </style>
 
 <!-- Service Worker -->
@@ -2768,20 +2786,20 @@ function go(id){
   if(id==='screen-conquistas')renderConquistas();
   if(id==='screen-jornada')renderJornada();
   if(id==='screen-trilhas')renderTrilhas();
-  if(id==='screen-carta-secreta')cartaSecretaInit();
-  if(id==='screen-olhar')olharReset();
-  if(id==='screen-confissional')confInit();
-  if(id==='screen-espelho')espelhoReset();
-  if(id==='screen-fotografia')fotoReset();
-  if(id==='screen-pandora')pandoraReset();
-  if(id==='screen-toque')toqueReset();
+  if(id==='screen-carta-secreta'){cartaSecretaInit();verificarConquista('carta_secreta');}
+  if(id==='screen-olhar'){olharReset();verificarConquista('olhar');}
+  if(id==='screen-confissional'){confInit();verificarConquista('confissional');}
+  if(id==='screen-espelho'){espelhoReset();verificarConquista('espelho');}
+  if(id==='screen-fotografia'){fotoReset();verificarConquista('fotografia');}
+  if(id==='screen-pandora'){pandoraReset();verificarConquista('pandora');}
+  if(id==='screen-toque'){toqueReset();verificarConquista('toque_guiado');}
   if(id==='screen-recomeco'){if(!localStorage.getItem('jd_recomeco'))localStorage.setItem('jd_recomeco','1');renderRecomeco();}
   const _swPill=document.getElementById('safeword-pill');
   if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
   const _acBar=document.getElementById('aftercare-bar');
   if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
-  if(id==='home')atualizarHomeCap();
+  if(id==='home'){atualizarHomeCap();_saudacaoDinamica();}
 }
 
 
@@ -3115,6 +3133,26 @@ function _iniciarJornadaReal(){
   go('screen-noite-guiada');
 }
 
+function _saudacaoDinamica(){
+  const h=new Date().getHours();
+  const frases={
+    manha:['bom dia, casal','comecem o dia juntos','a manhã é de vocês'],
+    tarde:['boa tarde, casal','uma pausa para vocês','o dia pede atenção'],
+    noite:['boa noite, casal','que noite é essa?','a noite começa aqui','a noite é de vocês'],
+    madrugada:['ainda acordados?','a madrugada é íntima','o silêncio é de vocês'],
+  };
+  let pool;
+  if(h>=5&&h<12)pool=frases.manha;
+  else if(h>=12&&h<18)pool=frases.tarde;
+  else if(h>=18&&h<24)pool=frases.noite;
+  else pool=frases.madrugada;
+  const el=document.querySelector('.oc-sal-pre');
+  if(el){
+    const picked=pool[Math.floor(Math.random()*pool.length)];
+    el.style.opacity='0';
+    setTimeout(()=>{el.textContent=picked;el.style.opacity='1';},200);
+  }
+}
 function atualizarHomeCap(){
   const cap=parseInt(localStorage.getItem('jd_capitulo')||'0');
   const badge=document.getElementById('home-cap-badge');
@@ -3152,7 +3190,7 @@ function doLogin(){
   document.getElementById('vdPlayer').textContent=`Vez de ${n1}`;
   vdCurrent=1;_vdLocal=1;
   go('home');
-  setTimeout(atualizarHomeCap,50);
+  setTimeout(()=>{atualizarHomeCap();_saudacaoDinamica();},50);
 }
 function doLogout(){
   if(!confirm('Encerrar a sessão atual e voltar para a tela inicial?'))return;
@@ -4912,6 +4950,16 @@ const CONQUISTAS={
   cap3:{icon:'📖',nome:'Capítulo 3',historia:'O jogo ficou sério. Vocês estão dispostos a ir mais fundo — isso importa.'},
   cap5:{icon:'🌟',nome:'Capítulo 5',historia:'Metade da jornada. A tensão entre vocês já tem uma linguagem própria.'},
   cap10:{icon:'💎',nome:'A História de Vocês',historia:'Chegaram ao último capítulo. A história que escreveram é só de vocês — e ela continua.'},
+  carta_secreta:{icon:'💌',nome:'Carta Entregue',historia:'Compartilharam algo que ficava guardado. Palavras escritas com intenção chegam mais fundo.'},
+  confissional:{icon:'🕯️',nome:'A Grande Confissão',historia:'Revelaram o que estava escondido. A confiança que isso exige é a base de tudo.'},
+  pandora:{icon:'🗝️',nome:'Caixa Aberta',historia:'Abriram a caixa — e o que saiu de lá foi criado pelos dois juntos.'},
+  espelho:{icon:'🪞',nome:'Espelho e Reflexo',historia:'Se viram através do outro. Esse espelho raramente mente.'},
+  fotografia:{icon:'📸',nome:'Memória Revelada',historia:'Revelaram imagens que existiam só na memória. E agora existem entre vocês dois.'},
+  toque_guiado:{icon:'🫧',nome:'Toque Presente',historia:'Cinco minutos de atenção pura. O corpo não esquece quando foi realmente tocado.'},
+  olhar:{icon:'👁️',nome:'O Encontro dos Olhos',historia:'Ficaram frente a frente sem desviar. Nesse olhar inteiro, dizem mais do que as palavras conseguem.'},
+  trilha:{icon:'🧭',nome:'Trilha Iniciada',historia:'Escolheram um caminho juntos. Cada trilha é um começo — e vocês começaram.'},
+  trilha5:{icon:'🌟',nome:'Cinco Caminhos',historia:'Cinco trilhas percorridas. Cada uma deixou algo — e isso vai aparecer nas próximas.'},
+  missao10:{icon:'🏆',nome:'Dez Semanas',historia:'Dez missões juntos. Isso não é sorte — é compromisso real, semana a semana.'},
 };
 let _rSpins=parseInt(localStorage.getItem('jd_rSpins')||'0');
 function verificarConquista(tipo,a,b){
@@ -4927,7 +4975,7 @@ function verificarConquista(tipo,a,b){
   if(tipo==='vd')ganhar('primeira');
   if(tipo==='dado')ganhar('dado');
   if(tipo==='missao')ganhar('missao');
-  if(tipo==='missao_sem'){ganhar('missao');if(a>=5)ganhar('missao5');}
+  // missao_sem handled above with missao10
   if(tipo==='mapa')ganhar('mapa');
   if(tipo==='quiz'&&a>=6)ganhar('quiz6');
   if(tipo==='roleta'){_rSpins++;localStorage.setItem('jd_rSpins',String(_rSpins));if(_rSpins>=10)ganhar('roleta10');}
@@ -4939,6 +4987,20 @@ function verificarConquista(tipo,a,b){
   if(tipo==='cap10')ganhar('cap10');
   if(tipo==='streak'){if(a>=3)ganhar('streak3');if(a>=7)ganhar('streak7');}
   if(tipo==='completo')ganhar('completo');
+  if(tipo==='carta_secreta')ganhar('carta_secreta');
+  if(tipo==='confissional')ganhar('confissional');
+  if(tipo==='pandora')ganhar('pandora');
+  if(tipo==='espelho')ganhar('espelho');
+  if(tipo==='fotografia')ganhar('fotografia');
+  if(tipo==='toque_guiado')ganhar('toque_guiado');
+  if(tipo==='olhar')ganhar('olhar');
+  if(tipo==='trilha'){
+    ganhar('trilha');
+    const tc=parseInt(localStorage.getItem('jd_trilhas_ct')||'0')+1;
+    localStorage.setItem('jd_trilhas_ct',String(tc));
+    if(tc>=5)ganhar('trilha5');
+  }
+  if(tipo==='missao_sem'){ganhar('missao');if(a>=5)ganhar('missao5');if(a>=10)ganhar('missao10');}
   if(['vd','dado','missao','mapa','roleta'].includes(tipo)){
     const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
     const jogos=new Set(hist.slice(0,20).map(h=>h.jogo.split(' ')[0]));
@@ -6330,6 +6392,7 @@ function renderTrilhas(){
 }
 
 function iniciarTrilhaNar(id){
+  verificarConquista('trilha');
   var trilha=TRILHAS_NAR.find(function(t){return t.id===id;});
   if(!trilha)return;
   var cap=parseInt(localStorage.getItem('jd_capitulo')||'0')+1;
