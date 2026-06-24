@@ -443,25 +443,6 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .mission-sel-card.on .mission-sel-lbl{color:rgba(238,104,136,0.7)}
 .mission-sel-card:not(.on) .mission-sel-lbl{color:rgba(180,130,150,0.3)}
 .mission-sel-cta{width:100%;background:linear-gradient(135deg,rgba(238,104,136,0.14),rgba(212,133,90,0.1));border:1px solid rgba(238,104,136,0.3);color:rgba(238,150,170,0.9);font-family:'Jost',sans-serif;font-size:0.76rem;letter-spacing:0.08em;text-transform:uppercase;padding:7px;border-radius:9px;text-align:center;cursor:pointer;margin-top:2px}
-/* ── PIN de Acesso ── */
-#gate-overlay{position:fixed;inset:0;z-index:9999;background:#0E0408;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:2rem}
-.pin-ov-logo{font-family:'Cormorant SC',serif;font-size:1.4rem;color:rgba(200,148,58,0.6);letter-spacing:0.1em;text-align:center}
-.pin-ov-sub{font-size:0.62rem;color:rgba(180,130,100,0.38);font-style:italic;margin-top:-20px;letter-spacing:0.06em;text-align:center}
-.pin-ov-dots{display:flex;gap:16px}
-.pin-ov-dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(200,148,58,0.3);transition:all 0.15s}
-.pin-ov-dot.fill{background:rgba(200,148,58,0.85);border-color:rgba(200,148,58,0.85);box-shadow:0 0 10px rgba(200,148,58,0.4)}
-.pin-ov-dot.err{background:rgba(220,60,60,0.7);border-color:rgba(220,60,60,0.7);box-shadow:0 0 10px rgba(220,60,60,0.35)}
-.pin-numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:210px}
-.pin-key{height:54px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;color:rgba(220,190,150,0.85);font-family:'Georgia',serif;font-size:1.25rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.1s;-webkit-user-select:none;user-select:none}
-.pin-key:active{background:rgba(200,148,58,0.14)}
-.pin-key.del{font-size:0.75rem;color:rgba(180,130,100,0.5);letter-spacing:0.04em}
-.pin-key.empty{border:none;background:none;cursor:default}
-.pin-ov-err{font-size:0.65rem;color:rgba(220,80,80,0.7);font-style:italic;height:16px;text-align:center}
-.pin-ov-hint{font-size:0.58rem;color:rgba(180,130,100,0.28);font-style:italic;letter-spacing:0.04em}
-#screen-pin-setup{gap:0;padding-top:0}
-.pin-setup-wrap{display:flex;flex-direction:column;align-items:center;gap:28px;padding:2rem 1.5rem;flex:1;justify-content:center}
-.pin-setup-title{font-family:'Cormorant SC',serif;font-size:1.15rem;color:rgba(220,185,135,0.9);letter-spacing:0.06em;text-align:center}
-.pin-setup-sub{font-size:0.65rem;color:rgba(180,130,100,0.4);font-style:italic;text-align:center;margin-top:-20px}
 /* ══ HISTORY CARD ══ */
 .hist-card{background:var(--ground-2);border:1px solid rgba(212,133,90,0.15);border-radius:8px;padding:0.7rem 0.9rem;display:flex;flex-direction:column;gap:0.25rem}
 .hist-jogo{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
@@ -841,27 +822,6 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 </head>
 <body>
 <div id="bg"><div class="bg-p" style="left:61%;width:1.5px;height:1.5px;--a:0.27;animation-duration:9.2s;animation-delay:-8.6s"></div><div class="bg-p" style="left:93%;width:2.0px;height:2.0px;--a:0.31;animation-duration:9.9s;animation-delay:-5.4s"></div><div class="bg-p" style="left:32%;width:2.4px;height:2.4px;--a:0.31;animation-duration:10.9s;animation-delay:-10.2s"></div><div class="bg-p" style="left:68%;width:2.6px;height:2.6px;--a:0.37;animation-duration:10.4s;animation-delay:-7.5s"></div><div class="bg-p" style="left:91%;width:1.8px;height:1.8px;--a:0.14;animation-duration:15.5s;animation-delay:-9.8s"></div><div class="bg-p" style="left:27%;width:2.5px;height:2.5px;--a:0.31;animation-duration:17.2s;animation-delay:-2.0s"></div><div class="bg-p" style="left:84%;width:1.5px;height:1.5px;--a:0.18;animation-duration:11.5s;animation-delay:-0.6s"></div><div class="bg-p" style="left:8%;width:2.7px;height:2.7px;--a:0.28;animation-duration:12.1s;animation-delay:-1.5s"></div><div class="bg-p" style="left:93%;width:2.6px;height:2.6px;--a:0.32;animation-duration:11.3s;animation-delay:-9.4s"></div><div class="bg-p" style="left:45%;width:2.7px;height:2.7px;--a:0.2;animation-duration:11.6s;animation-delay:-10.5s"></div><div class="bg-p" style="left:73%;width:1.6px;height:1.6px;--a:0.35;animation-duration:9.5s;animation-delay:-5.8s"></div><div class="bg-p" style="left:6%;width:2.6px;height:2.6px;--a:0.32;animation-duration:17.7s;animation-delay:-1.6s"></div><div class="bg-p" style="left:34%;width:2.8px;height:2.8px;--a:0.2;animation-duration:17.6s;animation-delay:-8.9s"></div><div class="bg-p" style="left:91%;width:2.0px;height:2.0px;--a:0.15;animation-duration:16.4s;animation-delay:-3.9s"></div><div class="bg-p" style="left:78%;width:2.7px;height:2.7px;--a:0.18;animation-duration:12.1s;animation-delay:-7.1s"></div><div class="bg-p" style="left:18%;width:1.6px;height:1.6px;--a:0.25;animation-duration:16.2s;animation-delay:-11.9s"></div><div class="bg-p" style="left:19%;width:1.7px;height:1.7px;--a:0.28;animation-duration:10.7s;animation-delay:-1.7s"></div><div class="bg-p" style="left:91%;width:3.1px;height:3.1px;--a:0.24;animation-duration:8.9s;animation-delay:-1.1s"></div><div class="bg-p" style="left:90%;width:2.7px;height:2.7px;--a:0.15;animation-duration:17.2s;animation-delay:-1.8s"></div><div class="bg-p" style="left:75%;width:2.5px;height:2.5px;--a:0.15;animation-duration:16.3s;animation-delay:-15.4s"></div><div class="bg-p" style="left:1%;width:2.9px;height:2.9px;--a:0.23;animation-duration:9.6s;animation-delay:-5.4s"></div><div class="bg-p" style="left:30%;width:1.4px;height:1.4px;--a:0.33;animation-duration:9.6s;animation-delay:-9.5s"></div><div class="bg-p" style="left:60%;width:2.3px;height:2.3px;--a:0.25;animation-duration:16.7s;animation-delay:-10.5s"></div><div class="bg-p" style="left:85%;width:3.0px;height:3.0px;--a:0.17;animation-duration:7.8s;animation-delay:-4.6s"></div><div class="bg-p" style="left:39%;width:1.7px;height:1.7px;--a:0.27;animation-duration:15.0s;animation-delay:-8.4s"></div><div class="bg-p" style="left:68%;width:1.4px;height:1.4px;--a:0.18;animation-duration:9.1s;animation-delay:-5.0s"></div><div class="bg-p" style="left:50%;width:1.5px;height:1.5px;--a:0.34;animation-duration:10.5s;animation-delay:-3.3s"></div><div class="bg-p" style="left:97%;width:2.5px;height:2.5px;--a:0.33;animation-duration:13.4s;animation-delay:-1.6s"></div></div>
-<div id="gate-overlay" style="display:none">
-  <div>
-    <div class="pin-ov-logo">Jogos do Desejo</div>
-    <div class="pin-ov-sub">acesso privado</div>
-  </div>
-  <div class="pin-ov-dots">
-    <div class="pin-ov-dot" id="pov-d0"></div>
-    <div class="pin-ov-dot" id="pov-d1"></div>
-    <div class="pin-ov-dot" id="pov-d2"></div>
-    <div class="pin-ov-dot" id="pov-d3"></div>
-  </div>
-  <div class="pin-numpad">
-    <div class="pin-key" onclick="gateKey(1)">1</div><div class="pin-key" onclick="gateKey(2)">2</div><div class="pin-key" onclick="gateKey(3)">3</div>
-    <div class="pin-key" onclick="gateKey(4)">4</div><div class="pin-key" onclick="gateKey(5)">5</div><div class="pin-key" onclick="gateKey(6)">6</div>
-    <div class="pin-key" onclick="gateKey(7)">7</div><div class="pin-key" onclick="gateKey(8)">8</div><div class="pin-key" onclick="gateKey(9)">9</div>
-    <div class="pin-key empty"></div><div class="pin-key" onclick="gateKey(0)">0</div><div class="pin-key del" onclick="gateDel()">⌫</div>
-  </div>
-  <div class="pin-ov-err" id="pin-ov-err"></div>
-  <div class="pin-ov-hint">toque os números para entrar</div>
-</div>
-
 <div id="mp-banner">
   <span class="mp-b-code">💞 <b id="mp-b-code-val"></b></span>
   <span class="mp-b-vez"><span class="mp-b-vez-tag" id="mp-vez-tag" style="display:none">sua vez</span><b id="mp-vez-nome">—</b></span>
@@ -1128,36 +1088,6 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
     <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
     <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
-    <button class="home-logout" onclick="_openPinSetup()">🔒 PIN</button>
-  </div>
-</div>
-
-<!-- ══ PIN SETUP ══ -->
-<div class="screen" id="screen-pin-setup">
-  <div class="game-header">
-    <button class="back-btn" onclick="go('home')">← Voltar</button>
-    <span class="game-title">PIN de Acesso</span>
-    <span style="width:48px"></span>
-  </div>
-  <div class="pin-setup-wrap">
-    <div>
-      <div class="pin-setup-title" id="pin-setup-title">Criar PIN</div>
-      <div class="pin-setup-sub" id="pin-setup-sub">Escolham 4 dígitos para proteger o acesso</div>
-    </div>
-    <div class="pin-ov-dots">
-      <div class="pin-ov-dot" id="psu-d0"></div>
-      <div class="pin-ov-dot" id="psu-d1"></div>
-      <div class="pin-ov-dot" id="psu-d2"></div>
-      <div class="pin-ov-dot" id="psu-d3"></div>
-    </div>
-    <div class="pin-numpad">
-      <div class="pin-key" onclick="pinSetupKey(1)">1</div><div class="pin-key" onclick="pinSetupKey(2)">2</div><div class="pin-key" onclick="pinSetupKey(3)">3</div>
-      <div class="pin-key" onclick="pinSetupKey(4)">4</div><div class="pin-key" onclick="pinSetupKey(5)">5</div><div class="pin-key" onclick="pinSetupKey(6)">6</div>
-      <div class="pin-key" onclick="pinSetupKey(7)">7</div><div class="pin-key" onclick="pinSetupKey(8)">8</div><div class="pin-key" onclick="pinSetupKey(9)">9</div>
-      <div class="pin-key empty"></div><div class="pin-key" onclick="pinSetupKey(0)">0</div><div class="pin-key del" onclick="pinSetupDel()">⌫</div>
-    </div>
-    <div class="pin-ov-err" id="pin-setup-err"></div>
-    <button id="pin-remove-btn" onclick="pinRemover()" style="display:none;background:none;border:1px solid rgba(200,80,80,0.25);color:rgba(200,100,100,0.55);font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 1rem;border-radius:6px;cursor:pointer">Remover PIN</button>
   </div>
 </div>
 
@@ -1971,10 +1901,11 @@ function apagarTodosDados(){
   Object.keys(localStorage).filter(k=>k.startsWith('jd_')).forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
-function _resumeInit(){
+(function(){
   const seen=localStorage.getItem('jd_seen');
   const aged=localStorage.getItem('jd_age');
   const sala=new URLSearchParams(location.search).get('sala');
+  // Link de convite: ignora onboarding/age-gate e abre o quick join direto
   if(sala&&sala.length>=4){
     const ov=document.getElementById('quick-join-overlay');
     const cd=document.getElementById('qj-code-display');
@@ -2005,6 +1936,7 @@ function _resumeInit(){
     } else {
       document.getElementById('screen-mode').classList.add('active');
     }
+    // Lembrete se ausente 5+ dias
     const last=localStorage.getItem('jd_lastDay');
     if(last){
       const dias=Math.floor((Date.now()-new Date(last).getTime())/(86400000));
@@ -2015,125 +1947,7 @@ function _resumeInit(){
   } else {
     document.getElementById('screen-onboarding').classList.add('active');
   }
-}
-(function(){
-  if(localStorage.getItem('jd_pin_hash')){
-    const o=document.getElementById('gate-overlay');
-    if(o)o.style.display='flex';
-    window._pinUnlockCb=_resumeInit;
-    return;
-  }
-  _resumeInit();
 })();
-
-// ══ PIN DE ACESSO ═════════════════════════════════════════════
-async function _hashPIN(pin){
-  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(String(pin)));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-function _pinUpdateDots(prefix,buf,err){
-  for(let i=0;i<4;i++){
-    const d=document.getElementById(prefix+i);
-    if(!d)continue;
-    d.classList.toggle('fill',i<buf.length&&!err);
-    d.classList.toggle('err',!!err&&i<buf.length);
-  }
-}
-let _gateBuf='';
-function gateKey(d){
-  if(_gateBuf.length>=4)return;
-  _gateBuf+=String(d);
-  _pinUpdateDots('pov-d',_gateBuf,false);
-  if(_gateBuf.length===4)_gateVerify();
-}
-function gateDel(){
-  if(!_gateBuf.length)return;
-  _gateBuf=_gateBuf.slice(0,-1);
-  _pinUpdateDots('pov-d',_gateBuf,false);
-  document.getElementById('pin-ov-err').textContent='';
-}
-async function _gateVerify(){
-  const stored=localStorage.getItem('jd_pin_hash');
-  if(!stored){document.getElementById('gate-overlay').style.display='none';if(window._pinUnlockCb)window._pinUnlockCb();return;}
-  const h=await _hashPIN(_gateBuf);
-  if(h===stored){
-    localStorage.removeItem('jd_pin_fails');
-    document.getElementById('pin-ov-err').textContent='';
-    document.getElementById('gate-overlay').style.display='none';
-    _gateBuf='';_pinUpdateDots('pov-d','',false);
-    if(window._pinUnlockCb)window._pinUnlockCb();
-  } else {
-    let fails=parseInt(localStorage.getItem('jd_pin_fails')||'0')+1;
-    if(fails>=5){
-      localStorage.removeItem('jd_pin_hash');localStorage.removeItem('jd_pin_fails');
-      document.getElementById('gate-overlay').style.display='none';
-      _gateBuf='';_pinUpdateDots('pov-d','',false);
-      if(window._pinUnlockCb)window._pinUnlockCb();
-    } else {
-      localStorage.setItem('jd_pin_fails',String(fails));
-      document.getElementById('pin-ov-err').textContent='PIN incorreto ('+fails+'/5)';
-      _pinUpdateDots('pov-d',_gateBuf,true);
-      setTimeout(()=>{_gateBuf='';_pinUpdateDots('pov-d','',false);document.getElementById('pin-ov-err').textContent='';},800);
-    }
-  }
-}
-let _pinSuBuf='',_pinSuPhase=1,_pinSuFirst='';
-function _openPinSetup(){
-  _pinSuBuf='';_pinSuPhase=1;_pinSuFirst='';
-  _pinUpdateDots('psu-d','',false);
-  document.getElementById('pin-setup-err').textContent='';
-  document.getElementById('pin-setup-title').textContent='Criar PIN';
-  document.getElementById('pin-setup-sub').textContent='Escolham 4 dígitos para proteger o acesso';
-  const rb=document.getElementById('pin-remove-btn');
-  if(rb)rb.style.display=localStorage.getItem('jd_pin_hash')?'block':'none';
-  go('screen-pin-setup');
-}
-function pinSetupKey(d){
-  if(_pinSuBuf.length>=4)return;
-  _pinSuBuf+=String(d);
-  _pinUpdateDots('psu-d',_pinSuBuf,false);
-  if(_pinSuBuf.length===4){
-    if(_pinSuPhase===1){
-      _pinSuFirst=_pinSuBuf;_pinSuBuf='';_pinSuPhase=2;
-      setTimeout(()=>{
-        _pinUpdateDots('psu-d','',false);
-        document.getElementById('pin-setup-title').textContent='Confirmar PIN';
-        document.getElementById('pin-setup-sub').textContent='Digite o mesmo PIN novamente';
-      },300);
-    } else {
-      if(_pinSuBuf===_pinSuFirst){
-        _hashPIN(_pinSuBuf).then(h=>{
-          localStorage.setItem('jd_pin_hash',h);
-          localStorage.removeItem('jd_pin_fails');
-          document.getElementById('pin-setup-err').textContent='✓ PIN criado com sucesso';
-          setTimeout(()=>go('home'),1200);
-        });
-      } else {
-        document.getElementById('pin-setup-err').textContent='PINs não conferem — tente novamente';
-        _pinUpdateDots('psu-d',_pinSuBuf,true);
-        setTimeout(()=>{
-          _pinSuBuf='';_pinSuPhase=1;_pinSuFirst='';
-          _pinUpdateDots('psu-d','',false);
-          document.getElementById('pin-setup-title').textContent='Criar PIN';
-          document.getElementById('pin-setup-sub').textContent='Escolham 4 dígitos para proteger o acesso';
-          document.getElementById('pin-setup-err').textContent='';
-        },900);
-      }
-    }
-  }
-}
-function pinSetupDel(){
-  if(!_pinSuBuf.length)return;
-  _pinSuBuf=_pinSuBuf.slice(0,-1);
-  _pinUpdateDots('psu-d',_pinSuBuf,false);
-  document.getElementById('pin-setup-err').textContent='';
-}
-function pinRemover(){
-  if(!confirm('Remover o PIN de acesso?'))return;
-  localStorage.removeItem('jd_pin_hash');
-  localStorage.removeItem('jd_pin_fails');
-  go('home');
-}
 
 // ══ INSTALL (Adicionar à tela inicial) ══════════════════════
 function _isStandalone(){
