@@ -1712,6 +1712,18 @@ body.tema-petala .cfg-fonte-btn.on{border-color:var(--gold);background:rgba(155,
 body.tema-petala .cfg-action-btn{border-color:rgba(155,64,16,0.15);}
 body.tema-petala .cfg-sec-label{border-color:rgba(155,64,16,0.12);}
 body.tema-petala .cfg-tema-nome{color:var(--text);}
+
+/* === GAMES ICON GRID (hp3) === */
+#hp3{overflow-y:auto;height:100dvh;min-height:unset!important;padding:1.1rem 0.9rem 3rem;display:flex;flex-direction:column;align-items:stretch;gap:0.9rem;box-sizing:border-box;}
+.hp3-title{text-align:center;font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.5);flex-shrink:0}
+.games-icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;width:100%}
+.game-icon-card{display:flex;flex-direction:column;align-items:center;gap:0.3rem;padding:0.75rem 0.3rem 0.65rem;background:rgba(200,148,58,0.05);border:1px solid rgba(200,148,58,0.13);border-radius:12px;cursor:pointer;transition:border-color 0.18s,background 0.18s;-webkit-tap-highlight-color:transparent}
+.game-icon-card:active{background:rgba(200,148,58,0.13);border-color:rgba(200,148,58,0.42);}
+.gi-icon{font-size:1.75rem;line-height:1;filter:drop-shadow(0 0 8px rgba(212,133,90,0.28))}
+.gi-name{font-family:'Jost',sans-serif;font-size:0.6rem;color:var(--text);text-align:center;line-height:1.3;letter-spacing:0.02em}
+.hp3-actions{display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap;margin-top:auto;padding-top:0.4rem;flex-shrink:0}
+body.tema-petala .game-icon-card{background:rgba(192,32,96,0.04);border-color:rgba(192,32,96,0.12);}
+body.tema-petala .game-icon-card:active{background:rgba(192,32,96,0.1);border-color:rgba(192,32,96,0.35);}
 </style>
 
 <!-- Service Worker -->
@@ -2006,26 +2018,26 @@ body.tema-petala .cfg-tema-nome{color:var(--text);}
 
   <!-- ── página 3: explorar jogos ── -->
   <div class="home-page" id="hp3">
-  <!-- explorar jogos individuais -->
-  <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
-  <div class="games-grid" id="games-grid" style="display:none">
-    <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
-    <div class="game-card" onclick="go('screen-vd')"><div class="icon">🃏</div><div class="name">Verdade ou Desafio</div><div class="desc">Perguntas íntimas e ações ousadas</div></div>
-    <div class="game-card" onclick="go('screen-dado')"><div class="icon">🎲</div><div class="name">Dado dos Prazeres</div><div class="desc">Combinações aleatórias do desejo</div></div>
-    <div class="game-card" onclick="go('screen-quiz')"><div class="icon">❤️</div><div class="name">Quiz do Casal</div><div class="desc">Descubram o quanto se conhecem</div></div>
-    <div class="game-card" onclick="go('screen-posicoes')"><div class="icon">🌸</div><div class="name">Posições do Casal</div><div class="desc">Explore posições com ilustrações e dicas</div></div>
-    <div class="game-card" onclick="go('screen-strip')"><div class="icon">🪄</div><div class="name">Ritual do Desejo</div><div class="desc">Uma dança guiada, no clima certo</div></div>
-    <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
-    <div class="game-card" onclick="go('screen-comando')"><div class="icon">🖤</div><div class="name">Comando &amp; Entrega</div><div class="desc">Um conduz, o outro se entrega — com segurança</div></div>
-    <div class="game-card" onclick="go('screen-fantasia')"><div class="icon">🎭</div><div class="name">Encenações</div><div class="desc">Cenários para encenar e soltar a imaginação</div></div>
-    <div class="game-card" onclick="go('screen-carta-secreta')"><div class="icon">💌</div><div class="name">Carta Secreta</div><div class="desc">Revelem desejos que ficaram guardados</div></div>
-    <div class="game-card" onclick="go('screen-olhar')"><div class="icon">👀</div><div class="name">O Olhar</div><div class="desc">Um minuto de presença — só olhos nos olhos</div></div>
-    <div class="game-card" onclick="go('screen-confissional')"><div class="icon">🕯️</div><div class="name">Confissional</div><div class="desc">Confissões íntimas reveladas em voz alta</div></div>
-    <div class="game-card" onclick="go('screen-espelho')"><div class="icon">🪞</div><div class="name">O Espelho</div><div class="desc">Um lidera, o outro espelha — sem palavras</div></div>
-    <div class="game-card" onclick="go('screen-fotografia')"><div class="icon">📸</div><div class="name">Fotografia do Desejo</div><div class="desc">Cenas que só existem entre vocês dois</div></div>
-    <div class="game-card" onclick="go('screen-pandora')"><div class="icon">🗝️</div><div class="name">Caixa de Pandora</div><div class="desc">Abram o que ficou guardado por tempo demais</div></div>
-    <div class="game-card" onclick="go('screen-toque')"><div class="icon">🫧</div><div class="name">Toque Guiado</div><div class="desc">Sequência de toque intencional, passo a passo</div></div>
-    <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
+  <div class="hp3-title">Explorar jogos</div>
+  <div class="games-icon-grid">
+    <div class="game-icon-card" onclick="go('screen-roleta')"><div class="gi-icon">🎡</div><div class="gi-name">Roleta do Desejo</div></div>
+    <div class="game-icon-card" onclick="go('screen-vd')"><div class="gi-icon">🃏</div><div class="gi-name">Verdade ou Desafio</div></div>
+    <div class="game-icon-card" onclick="go('screen-dado')"><div class="gi-icon">🎲</div><div class="gi-name">Dado dos Prazeres</div></div>
+    <div class="game-icon-card" onclick="go('screen-quiz')"><div class="gi-icon">❤️</div><div class="gi-name">Quiz do Casal</div></div>
+    <div class="game-icon-card" onclick="go('screen-posicoes')"><div class="gi-icon">🌸</div><div class="gi-name">Posições do Casal</div></div>
+    <div class="game-icon-card" onclick="go('screen-strip')"><div class="gi-icon">🪄</div><div class="gi-name">Ritual do Desejo</div></div>
+    <div class="game-icon-card" onclick="go('screen-mapa')"><div class="gi-icon">🗺️</div><div class="gi-name">Mapa do Desejo</div></div>
+    <div class="game-icon-card" onclick="go('screen-comando')"><div class="gi-icon">🖤</div><div class="gi-name">Comando &amp; Entrega</div></div>
+    <div class="game-icon-card" onclick="go('screen-fantasia')"><div class="gi-icon">🎭</div><div class="gi-name">Encenações</div></div>
+    <div class="game-icon-card" onclick="go('screen-carta-secreta')"><div class="gi-icon">💌</div><div class="gi-name">Carta Secreta</div></div>
+    <div class="game-icon-card" onclick="go('screen-olhar')"><div class="gi-icon">👀</div><div class="gi-name">O Olhar</div></div>
+    <div class="game-icon-card" onclick="go('screen-confissional')"><div class="gi-icon">🕯️</div><div class="gi-name">Confissional</div></div>
+    <div class="game-icon-card" onclick="go('screen-espelho')"><div class="gi-icon">🪞</div><div class="gi-name">O Espelho</div></div>
+    <div class="game-icon-card" onclick="go('screen-fotografia')"><div class="gi-icon">📸</div><div class="gi-name">Fotografia do Desejo</div></div>
+    <div class="game-icon-card" onclick="go('screen-pandora')"><div class="gi-icon">🗝️</div><div class="gi-name">Caixa de Pandora</div></div>
+    <div class="game-icon-card" onclick="go('screen-toque')"><div class="gi-icon">🫧</div><div class="gi-name">Toque Guiado</div></div>
+    <div class="game-icon-card" onclick="go('screen-reconexao')"><div class="gi-icon">💬</div><div class="gi-name">Reconexão</div></div>
+    <div class="game-icon-card" onclick="go('screen-missao')"><div class="gi-icon">🌙</div><div class="gi-name">Missão da Noite</div></div>
   </div>
   <!-- elementos ocultos — hooks JS -->
   <div style="display:none" aria-hidden="true">
@@ -2033,8 +2045,7 @@ body.tema-petala .cfg-tema-nome{color:var(--text);}
     <button id="home-cq-btn"><span id="home-cq-label">Conquistas</span></button>
     <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão</button>
   </div>
-  <!-- exportar / logout -->
-  <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
+  <div class="hp3-actions">
     <button class="home-logout" onclick="go('screen-config')" title="Configurações">⚙ Config</button>
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
     <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
