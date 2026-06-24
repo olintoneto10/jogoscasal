@@ -1680,6 +1680,38 @@ body.tema-petala .achiev-toast-hist{color:rgba(80,30,50,0.82)!important;}
 body.tema-petala .home-dot{background:rgba(155,64,16,0.32);}
 body.tema-petala .home-dot.on{background:var(--gold);}
 html.home-open,html.home-open body{overflow:hidden!important;height:100%!important;}
+
+/* === CONFIGURAÇÕES === */
+#screen-config{gap:0;padding:0;align-items:stretch}
+.cfg-header{display:flex;align-items:center;justify-content:space-between;width:100%;padding:1.2rem 1.2rem 0.8rem;box-sizing:border-box;flex-shrink:0}
+.cfg-title{font-family:'Cormorant SC',serif;font-size:1.15rem;letter-spacing:0.08em;color:var(--gold-l)}
+.cfg-body{display:flex;flex-direction:column;gap:2rem;width:100%;max-width:440px;margin:0 auto;padding:0.5rem 1.2rem 4rem;box-sizing:border-box;overflow-y:auto}
+.cfg-section{display:flex;flex-direction:column;gap:0.8rem}
+.cfg-sec-label{font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);opacity:0.7;border-bottom:1px solid rgba(200,148,58,0.12);padding-bottom:0.4rem}
+.cfg-tema-row{display:flex;gap:0.7rem}
+.cfg-tema-card{flex:1;background:none;border:1px solid rgba(200,148,58,0.15);border-radius:12px;padding:0.9rem 0.5rem;display:flex;flex-direction:column;align-items:center;gap:0.55rem;cursor:pointer;transition:border-color 0.2s,background 0.2s}
+.cfg-tema-card.on{border-color:var(--gold);background:rgba(200,148,58,0.08)}
+.cfg-tema-swatch{width:2.2rem;height:2.2rem;border-radius:50%}
+.cfg-sw-petala{background:#FFFFFF;border:2px solid #C02060}
+.cfg-sw-veludo{background:radial-gradient(circle at 40% 35%,#4D1030 0%,#1A080F 100%)}
+.cfg-sw-safira{background:radial-gradient(circle at 40% 35%,#1A3050 0%,#060C14 100%)}
+.cfg-tema-nome{font-family:'Jost',sans-serif;font-size:0.72rem;color:var(--text)}
+.cfg-fonte-row{display:flex;gap:0.6rem}
+.cfg-fonte-btn{flex:1;padding:0.65rem 0;border:1px solid rgba(200,148,58,0.15);border-radius:8px;background:none;color:var(--text);cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s;line-height:1}
+.cfg-fonte-btn:nth-child(1){font-size:0.82rem}
+.cfg-fonte-btn:nth-child(2){font-size:1.05rem}
+.cfg-fonte-btn:nth-child(3){font-size:1.28rem}
+.cfg-fonte-btn.on{border-color:var(--gold);background:rgba(200,148,58,0.1);color:var(--gold)}
+.cfg-action-btn{width:100%;padding:0.9rem 1rem;border:1px solid rgba(200,148,58,0.18);border-radius:10px;background:none;color:var(--text);font-family:'Jost',sans-serif;font-size:0.85rem;text-align:left;cursor:pointer;transition:background 0.2s}
+.cfg-action-btn+.cfg-action-btn{margin-top:0.5rem}
+.cfg-action-danger{color:var(--rose-l);border-color:rgba(208,69,110,0.2)}
+body.tema-petala .cfg-tema-card{border-color:rgba(155,64,16,0.15);}
+body.tema-petala .cfg-tema-card.on{border-color:var(--gold);background:rgba(155,64,16,0.06);}
+body.tema-petala .cfg-fonte-btn{border-color:rgba(155,64,16,0.15);}
+body.tema-petala .cfg-fonte-btn.on{border-color:var(--gold);background:rgba(155,64,16,0.08);}
+body.tema-petala .cfg-action-btn{border-color:rgba(155,64,16,0.15);}
+body.tema-petala .cfg-sec-label{border-color:rgba(155,64,16,0.12);}
+body.tema-petala .cfg-tema-nome{color:var(--text);}
 </style>
 
 <!-- Service Worker -->
@@ -2003,6 +2035,7 @@ html.home-open,html.home-open body{overflow:hidden!important;height:100%!importa
   </div>
   <!-- exportar / logout -->
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem">
+    <button class="home-logout" onclick="go('screen-config')" title="Configurações">⚙ Config</button>
     <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
     <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
     <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
@@ -3041,7 +3074,9 @@ function ageConfirm(){
   localStorage.setItem('jd_age','1');
   document.getElementById('screen-agegate').classList.remove('active');
   mostrarInstallBanner();
-  if(!localStorage.getItem('jd_seen')){
+  if(!localStorage.getItem('jd_seen')&&!localStorage.getItem('jd_tema')){
+    document.getElementById('tema-picker-overlay').style.display='flex';
+  } else if(!localStorage.getItem('jd_seen')){
     document.getElementById('screen-onboarding').classList.add('active');
   } else if(!sessionStorage.getItem('jd_perfil_done')){
     document.getElementById('screen-perfil').classList.add('active');
@@ -3081,8 +3116,15 @@ function _aplicarTema(t){
 function escolherTema(t){
   localStorage.setItem('jd_tema',t);
   _aplicarTema(t);
-  document.getElementById('tema-picker-overlay').style.display='none';
-  _verificarMissaoEntrada();
+  var _tpo=document.getElementById('tema-picker-overlay');
+  if(_tpo)_tpo.style.display='none';
+  if(!localStorage.getItem('jd_seen')){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    document.getElementById('screen-onboarding').classList.add('active');
+  } else {
+    renderConfigScreen();
+    _verificarMissaoEntrada();
+  }
 }
 function abrirTemaPicker(){
   document.getElementById('tema-picker-overlay').style.display='flex';
@@ -3139,6 +3181,7 @@ function _inicializarTemaEMissao(){
 }
 (function(){
   const _savedTema=localStorage.getItem('jd_tema');if(_savedTema)_aplicarTema(_savedTema);
+  (function(){var _fMap={p:15,m:17,g:19};var _f=localStorage.getItem('jd_fonte');if(_f&&_fMap[_f])document.documentElement.style.fontSize=_fMap[_f]+'px';})();
   const seen=localStorage.getItem('jd_seen');
   const aged=localStorage.getItem('jd_age');
   const sala=new URLSearchParams(location.search).get('sala');
@@ -3315,6 +3358,7 @@ function go(id){
   if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
   if(id==='home'){atualizarHomeCap();_saudacaoDinamica();renderCapituloHome();document.documentElement.classList.add('home-open');const _hpEl=document.getElementById('home');if(_hpEl){_hpEl.scrollTop=0;_hpUpdateDots(0);}}else{document.documentElement.classList.remove('home-open');}
+  if(id==='screen-config'){renderConfigScreen();}
 }
 
 
@@ -7024,6 +7068,45 @@ function _hpGo(idx){
     },{passive:true});
   });
 })();
+
+// === CONFIGURAÇÕES ===
+var _cfgFonteMap={p:15,m:17,g:19};
+
+function renderConfigScreen(){
+  var t=localStorage.getItem('jd_tema')||'veludo';
+  ['petala','veludo','safira'].forEach(function(n){
+    var el=document.getElementById('cfg-t-'+n);
+    if(el)el.classList.toggle('on',n===t);
+  });
+  var f=localStorage.getItem('jd_fonte')||'m';
+  ['p','m','g'].forEach(function(s){
+    var el=document.getElementById('cfg-f-'+s);
+    if(el)el.classList.toggle('on',s===f);
+  });
+}
+
+function cfgEscolherTema(t){
+  localStorage.setItem('jd_tema',t);
+  _aplicarTema(t);
+  renderConfigScreen();
+}
+
+function cfgFonte(size){
+  localStorage.setItem('jd_fonte',size);
+  var px=_cfgFonteMap[size]||17;
+  document.documentElement.style.fontSize=px+'px';
+  renderConfigScreen();
+}
+
+function cfgZerarDados(){
+  if(!confirm('Apagar todo o progresso? Histórico, conquistas e XP serão perdidos permanentemente.'))return;
+  var _t=localStorage.getItem('jd_tema');
+  var _f=localStorage.getItem('jd_fonte');
+  Object.keys(localStorage).filter(function(k){return k.startsWith('jd_');}).forEach(function(k){localStorage.removeItem(k);});
+  if(_t)localStorage.setItem('jd_tema',_t);
+  if(_f)localStorage.setItem('jd_fonte',_f);
+  location.reload();
+}
 </script>
 
 <!-- ══ MULTIPLAYER CARD VIEW ══ -->
@@ -7229,6 +7312,52 @@ function _hpGo(idx){
   </div>
   <button class="me-confirm-btn" onclick="missaoEntradaConfirmar()">✓ Confirmar missão desta semana</button>
   <button class="me-skip-btn" onclick="missaoEntradaPular()">Pular por agora</button>
+</div>
+
+
+<!-- ══ CONFIGURAÇÕES ══ -->
+<div class="screen" id="screen-config">
+  <div class="cfg-header">
+    <button class="back-btn" onclick="go('home')">← Voltar</button>
+    <span class="cfg-title">Configurações</span>
+    <div style="width:5rem"></div>
+  </div>
+  <div class="cfg-body">
+
+    <div class="cfg-section">
+      <div class="cfg-sec-label">Visual</div>
+      <div class="cfg-tema-row">
+        <button class="cfg-tema-card" id="cfg-t-petala" onclick="cfgEscolherTema('petala')">
+          <div class="cfg-tema-swatch cfg-sw-petala"></div>
+          <span class="cfg-tema-nome">Pétala</span>
+        </button>
+        <button class="cfg-tema-card" id="cfg-t-veludo" onclick="cfgEscolherTema('veludo')">
+          <div class="cfg-tema-swatch cfg-sw-veludo"></div>
+          <span class="cfg-tema-nome">Veludo</span>
+        </button>
+        <button class="cfg-tema-card" id="cfg-t-safira" onclick="cfgEscolherTema('safira')">
+          <div class="cfg-tema-swatch cfg-sw-safira"></div>
+          <span class="cfg-tema-nome">Safira</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cfg-section">
+      <div class="cfg-sec-label">Tamanho da fonte</div>
+      <div class="cfg-fonte-row">
+        <button class="cfg-fonte-btn" id="cfg-f-p" onclick="cfgFonte('p')">A</button>
+        <button class="cfg-fonte-btn" id="cfg-f-m" onclick="cfgFonte('m')">A</button>
+        <button class="cfg-fonte-btn" id="cfg-f-g" onclick="cfgFonte('g')">A</button>
+      </div>
+    </div>
+
+    <div class="cfg-section">
+      <div class="cfg-sec-label">Dados</div>
+      <button class="cfg-action-btn" onclick="exportarDados()">📤 Exportar backup</button>
+      <button class="cfg-action-btn cfg-action-danger" onclick="cfgZerarDados()">🗑 Zerar todo o progresso</button>
+    </div>
+
+  </div>
 </div>
 
 </body>
