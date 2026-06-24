@@ -705,6 +705,51 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .ng-epil-card{margin:1rem 1.2rem;padding:1.4rem 1.4rem;background:rgba(238,104,136,0.055);border:1px solid rgba(238,104,136,0.22);border-radius:10px;text-align:center}
 .ng-epil-titulo{font-family:'Cormorant SC',serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--rose-l);margin-bottom:0.9rem}
 .ng-epil-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+/* ══ MODO RECOMEÇO ══ */
+#screen-recomeco{gap:0;padding-top:0}
+.rec-hero{text-align:center;padding:0.6rem 1.2rem 0.5rem;flex-shrink:0}
+.rec-badge{display:inline-block;background:rgba(140,80,200,0.1);border:1px solid rgba(160,100,220,0.25);border-radius:20px;padding:0.18rem 0.75rem;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(180,130,230,0.65);margin-bottom:0.35rem;font-family:'Jost',sans-serif}
+.rec-title{font-family:'Cormorant SC',serif;font-size:1.15rem;color:rgba(220,180,240,0.9);letter-spacing:0.04em}
+.rec-sub{font-size:0.68rem;color:rgba(170,130,190,0.52);font-style:italic;margin-top:0.2rem;line-height:1.5;font-family:'Libre Caslon Text',serif}
+.rec-trail{flex:1;overflow-y:auto;padding:0.2rem 1.2rem 0.8rem;display:flex;flex-direction:column;gap:0}
+.rec-step{display:flex;gap:0.65rem;padding:0.55rem 0;position:relative;cursor:default}
+.rec-step.available{cursor:pointer}
+.rec-step:not(:last-child)::after{content:'';position:absolute;left:12px;top:30px;bottom:0;width:1px;background:rgba(160,100,200,0.12)}
+.rec-circle{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-family:'Cormorant SC',serif;margin-top:2px;transition:all 0.2s}
+.rec-step.done .rec-circle{background:rgba(140,80,200,0.18);border:1px solid rgba(180,120,240,0.45);color:rgba(200,160,240,0.9)}
+.rec-step.available .rec-circle{background:rgba(140,80,200,0.22);border:1.5px solid rgba(180,130,240,0.65);color:#fff;box-shadow:0 0 8px rgba(160,100,220,0.28)}
+.rec-step.locked .rec-circle{background:rgba(255,255,255,0.02);border:1px solid rgba(180,130,200,0.1);color:rgba(180,140,200,0.22)}
+.rec-body{flex:1}
+.rec-nome{font-family:'Cormorant SC',serif;font-size:0.88rem;letter-spacing:0.02em;transition:color 0.2s}
+.rec-step.done .rec-nome{color:rgba(190,150,220,0.72)}
+.rec-step.available .rec-nome{color:rgba(220,185,245,0.98)}
+.rec-step.locked .rec-nome{color:rgba(160,120,190,0.28)}
+.rec-desc{font-size:0.63rem;font-style:italic;line-height:1.35;margin-top:0.1rem;font-family:'Libre Caslon Text',serif;transition:color 0.2s}
+.rec-step.done .rec-desc{color:rgba(160,120,190,0.42)}
+.rec-step.available .rec-desc{color:rgba(180,145,210,0.6)}
+.rec-step.locked .rec-desc{color:rgba(150,110,180,0.18)}
+.rec-tag{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;font-family:'Jost',sans-serif;margin-top:0.15rem;transition:color 0.2s}
+.rec-step.done .rec-tag{color:rgba(180,130,200,0.4)}
+.rec-step.available .rec-tag{color:rgba(200,148,58,0.6)}
+.rec-cta{margin:0 1.2rem 0.9rem;background:rgba(140,80,200,0.11);border:1px solid rgba(160,100,220,0.28);border-radius:10px;padding:0.68rem;color:rgba(200,160,240,0.88);font-family:'Cormorant SC',serif;font-size:0.95rem;letter-spacing:0.04em;text-align:center;cursor:pointer;transition:all 0.2s;flex-shrink:0}
+.rec-cta:hover{background:rgba(140,80,200,0.2);border-color:rgba(180,120,240,0.5)}
+.rec-done-msg{text-align:center;padding:1rem 1.2rem;font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:rgba(180,140,200,0.6);line-height:1.7}
+/* overlay de atividade */
+.rec-overlay{display:none;position:fixed;inset:0;background:rgba(14,4,8,0.97);backdrop-filter:blur(20px);z-index:460;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
+.rec-overlay.on{display:flex}
+.rec-ov-card{max-width:310px;width:100%;display:flex;flex-direction:column;gap:1rem;text-align:center}
+.rec-ov-num{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(180,130,220,0.5);font-family:'Jost',sans-serif}
+.rec-ov-title{font-family:'Cormorant SC',serif;font-size:1.2rem;color:rgba(220,180,240,0.95);letter-spacing:0.04em}
+.rec-ov-desc{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.85rem;color:rgba(190,150,220,0.7);line-height:1.7}
+.rec-ov-link{background:rgba(140,80,200,0.1);border:1px solid rgba(160,100,220,0.28);border-radius:10px;padding:0.65rem;color:rgba(200,160,240,0.88);font-family:'Cormorant SC',serif;font-size:0.9rem;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s}
+.rec-ov-link:hover{background:rgba(140,80,200,0.2)}
+.rec-ov-concluir{background:linear-gradient(135deg,rgba(140,80,200,0.18),rgba(100,50,160,0.12));border:1px solid rgba(160,100,220,0.38);border-radius:10px;padding:0.68rem;color:rgba(210,170,245,0.95);font-family:'Cormorant SC',serif;font-size:0.95rem;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s}
+.rec-ov-concluir:hover{border-color:rgba(180,130,240,0.55)}
+.rec-ov-fechar{background:none;border:none;color:rgba(180,130,190,0.35);font-size:0.72rem;cursor:pointer;font-family:'Jost',sans-serif;text-decoration:underline;margin-top:0.2rem}
+/* home btn recomeço */
+.btn-recomeco{width:calc(100% - 2.4rem);margin:0 1.2rem 0;background:rgba(140,80,200,0.07);border:1px solid rgba(160,100,220,0.22);color:rgba(190,150,230,0.85);font-family:'Cormorant SC',serif;font-size:1rem;letter-spacing:0.05em;padding:0.65rem 1.5rem;border-radius:10px;cursor:pointer;transition:all 0.22s;display:none}
+.btn-recomeco.on{display:block}
+.btn-recomeco:hover{background:rgba(140,80,200,0.14);border-color:rgba(180,120,240,0.38)}
 /* ══ NOSSA JORNADA ══ */
 #screen-jornada{gap:0;padding-top:0}
 .jornada-hero{text-align:center;padding:0.5rem 1.2rem 0.6rem;flex-shrink:0}
@@ -988,6 +1033,7 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   <div class="home-cap-badge" id="home-cap-badge" style="display:none">Capítulo <span id="home-cap-num">1</span> da história de vocês<span class="home-cap-nome" id="home-cap-nome">A Primeira Faísca</span></div>
   <button class="btn-noite" onclick="go('screen-noite-config')">✨ Começar a Noite Guiada</button>
   <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão — comece aqui</button>
+  <button class="btn-recomeco" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Modo Recomeço</button>
   <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
   <div class="games-grid" id="games-grid" style="display:none">
     <div class="game-card" onclick="go('screen-roleta')"><div class="icon">🎡</div><div class="name">Roleta do Desejo</div><div class="desc">Gire e descubra o que a noite reserva</div></div>
@@ -1498,6 +1544,34 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
   </div>
 </div>
 
+<!-- ══ MODO RECOMEÇO ══ -->
+<div class="screen" id="screen-recomeco">
+  <div class="game-header">
+    <button class="back-btn" onclick="go('home')">← Voltar</button>
+    <span class="game-title">Modo Recomeço</span>
+    <span style="width:48px"></span>
+  </div>
+  <div class="rec-hero">
+    <div class="rec-badge">7 noites · trilha guiada</div>
+    <div class="rec-title">Recomeço</div>
+    <div class="rec-sub">Uma jornada para quem quer se reencontrar, passo a passo.</div>
+  </div>
+  <div class="rec-trail" id="rec-trail"></div>
+  <div id="rec-cta-wrap"></div>
+</div>
+
+<!-- Overlay de atividade do Recomeço -->
+<div class="rec-overlay" id="rec-overlay">
+  <div class="rec-ov-card">
+    <div class="rec-ov-num" id="rec-ov-num"></div>
+    <div class="rec-ov-title" id="rec-ov-title"></div>
+    <div class="rec-ov-desc" id="rec-ov-desc"></div>
+    <div id="rec-ov-link-wrap"></div>
+    <button class="rec-ov-concluir" onclick="recomecoConcluir()">✓ Marcar esta noite como concluída</button>
+    <button class="rec-ov-fechar" onclick="document.getElementById('rec-overlay').classList.remove('on')">Voltar à trilha</button>
+  </div>
+</div>
+
 <!-- ══ NOSSA JORNADA ══ -->
 <div class="screen" id="screen-jornada">
   <div class="game-header">
@@ -1924,6 +1998,7 @@ function go(id){
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
   if(id==='screen-conquistas')renderConquistas();
   if(id==='screen-jornada')renderJornada();
+  if(id==='screen-recomeco'){if(!localStorage.getItem('jd_recomeco'))localStorage.setItem('jd_recomeco','1');renderRecomeco();}
   const _swPill=document.getElementById('safeword-pill');
   if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
   const _acBar=document.getElementById('aftercare-bar');
@@ -3701,7 +3776,7 @@ const _goOrigGamif=go;
 go=function(id){
   _goOrigGamif(id);
   if(id==='home'){
-    atualizarStreak();carregarMissaoSemana();renderCapituloHome();renderSemaforo();
+    atualizarStreak();carregarMissaoSemana();renderCapituloHome();renderSemaforo();renderBtnRecomeco();
     const _cqG=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
     const _cqT=Object.keys(CONQUISTAS).length;
     const _cqLbl=document.getElementById('home-cq-label');
@@ -3799,6 +3874,76 @@ function abrirSafeword(){
   const el=document.getElementById('safeword-display');
   if(el)el.textContent=word;
   document.getElementById('safeword-overlay').classList.add('on');
+}
+
+// ══ MODO RECOMEÇO ═════════════════════════════════════════════════════
+const RECOMECO_TRILHA=[
+  {nome:'Silêncio compartilhado',desc:'Apenas presença — sem agenda, sem cobranças. Fiquem juntos num espaço tranquilo por 10 minutos.',link:null,linkLabel:null},
+  {nome:'Uma coisa que admiro',desc:'Cada um escolhe uma qualidade que ainda admira no outro e partilha em voz alta, com calma.',link:null,linkLabel:null},
+  {nome:'Reconexão guiada',desc:'Perguntas suaves para fechar a distância entre vocês. Sem pressa para chegar a lugar algum.',link:'screen-reconexao',linkLabel:'Ir para Reconexão →'},
+  {nome:'Toque intencional',desc:'O corpo também reconecta. Escolham uma atividade de carinho sem agenda.',link:'screen-socarinho',linkLabel:'Ir para Só Carinho →'},
+  {nome:'Memória favorita',desc:'Revivam juntos um momento que os dois guardam com carinho. Contem como se fosse a primeira vez.',link:null,linkLabel:null},
+  {nome:'Desejo revelado',desc:'Digam algo que ainda querem viver juntos — algo que ficou guardado. O Mapa do Desejo pode ajudar.',link:'screen-mapa',linkLabel:'Ir para Mapa do Desejo →'},
+  {nome:'Noite Guiada completa',desc:'A jornada culmina numa noite inteira, do jeito de vocês. Escolham o ritmo e comecem.',link:'screen-noite-config',linkLabel:'Começar a Noite Guiada →'},
+];
+function renderRecomeco(){
+  const noiteAtual=parseInt(localStorage.getItem('jd_recomeco')||'1');
+  const trailEl=document.getElementById('rec-trail');
+  const ctaEl=document.getElementById('rec-cta-wrap');
+  if(!trailEl)return;
+  const concluidas=noiteAtual-1;
+  let trailHtml='';
+  RECOMECO_TRILHA.forEach((n,i)=>{
+    const num=i+1;
+    let state='locked';
+    if(num<noiteAtual)state='done';
+    else if(num===noiteAtual)state='available';
+    const circle=state==='done'?'✓':String(num);
+    const tag=state==='done'?'concluída':state==='available'?'hoje · toque para começar':'';
+    const onclick=state==='available'?'onclick="recomecoAbrir('+i+')"':'';
+    trailHtml+='<div class="rec-step '+state+'" '+onclick+'>'
+      +'<div class="rec-circle">'+circle+'</div>'
+      +'<div class="rec-body">'
+      +'<div class="rec-nome">Noite '+num+' · '+n.nome+'</div>'
+      +'<div class="rec-desc">'+n.desc+'</div>'
+      +(tag?'<div class="rec-tag">'+tag+'</div>':'')
+      +'</div></div>';
+  });
+  trailEl.innerHTML=trailHtml;
+  if(noiteAtual>7){
+    ctaEl.innerHTML='<div class="rec-done-msg">🌿 Jornada concluída.<br>Vocês percorreram as 7 noites juntos.</div>';
+  } else {
+    const n=RECOMECO_TRILHA[noiteAtual-1];
+    ctaEl.innerHTML='<button class="rec-cta" onclick="recomecoAbrir('+(noiteAtual-1)+')">▶ Começar a Noite '+noiteAtual+'</button>';
+  }
+}
+function recomecoAbrir(idx){
+  const n=RECOMECO_TRILHA[idx];
+  document.getElementById('rec-ov-num').textContent='Noite '+(idx+1)+' de 7';
+  document.getElementById('rec-ov-title').textContent=n.nome;
+  document.getElementById('rec-ov-desc').textContent=n.desc;
+  const linkWrap=document.getElementById('rec-ov-link-wrap');
+  if(n.link){
+    linkWrap.innerHTML='<button class="rec-ov-link" onclick="document.getElementById('rec-overlay').classList.remove('on');go(''+n.link+'')">'+n.linkLabel+'</button>';
+  } else {
+    linkWrap.innerHTML='';
+  }
+  document.getElementById('rec-overlay').classList.add('on');
+}
+function recomecoConcluir(){
+  const noiteAtual=parseInt(localStorage.getItem('jd_recomeco')||'1');
+  localStorage.setItem('jd_recomeco',String(Math.min(noiteAtual+1,8)));
+  document.getElementById('rec-overlay').classList.remove('on');
+  renderRecomeco();
+  ganharXP(10);
+}
+function renderBtnRecomeco(){
+  const btn=document.getElementById('btn-recomeco');
+  if(!btn)return;
+  const n=parseInt(localStorage.getItem('jd_recomeco')||'0');
+  if(n>0&&n<=7){btn.classList.add('on');btn.textContent='🌱 Recomeço — Noite '+n+' de 7';}
+  else if(n===0){btn.classList.add('on');btn.textContent='🌱 Modo Recomeço — começar trilha';}
+  else{btn.classList.remove('on');}
 }
 
 // ══ NOSSA JORNADA ════════════════════════════════════════════════════
