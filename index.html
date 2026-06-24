@@ -1243,6 +1243,57 @@ body::before{background:
 .overlay{background:rgba(8,2,5,0.93)}
 #aftercare-overlay,#timer-overlay{background:rgba(8,2,5,0.97)}
 
+
+/* ── P5: Transições de tela ─────────────────────────────── */
+@keyframes screenEnter{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+.screen.active{animation:screenEnter 0.22s ease-out both}
+/* Home recebe fade mais suave */
+#home.active,#login.active,#screen-agegate.active,#screen-onboarding.active{
+  animation:screenEnter 0.3s ease-out both
+}
+/* Overlays entram com fade puro */
+@keyframes overlayEnter{from{opacity:0}to{opacity:1}}
+.overlay.on{animation:overlayEnter 0.28s ease-out both}
+#aftercare-overlay.on,#timer-overlay.on,#bifurcacao-overlay.on,#transicao-overlay.on{
+  animation:overlayEnter 0.3s ease-out both
+}
+
+/* ── P5: Mission sel cards com ícone ─────────────────────── */
+.mission-sel-icon{font-size:1.5rem;display:block;text-align:center;margin-bottom:4px;line-height:1}
+.mission-sel-card{padding:12px 13px;border-radius:12px}
+.mission-sel-nome{font-size:0.95rem!important}
+.mission-sel-tarefa{font-size:0.75rem!important;-webkit-line-clamp:3!important}
+
+/* ── P5: Home mission card mais espaçado ──────────────────── */
+.home-mission{padding:1.1rem 1.2rem;gap:0.6rem}
+.mission-week-label{font-size:0.65rem;margin-bottom:0.15rem}
+.mission-week-text{font-size:1.08rem!important}
+
+/* ── P5: Stagger nos cards da home ───────────────────────── */
+.games-grid .game-card:nth-child(1){animation-delay:0.03s}
+.games-grid .game-card:nth-child(2){animation-delay:0.07s}
+.games-grid .game-card:nth-child(3){animation-delay:0.11s}
+.games-grid .game-card:nth-child(4){animation-delay:0.15s}
+.games-grid .game-card:nth-child(5){animation-delay:0.19s}
+.games-grid .game-card:nth-child(6){animation-delay:0.23s}
+.games-grid .game-card:nth-child(7){animation-delay:0.27s}
+.games-grid .game-card:nth-child(8){animation-delay:0.31s}
+
+/* ── P5: Trilha cards com stagger ─────────────────────────── */
+.trilha-card:nth-child(1){animation-delay:0.04s}
+.trilha-card:nth-child(2){animation-delay:0.09s}
+.trilha-card:nth-child(3){animation-delay:0.13s}
+.trilha-card:nth-child(4){animation-delay:0.17s}
+.trilha-card:nth-child(5){animation-delay:0.21s}
+.trilha-card:nth-child(6){animation-delay:0.25s}
+.trilha-card:nth-child(7){animation-delay:0.29s}
+.trilha-card:nth-child(8){animation-delay:0.33s}
+.trilha-card:nth-child(9){animation-delay:0.37s}
+.trilha-card:nth-child(10){animation-delay:0.41s}
+
 </style>
 
 <!-- Service Worker -->
@@ -1463,16 +1514,19 @@ body::before{background:
         <span class="mission-sel-week">escolham uma</span>
       </div>
       <div class="mission-sel-card on" onclick="missaoSelCard(this,0)">
+        <div class="mission-sel-icon"></div>
         <div class="mission-sel-nome"></div>
         <div class="mission-sel-tarefa"></div>
         <div class="mission-sel-lbl">✦ selecionada</div>
       </div>
       <div class="mission-sel-card" onclick="missaoSelCard(this,1)">
+        <div class="mission-sel-icon"></div>
         <div class="mission-sel-nome"></div>
         <div class="mission-sel-tarefa"></div>
         <div class="mission-sel-lbl">· escolher esta</div>
       </div>
       <div class="mission-sel-card" onclick="missaoSelCard(this,2)">
+        <div class="mission-sel-icon"></div>
         <div class="mission-sel-nome"></div>
         <div class="mission-sel-tarefa"></div>
         <div class="mission-sel-lbl">· escolher esta</div>
@@ -4367,54 +4421,54 @@ function atualizarStreak(){
 
 // ── Missão da Semana ─────────────────────────────────────────────
 const ARCOS_SEMANA=[
-  {titulo:'Semana da Reconexão',
-   setup:'Às vezes a vida separa sem avisar. Esta semana é sobre voltar deliberadamente para o centro.',
-   tarefa:'Jantar sem celular — dois pratos, uma conversa que vocês nunca tiveram',
-   encerramento:'Esse retorno intencional um ao outro é a raiz de tudo. O que parecia rotina ganhou outra textura.'},
-  {titulo:'A Arte da Escuta',
-   setup:'Escutar para entender é diferente de escutar para responder. Esta semana, pratiquem a diferença.',
-   tarefa:'Cada um fala 5 minutos ininterruptos sobre algo que sente — o outro só ouve, sem resolver',
-   encerramento:'Sentiram a diferença de serem ouvidos de verdade? Esse é um dos maiores presentes que casais podem trocar.'},
-  {titulo:'Toque com Presença',
-   setup:'O toque sem intenção de chegar a algum lugar é uma das formas mais profundas de conexão.',
-   tarefa:'Cinco minutos de toque — mãos, costas, cabelo — sem agenda e sem pressa para o que vem depois',
-   encerramento:'O corpo guarda memórias. Esse toque ficou registrado em vocês dois.'},
-  {titulo:'A Surpresa Pequena',
-   setup:'Casais felizes não precisam de grandes gestos — precisam de atenção cotidiana ao outro.',
-   tarefa:'Façam algo que o outro ama sem ser pedido: o café do jeito certo, a música favorita, a mensagem certa',
-   encerramento:'A surpresa pequena diz: eu te vejo. Continuem se vendo assim.'},
-  {titulo:'Vulnerabilidade em Voz Alta',
-   setup:'A intimidade real começa onde a performance termina. Esta semana, arrisquem ser vistos.',
-   tarefa:'Contem um ao outro algo que guardam há tempo — um medo, uma insegurança, um desejo antigo',
-   encerramento:'Isso levou coragem. A vulnerabilidade compartilhada é o tecido da intimidade duradoura.'},
-  {titulo:'O Jogo da Observação',
-   setup:'Com o tempo, paramos de realmente ver quem está ao lado. Esta semana, redescubram.',
-   tarefa:'Descrevam três coisas que notaram no outro esta semana — algo físico, algo de caráter, algo novo',
-   encerramento:'Ver e ser visto — esse é o núcleo do amor. Vocês praticaram isso juntos.'},
-  {titulo:'Semana do Ritual',
-   setup:'Rituais são a linguagem silenciosa dos casais. Um ritual simples, repetido, vira âncora.',
-   tarefa:'Criem um ritual de 5 minutos para fazer toda semana — um brinde, uma dança, uma pergunta especial',
-   encerramento:'O ritual que criaram agora pertence a vocês. Repitam — com o tempo, vai ficar precioso.'},
-  {titulo:'Fantasia Compartilhada',
-   setup:'Desejos não ditos criam distância. Ditos com cuidado, criam cumplicidade.',
-   tarefa:'Compartilhem uma fantasia que nunca disseram em voz alta — sem pressão de realizar, só de contar',
-   encerramento:'A fantasia compartilhada não precisa virar realidade para criar conexão. Ela já funcionou.'},
-  {titulo:'A Noite Sem Agenda',
-   setup:'Quando foi a última vez que passaram uma noite sem planos, só presentes um para o outro?',
-   tarefa:'Uma noite sem roteiro: sem celular, sem série, sem decisão prévia — só estar juntos e ver o que surge',
-   encerramento:'O inesperado que surgiu dessa noite? É o melhor de vocês. Guardem isso.'},
-  {titulo:'Gratidão em Detalhes',
-   setup:'A gratidão genérica não toca ninguém. A gratidão específica muda relacionamentos.',
-   tarefa:'Cada um lista cinco coisas muito específicas que admira no outro — não o quê, mas por quê',
-   encerramento:'Essa especificidade é a diferença entre um elogio e uma declaração. Vocês se declararam.'},
-  {titulo:'Redescoberta',
-   setup:'Pessoas mudam. O casal que se reconhece em constante descoberta permanece vivo.',
-   tarefa:'Façam uma pergunta que nunca fizeram um ao outro — sonho, medo, prazer, infância ou futuro',
-   encerramento:'Havia algo que vocês não sabiam. E há mais. Continuem perguntando.'},
-  {titulo:'A Conversa Adiada',
-   setup:'Toda relação tem conversas que foram postergadas. Esta semana, escolham ter uma delas — com cuidado.',
-   tarefa:'Abordem algo que evitavam: uma mágoa pequena, uma necessidade não dita, um "precisamos conversar"',
-   encerramento:'As conversas difíceis, feitas com amor, são as que mais fortalecem. Vocês tiveram coragem.'},
+  {icone:'🕯️',titulo:'Semana da Reconexão',
+   setup:'Às vezes a vida nos afasta sem avisar — agenda cheia, cabeça longe, corpos presentes mas almas ausentes. Esta semana é sobre escolher, deliberadamente, voltar.',
+   tarefa:'Jantar sem celular: dois pratos, velas se tiverem, e uma conversa que vocês nunca tiveram antes. Nada de séries, nada de telas.',
+   encerramento:'Esse retorno intencional um ao outro é a raiz de tudo que vem depois. O que parecia rotina ganhou outra textura — guardem isso.'},
+  {icone:'🎧',titulo:'A Arte da Escuta',
+   setup:'Escutar para entender é completamente diferente de escutar para responder. A maioria de nós faz a segunda. Esta semana, pratiquem a primeira.',
+   tarefa:'Cada um fala por 5 minutos ininterruptos sobre algo que sente ou carrega — o outro só ouve, sem consertar, sem opinar, sem resolver. Só estar presente.',
+   encerramento:'Sentiram a diferença de serem realmente ouvidos? Esse silêncio ativo é um dos maiores presentes que dois amantes podem trocar.'},
+  {icone:'🤲',titulo:'Toque com Presença',
+   setup:'Existe um toque que não quer chegar a lugar nenhum — que não é prelúdio para nada, não tem agenda, não pede resposta. Esse é o toque que reconecta de verdade.',
+   tarefa:'Reserve 10 minutos: mãos, costas, cabelo, rosto — devagar, com atenção. Sem pressa, sem o que vem depois. Só o toque pelo toque.',
+   encerramento:'O corpo guarda memória afetiva. Esse toque ficou registrado nos dois — e vai aparecer nas próximas semanas sem que percebam.'},
+  {icone:'🎁',titulo:'A Surpresa Pequena',
+   setup:'Casais que duram não precisam de grandes gestos — precisam de atenção cotidiana ao outro. Uma surpresa pequena vale mais do que qualquer presente caro.',
+   tarefa:'Façam algo que o outro ama sem ser pedido: o café do jeito exato que gosta, a música favorita tocando quando chega em casa, a mensagem no momento certo do dia.',
+   encerramento:'A surpresa pequena carrega uma mensagem silenciosa: "eu te observo, eu te conheço, eu te vejo." Continuem se vendo assim.'},
+  {icone:'💬',titulo:'Vulnerabilidade em Voz Alta',
+   setup:'A intimidade real começa exatamente onde a performance termina. Quando paramos de nos mostrar "bem" e arriscamos ser vistos de verdade — aí a conexão aprofunda.',
+   tarefa:'Escolham um momento de tranquilidade e contem um ao outro algo que carregam há tempo: um medo que não costumam admitir, uma insegurança, um desejo antigo.',
+   encerramento:'Isso levou coragem real. A vulnerabilidade compartilhada é o tecido mais resistente da intimidade duradoura — e vocês o teceram juntos.'},
+  {icone:'👁️',titulo:'O Jogo da Observação',
+   setup:'Com o tempo e a familiaridade, paramos de realmente ver quem está ao lado. Nos acostumamos com a presença e deixamos de notar a pessoa. Esta semana, redescubram.',
+   tarefa:'Ao final de cada dia, cada um anota uma coisa que notou no outro — algo físico, algo de caráter, algo que mudou ou que nunca havia visto antes. Troquem no fim da semana.',
+   encerramento:'Ver e ser visto — esse é o núcleo silencioso do amor maduro. Vocês praticaram isso juntos, e isso não some fácil.'},
+  {icone:'🕊️',titulo:'Semana do Ritual',
+   setup:'Rituais são a linguagem silenciosa dos casais que permanecem. Um gesto simples, repetido com intenção, vira âncora — um sinal que diz "somos nós, e isso é especial".',
+   tarefa:'Criem um ritual de 5 minutos para repetir toda semana: um brinde com o que tiverem, uma dança breve na cozinha, uma pergunta específica que só vocês fazem um ao outro.',
+   encerramento:'O ritual que acabaram de criar agora pertence a vocês dois, a mais ninguém. Repitam — com o tempo, vai ficar precioso de um jeito que surpresas não conseguem.'},
+  {icone:'🔥',titulo:'Fantasia Compartilhada',
+   setup:'Desejos não ditos criam uma distância silenciosa. Ditos com cuidado e sem julgamento, criam cumplicidade — e uma nova linguagem entre os dois.',
+   tarefa:'Cada um compartilha uma fantasia que nunca disse em voz alta. Não precisa ser sobre sexo — pode ser um lugar, uma cena, uma sensação. Sem pressão de realizar, só de contar.',
+   encerramento:'A fantasia compartilhada não precisa virar realidade para gerar conexão. O ato de confiar o desejo ao outro já funcionou.'},
+  {icone:'🌙',titulo:'A Noite Sem Agenda',
+   setup:'Quando foi a última vez que vocês passaram uma noite completamente sem planos — sem série escolhida, sem lugar para ir, só presentes um para o outro?',
+   tarefa:'Uma noite inteira sem roteiro: sem celular depois das 20h, sem série, sem delivery já decidido. Deixem o momento escolher o que acontece.',
+   encerramento:'O inesperado que surgiu dessa noite? É o melhor de vocês surgindo naturalmente. Guardem a lembrança — e repitam mais vezes.'},
+  {icone:'✨',titulo:'Gratidão em Detalhes',
+   setup:'Gratidão genérica ("você é ótimo") não toca ninguém de verdade. Gratidão específica ("quando você fez X na semana passada, eu senti Y") transforma relacionamentos.',
+   tarefa:'Cada um escreve cinco coisas muito específicas que admira no outro esta semana — não o quê, mas o porquê. Leiam um para o outro em voz alta.',
+   encerramento:'Essa especificidade é a diferença entre um elogio e uma declaração de amor real. Vocês se declararam — e isso fica.'},
+  {icone:'🗝️',titulo:'Redescoberta',
+   setup:'Pessoas mudam — inclusive (e especialmente) as que amamos. O casal que se reconhece em constante descoberta, que ainda se pergunta sobre o outro, permanece vivo.',
+   tarefa:'Façam uma pergunta que nunca fizeram um ao outro — sobre um sonho novo, um medo que mudou, um prazer descoberto, a infância, ou onde imaginam estar em dez anos.',
+   encerramento:'Havia algo que vocês não sabiam um sobre o outro. E há muito mais. Continuem perguntando — sempre vai ter mais.'},
+  {icone:'🕊️',titulo:'A Conversa Adiada',
+   setup:'Toda relação tem conversas que foram sendo empurradas para frente: uma mágoa pequena, uma necessidade não dita, um assunto que "não é o momento". Esta semana, o momento chegou.',
+   tarefa:'Escolham uma conversa que estão evitando — algo pequeno ou algo maior. Abordem com cuidado e sem pressa: comecem com "eu sinto" em vez de "você faz".',
+   encerramento:'As conversas difíceis, feitas com amor e intenção, são as que mais fortalecem. Vocês tiveram a coragem que a maioria dos casais não tem.'},
 ];
 // Semanas começam segunda-feira 00:00 BRT (UTC-3); âncora = 1970-01-05 03:00 UTC = 442800000ms
 function getSemanaAtual(){return Math.floor((Date.now()-442800000)/(7*86400000));}
@@ -4469,6 +4523,8 @@ function _renderMissaoSelCards(){
   const cards=document.querySelectorAll('.mission-sel-card');
   cards.forEach((card,i)=>{
     const arc=ARCOS_SEMANA[(sem+i)%ARCOS_SEMANA.length];
+    const iconEl=card.querySelector('.mission-sel-icon');
+    if(iconEl)iconEl.textContent=arc.icone||'✦';
     card.querySelector('.mission-sel-nome').textContent=arc.titulo;
     card.querySelector('.mission-sel-tarefa').textContent=arc.tarefa;
     card.classList.toggle('on',i===0);
