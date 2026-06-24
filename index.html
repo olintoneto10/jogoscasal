@@ -4001,7 +4001,7 @@ function recomecoAbrir(idx){
   document.getElementById('rec-ov-desc').textContent=n.desc;
   const linkWrap=document.getElementById('rec-ov-link-wrap');
   if(n.link){
-    linkWrap.innerHTML='<button class="rec-ov-link" onclick="document.getElementById('rec-overlay').classList.remove('on');go(''+n.link+'')">'+n.linkLabel+'</button>';
+    linkWrap.innerHTML=`<button class="rec-ov-link" onclick="document.getElementById('rec-overlay').classList.remove('on');go('${n.link}')">${n.linkLabel}</button>`;
   } else {
     linkWrap.innerHTML='';
   }
