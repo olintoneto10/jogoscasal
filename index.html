@@ -1473,6 +1473,185 @@ html{font-size:17px}
 .me-sub{font-size:0.9rem!important;color:rgba(218,185,165,0.88)!important}
 .me-confirm-btn{font-size:0.88rem!important}
 .me-skip-btn{font-size:0.8rem!important;opacity:0.75!important}
+
+/* ══ TEMA PÉTALA — fundo branco, rosa profundo, dourado ══════════ */
+body.tema-petala{
+  --text:#22080F;--muted:#8A6070;--gold:#9A4010;--gold-l:#B85020;
+  --rose:#C02060;--rose-l:#D84080;--glow-gold:rgba(155,64,16,0.15);
+  --ground:#FAFAFA;--ground-2:#F5F0F2;--ground-3:#EFE8EC;
+}
+html:has(body.tema-petala),body.tema-petala{background:#FFFFFF!important;color:#22080F!important;}
+body.tema-petala::before{background:radial-gradient(ellipse at 80% 20%,rgba(192,32,96,0.05) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(155,64,16,0.04) 0%,transparent 50%);}
+
+/* ── Picker: card Pétala ── */
+.tp-card-petala{background:radial-gradient(135deg,#FFF0F5 0%,#FFF8FA 100%);border-color:rgba(192,32,96,0.6)!important;}
+.tp-card-petala .tp-card-name{color:#C02060;}
+.tp-card-petala .tp-card-desc{color:#4A1828!important;opacity:1!important;}
+
+/* ── Home: saudação ── */
+body.tema-petala .oc-sal-pre{color:rgba(192,32,96,0.72)!important;}
+body.tema-petala .oc-sal-nomes{color:#22080F!important;}
+body.tema-petala .oc-heart{color:#C02060!important;}
+
+/* ── Home: semáforo ── */
+body.tema-petala .semaforo-banner{background:rgba(192,32,96,0.05)!important;border-color:rgba(192,32,96,0.14)!important;}
+body.tema-petala #home .semaforo-banner .semaforo-label{color:rgba(140,48,80,0.82)!important;}
+body.tema-petala .vazio .semaforo-label{color:rgba(140,48,80,0.72)!important;}
+body.tema-petala .vazio .semaforo-val{color:rgba(44,14,28,0.55)!important;}
+body.tema-petala #home .semaforo-change{color:rgba(155,64,16,0.82)!important;}
+body.tema-petala .semaforo-dot{background:#C02060!important;}
+
+/* ── Home: card Noite Guiada ── */
+body.tema-petala .oc-card-noite{background:rgba(192,32,96,0.05)!important;border:1.5px solid rgba(192,32,96,0.16)!important;}
+body.tema-petala .oc-card-pre{color:rgba(192,32,96,0.72)!important;}
+body.tema-petala .oc-card-nome{color:#8A1040!important;}
+body.tema-petala .oc-card-desc{color:rgba(44,14,28,0.82)!important;}
+body.tema-petala .oc-card-cta{background:rgba(192,32,96,0.09)!important;border-color:rgba(192,32,96,0.3)!important;color:#8A1040!important;}
+
+/* ── Home: grade de botões ── */
+body.tema-petala .oc-sec-btn{background:rgba(192,32,96,0.05)!important;border-color:rgba(192,32,96,0.14)!important;color:#7A1038!important;}
+body.tema-petala .oc-sec-btn:active{background:rgba(192,32,96,0.12)!important;}
+
+/* ── Home: streak ── */
+body.tema-petala .home-streak{background:linear-gradient(135deg,rgba(155,64,16,0.08),rgba(192,32,96,0.06))!important;border-color:rgba(155,64,16,0.22)!important;}
+body.tema-petala .streak-count{color:#9A4010!important;}
+body.tema-petala .streak-label{color:rgba(120,60,40,0.88)!important;}
+body.tema-petala .streak-hist-btn{background:rgba(192,32,96,0.1)!important;border-color:rgba(192,32,96,0.25)!important;color:#8A1040!important;}
+
+/* ── Home: missão ── */
+body.tema-petala .home-mission{background:rgba(192,32,96,0.04)!important;border-color:rgba(192,32,96,0.12)!important;}
+body.tema-petala .mission-week-label{color:rgba(140,50,70,0.78)!important;}
+body.tema-petala #mission-week-subtitle{color:rgba(120,50,60,0.75)!important;}
+body.tema-petala .mission-week-text{color:rgba(34,8,16,0.95)!important;}
+body.tema-petala .mission-done-btn{background:rgba(192,32,96,0.1)!important;border-color:rgba(192,32,96,0.28)!important;color:#8A1040!important;}
+body.tema-petala .mission-done-btn.done{background:rgba(155,64,16,0.1)!important;border-color:rgba(155,64,16,0.28)!important;color:#7A3010!important;}
+body.tema-petala #mission-total-label{color:rgba(120,50,70,0.65)!important;}
+body.tema-petala #mission-encerramento{color:rgba(130,60,20,0.9)!important;}
+
+/* ── Home: capítulo / XP ── */
+body.tema-petala .cap-label{color:rgba(140,48,60,0.72)!important;}
+body.tema-petala .cap-nome{color:#9A4010!important;}
+body.tema-petala .cap-bar-wrap{background:rgba(0,0,0,0.09)!important;}
+body.tema-petala #cap-bar-fill{background:linear-gradient(90deg,#C8603A,#D04080)!important;}
+body.tema-petala #cap-xp-label{color:rgba(140,80,60,0.62)!important;}
+
+/* ── Home: botões Sorteio e Trilhas ── */
+body.tema-petala .btn-sorteio{background:rgba(192,32,96,0.05)!important;border-color:rgba(192,32,96,0.22)!important;color:#8A1040!important;}
+body.tema-petala .btn-sorteio:hover{background:rgba(192,32,96,0.1)!important;}
+body.tema-petala .btn-trilhas{background:linear-gradient(135deg,rgba(192,32,96,0.1),rgba(140,20,70,0.07))!important;border-color:rgba(192,32,96,0.28)!important;color:#8A1040!important;}
+body.tema-petala .games-grid-sep{color:rgba(155,64,80,0.6)!important;}
+
+/* ── Home: trilha recomendada ── */
+body.tema-petala .home-trilha-rec{background:linear-gradient(145deg,rgba(155,64,16,0.08),rgba(155,64,16,0.05))!important;border-color:rgba(155,64,16,0.2)!important;}
+body.tema-petala .home-trilha-badge{color:rgba(155,64,16,0.7)!important;}
+body.tema-petala .home-trilha-nome{color:#7A3010!important;}
+body.tema-petala .home-trilha-sub{color:rgba(120,60,40,0.7)!important;}
+body.tema-petala .home-trilha-cta{color:#9A4010!important;}
+
+/* ── Overlay missão entrada ── */
+body.tema-petala #missao-entrada-overlay{background:rgba(255,255,255,0.97)!important;}
+body.tema-petala .me-title{color:#22080F!important;}
+body.tema-petala .me-sub{color:rgba(120,60,80,0.82)!important;}
+body.tema-petala .me-card{background:rgba(192,32,96,0.06)!important;border-color:rgba(192,32,96,0.18)!important;}
+body.tema-petala .me-card.on{background:rgba(192,32,96,0.12)!important;border-color:rgba(208,64,112,0.45)!important;}
+body.tema-petala .me-card-nome{color:rgba(140,16,60,0.96)!important;}
+body.tema-petala .me-card-tarefa{color:rgba(100,40,60,0.86)!important;}
+body.tema-petala .me-card.on .me-card-lbl{color:rgba(192,32,96,0.78)!important;}
+body.tema-petala .me-skip-btn{color:rgba(120,60,80,0.7)!important;}
+
+/* ── Telas de jogo — game-header ── */
+body.tema-petala .game-header{border-bottom:1px solid rgba(192,32,96,0.12)!important;}
+body.tema-petala .back-btn{color:#8A1040!important;border-color:rgba(192,32,96,0.28)!important;}
+body.tema-petala .game-title{color:#8A1040!important;}
+
+/* ── Cards de jogos (grid) ── */
+body.tema-petala .game-card{background:rgba(192,32,96,0.04)!important;border:1px solid rgba(192,32,96,0.13)!important;}
+body.tema-petala .game-card .name{color:#7A1038!important;}
+body.tema-petala .game-card .desc{color:rgba(100,40,60,0.82)!important;}
+
+/* ── Textos gerais do jogo ── */
+body.tema-petala .c-title{color:#8A1040!important;}
+body.tema-petala .c-text{color:rgba(34,8,16,0.88)!important;}
+body.tema-petala .c-level{color:rgba(130,60,60,0.75)!important;}
+body.tema-petala .c-timer{color:#9A4010!important;}
+
+/* ── Botões globais no tema petala ── */
+body.tema-petala .btn-ghost{color:#8A1040!important;border-color:rgba(192,32,96,0.3)!important;}
+body.tema-petala .btn-ghost:hover{background:rgba(192,32,96,0.08)!important;}
+body.tema-petala .lvl{color:rgba(130,50,60,0.72)!important;border-right-color:rgba(192,32,96,0.2)!important;}
+body.tema-petala .lvl.on{color:#8A1040!important;}
+
+/* ── Safeword pill ── */
+body.tema-petala .safeword-pill{background:rgba(200,32,80,0.12)!important;border-color:rgba(200,32,80,0.3)!important;color:#8A1040!important;}
+
+/* ── Aftercare bar ── */
+body.tema-petala .aftercare-bar{background:rgba(255,248,252,0.97)!important;border-top-color:rgba(192,32,96,0.15)!important;}
+body.tema-petala .aftercare-text{color:rgba(44,14,28,0.88)!important;}
+
+/* ── Roleta ── */
+body.tema-petala .roleta-outer{border-color:rgba(192,32,96,0.2)!important;}
+body.tema-petala .card-result{background:rgba(192,32,96,0.06)!important;border-color:rgba(192,32,96,0.2)!important;}
+
+/* ── VD ── */
+body.tema-petala .vd-player{color:rgba(100,40,60,0.82)!important;}
+body.tema-petala .vd-question{color:#22080F!important;}
+body.tema-petala .vd-btn{color:#fff!important;}
+
+/* ── Dado ── */
+body.tema-petala .die-label{color:rgba(130,60,60,0.72)!important;}
+body.tema-petala .die-value{color:#9A4010!important;}
+
+/* ── Semáforo tela config ── */
+body.tema-petala .semaforo-opt-nome{color:#22080F!important;}
+body.tema-petala .semaforo-screen{background:#FFFFFF!important;}
+
+/* ── Conquistas ── */
+body.tema-petala .cq-item-nome{color:#8A1040!important;}
+body.tema-petala .cq-item-hist{color:rgba(80,30,50,0.82)!important;}
+body.tema-petala .cq-item{background:rgba(192,32,96,0.04)!important;border-color:rgba(192,32,96,0.14)!important;}
+body.tema-petala .cq-item.on{background:rgba(192,32,96,0.1)!important;border-color:rgba(192,32,96,0.3)!important;}
+
+/* ── Jornada ── */
+body.tema-petala .jornada-item{background:rgba(192,32,96,0.04)!important;border-color:rgba(192,32,96,0.13)!important;}
+body.tema-petala .jornada-item-nome{color:#8A1040!important;}
+body.tema-petala .jornada-nota{color:rgba(80,30,50,0.82)!important;}
+
+/* ── Noite Guiada ── */
+body.tema-petala .noite-step-nome{color:#8A1040!important;}
+body.tema-petala .noite-step-desc{color:rgba(60,20,35,0.82)!important;}
+body.tema-petala .noite-header-title{color:#8A1040!important;}
+
+/* ── Reconexão ── */
+body.tema-petala .recon-instruction{color:rgba(80,30,50,0.85)!important;}
+body.tema-petala .recon-step-num{color:rgba(140,60,80,0.65)!important;}
+
+/* ── Mapa do Desejo ── */
+body.tema-petala .mapa-item-label{color:#22080F!important;}
+body.tema-petala .mapa-match-item{color:#22080F!important;}
+body.tema-petala .mapa-intro-text{color:rgba(80,30,50,0.82)!important;}
+
+/* ── Só Carinho ── */
+body.tema-petala .sc-item-nome{color:#8A1040!important;}
+body.tema-petala .sc-item{background:rgba(192,32,96,0.05)!important;border-color:rgba(192,32,96,0.13)!important;}
+
+/* ── Recomeço ── */
+body.tema-petala .rec-noite-nome{color:#8A1040!important;}
+body.tema-petala .rec-noite-desc{color:rgba(80,30,50,0.82)!important;}
+
+/* ── Home logout / exportar ── */
+body.tema-petala .home-logout{color:rgba(130,60,80,0.6)!important;}
+body.tema-petala .tab-btn{color:rgba(140,60,80,0.7)!important;}
+body.tema-petala .tab-btn.on{color:#8A1040!important;}
+
+/* ── Install banner ── */
+body.tema-petala .install-banner{background:rgba(255,248,252,0.98)!important;border-color:rgba(192,32,96,0.2)!important;}
+body.tema-petala .install-text{color:#22080F!important;}
+
+/* ── Textos de conquista / toast ── */
+body.tema-petala .achiev-toast{background:rgba(255,248,252,0.98)!important;border-color:rgba(192,32,96,0.3)!important;}
+body.tema-petala .achiev-toast-name{color:#8A1040!important;}
+body.tema-petala .achiev-toast-hist{color:rgba(80,30,50,0.82)!important;}
+
 </style>
 
 <!-- Service Worker -->
@@ -2848,9 +3027,10 @@ function apagarTodosDados(){
 }
 // ══ P10: TEMAS & MISSÃO ENTRADA ══════════════════════════════════
 function _aplicarTema(t){
-  document.body.classList.remove('tema-brasa','tema-safira');
+  document.body.classList.remove('tema-brasa','tema-safira','tema-petala');
   if(t==='brasa')document.body.classList.add('tema-brasa');
   else if(t==='safira')document.body.classList.add('tema-safira');
+  else if(t==='petala')document.body.classList.add('tema-petala');
 }
 function escolherTema(t){
   localStorage.setItem('jd_tema',t);
@@ -6922,6 +7102,15 @@ function iniciarTrilhaNar(id){
   <div class="tp-title">Escolham o visual</div>
   <div class="tp-sub">Podem trocar depois nas configurações</div>
   <div class="tp-cards">
+    <div class="tp-card tp-card-petala" onclick="escolherTema('petala')">
+      <div class="tp-card-name">Pétala</div>
+      <div class="tp-card-desc">Fundo branco, rosa e dourado — claro, elegante e íntimo.</div>
+      <div class="tp-swatches">
+        <div class="tp-swatch" style="background:#FFFFFF;border-color:rgba(0,0,0,0.15)"></div>
+        <div class="tp-swatch" style="background:#C02060"></div>
+        <div class="tp-swatch" style="background:#9A4010"></div>
+      </div>
+    </div>
     <div class="tp-card tp-card-veludo" onclick="escolherTema('veludo')">
       <div class="tp-card-name">Veludo</div>
       <div class="tp-card-desc">Tons de vinho e ouro — quente, profundo e sedutor.</div>
@@ -6929,15 +7118,6 @@ function iniciarTrilhaNar(id){
         <div class="tp-swatch" style="background:#4D0A24"></div>
         <div class="tp-swatch" style="background:#D4855A"></div>
         <div class="tp-swatch" style="background:#D0456E"></div>
-      </div>
-    </div>
-    <div class="tp-card tp-card-brasa" onclick="escolherTema('brasa')">
-      <div class="tp-card-name">Brasa</div>
-      <div class="tp-card-desc">Carvão e âmbar — ardente, terroso e intenso.</div>
-      <div class="tp-swatches">
-        <div class="tp-swatch" style="background:#3a0e04"></div>
-        <div class="tp-swatch" style="background:#C86830"></div>
-        <div class="tp-swatch" style="background:#B83030"></div>
       </div>
     </div>
     <div class="tp-card tp-card-safira" onclick="escolherTema('safira')">
