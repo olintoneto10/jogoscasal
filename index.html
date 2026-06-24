@@ -999,6 +999,250 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 /* botão Trilhas na home */
 .btn-trilhas{background:linear-gradient(135deg,rgba(180,60,100,0.18),rgba(130,40,80,0.12));border:1.5px solid rgba(200,80,130,0.3);border-radius:30px;padding:0.7rem 1.4rem;font-size:0.82rem;color:rgba(230,170,200,0.9);cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:0.05em;transition:all 0.2s;width:100%;margin-top:0.3rem}
 .btn-trilhas:active{background:rgba(180,60,100,0.28);border-color:rgba(220,100,145,0.5)}
+
+/* ════════════════════════════════════════════════════════════════
+   REFINAMENTO VISUAL — Luxo Íntimo v41
+   ════════════════════════════════════════════════════════════════ */
+
+/* Fundo mais profundo e atmosférico */
+html,body{background:radial-gradient(ellipse at 50% -5%,#601228 0%,#30101A 32%,#160810 58%,#060106 100%)}
+body::before{background:
+  radial-gradient(ellipse at 72% 8%,rgba(208,69,110,0.14) 0%,transparent 48%),
+  radial-gradient(ellipse at 28% 80%,rgba(212,133,90,0.11) 0%,transparent 46%),
+  radial-gradient(ellipse at 50% 50%,rgba(130,25,65,0.07) 0%,transparent 60%)}
+
+/* Título home mais impactante */
+.home-header h1{
+  font-size:clamp(2.8rem,12vw,4rem);
+  text-shadow:0 0 70px var(--glow-gold),0 0 140px rgba(208,69,110,0.28),0 3px 6px rgba(0,0,0,0.5)
+}
+.home-header p{font-size:1.1rem;color:rgba(205,165,145,0.84);letter-spacing:0.1em}
+
+/* Cards de jogo mais ricos */
+.game-card{
+  background:linear-gradient(155deg,#200B16 0%,#260E1C 55%,#2C1220 100%);
+  border-color:rgba(212,133,90,0.30);
+  box-shadow:0 4px 28px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.035)
+}
+.game-card:hover{
+  border-color:rgba(238,104,136,0.70);
+  box-shadow:0 10px 44px rgba(208,69,110,0.28),0 4px 16px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.035)
+}
+.game-card .icon{filter:drop-shadow(0 0 14px rgba(212,133,90,0.4));font-size:2.2rem}
+.game-card .name{font-size:1.1rem;letter-spacing:0.055em}
+.game-card .desc{font-size:0.88rem}
+
+/* Botão principal — Noite Guiada */
+.btn-noite{
+  background:linear-gradient(145deg,rgba(238,104,136,0.24),rgba(212,133,90,0.16));
+  border-color:rgba(238,104,136,0.50);
+  box-shadow:0 5px 32px rgba(238,104,136,0.16),inset 0 1px 0 rgba(255,255,255,0.04);
+  font-size:1.22rem;
+  padding:1rem 1.5rem
+}
+.btn-noite:hover{
+  background:linear-gradient(145deg,rgba(238,104,136,0.35),rgba(212,133,90,0.25));
+  box-shadow:0 7px 40px rgba(238,104,136,0.28),inset 0 1px 0 rgba(255,255,255,0.04)
+}
+
+/* btn-gold mais teatral */
+.btn-gold{
+  background:linear-gradient(135deg,#FBB580 0%,#D4855A 40%,#A04828 100%);
+  box-shadow:0 5px 32px rgba(212,133,90,0.48),inset 0 1px 0 rgba(255,255,255,0.1);
+  font-size:1.18rem;
+  padding:1rem 3.4rem;
+  border-radius:6px;
+  letter-spacing:0.18em
+}
+.btn-gold:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 10px 44px rgba(212,133,90,0.60),inset 0 1px 0 rgba(255,255,255,0.1)}
+
+/* Botão Trilhas */
+.btn-trilhas{
+  background:linear-gradient(135deg,rgba(180,60,100,0.20),rgba(130,40,80,0.14));
+  border-color:rgba(210,80,130,0.38);
+  box-shadow:0 3px 16px rgba(180,60,100,0.10);
+  font-size:0.86rem;
+  padding:0.8rem 1.4rem
+}
+.btn-trilhas:hover{background:linear-gradient(135deg,rgba(200,70,115,0.30),rgba(150,50,95,0.20));border-color:rgba(230,100,148,0.55)}
+
+/* Botão Reconexão */
+.btn-reconexao{
+  background:rgba(196,107,122,0.10);
+  border-color:rgba(196,107,122,0.32);
+  box-shadow:0 3px 16px rgba(196,107,122,0.08);
+  font-size:1.08rem;
+  padding:0.8rem 1.5rem
+}
+
+/* Missão semanal */
+.home-mission{
+  background:linear-gradient(145deg,rgba(208,69,110,0.11),rgba(238,104,136,0.06));
+  border-color:rgba(208,69,110,0.30);
+  box-shadow:0 3px 22px rgba(208,69,110,0.09)
+}
+.mission-week-text{font-size:1.05rem;line-height:1.62;color:rgba(255,228,220,0.96)}
+
+/* Streak */
+.home-streak{
+  background:linear-gradient(135deg,rgba(212,133,90,0.14),rgba(238,104,136,0.09));
+  border-color:rgba(212,133,90,0.30);
+  box-shadow:0 2px 18px rgba(212,133,90,0.09)
+}
+.streak-count{font-size:1.6rem}
+
+/* Cartas de overlay (flip card) */
+.face.back,.face.front{
+  background:linear-gradient(155deg,#1E0A14 0%,#2A0E1C 100%);
+  box-shadow:0 36px 90px rgba(0,0,0,0.75)
+}
+
+/* Texto das cartas */
+.c-text{font-size:1.14rem;line-height:1.78}
+.c-cat{font-size:1.9rem;text-shadow:0 0 36px var(--glow-gold)}
+
+/* Login */
+.login-player{
+  background:linear-gradient(155deg,#1E0A14,#240D18);
+  border-color:rgba(200,148,58,0.26);
+  box-shadow:0 4px 28px rgba(0,0,0,0.35)
+}
+.login-input{
+  background:rgba(255,255,255,0.035);
+  border-color:rgba(200,148,58,0.26);
+  font-size:1.05rem;
+  padding:0.65rem 0.85rem;
+  border-radius:8px
+}
+.login-input:focus{border-color:rgba(212,133,90,0.72);box-shadow:0 0 0 3px rgba(212,133,90,0.09)}
+.login-logo h1{text-shadow:0 0 60px rgba(208,69,110,0.65),0 0 110px rgba(212,133,90,0.35)}
+
+/* Headers de jogo */
+.game-title{font-size:1.2rem;letter-spacing:0.08em;text-shadow:0 0 24px rgba(240,160,112,0.32)}
+
+/* Níveis (tabs) */
+.levels{border-color:rgba(212,133,90,0.30);border-radius:6px}
+.lvl{font-size:0.78rem;padding:0.65rem 1.1rem}
+
+/* Missão card */
+.missao-card{
+  background:linear-gradient(155deg,#1E0A14,#2A0E1E);
+  border-color:rgba(200,148,58,0.34);
+  box-shadow:0 8px 40px rgba(0,0,0,0.4)
+}
+.missao-card-title{font-size:1.5rem}
+.step-text{font-size:1.12rem;line-height:1.72}
+
+/* Posições */
+.pos-card{box-shadow:0 16px 52px rgba(0,0,0,0.5);border-color:rgba(200,148,58,0.32)}
+.pos-name{font-size:1.6rem}
+.pos-desc{font-size:1.08rem;line-height:1.72}
+
+/* Quiz */
+.quiz-question{font-size:1.5rem}
+.quiz-opt{
+  background:rgba(255,255,255,0.025);
+  border-color:rgba(200,148,58,0.24);
+  font-size:1.1rem;
+  padding:1rem 1.2rem
+}
+.quiz-opt:hover{border-color:rgba(200,148,58,0.55);background:rgba(200,148,58,0.09)}
+
+/* Dado */
+.die-card{background:linear-gradient(145deg,#1E0A14,#240E1A);border-color:rgba(200,148,58,0.26)}
+
+/* Botão voltar */
+.back-btn{border-color:rgba(212,133,90,0.40);border-radius:5px;font-size:0.78rem}
+.back-btn:hover{background:rgba(200,148,58,0.12)}
+
+/* Botão ghost */
+.btn-ghost{border-color:rgba(212,133,90,0.40);font-size:0.78rem}
+.btn-ghost:hover{background:rgba(212,133,90,0.15)}
+
+/* Trilha cards */
+.trilha-card{
+  background:rgba(80,15,45,0.24);
+  border-color:rgba(195,80,125,0.26);
+  box-shadow:0 2px 16px rgba(0,0,0,0.28)
+}
+.trilha-card:active,.trilha-card:hover{
+  background:rgba(120,30,65,0.34);
+  border-color:rgba(235,105,155,0.52);
+  box-shadow:0 5px 24px rgba(200,70,110,0.18)
+}
+.trilha-card-nome{font-size:1.05rem}
+
+/* nc-card-choice — Noite Config */
+.nc-card-choice{
+  background:rgba(100,20,55,0.24);
+  border-color:rgba(200,80,128,0.30);
+  box-shadow:0 2px 14px rgba(0,0,0,0.22)
+}
+.nc-card-choice:hover,.nc-card-choice:active{
+  background:rgba(180,60,108,0.32);
+  border-color:rgba(235,110,158,0.58);
+  box-shadow:0 5px 24px rgba(200,70,110,0.18)
+}
+
+/* Noite guiada — passos */
+.ng-passo{
+  background:linear-gradient(155deg,rgba(20,6,12,0.9),rgba(32,11,22,0.9));
+  box-shadow:0 2px 14px rgba(0,0,0,0.28)
+}
+.ng-passo.ativo{box-shadow:0 4px 22px rgba(238,104,136,0.14)}
+
+/* Scrollbar premium */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(200,148,58,0.22);border-radius:3px}
+
+/* Jornada stats */
+.jornada-stat{
+  background:rgba(85,18,48,0.26);
+  border-color:rgba(185,80,122,0.22);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2)
+}
+.jornada-stat-num{font-size:1.5rem;color:rgba(240,195,220,0.92)}
+
+/* Reconexão */
+.recon-question{font-size:1.65rem}
+
+/* Aftercare */
+.aftercare-card{
+  background:linear-gradient(155deg,#1E0A14,#280D1E);
+  border-color:rgba(200,148,58,0.34);
+  box-shadow:0 28px 70px rgba(0,0,0,0.7)
+}
+
+/* Botões de bifurcação */
+.bif-btn{background:rgba(110,22,60,0.24);border-color:rgba(205,85,128,0.32);box-shadow:0 2px 14px rgba(0,0,0,0.2)}
+.bif-btn:hover,.bif-btn:active{background:rgba(185,62,108,0.32);border-color:rgba(232,110,155,0.55)}
+
+/* Capítulo */
+.home-capitulo{
+  background:linear-gradient(135deg,rgba(130,65,155,0.12),rgba(212,133,90,0.07));
+  border-color:rgba(155,90,195,0.24)
+}
+
+/* PIN */
+.pin-key{background:rgba(255,255,255,0.035);border-color:rgba(200,148,58,0.18)}
+.pin-key:hover{background:rgba(200,148,58,0.12);border-color:rgba(200,148,58,0.38)}
+
+/* Tela de modo */
+.mode-card{
+  background:linear-gradient(155deg,#200B16 0%,#2A0E1E 100%);
+  border-color:rgba(212,133,90,0.28);
+  box-shadow:0 4px 24px rgba(0,0,0,0.35)
+}
+.mode-card:hover,.mode-card:active{border-color:rgba(238,104,136,0.62);box-shadow:0 8px 36px rgba(208,69,110,0.20)}
+
+/* Onboarding */
+.onb-title{text-shadow:0 0 50px rgba(208,69,110,0.55)}
+
+/* Overlay backdrop mais profundo */
+.overlay{background:rgba(8,2,5,0.93)}
+#aftercare-overlay,#timer-overlay{background:rgba(8,2,5,0.97)}
+
 </style>
 
 <!-- Service Worker -->
