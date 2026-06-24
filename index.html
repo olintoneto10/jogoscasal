@@ -5007,8 +5007,7 @@ function recomecoConcluir(){
   if(_nova===8)setTimeout(()=>verificarConquista('recomeco'),400);
 }
 function _recomecoReiniciar(){
-  if(!window.confirm('Reiniciar a jornada do Recomeço?
-O progresso das 7 noites será apagado.'))return;
+  if(!window.confirm('Reiniciar a jornada do Recomeço? O progresso das 7 noites será apagado.'))return;
   localStorage.setItem('jd_recomeco','1');
   renderRecomeco();
 }
