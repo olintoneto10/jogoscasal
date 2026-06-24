@@ -1354,6 +1354,64 @@ body::before{background:
   color:rgba(165,115,145,0.6)!important;font-size:0.78rem!important;padding:0.5rem 1.4rem!important
 }
 
+
+/* ══ P10: TEMAS ══════════════════════════════════════════════ */
+/* Veludo = default (no class). Brasa = dark amber. Safira = deep navy. */
+
+/* ── Tema Brasa ── */
+body.tema-brasa{
+  --text:#F8E8D5;--muted:#C09060;--gold:#C86830;--gold-l:#E08050;
+  --rose:#B83030;--rose-l:#D85050;--glow-gold:rgba(200,104,48,0.5);
+  --ground:#3a0e04;--ground-2:#4a1808;--ground-3:#5a2010;
+}
+html:has(body.tema-brasa),body.tema-brasa{background:radial-gradient(ellipse at 50% 0%,#6a1808 0%,#3a0e04 38%,#200802 62%,#0a0201 100%)!important;}
+body.tema-brasa::before{background:radial-gradient(ellipse at 80% 20%,rgba(184,48,48,0.09) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(200,104,48,0.08) 0%,transparent 50%);}
+
+/* ── Tema Safira ── */
+body.tema-safira{
+  --text:#E8ECF8;--muted:#8090B8;--gold:#6888C0;--gold-l:#88A8D8;
+  --rose:#7848A8;--rose-l:#9868C8;--glow-gold:rgba(104,136,192,0.5);
+  --ground:#070c28;--ground-2:#0d1438;--ground-3:#121c48;
+}
+html:has(body.tema-safira),body.tema-safira{background:radial-gradient(ellipse at 50% 0%,#1a2a6a 0%,#0c1440 38%,#070c28 62%,#020308 100%)!important;}
+body.tema-safira::before{background:radial-gradient(ellipse at 80% 20%,rgba(120,72,168,0.09) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(104,136,192,0.08) 0%,transparent 50%);}
+
+/* ── Tema Picker Overlay ── */
+#tema-picker-overlay{position:fixed;inset:0;z-index:9000;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.94);padding:1.5rem;overflow-y:auto;}
+.tp-title{font-family:'Cormorant SC',serif;font-size:1.6rem;color:var(--text,#FAE8DC);text-align:center;margin-bottom:0.3rem;letter-spacing:0.06em;}
+.tp-sub{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:rgba(200,160,144,0.75);text-align:center;margin-bottom:1.6rem;}
+.tp-cards{display:flex;flex-direction:column;gap:1rem;width:100%;max-width:400px;}
+.tp-card{border-radius:14px;padding:1.2rem 1rem 1rem;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;border:2px solid transparent;user-select:none;}
+.tp-card:active{transform:scale(0.97);}
+.tp-card-veludo{background:radial-gradient(135deg,#3D0A20 0%,#1A080F 100%);border-color:rgba(212,133,90,0.7);}
+.tp-card-brasa{background:radial-gradient(135deg,#5a1808 0%,#1a0602 100%);border-color:rgba(200,104,48,0.7);}
+.tp-card-safira{background:radial-gradient(135deg,#1a2c6a 0%,#070f2a 100%);border-color:rgba(104,136,192,0.7);}
+.tp-card-name{font-family:'Cormorant SC',serif;font-size:1.15rem;font-weight:600;letter-spacing:0.1em;margin-bottom:0.28rem;}
+.tp-card-veludo .tp-card-name{color:#D4855A;}
+.tp-card-brasa .tp-card-name{color:#C86830;}
+.tp-card-safira .tp-card-name{color:#6888C0;}
+.tp-card-desc{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.82rem;line-height:1.55;opacity:0.85;}
+.tp-card-veludo .tp-card-desc{color:#FAE8DC;}
+.tp-card-brasa .tp-card-desc{color:#F8E8D5;}
+.tp-card-safira .tp-card-desc{color:#E8ECF8;}
+.tp-swatches{display:flex;gap:7px;margin-top:0.65rem;}
+.tp-swatch{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,0.14);}
+
+/* ── Missão Entrada Overlay ── */
+#missao-entrada-overlay{position:fixed;inset:0;z-index:8000;display:none;flex-direction:column;align-items:center;justify-content:flex-start;background:rgba(0,0,0,0.9);padding:2.2rem 1.2rem 1.8rem;overflow-y:auto;}
+.me-title{font-family:'Cormorant SC',serif;font-size:1.45rem;color:var(--text,#FAE8DC);text-align:center;letter-spacing:0.06em;margin-bottom:0.3rem;}
+.me-sub{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.86rem;color:var(--muted,#C8A090);text-align:center;margin-bottom:1.4rem;}
+.me-cards{width:100%;max-width:420px;display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.1rem;}
+.me-card{background:rgba(208,69,110,0.07);border:1px solid rgba(208,69,110,0.18);border-radius:12px;padding:12px 13px;cursor:pointer;transition:all 0.2s;user-select:none;}
+.me-card.on{border-color:rgba(238,104,136,0.55);background:rgba(208,69,110,0.13);box-shadow:0 2px 12px rgba(238,104,136,0.1);}
+.me-card-icon{font-size:1.5rem;display:block;text-align:center;margin-bottom:4px;line-height:1;}
+.me-card-nome{font-family:'Libre Caslon Text',serif;font-size:0.95rem;color:rgba(230,160,180,0.92);margin-bottom:2px;}
+.me-card-tarefa{font-size:0.78rem;color:var(--muted,#C8A090);line-height:1.4;}
+.me-card-lbl{display:inline-block;margin-top:3px;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;font-family:'Jost',sans-serif;}
+.me-card.on .me-card-lbl{color:rgba(238,104,136,0.75);}
+.me-card:not(.on) .me-card-lbl{color:rgba(180,130,150,0.3);}
+.me-confirm-btn{width:100%;max-width:420px;background:linear-gradient(135deg,var(--gold,#D4855A),var(--rose,#D0456E));color:#fff;border:none;border-radius:8px;padding:0.88rem;font-family:'Jost',sans-serif;font-size:0.83rem;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;cursor:pointer;margin-bottom:0.55rem;}
+.me-skip-btn{background:none;border:none;color:var(--muted,#C8A090);font-family:'Jost',sans-serif;font-size:0.75rem;text-decoration:underline;cursor:pointer;padding:0.3rem;opacity:0.6;}
 </style>
 
 <!-- Service Worker -->
@@ -2727,7 +2785,73 @@ function apagarTodosDados(){
   Object.keys(localStorage).filter(k=>k.startsWith('jd_')).forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
+// ══ P10: TEMAS & MISSÃO ENTRADA ══════════════════════════════════
+function _aplicarTema(t){
+  document.body.classList.remove('tema-brasa','tema-safira');
+  if(t==='brasa')document.body.classList.add('tema-brasa');
+  else if(t==='safira')document.body.classList.add('tema-safira');
+}
+function escolherTema(t){
+  localStorage.setItem('jd_tema',t);
+  _aplicarTema(t);
+  document.getElementById('tema-picker-overlay').style.display='none';
+  _verificarMissaoEntrada();
+}
+function abrirTemaPicker(){
+  document.getElementById('tema-picker-overlay').style.display='flex';
+}
+function _verificarMissaoEntrada(){
+  const sem=getSemanaAtual();
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  if(stored.sem!==sem||stored.escolha==null){
+    _mostrarMissaoEntrada();
+  }
+}
+function _mostrarMissaoEntrada(){
+  document.getElementById('missao-entrada-overlay').style.display='flex';
+  _renderMeCards();
+}
+let _meSelIdx=0;
+function _renderMeCards(){
+  _meSelIdx=0;
+  const sem=getSemanaAtual();
+  document.querySelectorAll('.me-card').forEach(function(card,i){
+    const arc=ARCOS_SEMANA[(sem+i)%ARCOS_SEMANA.length];
+    const iconEl=card.querySelector('.me-card-icon');
+    if(iconEl)iconEl.textContent=arc.icone||'✦';
+    card.querySelector('.me-card-nome').textContent=arc.titulo;
+    card.querySelector('.me-card-tarefa').textContent=arc.tarefa;
+    card.classList.toggle('on',i===0);
+    card.querySelector('.me-card-lbl').textContent=i===0?'✦ selecionada':'· escolher esta';
+  });
+}
+function meSelCard(el,idx){
+  _meSelIdx=idx;
+  document.querySelectorAll('.me-card').forEach(function(c,i){
+    c.classList.toggle('on',i===idx);
+    c.querySelector('.me-card-lbl').textContent=i===idx?'✦ selecionada':'· escolher esta';
+  });
+}
+function missaoEntradaConfirmar(){
+  const sem=getSemanaAtual();
+  const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
+  localStorage.setItem('jd_missaoSem',JSON.stringify(Object.assign({},stored,{sem:sem,escolha:_meSelIdx,feita:false})));
+  document.getElementById('missao-entrada-overlay').style.display='none';
+  carregarMissaoSemana();
+}
+function missaoEntradaPular(){
+  document.getElementById('missao-entrada-overlay').style.display='none';
+}
+function _inicializarTemaEMissao(){
+  const tema=localStorage.getItem('jd_tema');
+  if(!tema){
+    document.getElementById('tema-picker-overlay').style.display='flex';
+    return;
+  }
+  _verificarMissaoEntrada();
+}
 (function(){
+  const _savedTema=localStorage.getItem('jd_tema');if(_savedTema)_aplicarTema(_savedTema);
   const seen=localStorage.getItem('jd_seen');
   const aged=localStorage.getItem('jd_age');
   const sala=new URLSearchParams(location.search).get('sala');
@@ -2758,6 +2882,7 @@ function apagarTodosDados(){
         vdCurrent=1;
         go('home');
         setTimeout(atualizarHomeCap,50);
+        setTimeout(_inicializarTemaEMissao,100);
       },{once:true});
     } else {
       document.getElementById('screen-mode').classList.add('active');
@@ -4681,13 +4806,10 @@ function carregarMissaoSemana(){
   const stored=JSON.parse(localStorage.getItem('jd_missaoSem')||'{}');
   const temEscolha=(stored.sem===sem&&stored.escolha!=null);
   const el=document.getElementById('home-mission');
-  el.style.display='flex';
   const selWrap=document.getElementById('mission-sel-wrap');
   const activeWrap=document.getElementById('mission-active-wrap');
   if(!temEscolha){
-    if(selWrap)selWrap.style.display='flex';
-    if(activeWrap)activeWrap.style.display='none';
-    _renderMissaoSelCards();
+    el.style.display='none'; // entrada overlay handles selection
     return;
   }
   if(selWrap)selWrap.style.display='none';
@@ -6732,6 +6854,69 @@ function iniciarTrilhaNar(id){
     <button class="climax-btn" onclick="climaxEncerrar()">Encerrar com carinho</button>
     <button class="climax-btn" style="color:rgba(180,140,160,0.6);border-color:rgba(180,140,160,0.1)" onclick="climaxSemApp()">Continuar sem o app →</button>
   </div>
+</div>
+
+<!-- ══ P10: TEMA PICKER OVERLAY ══ -->
+<div id="tema-picker-overlay">
+  <div class="tp-title">Escolham o visual</div>
+  <div class="tp-sub">Podem trocar depois nas configurações</div>
+  <div class="tp-cards">
+    <div class="tp-card tp-card-veludo" onclick="escolherTema('veludo')">
+      <div class="tp-card-name">Veludo</div>
+      <div class="tp-card-desc">Tons de vinho e ouro — quente, profundo e sedutor.</div>
+      <div class="tp-swatches">
+        <div class="tp-swatch" style="background:#4D0A24"></div>
+        <div class="tp-swatch" style="background:#D4855A"></div>
+        <div class="tp-swatch" style="background:#D0456E"></div>
+      </div>
+    </div>
+    <div class="tp-card tp-card-brasa" onclick="escolherTema('brasa')">
+      <div class="tp-card-name">Brasa</div>
+      <div class="tp-card-desc">Carvão e âmbar — ardente, terroso e intenso.</div>
+      <div class="tp-swatches">
+        <div class="tp-swatch" style="background:#3a0e04"></div>
+        <div class="tp-swatch" style="background:#C86830"></div>
+        <div class="tp-swatch" style="background:#B83030"></div>
+      </div>
+    </div>
+    <div class="tp-card tp-card-safira" onclick="escolherTema('safira')">
+      <div class="tp-card-name">Safira</div>
+      <div class="tp-card-desc">Azul profundo e violeta — frio, misterioso e elegante.</div>
+      <div class="tp-swatches">
+        <div class="tp-swatch" style="background:#0c1440"></div>
+        <div class="tp-swatch" style="background:#6888C0"></div>
+        <div class="tp-swatch" style="background:#7848A8"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ P10: MISSÃO ENTRADA OVERLAY ══ -->
+<div id="missao-entrada-overlay">
+  <div class="me-title">Missão desta semana</div>
+  <div class="me-sub">Escolham juntos o que vão explorar</div>
+  <div class="me-cards">
+    <div class="me-card on" onclick="meSelCard(this,0)">
+      <div class="me-card-icon"></div>
+      <div class="me-card-nome"></div>
+      <div class="me-card-tarefa"></div>
+      <div class="me-card-lbl">✦ selecionada</div>
+    </div>
+    <div class="me-card" onclick="meSelCard(this,1)">
+      <div class="me-card-icon"></div>
+      <div class="me-card-nome"></div>
+      <div class="me-card-tarefa"></div>
+      <div class="me-card-lbl">· escolher esta</div>
+    </div>
+    <div class="me-card" onclick="meSelCard(this,2)">
+      <div class="me-card-icon"></div>
+      <div class="me-card-nome"></div>
+      <div class="me-card-tarefa"></div>
+      <div class="me-card-lbl">· escolher esta</div>
+    </div>
+  </div>
+  <button class="me-confirm-btn" onclick="missaoEntradaConfirmar()">✓ Confirmar missão desta semana</button>
+  <button class="me-skip-btn" onclick="missaoEntradaPular()">Pular por agora</button>
 </div>
 
 </body>

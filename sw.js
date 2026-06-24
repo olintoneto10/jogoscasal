@@ -1,4 +1,4 @@
-const CACHE = 'jd-v47';
+const CACHE = 'jd-v48';
 const ASSETS = ['./', './index.html', './manifest.json',
   'https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap'];
 
