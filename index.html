@@ -890,6 +890,53 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 .climax-btn{background:rgba(208,69,110,0.06);border:1px solid rgba(208,69,110,0.15);border-radius:11px;padding:14px 20px;color:rgba(230,170,190,0.88);font-family:'Jost',sans-serif;font-size:0.96rem;letter-spacing:0.04em;cursor:pointer;text-align:center;transition:all 0.2s}
 .climax-btn:active{border-color:rgba(208,69,110,0.4);background:rgba(208,69,110,0.13)}
 .climax-btn.principal{border-color:rgba(238,104,136,0.3);color:rgba(238,150,170,0.95)}
+/* ── P2: Config simplificada ─────────────────────────── */
+.nc-intro{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.4rem;color:rgba(235,190,215,0.9);text-align:center;margin:1.5rem 0 1.2rem;line-height:1.45}
+.nc-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;width:100%}
+.nc-card-choice{display:flex;flex-direction:column;align-items:center;gap:0.4rem;background:rgba(120,30,70,0.18);border:1.5px solid rgba(190,80,120,0.22);border-radius:16px;padding:1.3rem 0.8rem;cursor:pointer;transition:all 0.2s;min-height:104px;width:100%}
+.nc-card-choice:hover,.nc-card-choice:active{background:rgba(190,80,120,0.28);border-color:rgba(220,120,160,0.5)}
+.nc-ch-icon{font-size:1.8rem;line-height:1}
+.nc-ch-nome{font-size:0.96rem;font-weight:600;color:rgba(235,190,215,0.95);text-align:center;line-height:1.3}
+.nc-ch-sub{font-size:0.7rem;color:rgba(185,135,165,0.65);text-align:center;font-style:italic}
+/* ── P2: Carta Secreta ──────────────────────────────── */
+.carta-sec-intro{font-size:0.88rem;color:rgba(195,140,170,0.8);text-align:center;line-height:1.55;margin:0.5rem 0 1rem;padding:0 0.5rem;font-style:italic}
+.carta-sec-wrap{display:flex;justify-content:center;width:100%;margin:0.5rem 0}
+.carta-sec-card{width:100%;max-width:340px;min-height:190px;border-radius:20px;cursor:pointer}
+.carta-sec-back{display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(120,30,70,0.2);border:1.5px solid rgba(190,80,120,0.28);border-radius:20px;padding:2.5rem 1.5rem;gap:0.8rem;min-height:190px;transition:all 0.2s}
+.carta-sec-back:active{border-color:rgba(220,100,140,0.5);background:rgba(150,40,90,0.28)}
+.carta-sec-seal{font-size:2.2rem;color:rgba(200,100,140,0.65)}
+.carta-sec-hint{font-size:0.78rem;color:rgba(185,135,165,0.6);font-style:italic}
+.carta-sec-front{background:rgba(90,20,50,0.32);border:1.5px solid rgba(200,100,140,0.38);border-radius:20px;padding:2rem 1.5rem;min-height:190px;display:flex;flex-direction:column;gap:0.8rem}
+.carta-sec-vez{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(200,120,155,0.65);font-family:'Jost',sans-serif}
+.carta-sec-text{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.05rem;color:rgba(235,200,215,0.95);line-height:1.7}
+.carta-sec-btns{display:flex;justify-content:center;width:100%;margin-top:0.3rem}
+/* ── P2: O Olhar ──────────────────────────────────────── */
+.olhar-intro{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.1rem;color:rgba(220,175,200,0.85);text-align:center;line-height:1.65;margin:0.8rem 0 1.8rem;padding:0 0.5rem}
+.olhar-timer-wrap{display:flex;flex-direction:column;align-items:center;gap:0.3rem;margin:0.5rem 0 2rem}
+.olhar-timer{font-size:5rem;font-weight:700;color:rgba(210,130,165,0.9);line-height:1;letter-spacing:-2px;transition:color 0.5s}
+.olhar-timer.fim{color:rgba(238,104,136,0.85)}
+.olhar-timer-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(185,130,160,0.55);font-family:'Jost',sans-serif}
+.olhar-prompt{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1rem;color:rgba(220,175,200,0.9);text-align:center;line-height:1.65;margin:0.8rem 0;padding:1.2rem 1.4rem;background:rgba(90,20,50,0.28);border:1px solid rgba(180,80,120,0.22);border-radius:16px;width:100%}
+/* ── P2: Bifurcação ───────────────────────────────────── */
+#bifurcacao-overlay{position:fixed;inset:0;background:rgba(8,2,6,0.96);backdrop-filter:blur(20px);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;padding:2rem}
+#bifurcacao-overlay.on{display:flex}
+.bif-titulo{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.45rem;color:rgba(235,190,215,0.95);text-align:center;line-height:1.4;max-width:260px}
+.bif-sub{font-size:0.78rem;color:rgba(185,135,165,0.65);text-align:center;margin-top:-0.5rem;font-style:italic}
+.bif-opcoes{display:flex;gap:1rem;width:100%;max-width:320px;margin-top:0.5rem}
+.bif-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.45rem;background:rgba(120,30,70,0.18);border:1.5px solid rgba(190,80,120,0.25);border-radius:18px;padding:1.4rem 0.8rem;cursor:pointer;transition:all 0.2s}
+.bif-btn:hover,.bif-btn:active{background:rgba(190,80,120,0.28);border-color:rgba(220,120,160,0.5)}
+.bif-icon{font-size:2rem}
+.bif-nome{font-size:0.94rem;font-weight:600;color:rgba(235,190,215,0.95);text-align:center}
+.bif-desc{font-size:0.7rem;color:rgba(185,135,165,0.62);text-align:center;font-style:italic;line-height:1.4}
+/* ── P2: Transição narrativa ──────────────────────────── */
+#transicao-overlay{position:fixed;inset:0;background:rgba(8,2,6,0.95);backdrop-filter:blur(20px);z-index:490;display:none;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:2rem}
+#transicao-overlay.on{display:flex}
+.trans-seta{font-size:1.1rem;color:rgba(190,100,140,0.38);margin-bottom:0.2rem;font-family:'Jost',sans-serif;letter-spacing:0.22em}
+.trans-icon{font-size:3rem;line-height:1}
+.trans-nome{font-size:1.22rem;font-weight:600;color:rgba(235,190,215,0.95);text-align:center;margin-top:0.2rem}
+.trans-desc{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.88rem;color:rgba(195,140,170,0.78);text-align:center;line-height:1.65;max-width:280px}
+.trans-btn{margin-top:1.2rem;background:rgba(170,60,100,0.25);border:1.5px solid rgba(210,90,135,0.42);border-radius:30px;padding:0.85rem 2.5rem;font-size:0.92rem;color:rgba(235,190,215,0.95);cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:0.06em;transition:all 0.2s}
+.trans-btn:active{background:rgba(190,70,110,0.35);border-color:rgba(230,110,150,0.6)}
 </style>
 
 <!-- Service Worker -->
@@ -1171,6 +1218,8 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div class="game-card" onclick="go('screen-mapa')"><div class="icon">🗺️</div><div class="name">Mapa do Desejo</div><div class="desc">Descubram o que os dois querem experimentar</div></div>
     <div class="game-card" onclick="go('screen-comando')"><div class="icon">🖤</div><div class="name">Comando &amp; Entrega</div><div class="desc">Um conduz, o outro se entrega — com segurança</div></div>
     <div class="game-card" onclick="go('screen-fantasia')"><div class="icon">🎭</div><div class="name">Encenações</div><div class="desc">Cenários para encenar e soltar a imaginação</div></div>
+    <div class="game-card" onclick="go('screen-carta-secreta')"><div class="icon">💌</div><div class="name">Carta Secreta</div><div class="desc">Revelem desejos que ficaram guardados</div></div>
+    <div class="game-card" onclick="go('screen-olhar')"><div class="icon">👀</div><div class="name">O Olhar</div><div class="desc">Um minuto de presença — só olhos nos olhos</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
   <!-- elementos ocultos — hooks JS (capítulo, conquistas, semaforo-val, cap-badge) -->
@@ -1202,24 +1251,44 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div style="width:5rem"></div>
   </div>
   <div class="nc-body">
-    <div>
-      <div class="nc-q">Quanto tempo temos?</div>
-      <div class="nc-opts two" id="nc-tempo">
-        <button class="nc-opt" data-val="curta" onclick="ncSel(this,'nc-tempo')">20 minutos<small>Pequeno, mas presente</small></button>
-        <button class="nc-opt" data-val="media" onclick="ncSel(this,'nc-tempo')">45 minutos<small>Uma noite real</small></button>
-        <button class="nc-opt" data-val="longa" onclick="ncSel(this,'nc-tempo')">1h 30min<small>Sem pressa</small></button>
-        <button class="nc-opt" data-val="noite" onclick="ncSel(this,'nc-tempo')">A noite toda<small>O capítulo completo</small></button>
-      </div>
+    <div class="nc-intro">Que noite é essa?</div>
+    <div class="nc-cards-grid">
+      <button class="nc-card-choice" onclick="ncEscolha('curta','cansados')">
+        <span class="nc-ch-icon">🌙</span>
+        <span class="nc-ch-nome">Suave e presente</span>
+        <span class="nc-ch-sub">20 min · conexão leve</span>
+      </button>
+      <button class="nc-card-choice" onclick="ncEscolha('media','animados')">
+        <span class="nc-ch-icon">🔥</span>
+        <span class="nc-ch-nome">Com energia</span>
+        <span class="nc-ch-sub">45 min · intensidade</span>
+      </button>
+      <button class="nc-card-choice" onclick="ncEscolha('media','reconectar')">
+        <span class="nc-ch-icon">🤍</span>
+        <span class="nc-ch-nome">Nos reencontrar</span>
+        <span class="nc-ch-sub">45 min · cuidado mútuo</span>
+      </button>
+      <button class="nc-card-choice" onclick="ncEscolha('longa','animados')">
+        <span class="nc-ch-icon">⚡</span>
+        <span class="nc-ch-nome">A noite toda</span>
+        <span class="nc-ch-sub">90 min · sem pressa</span>
+      </button>
     </div>
-    <div>
-      <div class="nc-q">Como estamos chegando?</div>
-      <div class="nc-opts" id="nc-estado">
-        <button class="nc-opt" data-val="cansados" onclick="ncSel(this,'nc-estado')">😌 Cansados, mas presentes<small>Querem conexão leve</small></button>
-        <button class="nc-opt" data-val="animados" onclick="ncSel(this,'nc-estado')">🔥 Animados e com energia<small>Prontos para intensidade</small></button>
-        <button class="nc-opt" data-val="reconectar" onclick="ncSel(this,'nc-estado')">💬 Precisamos reconectar<small>A distância pede cuidado</small></button>
+    <!-- nc-tempo e nc-estado ocultos — compatibilidade JS -->
+    <div style="display:none" aria-hidden="true">
+      <div id="nc-tempo">
+        <button class="nc-opt" data-val="curta"></button>
+        <button class="nc-opt" data-val="media"></button>
+        <button class="nc-opt" data-val="longa"></button>
+        <button class="nc-opt" data-val="noite"></button>
       </div>
+      <div id="nc-estado">
+        <button class="nc-opt" data-val="cansados"></button>
+        <button class="nc-opt" data-val="animados"></button>
+        <button class="nc-opt" data-val="reconectar"></button>
+      </div>
+      <button class="btn-gold" id="nc-iniciar" onclick="iniciarJornadaCurada()"></button>
     </div>
-    <button class="btn-gold" id="nc-iniciar" style="opacity:0.4;pointer-events:none" onclick="iniciarJornadaCurada()">Começar nossa noite →</button>
   </div>
 </div>
 
@@ -1549,6 +1618,46 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <div id="mapaMatchCards" style="width:100%;display:flex;flex-direction:column;gap:0.8rem"></div>
     <button class="btn-ghost" onclick="mapaReset()">Jogar Novamente</button>
   </div>
+</div>
+
+<!-- ══ CARTA SECRETA ══ -->
+<div class="screen" id="screen-carta-secreta">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">Carta Secreta</span></div>
+  <div style="height:0.6rem"></div>
+  <div class="levels" id="cartaSecLevels">
+    <button class="lvl on" data-level="Romântico">Romântico</button>
+    <button class="lvl" data-level="Quente">Quente</button>
+    <button class="lvl" data-level="Explosivo">Explosivo</button>
+  </div>
+  <div class="carta-sec-intro">Cada carta carrega um segredo. Revele o seu — e ouça o da pessoa ao seu lado.</div>
+  <div class="carta-sec-wrap">
+    <div class="carta-sec-card" id="carta-sec-card" onclick="cartaSecretaRevelar()">
+      <div class="carta-sec-back" id="carta-sec-back">
+        <div class="carta-sec-seal">✦</div>
+        <div class="carta-sec-hint">Toque para revelar</div>
+      </div>
+      <div class="carta-sec-front" id="carta-sec-front" style="display:none">
+        <div class="carta-sec-vez" id="carta-sec-vez">Para você</div>
+        <div class="carta-sec-text" id="carta-sec-text"></div>
+      </div>
+    </div>
+  </div>
+  <div class="carta-sec-btns" id="carta-sec-btns" style="display:none">
+    <button class="btn-ghost" onclick="cartaSecretaProxima()">Nova carta →</button>
+  </div>
+</div>
+
+<!-- ══ O OLHAR ══ -->
+<div class="screen" id="screen-olhar">
+  <div class="game-header"><button class="back-btn" onclick="go('home')">← Voltar</button><span class="game-title">O Olhar</span></div>
+  <div class="olhar-intro">Olhem nos olhos um do outro.<br>Sem palavras. Apenas presença.</div>
+  <div class="olhar-timer-wrap" id="olhar-timer-wrap">
+    <div class="olhar-timer" id="olhar-timer">60</div>
+    <div class="olhar-timer-label" id="olhar-timer-label">segundos</div>
+  </div>
+  <div class="olhar-prompt" id="olhar-prompt" style="display:none"></div>
+  <button class="btn-gold" id="olhar-btn" onclick="olharIniciar()">Começar →</button>
+  <button class="btn-ghost" id="olhar-prox" style="display:none;margin-top:0.5rem" onclick="olharProximo()">Nova rodada →</button>
 </div>
 
 <!-- ══ AFTERCARE OVERLAY ══ -->
@@ -2122,20 +2231,33 @@ function go(id){
       setTimeout(()=>mostrarConquista({icon:'🌙',nome:'Noite Guiada Completa',historia:'Vocês completaram todos os passos juntos. Essa consistência é o que os separa.'}),400);
       return;
     }
-    // Mostrar overlay de reação entre passos
+    // Callback: avança e mostra transição narrativa
     window._noiteProxCallback=function(){
       noite.atual=proxIdx;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
-      // Verificar se ativar modo clímax (2+ reações 'mais' seguidas)
       if(window._reacaoSequencia>=2){
         window._reacaoSequencia=0;
         mostrarClimax();return;
+      }
+      // Transição narrativa antes do próximo passo
+      const np=noite.passos[noite.atual];
+      if(np){
+        document.getElementById('trans-icon').textContent=np.icon;
+        document.getElementById('trans-nome').textContent=np.nome;
+        document.getElementById('trans-desc').textContent=np.desc;
+        document.getElementById('transicao-overlay').classList.add('on');
+        return;
       }
       renderNoiteGuiada();
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById('screen-noite-guiada').classList.add('active');
       window.scrollTo(0,0);
     };
-    document.getElementById('reacao-overlay').classList.add('on');
+    // Após passo 0: bifurcação; demais: reação
+    if(noite.atual===0){
+      document.getElementById('bifurcacao-overlay').classList.add('on');
+    }else{
+      document.getElementById('reacao-overlay').classList.add('on');
+    }
     return;
   }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2151,11 +2273,13 @@ function go(id){
   if(id==='screen-roleta'||id==='screen-dado')mpBannerUpdate();
   if(id==='screen-conquistas')renderConquistas();
   if(id==='screen-jornada')renderJornada();
+  if(id==='screen-carta-secreta')cartaSecretaInit();
+  if(id==='screen-olhar')olharReset();
   if(id==='screen-recomeco'){if(!localStorage.getItem('jd_recomeco'))localStorage.setItem('jd_recomeco','1');renderRecomeco();}
   const _swPill=document.getElementById('safeword-pill');
-  if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
+  if(_swPill){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar'].includes(id)){_swPill.classList.add('on');}else{_swPill.classList.remove('on');}}
   const _acBar=document.getElementById('aftercare-bar');
-  if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
+  if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
   if(id==='home')atualizarHomeCap();
 }
@@ -2181,6 +2305,18 @@ const NOITE_SEQ={
     {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Sem limites'},
     {jogo:'screen-strip',icon:'✨',nome:'Ritual do Desejo',desc:'A noite esquenta de vez'},
     {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Missão final — explosiva'},
+  ],
+};
+const NOITE_BIF={
+  'suave':[
+    {jogo:'screen-olhar',icon:'👀',nome:'O Olhar',desc:'Fiquem só nos olhos um do outro — presença total',começa:'p1'},
+    {jogo:'screen-reconexao',icon:'💬',nome:'Reconexão',desc:'Perguntas que aproximam e aquecem o coração',começa:'p2'},
+    {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Encerrem com um ritual de cuidado mútuo',começa:'p1'},
+  ],
+  'intenso':[
+    {jogo:'screen-carta-secreta',icon:'💌',nome:'Carta Secreta',desc:'Revelem o que ficou guardado — sem filtros',começa:'p2'},
+    {jogo:'screen-dado',icon:'🎲',nome:'Dado dos Prazeres',desc:'Combinações aleatórias — deixem o corpo decidir',começa:'p1'},
+    {jogo:'screen-missao',icon:'🌙',nome:'Missão da Noite',desc:'Missão final — intensidade total',começa:'p2'},
   ],
 };
 const noite={ativa:false,nivel:'Romântico',passos:[],atual:0,emJogo:false,tempo:'',estado:'',prologo:'',epilogo:'',titulo:'',capitulo:0,prologoVisto:false};
@@ -5076,6 +5212,171 @@ function iniciarTrilhaRec(){
   window.scrollTo(0,0);
 }
 
+// ══ P2: ENTRADA SIMPLIFICADA ════════════════════════════════════════════════
+function ncEscolha(tempo,estado){
+  document.querySelectorAll('#nc-tempo .nc-opt').forEach(function(b){b.classList.toggle('on',b.dataset.val===tempo);});
+  document.querySelectorAll('#nc-estado .nc-opt').forEach(function(b){b.classList.toggle('on',b.dataset.val===estado);});
+  var ini=document.getElementById('nc-iniciar');
+  if(ini){ini.style.opacity='1';ini.style.pointerEvents='all';}
+  iniciarJornadaCurada();
+}
+
+// ══ P2: BIFURCAÇÃO ══════════════════════════════════════════════════════════
+function bifurcar(direcao){
+  document.getElementById('bifurcacao-overlay').classList.remove('on');
+  var bifSteps=(NOITE_BIF[direcao]||NOITE_BIF['suave']).map(function(s){return Object.assign({},s);});
+  // Ajusta nível se intenso
+  if(direcao==='intenso'&&noite.nivel==='Romântico'){
+    noite.nivel='Quente';
+    ['rLevels','vdLevels','dadoLevels','missaoLevels','stripLevels'].forEach(function(gid){
+      var grp=document.getElementById(gid);if(!grp)return;
+      grp.querySelectorAll('.lvl').forEach(function(b){b.classList.toggle('on',b.dataset.level===noite.nivel);});
+      levelState[gid]=noite.nivel;
+    });
+  }
+  // Substitui os passos restantes pelo caminho escolhido
+  noite.passos=noite.passos.slice(0,noite.atual+1).concat(bifSteps);
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+  if(window._noiteProxCallback){window._noiteProxCallback();window._noiteProxCallback=null;}
+}
+
+// ══ P2: TRANSIÇÃO NARRATIVA ══════════════════════════════════════════════════
+function transicaoContinuar(){
+  document.getElementById('transicao-overlay').classList.remove('on');
+  renderNoiteGuiada();
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('screen-noite-guiada').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══ P2: CARTA SECRETA ═══════════════════════════════════════════════════════
+var _CARTAS_SEC={
+  'Romântico':[
+    'Esta noite, eu quero apenas ficar olhando para você.',
+    'Tenho pensado em você o dia todo. Não consigo parar.',
+    'Quero que você me diga algo que ainda não disse.',
+    'Meu segredo: você é a pessoa com quem sempre quis estar.',
+    'Esta noite, deixe-me cuidar de você do meu jeito.',
+    'Quero adormecer nos seus braços esta noite — só isso.',
+  ],
+  'Quente':[
+    'Tenho pensado em te beijar de um jeito que você vai lembrar amanhã.',
+    'Quero descobrir o que te faz perder a respiração.',
+    'Esta noite, eu sigo o que você me pedir.',
+    'Tenho uma fantasia com você que ainda não contei.',
+    'Quero que você me olhe como se não houvesse mais ninguém.',
+    'Tenho guardado esse desejo faz tempo. Essa carta é a hora.',
+  ],
+  'Explosivo':[
+    'Esta noite eu não quero conter nada.',
+    'Você vai descobrir um lado meu que ainda não conhece.',
+    'Tenho guardado esse desejo há semanas. É a sua vez de saber.',
+    'O que eu quero fazer com você não cabe em palavras.',
+    'Esta carta é uma promessa. O que vem depois é real.',
+    'Nenhuma regra esta noite — só nós dois.',
+  ],
+};
+var _cartaSecIdx=0;
+var _cartaSecRevelada=false;
+function cartaSecretaInit(){
+  var lvlEl=document.getElementById('cartaSecLevels');
+  if(lvlEl){
+    lvlEl.querySelectorAll('.lvl').forEach(function(b){
+      b.onclick=function(){
+        lvlEl.querySelectorAll('.lvl').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');
+        _cartaSecIdx=0;
+        cartaSecretaReset();
+      };
+    });
+  }
+  _cartaSecIdx=0;
+  cartaSecretaReset();
+}
+function cartaSecretaReset(){
+  _cartaSecRevelada=false;
+  var back=document.getElementById('carta-sec-back');
+  var front=document.getElementById('carta-sec-front');
+  var btns=document.getElementById('carta-sec-btns');
+  if(back)back.style.display='flex';
+  if(front)front.style.display='none';
+  if(btns)btns.style.display='none';
+}
+function cartaSecretaRevelar(){
+  if(_cartaSecRevelada)return;
+  _cartaSecRevelada=true;
+  var lvlBtn=document.querySelector('#cartaSecLevels .lvl.on');
+  var nivel=lvlBtn?lvlBtn.dataset.level:'Romântico';
+  var cartas=_CARTAS_SEC[nivel]||_CARTAS_SEC['Romântico'];
+  var idx=_cartaSecIdx%cartas.length;
+  var texto=cartas[idx];
+  var back=document.getElementById('carta-sec-back');
+  var front=document.getElementById('carta-sec-front');
+  var btns=document.getElementById('carta-sec-btns');
+  var textEl=document.getElementById('carta-sec-text');
+  var vezEl=document.getElementById('carta-sec-vez');
+  if(back)back.style.display='none';
+  if(textEl)textEl.textContent=texto;
+  if(vezEl)vezEl.textContent='Um segredo seu';
+  if(front)front.style.display='flex';
+  if(btns)btns.style.display='flex';
+}
+function cartaSecretaProxima(){
+  _cartaSecIdx++;
+  cartaSecretaReset();
+}
+
+// ══ P2: O OLHAR ═════════════════════════════════════════════════════════════
+var _OLHAR_PROMPTS=[
+  'O que você viu nos meus olhos?',
+  'O que você sentiu neste silêncio?',
+  'Diga uma coisa que percebeu olhando para mim.',
+  'Em qual momento da nossa vida você me olhou assim?',
+  'O que os seus olhos já revelaram que as palavras ainda não disseram?',
+  'Quando você olhou pra mim hoje, o que você pensou?',
+];
+var _olharTimer=null;
+var _olharPromptIdx=0;
+function olharReset(){
+  clearInterval(_olharTimer);_olharTimer=null;
+  var timerEl=document.getElementById('olhar-timer');
+  var labelEl=document.getElementById('olhar-timer-label');
+  var promptEl=document.getElementById('olhar-prompt');
+  var btnEl=document.getElementById('olhar-btn');
+  var proxEl=document.getElementById('olhar-prox');
+  if(timerEl){timerEl.textContent='60';timerEl.classList.remove('fim');}
+  if(labelEl)labelEl.textContent='segundos';
+  if(promptEl)promptEl.style.display='none';
+  if(btnEl){btnEl.style.display='block';btnEl.textContent='Começar →';}
+  if(proxEl)proxEl.style.display='none';
+}
+function olharIniciar(){
+  var btnEl=document.getElementById('olhar-btn');
+  if(btnEl)btnEl.style.display='none';
+  var timerEl=document.getElementById('olhar-timer');
+  var labelEl=document.getElementById('olhar-timer-label');
+  var promptEl=document.getElementById('olhar-prompt');
+  var proxEl=document.getElementById('olhar-prox');
+  var seg=60;
+  if(timerEl)timerEl.textContent=String(seg);
+  _olharTimer=setInterval(function(){
+    seg--;
+    if(timerEl)timerEl.textContent=String(Math.max(0,seg));
+    if(seg<=0){
+      clearInterval(_olharTimer);_olharTimer=null;
+      if(timerEl)timerEl.classList.add('fim');
+      if(labelEl)labelEl.textContent='tempo!';
+      var p=_OLHAR_PROMPTS[_olharPromptIdx%_OLHAR_PROMPTS.length];
+      if(promptEl){promptEl.textContent=p;promptEl.style.display='block';}
+      if(proxEl)proxEl.style.display='block';
+    }
+  },1000);
+}
+function olharProximo(){
+  _olharPromptIdx++;
+  olharReset();
+}
+
 </script>
 
 <!-- ══ MULTIPLAYER CARD VIEW ══ -->
@@ -5163,6 +5464,33 @@ function iniciarTrilhaRec(){
     <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Li e entendi</button>
   </div>
 </div>
+<!-- ══ BIFURCAÇÃO — escolha após 1º passo ══ -->
+<div id="bifurcacao-overlay">
+  <div class="bif-titulo">Como querem continuar a noite?</div>
+  <div class="bif-sub">Vocês escolhem o caminho.</div>
+  <div class="bif-opcoes">
+    <button class="bif-btn" onclick="bifurcar('suave')">
+      <span class="bif-icon">🌙</span>
+      <span class="bif-nome">Mais suave</span>
+      <span class="bif-desc">Conexão, carinho e presença</span>
+    </button>
+    <button class="bif-btn" onclick="bifurcar('intenso')">
+      <span class="bif-icon">🔥</span>
+      <span class="bif-nome">Mais intenso</span>
+      <span class="bif-desc">Subir o clima, soltar o corpo</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══ TRANSIÇÃO NARRATIVA entre passos ══ -->
+<div id="transicao-overlay">
+  <div class="trans-seta">→</div>
+  <div class="trans-icon" id="trans-icon">🎡</div>
+  <div class="trans-nome" id="trans-nome">Próximo passo</div>
+  <div class="trans-desc" id="trans-desc"></div>
+  <button class="trans-btn" onclick="transicaoContinuar()">Continuar →</button>
+</div>
+
 <!-- ══ REAÇÃO PÓS-JOGO ══ -->
 <div id="reacao-overlay">
   <div class="reacao-titulo">Como foi esse momento?</div>
