@@ -833,6 +833,63 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
 /* ══ HOME — CAPÍTULO BADGE ═══════════════════════════════════════ */
 .home-cap-badge{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0.2rem 1.2rem 0.6rem;font-family:'Jost',sans-serif;line-height:1.5}
 .home-cap-nome{font-family:'Cormorant SC',serif;font-size:1.1rem;letter-spacing:0.04em;color:var(--gold-l);display:block;margin-top:0.05rem}
+
+/* ── P1: Legibilidade global ─────────────────── */
+/* Fontes maiores nos elementos oc-* novos */
+.oc-sal-pre{font-size:0.72rem!important}
+.oc-sal-nomes{font-size:1.28rem!important}
+.oc-card-pre{font-size:0.7rem!important;color:rgba(208,69,110,0.7)!important}
+.oc-card-nome{font-size:1.28rem!important}
+.oc-card-desc{font-size:1rem!important;color:rgba(225,190,210,0.82)!important;line-height:1.6!important}
+.oc-card-cta{font-size:0.88rem!important;padding:10px 26px!important}
+.oc-sec-btn{font-size:0.92rem!important;min-height:48px!important;padding:12px 10px!important}
+/* Missão semanal — seleção */
+.mission-sel-title{font-size:0.72rem!important}
+.mission-sel-week{font-size:0.7rem!important;color:rgba(200,155,120,0.7)!important}
+.mission-sel-nome{font-size:1rem!important}
+.mission-sel-tarefa{font-size:0.82rem!important;color:rgba(205,160,180,0.82)!important}
+.mission-sel-lbl{font-size:0.7rem!important}
+.mission-sel-cta{font-size:0.86rem!important;padding:10px!important}
+/* Missão semanal — fase ativa */
+.mission-week-label{font-size:0.72rem!important}
+.mission-week-text{font-size:1.08rem!important}
+.mission-done-btn{font-size:0.78rem!important;padding:0.45rem 1rem!important;min-height:38px}
+/* Semáforo compacto na home — mais legível */
+#home .semaforo-banner .semaforo-label{font-size:0.72rem!important}
+#home .semaforo-change{font-size:0.7rem!important;color:rgba(200,148,58,0.75)!important}
+/* Botões globais — altura mínima de toque confortável */
+.btn-ghost{min-height:48px!important}
+.btn-gold{min-height:48px!important}
+.back-btn{min-height:44px!important}
+/* Saudação home */
+.oc-sal-pre{color:rgba(208,69,110,0.65)!important}
+/* Trilha recomendada home */
+.home-trilha-rec{background:linear-gradient(145deg,rgba(200,148,58,0.08),rgba(212,133,90,0.05));border:1px solid rgba(200,148,58,0.22);border-radius:13px;padding:12px 14px;width:100%;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all 0.2s}
+.home-trilha-rec:active{border-color:rgba(200,148,58,0.4);background:rgba(200,148,58,0.12)}
+.home-trilha-icon{font-size:1.4rem;flex-shrink:0}
+.home-trilha-info{flex:1;min-width:0}
+.home-trilha-badge{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(200,148,58,0.65);margin-bottom:3px;font-family:'Jost',sans-serif}
+.home-trilha-nome{font-family:'Libre Caslon Text',serif;font-size:1rem;color:rgba(240,200,170,0.92);font-style:italic;margin-bottom:2px}
+.home-trilha-sub{font-size:0.76rem;color:rgba(200,160,140,0.6);font-style:italic}
+.home-trilha-cta{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,148,58,0.6);white-space:nowrap;font-family:'Jost',sans-serif}
+/* Reação pós-jogo */
+#reacao-overlay{position:fixed;inset:0;background:rgba(10,4,8,0.97);backdrop-filter:blur(20px);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem;padding:2rem}
+#reacao-overlay.on{display:flex}
+.reacao-titulo{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.2rem;color:rgba(238,150,170,0.88);text-align:center;line-height:1.5}
+.reacao-btns{display:flex;gap:1rem}
+.reacao-btn{background:rgba(208,69,110,0.07);border:1px solid rgba(208,69,110,0.18);border-radius:14px;padding:18px 16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all 0.2s;min-width:88px}
+.reacao-btn:active{border-color:rgba(208,69,110,0.45);background:rgba(208,69,110,0.15)}
+.reacao-btn-icon{font-size:1.8rem;line-height:1}
+.reacao-btn-lbl{font-size:0.72rem;color:rgba(220,170,190,0.78);font-family:'Jost',sans-serif;letter-spacing:0.04em;text-align:center;line-height:1.3}
+/* Clímax — app sai de cena */
+#climax-overlay{position:fixed;inset:0;background:#09030a;z-index:600;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2.4rem;padding:2.5rem}
+#climax-overlay.on{display:flex}
+.climax-frase{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:1.5rem;color:rgba(240,210,225,0.88);text-align:center;line-height:1.65;max-width:280px}
+.climax-regra{width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(208,69,110,0.5),transparent)}
+.climax-opcoes{display:flex;flex-direction:column;gap:0.8rem;width:100%;max-width:300px}
+.climax-btn{background:rgba(208,69,110,0.06);border:1px solid rgba(208,69,110,0.15);border-radius:11px;padding:14px 20px;color:rgba(230,170,190,0.88);font-family:'Jost',sans-serif;font-size:0.96rem;letter-spacing:0.04em;cursor:pointer;text-align:center;transition:all 0.2s}
+.climax-btn:active{border-color:rgba(208,69,110,0.4);background:rgba(208,69,110,0.13)}
+.climax-btn.principal{border-color:rgba(238,104,136,0.3);color:rgba(238,150,170,0.95)}
 </style>
 
 <!-- Service Worker -->
@@ -1091,6 +1148,16 @@ button,.game-card,.quiz-opt,.lvl,.pin-key,.mood-btn,.timer-preset{touch-action:m
     <button class="oc-sec-btn" onclick="go('screen-socarinho')">🤍 Só Carinho</button>
     <button class="oc-sec-btn" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Recomeço</button>
     <button class="oc-sec-btn" onclick="go('screen-conquistas')">🏆 Conquistas</button>
+  </div>
+  <!-- trilha recomendada -->
+  <div class="home-trilha-rec" id="home-trilha-rec" onclick="iniciarTrilhaRec()" style="display:none">
+    <div class="home-trilha-icon" id="trilha-rec-icon">🕯️</div>
+    <div class="home-trilha-info">
+      <div class="home-trilha-badge">sugestão para hoje</div>
+      <div class="home-trilha-nome" id="trilha-rec-nome">Noite Romântica</div>
+      <div class="home-trilha-sub" id="trilha-rec-sub">20 min · leve e conectado</div>
+    </div>
+    <div class="home-trilha-cta">Começar →</div>
   </div>
   <!-- explorar jogos individuais -->
   <div class="games-grid-sep" id="games-grid-toggle" onclick="toggleGamesGrid()">▾ Explorar jogos individuais</div>
@@ -2041,9 +2108,12 @@ let _vdLocal = 1;
 function go(id){
   // Modo Noite Guiada: ao voltar ao home após jogar um passo, avança para o próximo
   if(id==='home'&&noite.ativa&&noite.emJogo){
-    noite.emJogo=false;noite.atual++;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
-    if(noite.atual>=noite.passos.length){
-      // Noite concluída — mostra epílogo antes de ir para home
+    // Mostrar reação antes de avançar (exceto no último passo)
+    noite.emJogo=false;
+    const proxIdx=noite.atual+1;
+    if(proxIdx>=noite.passos.length){
+      // Último passo — vai direto para epílogo
+      noite.atual=proxIdx;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
       renderNoiteGuiada();
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById('screen-noite-guiada').classList.add('active');
@@ -2052,10 +2122,21 @@ function go(id){
       setTimeout(()=>mostrarConquista({icon:'🌙',nome:'Noite Guiada Completa',historia:'Vocês completaram todos os passos juntos. Essa consistência é o que os separa.'}),400);
       return;
     }
-    renderNoiteGuiada();
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen-noite-guiada').classList.add('active');
-    window.scrollTo(0,0);return;
+    // Mostrar overlay de reação entre passos
+    window._noiteProxCallback=function(){
+      noite.atual=proxIdx;sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+      // Verificar se ativar modo clímax (2+ reações 'mais' seguidas)
+      if(window._reacaoSequencia>=2){
+        window._reacaoSequencia=0;
+        mostrarClimax();return;
+      }
+      renderNoiteGuiada();
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('screen-noite-guiada').classList.add('active');
+      window.scrollTo(0,0);
+    };
+    document.getElementById('reacao-overlay').classList.add('on');
+    return;
   }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -3888,7 +3969,7 @@ const _goOrigGamif=go;
 go=function(id){
   _goOrigGamif(id);
   if(id==='home'){
-    atualizarStreak();carregarMissaoSemana();renderCapituloHome();renderSemaforo();renderBtnRecomeco();
+    atualizarStreak();carregarMissaoSemana();renderCapituloHome();renderSemaforo();renderBtnRecomeco();renderTrilhaRec();
     const _cqG=JSON.parse(localStorage.getItem('jd_conquistas')||'[]');
     const _cqT=Object.keys(CONQUISTAS).length;
     const _cqLbl=document.getElementById('home-cq-label');
@@ -4931,6 +5012,70 @@ function compartilharApp(){
   }
 }
 
+// ══ REAÇÃO PÓS-JOGO ═════════════════════════════════════════════════════════
+window._reacaoSequencia=0;
+function reagirNoite(tipo){
+  document.getElementById('reacao-overlay').classList.remove('on');
+  if(tipo==='mais') window._reacaoSequencia=(window._reacaoSequencia||0)+1;
+  else window._reacaoSequencia=0;
+  if(window._noiteProxCallback){window._noiteProxCallback();window._noiteProxCallback=null;}
+}
+
+// ══ CLÍMAX — APP SAI DE CENA ════════════════════════════════════════════════
+function mostrarClimax(){
+  document.getElementById('climax-overlay').classList.add('on');
+}
+function climaxMaisUmaCarta(){
+  document.getElementById('climax-overlay').classList.remove('on');
+  renderNoiteGuiada();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-noite-guiada').classList.add('active');
+  window.scrollTo(0,0);
+}
+function climaxEncerrar(){
+  document.getElementById('climax-overlay').classList.remove('on');
+  encerrarNoiteGuiada();
+}
+function climaxSemApp(){
+  document.getElementById('climax-overlay').classList.remove('on');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  window.scrollTo(0,0);
+  const hoje=new Date().toISOString().slice(0,10);
+  const hist=JSON.parse(localStorage.getItem('jd_historico')||'[]');
+  hist.unshift({data:hoje,nivel:noite.nivel,titulo:noite.titulo||'Nossa Noite',passos:noite.passos.length});
+  localStorage.setItem('jd_historico',JSON.stringify(hist.slice(0,60)));
+  noite.ativa=false;noite.emJogo=false;
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+  ganharXP(30);
+}
+
+// ══ TRILHA RECOMENDADA HOME ══════════════════════════════════════════════════
+const _TRILHAS_REC=[
+  {icon:'🌙',nome:'Conexão Leve',sub:'20 min · suave e presente',nivel:'Romântico',cond:function(){return true;}},
+  {icon:'💬',nome:'Rir Antes',sub:'15 min · humor e leveza',nivel:'Romântico',cond:function(){var h=new Date().getHours();return h>=22||h<1;}},
+  {icon:'🔥',nome:'Subir o Clima',sub:'30 min · provocação gradual',nivel:'Quente',cond:function(){var sem=sessionStorage.getItem('jd_sema');return sem==='verde'||sem==='roxo';}},
+  {icon:'🤍',nome:'Só Carinho',sub:'10 min · sem pressão',nivel:'Romântico',cond:function(){var sem=sessionStorage.getItem('jd_sema');return sem==='vermelho'||sem==='laranja';}},
+  {icon:'⚡',nome:'Noite Explosiva',sub:'40 min · intensidade total',nivel:'Explosivo',cond:function(){var sem=sessionStorage.getItem('jd_sema');return sem==='roxo';}},
+];
+function renderTrilhaRec(){
+  var el=document.getElementById('home-trilha-rec');
+  if(!el)return;
+  var trilha=_TRILHAS_REC.find(function(t){return t.cond();})||_TRILHAS_REC[0];
+  document.getElementById('trilha-rec-icon').textContent=trilha.icon;
+  document.getElementById('trilha-rec-nome').textContent=trilha.nome;
+  document.getElementById('trilha-rec-sub').textContent=trilha.sub;
+  el._nivel=trilha.nivel;
+  el.style.display='flex';
+}
+function iniciarTrilhaRec(){
+  var el=document.getElementById('home-trilha-rec');
+  var nivel=(el&&el._nivel)||'Romântico';
+  iniciarNoiteGuiada(nivel);
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('screen-noite-guiada').classList.add('active');
+  window.scrollTo(0,0);
+}
+
 </script>
 
 <!-- ══ MULTIPLAYER CARD VIEW ══ -->
@@ -5018,5 +5163,35 @@ function compartilharApp(){
     <button onclick="document.getElementById('priv-overlay').style.display='none'" class="btn-gold" style="animation:none">Li e entendi</button>
   </div>
 </div>
+<!-- ══ REAÇÃO PÓS-JOGO ══ -->
+<div id="reacao-overlay">
+  <div class="reacao-titulo">Como foi esse momento?</div>
+  <div class="reacao-btns">
+    <button class="reacao-btn" onclick="reagirNoite('mais')">
+      <span class="reacao-btn-icon">🔥</span>
+      <span class="reacao-btn-lbl">Mais<br>intenso</span>
+    </button>
+    <button class="reacao-btn" onclick="reagirNoite('ok')">
+      <span class="reacao-btn-icon">✓</span>
+      <span class="reacao-btn-lbl">Perfeito<br>assim</span>
+    </button>
+    <button class="reacao-btn" onclick="reagirNoite('suave')">
+      <span class="reacao-btn-icon">🌙</span>
+      <span class="reacao-btn-lbl">Mais<br>suave</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══ CLÍMAX — APP SAI DE CENA ══ -->
+<div id="climax-overlay">
+  <div class="climax-frase">Esta parte<br>é de vocês.</div>
+  <div class="climax-regra"></div>
+  <div class="climax-opcoes">
+    <button class="climax-btn principal" onclick="climaxMaisUmaCarta()">✦ Mais uma carta</button>
+    <button class="climax-btn" onclick="climaxEncerrar()">Encerrar com carinho</button>
+    <button class="climax-btn" style="color:rgba(180,140,160,0.6);border-color:rgba(180,140,160,0.1)" onclick="climaxSemApp()">Continuar sem o app →</button>
+  </div>
+</div>
+
 </body>
 </html>
