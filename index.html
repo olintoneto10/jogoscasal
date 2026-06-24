@@ -1312,6 +1312,35 @@ body::before{background:
 .streak-fire{font-size:1.6rem}
 .streak-label{font-size:0.88rem}
 
+
+/* ── P7: Jornada stats 5 itens ─────────────────────────────── */
+.jornada-stats{flex-wrap:wrap}
+.jornada-stat{min-width:calc(30% - 0.6rem);flex:1}
+/* ── P7: Botão Sorteio ──────────────────────────────────────── */
+.btn-sorteio{
+  width:calc(100% - 2.4rem);margin:0.5rem 1.2rem 0;
+  background:linear-gradient(135deg,rgba(200,148,58,0.10),rgba(155,70,120,0.08));
+  border:1px solid rgba(200,148,58,0.26);
+  color:var(--gold-l);font-family:'Cormorant SC',serif;font-size:1.05rem;
+  letter-spacing:0.07em;padding:0.7rem 1.5rem;border-radius:10px;
+  cursor:pointer;transition:all 0.22s;display:block
+}
+.btn-sorteio:hover{
+  background:linear-gradient(135deg,rgba(212,133,90,0.20),rgba(155,70,120,0.16));
+  border-color:rgba(212,133,90,0.48)
+}
+/* ── P7: Capítulo na home ───────────────────────────────────── */
+#home-capitulo{
+  margin:0.6rem 1.2rem 0;
+  background:linear-gradient(135deg,rgba(120,60,140,0.09),rgba(212,133,90,0.06));
+  border:1px solid rgba(140,80,180,0.18);border-radius:10px;
+  padding:0.65rem 1rem;
+}
+#home-capitulo .cap-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.45rem}
+#home-capitulo .cap-header .cap-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(155,100,180,0.72);font-family:'Jost',sans-serif}
+#home-capitulo .cap-header .cap-nome{font-family:'Cormorant SC',serif;font-size:0.9rem;color:var(--gold-l);letter-spacing:0.04em}
+#home-cap-xp-hint{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(185,135,165,0.5);font-family:'Jost',sans-serif;text-align:right;margin-top:0.2rem}
+
 </style>
 
 <!-- Service Worker -->
@@ -1574,6 +1603,17 @@ body::before{background:
     <button class="oc-sec-btn" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Recomeço</button>
     <button class="oc-sec-btn" onclick="go('screen-conquistas')">🏆 Conquistas</button>
   </div>
+  <!-- capítulo (barra de XP) -->
+  <div id="home-capitulo">
+    <div class="cap-header">
+      <span class="cap-label" id="cap-num-label">Capítulo 1</span>
+      <span class="cap-nome" id="cap-nome-label">A Faísca</span>
+    </div>
+    <div class="cap-bar-wrap"><div id="cap-bar-fill" style="width:0%"></div></div>
+    <div id="cap-xp-label" style="font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(185,135,165,0.5);font-family:'Jost',sans-serif;text-align:right;margin-top:0.2rem"></div>
+  </div>
+  <!-- sorteio -->
+  <button class="btn-sorteio" onclick="_sorteio()">✦ Nos Surpreenda</button>
   <!-- trilha recomendada -->
   <div class="home-trilha-rec" id="home-trilha-rec" onclick="iniciarTrilhaRec()" style="display:none">
     <div class="home-trilha-icon" id="trilha-rec-icon">🕯️</div>
@@ -1606,14 +1646,8 @@ body::before{background:
     <div class="game-card" onclick="go('screen-toque')"><div class="icon">🫧</div><div class="name">Toque Guiado</div><div class="desc">Sequência de toque intencional, passo a passo</div></div>
     <div class="game-card" onclick="go('screen-missao')" style="grid-column:1/-1"><div class="icon">🌙</div><div class="name">Missão da Noite</div><div class="desc">Uma missão completa com etapas para viver juntos</div></div>
   </div>
-  <!-- elementos ocultos — hooks JS (capítulo, conquistas, semaforo-val, cap-badge) -->
+  <!-- elementos ocultos — hooks JS -->
   <div style="display:none" aria-hidden="true">
-    <div id="home-capitulo">
-      <span id="cap-num-label">Capítulo 1</span>
-      <span id="cap-xp-label"></span>
-      <div id="cap-nome-label">A Faísca</div>
-      <div><div id="cap-bar-fill" style="width:0%"></div></div>
-    </div>
     <div id="home-cap-badge">Capítulo <span id="home-cap-num">1</span> da história de vocês<span id="home-cap-nome">A Primeira Faísca</span></div>
     <button id="home-cq-btn"><span id="home-cq-label">Conquistas</span></button>
     <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão</button>
@@ -2338,6 +2372,8 @@ body::before{background:
     <div class="jornada-stat"><div class="jornada-stat-num" id="jstat-noites">0</div><div class="jornada-stat-lbl">Noites</div></div>
     <div class="jornada-stat"><div class="jornada-stat-num" id="jstat-cap">0</div><div class="jornada-stat-lbl">Capítulos</div></div>
     <div class="jornada-stat"><div class="jornada-stat-num" id="jstat-dias">0</div><div class="jornada-stat-lbl">Dias ativos</div></div>
+    <div class="jornada-stat"><div class="jornada-stat-num" id="jstat-cq">0</div><div class="jornada-stat-lbl">Conquistas</div></div>
+    <div class="jornada-stat"><div class="jornada-stat-num" id="jstat-miss">0</div><div class="jornada-stat-lbl">Missões</div></div>
   </div>
   <div class="jornada-arco" id="jornada-arco" style="display:none">
     <div class="jornada-arco-label">A história de vocês</div>
@@ -2799,7 +2835,7 @@ function go(id){
   const _acBar=document.getElementById('aftercare-bar');
   if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
-  if(id==='home'){atualizarHomeCap();_saudacaoDinamica();}
+  if(id==='home'){atualizarHomeCap();_saudacaoDinamica();renderCapituloHome();}
 }
 
 
@@ -3133,6 +3169,12 @@ function _iniciarJornadaReal(){
   go('screen-noite-guiada');
 }
 
+function _sorteio(){
+  const jogos=['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-posicoes','screen-strip','screen-mapa','screen-comando','screen-fantasia','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque','screen-missao'];
+  const btn=document.querySelector('.btn-sorteio');
+  if(btn){const t=btn.textContent;btn.textContent='· · ·';setTimeout(()=>{btn.textContent=t;},350);}
+  setTimeout(()=>go(jogos[Math.floor(Math.random()*jogos.length)]),260);
+}
 function _saudacaoDinamica(){
   const h=new Date().getHours();
   const frases={
@@ -4870,6 +4912,8 @@ function renderJornada(){
       const datas=hist.filter(n=>n.data).map(n=>n.data);
       const dias=new Set(datas).size;
       const sd=document.getElementById('jstat-dias');if(sd)sd.textContent=dias;
+      const scq=document.getElementById('jstat-cq');if(scq)scq.textContent=JSON.parse(localStorage.getItem('jd_conquistas')||'[]').length;
+      const sm=document.getElementById('jstat-miss');if(sm)sm.textContent=parseInt(localStorage.getItem('jd_missaoTotal')||'0');
     }
     // Arco narrativo
     if(arcoEl&&arcoTexto){
@@ -5742,7 +5786,7 @@ function fantNext(){
 
 // ══ EXPORTAR / IMPORTAR PROGRESSO ═══════════════════════════════════════
 function exportarDados(){
-  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins','jd_capitulo'];
+  const keys=['jd_seen','jd_age','jd_streak','jd_lastDay','jd_hist','jd_missaoSem','jd_conquistas','jd_notif','jd_xp','jd_missaoTotal','jd_rSpins','jd_capitulo','jd_trilhas_ct'];
   const data={v:1,ts:Date.now()};
   keys.forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
   Object.keys(localStorage).filter(k=>k.startsWith('jd_dk_')).forEach(k=>{const v=localStorage.getItem(k);if(v)data[k]=v;});
