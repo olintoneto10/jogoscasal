@@ -1341,6 +1341,19 @@ body::before{background:
 #home-capitulo .cap-header .cap-nome{font-family:'Cormorant SC',serif;font-size:0.9rem;color:var(--gold-l);letter-spacing:0.04em}
 #home-cap-xp-hint{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(185,135,165,0.5);font-family:'Jost',sans-serif;text-align:right;margin-top:0.2rem}
 
+
+/* ── P9: Recomeço pergunta guia ────────────────────────────── */
+.rec-ov-pergunta{
+  font-family:'Libre Caslon Text',serif;font-style:italic;
+  color:rgba(185,145,175,0.8);font-size:0.88rem;line-height:1.6;
+  padding:0.65rem 0.2rem;text-align:center
+}
+/* ── P9: Recomeço reset btn ────────────────────────────────── */
+.rec-cta-ghost{
+  background:transparent!important;border-color:rgba(180,100,160,0.22)!important;
+  color:rgba(165,115,145,0.6)!important;font-size:0.78rem!important;padding:0.5rem 1.4rem!important
+}
+
 </style>
 
 <!-- Service Worker -->
@@ -2345,6 +2358,7 @@ body::before{background:
     <div class="rec-ov-num" id="rec-ov-num"></div>
     <div class="rec-ov-title" id="rec-ov-title"></div>
     <div class="rec-ov-desc" id="rec-ov-desc"></div>
+    <div class="rec-ov-pergunta" id="rec-ov-pergunta" style="display:none"></div>
     <div id="rec-ov-link-wrap"></div>
     <button class="rec-ov-concluir" onclick="recomecoConcluir()">✓ Marcar esta noite como concluída</button>
     <button class="rec-ov-fechar" onclick="document.getElementById('rec-overlay').classList.remove('on')">Voltar à trilha</button>
@@ -2437,6 +2451,54 @@ body::before{background:
       <div class="sc-item-body">
         <div class="sc-item-nome">Escrever uma memória juntos</div>
         <div class="sc-item-desc">Anotar um momento especial que viveram e querem guardar.</div>
+        <div class="sc-item-dur">livre</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">💃</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Dança espontânea</div>
+        <div class="sc-item-desc">Coloquem uma música que os dois gostam e dancem — sem regra, sem coreografia, sem plateia.</div>
+        <div class="sc-item-dur">10 min</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">💆</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Massagem nas costas</div>
+        <div class="sc-item-desc">Dez minutos de atenção pura — ombros, costas e nuca do outro, sem pressa para terminar.</div>
+        <div class="sc-item-dur">10–15 min</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">🍵</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Preparar algo juntos</div>
+        <div class="sc-item-desc">Uma bebida, um lanche simples — mãos que trabalham juntas aproximam sem precisar de razão.</div>
+        <div class="sc-item-dur">15–20 min</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">📖</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Ler para o outro</div>
+        <div class="sc-item-desc">Um lê em voz alta o que o outro escolhe — poesia, trecho de livro, uma letra que significa algo.</div>
+        <div class="sc-item-dur">livre</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">🛁</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Banho preparado pelo outro</div>
+        <div class="sc-item-desc">Preparar o banho do outro com cuidado — temperatura, aroma, toalha. Um gesto que diz tudo.</div>
+        <div class="sc-item-dur">20–30 min</div>
+      </div>
+    </div>
+    <div class="sc-item" onclick="scEscolher(this)">
+      <span class="sc-item-icon">🎵</span>
+      <div class="sc-item-body">
+        <div class="sc-item-nome">Música que significa algo</div>
+        <div class="sc-item-desc">Cada um apresenta uma música que carrega uma história — e explica o que ela guarda.</div>
         <div class="sc-item-dur">livre</div>
       </div>
     </div>
@@ -3512,8 +3574,8 @@ const DADO={
     'Quente':['beijar','massagear','morder levemente','acariciar','soprar','lamber suavemente','pressionar','deslizar os dedos','apertar com cuidado','explorar com as mãos'],
     'Explosivo':['beijar','morder','massagear','lamber','acariciar','explorar','apertar','pressionar','usar os lábios','deslizar'],
   },
-  duracao:['30 segundos','1 minuto','2 minutos','3 minutos','5 minutos','7 minutos','10 minutos','você decide','até a música acabar','quanto tempo quiser'],
-  local:['aqui mesmo','no quarto','no banheiro','onde você quiser','no sofá','com música','com luz apagada','com os olhos fechados'],
+  duracao:['30 segundos','1 minuto','2 minutos','3 minutos','5 minutos','7 minutos','10 minutos','15 minutos','20 minutos','você decide','até a música acabar','quanto tempo quiser','devagar — sem relógio','até pedir para parar'],
+  local:['aqui mesmo','no quarto','no banheiro','onde você quiser','no sofá','com música','com luz apagada','com os olhos fechados','de frente um para o outro','na varanda','no chão','em silêncio absoluto','de roupa ainda','com uma venda'],
 };
 let dadoRolling=false;
 document.getElementById('dadoBtn').addEventListener('click',function(){
@@ -4880,13 +4942,13 @@ function abrirSafeword(){
 
 // ══ MODO RECOMEÇO ═════════════════════════════════════════════════════
 const RECOMECO_TRILHA=[
-  {nome:'Silêncio compartilhado',desc:'Apenas presença — sem agenda, sem cobranças. Fiquem juntos num espaço tranquilo por 10 minutos.',link:null,linkLabel:null},
-  {nome:'Uma coisa que admiro',desc:'Cada um escolhe uma qualidade que ainda admira no outro e partilha em voz alta, com calma.',link:null,linkLabel:null},
-  {nome:'Reconexão guiada',desc:'Perguntas suaves para fechar a distância entre vocês. Sem pressa para chegar a lugar algum.',link:'screen-reconexao',linkLabel:'Ir para Reconexão →'},
-  {nome:'Toque intencional',desc:'O corpo também reconecta. Escolham uma atividade de carinho sem agenda.',link:'screen-socarinho',linkLabel:'Ir para Só Carinho →'},
-  {nome:'Memória favorita',desc:'Revivam juntos um momento que os dois guardam com carinho. Contem como se fosse a primeira vez.',link:null,linkLabel:null},
-  {nome:'Desejo revelado',desc:'Digam algo que ainda querem viver juntos — algo que ficou guardado. O Mapa do Desejo pode ajudar.',link:'screen-mapa',linkLabel:'Ir para Mapa do Desejo →'},
-  {nome:'Noite Guiada completa',desc:'A jornada culmina numa noite inteira, do jeito de vocês. Escolham o ritmo e comecem.',link:'screen-noite-config',linkLabel:'Começar a Noite Guiada →'},
+  {nome:'Silêncio compartilhado',desc:'Apenas presença — sem agenda, sem cobranças. Fiquem juntos num espaço tranquilo por 10 minutos.',pergunta:'O que o silêncio de vocês está dizendo hoje?',link:null,linkLabel:null},
+  {nome:'Uma coisa que admiro',desc:'Cada um escolhe uma qualidade que ainda admira no outro e partilha em voz alta, com calma.',pergunta:'Qual é a qualidade que você admira mas raramente menciona?',link:null,linkLabel:null},
+  {nome:'Reconexão guiada',desc:'Perguntas suaves para fechar a distância entre vocês. Sem pressa para chegar a lugar algum.',pergunta:'O que você mais sentiu falta nos últimos dias?',link:'screen-reconexao',linkLabel:'Ir para Reconexão →'},
+  {nome:'Toque intencional',desc:'O corpo também reconecta. Escolham uma atividade de carinho sem agenda.',pergunta:'Como o seu corpo quer ser tocado hoje?',link:'screen-socarinho',linkLabel:'Ir para Só Carinho →'},
+  {nome:'Memória favorita',desc:'Revivam juntos um momento que os dois guardam com carinho. Contem como se fosse a primeira vez.',pergunta:'Qual momento nosso você revive quando quer se sentir bem?',link:null,linkLabel:null},
+  {nome:'Desejo revelado',desc:'Digam algo que ainda querem viver juntos — algo que ficou guardado. O Mapa do Desejo pode ajudar.',pergunta:'Tem algo que você sempre quis pedir e nunca pediu?',link:'screen-mapa',linkLabel:'Ir para Mapa do Desejo →'},
+  {nome:'Noite Guiada completa',desc:'A jornada culmina numa noite inteira, do jeito de vocês. Escolham o ritmo e comecem.',pergunta:'O que vocês querem que esta noite seja?',link:'screen-noite-config',linkLabel:'Começar a Noite Guiada →'},
 ];
 function renderRecomeco(){
   const noiteAtual=parseInt(localStorage.getItem('jd_recomeco')||'1');
@@ -4913,7 +4975,8 @@ function renderRecomeco(){
   });
   trailEl.innerHTML=trailHtml;
   if(noiteAtual>7){
-    ctaEl.innerHTML='<div class="rec-done-msg">🌿 Jornada concluída.<br>Vocês percorreram as 7 noites juntos.</div>';
+    ctaEl.innerHTML='<div class="rec-done-msg">🌿 Jornada concluída.<br>Vocês percorreram as 7 noites juntos.</div>'
+      +'<button class="rec-cta rec-cta-ghost" onclick="_recomecoReiniciar()">↩ Reiniciar jornada</button>';
   } else {
     const n=RECOMECO_TRILHA[noiteAtual-1];
     ctaEl.innerHTML='<button class="rec-cta" onclick="recomecoAbrir('+(noiteAtual-1)+')">▶ Começar a Noite '+noiteAtual+'</button>';
@@ -4924,6 +4987,8 @@ function recomecoAbrir(idx){
   document.getElementById('rec-ov-num').textContent='Noite '+(idx+1)+' de 7';
   document.getElementById('rec-ov-title').textContent=n.nome;
   document.getElementById('rec-ov-desc').textContent=n.desc;
+  const _pqEl=document.getElementById('rec-ov-pergunta');
+  if(_pqEl){if(n.pergunta){_pqEl.textContent='“'+n.pergunta+'”';_pqEl.style.display='';}else{_pqEl.style.display='none';}}
   const linkWrap=document.getElementById('rec-ov-link-wrap');
   if(n.link){
     linkWrap.innerHTML=`<button class="rec-ov-link" onclick="document.getElementById('rec-overlay').classList.remove('on');go('${n.link}')">${n.linkLabel}</button>`;
@@ -4934,10 +4999,18 @@ function recomecoAbrir(idx){
 }
 function recomecoConcluir(){
   const noiteAtual=parseInt(localStorage.getItem('jd_recomeco')||'1');
-  localStorage.setItem('jd_recomeco',String(Math.min(noiteAtual+1,8)));
+  const _nova=Math.min(noiteAtual+1,8);
+  localStorage.setItem('jd_recomeco',String(_nova));
   document.getElementById('rec-overlay').classList.remove('on');
   renderRecomeco();
   ganharXP(10);
+  if(_nova===8)setTimeout(()=>verificarConquista('recomeco'),400);
+}
+function _recomecoReiniciar(){
+  if(!window.confirm('Reiniciar a jornada do Recomeço?
+O progresso das 7 noites será apagado.'))return;
+  localStorage.setItem('jd_recomeco','1');
+  renderRecomeco();
 }
 function renderBtnRecomeco(){
   const btn=document.getElementById('btn-recomeco');
@@ -5060,6 +5133,7 @@ const CONQUISTAS={
   trilha:{icon:'🧭',nome:'Trilha Iniciada',historia:'Escolheram um caminho juntos. Cada trilha é um começo — e vocês começaram.'},
   trilha5:{icon:'🌟',nome:'Cinco Caminhos',historia:'Cinco trilhas percorridas. Cada uma deixou algo — e isso vai aparecer nas próximas.'},
   missao10:{icon:'🏆',nome:'Dez Semanas',historia:'Dez missões juntos. Isso não é sorte — é compromisso real, semana a semana.'},
+  recomeco:{icon:'🌿',nome:'Sete Noites',historia:'Percorreram as sete noites do Recomeço juntos. Essa jornada exigiu presença real — e vocês estavam lá.'},
 };
 let _rSpins=parseInt(localStorage.getItem('jd_rSpins')||'0');
 function verificarConquista(tipo,a,b){
@@ -5101,6 +5175,7 @@ function verificarConquista(tipo,a,b){
     if(tc>=5)ganhar('trilha5');
   }
   if(tipo==='missao_sem'){ganhar('missao');if(a>=5)ganhar('missao5');if(a>=10)ganhar('missao10');}
+  if(tipo==='recomeco')ganhar('recomeco');
   if(['vd','dado','missao','mapa','roleta'].includes(tipo)){
     const hist=JSON.parse(localStorage.getItem('jd_hist')||'[]');
     const jogos=new Set(hist.slice(0,20).map(h=>h.jogo.split(' ')[0]));
