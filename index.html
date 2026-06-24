@@ -199,6 +199,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .fab:hover{transform:scale(1.08);box-shadow:0 4px 20px rgba(200,148,58,0.25)}
 #music-fab{right:1.4rem}
 #timer-fab{right:5.2rem}
+#config-fab{right:9.0rem}
 .fab.active{border-color:var(--gold);box-shadow:0 0 16px rgba(200,148,58,0.35)}
 .music-panel{position:fixed;bottom:5rem;right:1rem;width:252px;background:rgba(21,13,30,0.97);border:1px solid rgba(200,148,58,0.25);border-radius:14px;padding:1rem;backdrop-filter:blur(20px);z-index:100;transform:scale(0.88) translateY(8px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:opacity 0.22s,transform 0.22s}
 .music-panel.on{opacity:1;pointer-events:all;transform:scale(1) translateY(0)}
@@ -1714,9 +1715,8 @@ body.tema-petala .cfg-tema-nome{color:var(--text);}
 
 /* === GAMES ICON GRID (hp3) === */
 #hp3{overflow-y:auto;height:100dvh;min-height:unset!important;padding:0;display:flex;flex-direction:column;align-items:stretch;box-sizing:border-box;}
-.hp3-header{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem 0.5rem;flex-shrink:0}
+.hp3-header{display:flex;align-items:center;justify-content:center;padding:0.85rem 1rem 0.5rem;flex-shrink:0}
 .hp3-header-title{font-size:0.63rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(184,136,122,0.55)}
-.hp3-cfg-btn{background:none;border:1px solid rgba(200,148,58,0.28);border-radius:8px;color:var(--gold-l);font-size:0.82rem;padding:0.38rem 0.75rem;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:0.03em}
 .games-icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.55rem;padding:0 0.85rem;box-sizing:border-box;flex:1;align-content:start}
 .game-icon-card{display:flex;flex-direction:column;align-items:center;gap:0.28rem;padding:0.6rem 0.3rem 0.55rem;background:rgba(200,148,58,0.05);border:1px solid rgba(200,148,58,0.13);border-radius:11px;cursor:pointer;transition:border-color 0.18s,background 0.18s;-webkit-tap-highlight-color:transparent}
 .game-icon-card:active{background:rgba(200,148,58,0.13);border-color:rgba(200,148,58,0.42);}
@@ -2023,7 +2023,6 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
   <div class="home-page" id="hp3">
   <div class="hp3-header">
     <span class="hp3-header-title">Explorar jogos</span>
-    <button class="hp3-cfg-btn" onclick="go('screen-config')">⚙ Config</button>
   </div>
   <div class="games-icon-grid">
     <div class="game-icon-card" onclick="go('screen-roleta')"><div class="gi-icon">🎡</div><div class="gi-name">Roleta do Desejo</div></div>
@@ -2928,6 +2927,8 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
 
 <!-- ══ TIMER FAB ══ -->
 <button class="fab" id="timer-fab" onclick="openTimerFrom(null)" title="Cronômetro">⏱</button>
+<!-- ══ CONFIG FAB ══ -->
+<button class="fab" id="config-fab" onclick="go('screen-config')" title="Configurações">⚙</button>
 
 <!-- ══ TIMER OVERLAY ══ -->
 <div id="timer-overlay">
