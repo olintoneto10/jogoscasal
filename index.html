@@ -3289,12 +3289,7 @@ function go(id){
       document.getElementById('screen-noite-guiada').classList.add('active');
       window.scrollTo(0,0);
     };
-    // Após passo 0: bifurcação; demais: reação
-    if(noite.atual===0){
-      document.getElementById('bifurcacao-overlay').classList.add('on');
-    }else{
-      document.getElementById('reacao-overlay').classList.add('on');
-    }
+    document.getElementById('reacao-overlay').classList.add('on');
     return;
   }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
