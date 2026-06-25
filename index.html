@@ -1971,7 +1971,7 @@ body.tema-petala .hn-cta-label{color:var(--gold-l)}
   </div>
 
   <!-- ── CTA PRINCIPAL ── -->
-  <button class="btn-noite hn-cta-main" onclick="go('screen-noite-config')">
+  <button class="btn-noite hn-cta-main" onclick="comecarNoiteDireto()">
     <span class="hn-cta-icon">🕯️</span>
     <span class="hn-cta-label">Começar a Noite</span>
     <span class="hn-cta-sub">uma experiência completa para vocês dois</span>
@@ -2372,7 +2372,7 @@ body.tema-petala .hn-cta-label{color:var(--gold-l)}
     <div style="font-size:2.8rem">🌿</div>
     <p style="font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--gold-l);letter-spacing:0.05em">Agora vocês estão presentes</p>
     <p style="font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.9rem;color:var(--muted);line-height:1.7">A conexão emocional já começou.<br>Escolham como continuar a noite.</p>
-    <button class="btn-noite" style="margin:0;width:100%" onclick="go('screen-noite-config')">✨ Começar a Noite Guiada</button>
+    <button class="btn-noite" style="margin:0;width:100%" onclick="comecarNoiteDireto()">✨ Começar a Noite Guiada</button>
     <button class="btn-ghost" style="width:100%;font-size:0.88rem" onclick="go('home')">Explorar jogos individuais</button>
     <button class="btn-skip" onclick="reconStart()">↩ Repetir as perguntas</button>
   </div>
@@ -3695,6 +3695,33 @@ function _iniciarJornadaReal(){
   go('screen-noite-guiada');
 }
 
+function comecarNoiteDireto(){
+  var sema=sessionStorage.getItem('jd_sema')||'verde';
+  var tempo,estado;
+  if(sema==='vermelho'){tempo='curta';estado='cansados';}
+  else if(sema==='amarelo'){tempo='media';estado='reconectar';}
+  else{tempo='media';estado='animados';}
+  var cap=parseInt(localStorage.getItem('jd_capitulo')||'0')+1;
+  var nomeCapIdx=(cap-1)%CAPITULOS_NOMES.length;
+  noite.ativa=true;noite.atual=0;noite.emJogo=false;noite.prologoVisto=false;
+  noite.tempo=tempo;noite.estado=estado;noite.capitulo=cap;
+  noite.titulo=CAPITULOS_NOMES[nomeCapIdx];
+  var chave=tempo+'-'+estado;
+  noite.prologo=JORNADAS_DATA.prologo[chave]||'Esta noite foi feita para vocês dois.';
+  noite.epilogo=JORNADAS_DATA.epilogo[chave]||'Mais um capítulo escrito juntos.';
+  var _pv=JORNADAS_DATA.passos[chave]||JORNADAS_DATA.passos['media-animados'];
+  var _vi=(cap-1)%_pv.length;
+  noite.passos=(Array.isArray(_pv[0])?_pv[_vi]:_pv).slice();
+  var nivelMap={cansados:'Romântico',reconectar:'Romântico',animados:'Quente'};
+  noite.nivel=(tempo==='longa'||tempo==='noite')&&estado==='animados'?'Explosivo':(nivelMap[estado]||'Romântico');
+  ['rLevels','vdLevels','dadoLevels','missaoLevels','stripLevels'].forEach(function(gid){
+    var grp=document.getElementById(gid);if(!grp)return;
+    grp.querySelectorAll('.lvl').forEach(function(b){b.classList.toggle('on',b.dataset.level===noite.nivel);});
+    levelState[gid]=noite.nivel;
+  });
+  sessionStorage.setItem('jd_noite',JSON.stringify(noite));
+  go('screen-noite-guiada');
+}
 function _sorteio(){
   const jogos=['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-posicoes','screen-strip','screen-mapa','screen-comando','screen-fantasia','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque','screen-missao'];
   const btn=document.querySelector('.btn-sorteio');
@@ -5287,8 +5314,8 @@ function setSemaforo(tipo){
   const btnNoite=document.querySelector('.btn-noite');
   if(btnNoite){
     if(tipo==='vermelho'){btnNoite.textContent='🤍 Modo Só Carinho';btnNoite.onclick=function(){go('screen-socarinho');};}
-    else if(tipo==='amarelo'){btnNoite.textContent='✨ Noite Guiada — ritmo suave';btnNoite.onclick=function(){go('screen-noite-config');};}
-    else{btnNoite.textContent='✨ Começar a Noite Guiada';btnNoite.onclick=function(){go('screen-noite-config');};}
+    else if(tipo==='amarelo'){btnNoite.textContent='✨ Noite Guiada — ritmo suave';btnNoite.onclick=comecarNoiteDireto;}
+    else{btnNoite.textContent='✨ Começar a Noite Guiada';btnNoite.onclick=comecarNoiteDireto;}
   }
 }
 function renderSemaforo(){
