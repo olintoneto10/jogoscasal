@@ -1676,6 +1676,56 @@ body.tema-petala .game-icon-card{background:rgba(192,32,96,0.04);border-color:rg
 body.tema-petala .game-icon-card:active{background:rgba(192,32,96,0.1);border-color:rgba(192,32,96,0.35);}
 body.tema-petala .hp3-cfg-btn{border-color:rgba(155,64,16,0.3);color:var(--gold-l);}
 body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
+
+/* === NOVA HOME === */
+#home.active{
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  gap:1.2rem!important;padding:2.5rem 1.5rem 5.5rem!important;
+  overflow:hidden!important;scroll-snap-type:unset!important;
+  height:100dvh!important;box-sizing:border-box!important;
+}
+.home-page{display:contents!important}
+.home-dots,.home-dot{display:none!important}
+html.home-open,html.home-open body{overflow:unset!important;height:unset!important}
+
+/* Saudação */
+.hn-saudacao{display:flex;flex-direction:column;align-items:center;gap:0.25rem;width:100%;text-align:center}
+.hn-saudacao .oc-sal-pre{font-size:0.6rem!important;letter-spacing:0.22em;text-transform:uppercase;color:rgba(208,69,110,0.5);font-family:'Jost',sans-serif;margin:0}
+.hn-saudacao .oc-sal-nomes{font-family:'Libre Caslon Text',serif;font-size:1.15rem;color:rgba(238,150,170,0.85);font-style:italic}
+
+/* Semáforo na nova home — mais compacto */
+#home .semaforo-banner{width:100%;max-width:340px;box-sizing:border-box}
+
+/* CTA principal */
+.hn-cta-main{
+  width:100%;max-width:340px;
+  padding:1.5rem 2rem;
+  background:linear-gradient(145deg,rgba(200,148,58,0.1),rgba(208,69,110,0.07));
+  border:1px solid rgba(200,148,58,0.3);border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;gap:0.55rem;
+  cursor:pointer;transition:all 0.22s;color:var(--text);font-family:inherit;
+  text-align:center;
+}
+.hn-cta-main:active{background:linear-gradient(145deg,rgba(200,148,58,0.18),rgba(208,69,110,0.13));border-color:var(--gold);transform:scale(0.98)}
+.hn-cta-icon{font-size:2.2rem;line-height:1;filter:drop-shadow(0 0 20px rgba(200,148,58,0.45))}
+.hn-cta-label{font-family:'Cormorant SC',serif;font-size:1.45rem;letter-spacing:0.06em;color:var(--gold-l);line-height:1}
+.hn-cta-sub{font-family:'Libre Caslon Text',serif;font-style:italic;font-size:0.8rem;color:var(--muted);line-height:1.4}
+
+/* Capítulo compacto */
+#home #home-capitulo{width:100%;max-width:340px;padding:0.6rem 0.9rem;border-radius:10px;box-sizing:border-box}
+
+/* Grade secundária */
+.hn-sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;width:100%;max-width:340px}
+.hn-sec-grid .oc-sec-btn{font-size:0.74rem;padding:0.6rem 0.5rem}
+
+/* Trilha recomendada na nova home */
+#home-trilha-rec{width:100%;max-width:340px;box-sizing:border-box}
+
+/* Tema pétala overrides */
+body.tema-petala .hn-cta-main{background:rgba(192,32,96,0.06);border-color:rgba(192,32,96,0.22)}
+body.tema-petala .hn-cta-main:active{background:rgba(192,32,96,0.12);border-color:rgba(192,32,96,0.45)}
+body.tema-petala .hn-cta-label{color:var(--gold-l)}
 </style>
 
 <!-- Service Worker -->
@@ -1858,13 +1908,13 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
 
 <!-- ══ HOME ══ -->
 <div class="screen" id="home">
-  <!-- ── página 1: boas-vindas ── -->
-  <div class="home-page" id="hp1">
-  <!-- saudação -->
-  <div class="oc-saudacao">
+
+  <!-- ── saudação + nomes ── -->
+  <div class="hn-saudacao">
     <div class="oc-sal-pre">jogos do desejo</div>
     <div class="oc-sal-nomes"><span id="hP1">—</span> <span class="oc-heart">♥</span> <span id="hP2">—</span></div>
   </div>
+
   <!-- streak (JS controla) -->
   <div class="home-streak" id="home-streak" style="display:none">
     <span class="streak-fire">🔥</span>
@@ -1872,7 +1922,8 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
     <span class="streak-label">noite seguida</span>
     <button class="streak-hist-btn" onclick="go('screen-jornada')">💞 Jornada</button>
   </div>
-  <!-- semáforo compacto -->
+
+  <!-- semáforo de clima -->
   <div class="semaforo-banner vazio" id="semaforo-banner" onclick="abrirSemaforo()">
     <div class="semaforo-dot"></div>
     <div class="semaforo-info">
@@ -1881,54 +1932,28 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
     </div>
     <div class="semaforo-change" id="semaforo-change">Definir ↓</div>
   </div>
-  <!-- card grande — Noite Guiada -->
-  <div class="oc-card-noite" onclick="go('screen-noite-config')">
-    <div class="oc-card-pre">o que faremos?</div>
-    <div class="oc-card-icon">🕯️</div>
-    <div class="oc-card-nome">Noite Guiada</div>
-    <div class="oc-card-desc">Uma experiência completa juntos — com jogos, clima e conexão.</div>
-    <div class="oc-card-cta">Começar →</div>
-  </div>
-  <!-- secundários: grade 2×2 -->
-  <div class="oc-sec-grid">
-    <button class="oc-sec-btn" onclick="go('screen-jornada')">📖 Nossa Jornada</button>
-    <button class="oc-sec-btn" onclick="go('screen-socarinho')">🤍 Só Carinho</button>
-    <button class="oc-sec-btn" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Recomeço</button>
-    <button class="oc-sec-btn" onclick="go('screen-conquistas')">🏆 Conquistas</button>
-  </div>
-  </div><!-- /hp1 -->
 
-  <!-- ── página 2: missão + progresso ── -->
-  <div class="home-page" id="hp2">
   <!-- missão da semana (JS controla visibilidade) -->
   <div class="home-mission" id="home-mission" style="display:none">
-    <!-- fase de seleção -->
     <div id="mission-sel-wrap" style="display:flex;flex-direction:column;gap:6px">
       <div class="mission-sel-header">
         <span class="mission-sel-title">Missão da Semana</span>
         <span class="mission-sel-week">escolham uma</span>
       </div>
       <div class="mission-sel-card on" onclick="missaoSelCard(this,0)">
-        <div class="mission-sel-icon"></div>
-        <div class="mission-sel-nome"></div>
-        <div class="mission-sel-tarefa"></div>
-        <div class="mission-sel-lbl">✦ selecionada</div>
+        <div class="mission-sel-icon"></div><div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div><div class="mission-sel-lbl">✦ selecionada</div>
       </div>
       <div class="mission-sel-card" onclick="missaoSelCard(this,1)">
-        <div class="mission-sel-icon"></div>
-        <div class="mission-sel-nome"></div>
-        <div class="mission-sel-tarefa"></div>
-        <div class="mission-sel-lbl">· escolher esta</div>
+        <div class="mission-sel-icon"></div><div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div><div class="mission-sel-lbl">· escolher esta</div>
       </div>
       <div class="mission-sel-card" onclick="missaoSelCard(this,2)">
-        <div class="mission-sel-icon"></div>
-        <div class="mission-sel-nome"></div>
-        <div class="mission-sel-tarefa"></div>
-        <div class="mission-sel-lbl">· escolher esta</div>
+        <div class="mission-sel-icon"></div><div class="mission-sel-nome"></div>
+        <div class="mission-sel-tarefa"></div><div class="mission-sel-lbl">· escolher esta</div>
       </div>
       <button class="mission-sel-cta" onclick="missaoConfirmar()">✓ Confirmar missão desta semana</button>
     </div>
-    <!-- fase ativa -->
     <div id="mission-active-wrap" style="display:none;flex-direction:column;gap:0.5rem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div class="mission-week-label">Missão da Semana</div>
@@ -1944,7 +1969,15 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
       </div>
     </div>
   </div>
-  <!-- capítulo (barra de XP) -->
+
+  <!-- ── CTA PRINCIPAL ── -->
+  <button class="btn-noite hn-cta-main" onclick="go('screen-noite-config')">
+    <span class="hn-cta-icon">🕯️</span>
+    <span class="hn-cta-label">Começar a Noite</span>
+    <span class="hn-cta-sub">uma experiência completa para vocês dois</span>
+  </button>
+
+  <!-- capítulo + XP -->
   <div id="home-capitulo">
     <div class="cap-header">
       <span class="cap-label" id="cap-num-label">Capítulo 1</span>
@@ -1953,9 +1986,8 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
     <div class="cap-bar-wrap"><div id="cap-bar-fill" style="width:0%"></div></div>
     <div id="cap-xp-label" style="font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(185,135,165,0.5);font-family:'Jost',sans-serif;text-align:right;margin-top:0.2rem"></div>
   </div>
-  <!-- sorteio -->
-  <button class="btn-sorteio" onclick="_sorteio()">✦ Nos Surpreenda</button>
-  <!-- trilha recomendada -->
+
+  <!-- trilha recomendada (JS controla) -->
   <div class="home-trilha-rec" id="home-trilha-rec" onclick="iniciarTrilhaRec()" style="display:none">
     <div class="home-trilha-icon" id="trilha-rec-icon">🕯️</div>
     <div class="home-trilha-info">
@@ -1965,55 +1997,25 @@ body.tema-petala .hp3-actions{border-color:rgba(155,64,16,0.1);}
     </div>
     <div class="home-trilha-cta">Começar →</div>
   </div>
-  <button class="btn-trilhas" onclick="go('screen-trilhas')">✦ Explorar as 10 Trilhas</button>
-  </div><!-- /hp2 -->
 
-  <!-- ── página 3: explorar jogos ── -->
-  <div class="home-page" id="hp3">
-  <div class="hp3-header">
-    <span class="hp3-header-title">Explorar jogos</span>
+  <!-- ações secundárias -->
+  <div class="hn-sec-grid">
+    <button class="oc-sec-btn" onclick="go('screen-jornada')">📖 Nossa Jornada</button>
+    <button class="oc-sec-btn" onclick="go('screen-socarinho')">🤍 Só Carinho</button>
+    <button class="oc-sec-btn" id="btn-recomeco" onclick="go('screen-recomeco')">🌱 Recomeço</button>
+    <button class="oc-sec-btn" onclick="go('screen-conquistas')">🏆 Conquistas</button>
   </div>
-  <div class="games-icon-grid">
-    <div class="game-icon-card" onclick="go('screen-roleta')"><div class="gi-icon">🎡</div><div class="gi-name">Roleta do Desejo</div></div>
-    <div class="game-icon-card" onclick="go('screen-vd')"><div class="gi-icon">🃏</div><div class="gi-name">Verdade ou Desafio</div></div>
-    <div class="game-icon-card" onclick="go('screen-dado')"><div class="gi-icon">🎲</div><div class="gi-name">Dado dos Prazeres</div></div>
-    <div class="game-icon-card" onclick="go('screen-quiz')"><div class="gi-icon">❤️</div><div class="gi-name">Quiz do Casal</div></div>
-    <div class="game-icon-card" onclick="go('screen-posicoes')"><div class="gi-icon">🌸</div><div class="gi-name">Posições do Casal</div></div>
-    <div class="game-icon-card" onclick="go('screen-strip')"><div class="gi-icon">🪄</div><div class="gi-name">Ritual do Desejo</div></div>
-    <div class="game-icon-card" onclick="go('screen-mapa')"><div class="gi-icon">🗺️</div><div class="gi-name">Mapa do Desejo</div></div>
-    <div class="game-icon-card" onclick="go('screen-comando')"><div class="gi-icon">🖤</div><div class="gi-name">Comando &amp; Entrega</div></div>
-    <div class="game-icon-card" onclick="go('screen-fantasia')"><div class="gi-icon">🎭</div><div class="gi-name">Encenações</div></div>
-    <div class="game-icon-card" onclick="go('screen-carta-secreta')"><div class="gi-icon">💌</div><div class="gi-name">Carta Secreta</div></div>
-    <div class="game-icon-card" onclick="go('screen-olhar')"><div class="gi-icon">👀</div><div class="gi-name">O Olhar</div></div>
-    <div class="game-icon-card" onclick="go('screen-confissional')"><div class="gi-icon">🕯️</div><div class="gi-name">Confissional</div></div>
-    <div class="game-icon-card" onclick="go('screen-espelho')"><div class="gi-icon">🪞</div><div class="gi-name">O Espelho</div></div>
-    <div class="game-icon-card" onclick="go('screen-fotografia')"><div class="gi-icon">📸</div><div class="gi-name">Fotografia do Desejo</div></div>
-    <div class="game-icon-card" onclick="go('screen-pandora')"><div class="gi-icon">🗝️</div><div class="gi-name">Caixa de Pandora</div></div>
-    <div class="game-icon-card" onclick="go('screen-toque')"><div class="gi-icon">🫧</div><div class="gi-name">Toque Guiado</div></div>
-    <div class="game-icon-card" onclick="go('screen-reconexao')"><div class="gi-icon">💬</div><div class="gi-name">Reconexão</div></div>
-    <div class="game-icon-card" onclick="go('screen-missao')"><div class="gi-icon">🌙</div><div class="gi-name">Missão da Noite</div></div>
-  </div>
+
   <!-- elementos ocultos — hooks JS -->
   <div style="display:none" aria-hidden="true">
     <div id="home-cap-badge">Capítulo <span id="home-cap-num">1</span> da história de vocês<span id="home-cap-nome">A Primeira Faísca</span></div>
     <button id="home-cq-btn"><span id="home-cq-label">Conquistas</span></button>
     <button class="btn-reconexao" onclick="go('screen-reconexao')">💬 Reconexão</button>
+    <button class="btn-sorteio" onclick="_sorteio()">✦ Nos Surpreenda</button>
+    <button class="btn-trilhas" onclick="go('screen-trilhas')">✦ Trilhas</button>
   </div>
-  <div class="hp3-actions">
-    <button class="home-logout" onclick="exportarDados()" title="Baixar backup do progresso">📤 Exportar</button>
-    <button class="home-logout" onclick="doLogout()">← Nova sessão</button>
-    <button class="home-logout" onclick="compartilharApp()" title="Indicar para amigos">🔗 Indicar</button>
-  </div>
-  </div><!-- /hp3 -->
 
-  <!-- indicadores de página -->
-  <div class="home-dots" id="home-dots">
-    <div class="home-dot on"  onclick="_hpGo(0)"></div>
-    <div class="home-dot"     onclick="_hpGo(1)"></div>
-    <div class="home-dot"     onclick="_hpGo(2)"></div>
-  </div>
 </div>
-
 <!-- ══ NOITE GUIADA ══ -->
 <!-- ══ NOITE CONFIG ══ -->
 <div class="screen" id="screen-noite-config">
@@ -3322,7 +3324,7 @@ function go(id){
   const _acBar=document.getElementById('aftercare-bar');
   if(_acBar){if(['screen-roleta','screen-vd','screen-dado','screen-quiz','screen-missao','screen-posicoes','screen-strip','screen-fantasia','screen-mapa','screen-carta-secreta','screen-olhar','screen-confissional','screen-espelho','screen-fotografia','screen-pandora','screen-toque'].includes(id)){_acBar.classList.add('on');}else{_acBar.classList.remove('on');}}
   if(id==='screen-noite-config'){document.querySelectorAll('.nc-opt').forEach(b=>b.classList.remove('on'));const ini=document.getElementById('nc-iniciar');if(ini){ini.style.opacity='0.4';ini.style.pointerEvents='none';}}
-  if(id==='home'){atualizarHomeCap();_saudacaoDinamica();renderCapituloHome();document.documentElement.classList.add('home-open');const _hpEl=document.getElementById('home');if(_hpEl){_hpEl.scrollTop=0;_hpUpdateDots(0);}}else{document.documentElement.classList.remove('home-open');}
+  if(id==='home'){atualizarHomeCap();_saudacaoDinamica();renderCapituloHome();}
   if(id==='screen-config'){renderConfigScreen();}
 }
 
